@@ -1,0 +1,27 @@
+{
+  "name": "junko",
+  "version": "1.0.0",
+  "description": "bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hichu-Yamichu",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^5.0.1",
+    "chalk": "^2.4.1",
+    "discord.js": "^11.4.2",
+    "enmap": "^4.3.3",
+    "ffmpeg-binaries": "^4.0.0",
+    "jimp": "^0.5.6",
+    "moment": "^2.22.2",
+    "node-opus": "^0.3.1",
+    "rss-parser": "^3.5.4",
+    "simple-youtube-api": "^5.1.1",
+    "ytdl-core": "^0.28.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0"
+  }
+}
