@@ -9,7 +9,6 @@
   "author": "Hichu-Yamichu",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^5.0.1",
     "chalk": "^2.4.1",
     "discord.js": "^11.4.2",
     "enmap": "^4.3.3",
@@ -17,10 +16,7 @@
     "jimp": "^0.5.6",
     "kaori": "^1.2.0",
     "moment": "^2.22.2",
-    "node-opus": "^0.3.1",
-    "rss-parser": "^3.5.4",
-    "simple-youtube-api": "^5.1.1",
-    "ytdl-core": "^0.28.0"
+    "rss-parser": "^3.5.4"
   },
   "devDependencies": {
     "eslint": "^5.9.0"

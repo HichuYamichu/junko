@@ -6,7 +6,6 @@ module.exports = (client, message) => {
 	passive.react(message);
 	passive.randomBully(message);
 	passive.reactFag(message);
-	passive.points(message, client);
 	const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 	if (message.content.match(prefixMention)) {
 		return message.reply(`Prefix: \`${client.config.prefix}\` This message was sent because you've pinged me. If you wish to not receive such messages don't fucking ping me.`);

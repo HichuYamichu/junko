@@ -2,11 +2,11 @@ module.exports = {
 	name: 'avatar',
 	description: 'Sends a avatar picture of mentioned member or message author.',
 	cooldown: 3,
-	args: true,
+	args: false,
 	usage: '<mention>',
-	guildOnly:false,
-	ownerOnly: false,
-	run(message) {
+	guildOnly: false,
+	ownerOnly: false,	
+	run(client, message) {
 
 		const Discord = require("discord.js");
 
