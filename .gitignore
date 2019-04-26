@@ -1,7 +1,2 @@
-node_modules/*
-config.json
-.eslintrc.json
-.vscode
-scores.*
-font/*
-images/*
+node_modules
+.env

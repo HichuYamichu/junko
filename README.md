@@ -1,1 +1,0 @@
-Simple discord bot for bullyng/annoying people
