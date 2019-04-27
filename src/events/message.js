@@ -1,7 +1,11 @@
 const { Collection } = require('discord.js');
+const passive = require('../modules/passiveMessage');
 
 module.exports = (client, message) => {
-  if (!message.content.startsWith(client.config.prefix) || message.author.bot) return;
+  if (message.author.bot) return;
+  passive.randomBully(message);
+  passive.reactFag(message);
+  if (!message.content.startsWith(client.config.prefix)) return;
 
   const args = message.content.slice(client.config.prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
