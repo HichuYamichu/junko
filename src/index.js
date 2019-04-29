@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Junko = require('./struct/Junko');

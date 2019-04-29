@@ -12,10 +12,13 @@
     "bluebird": "^3.5.4",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^7.0.0",
+    "kaori": "^1.2.0",
     "redis": "^2.8.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-config-aqua": "^5.0.0"
+    "eslint-config-aqua": "^5.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "1.17.0"
   }
 }

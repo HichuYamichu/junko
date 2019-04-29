@@ -7,7 +7,8 @@ module.exports = class extends Client {
   constructor() {
     super({
       disableEveryone: true,
-      disabledEvents: ['TYPING_START']
+      disabledEvents: ['TYPING_START'],
+      partials: ['MESSAGE', 'CHANNEL', 'USER', 'GUILD_MEMBER']
     });
     this.commands = new Collection();
 
