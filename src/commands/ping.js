@@ -5,10 +5,11 @@ module.exports = {
   usage: '<user> <role>',
   guildOnly: true,
   cooldown: 1,
+  permissionLVL: 0,
   async execute(message, args) {
-    const m = await message.channel.send('Ping?');
-    m.edit(
-      `Pong! Latency is ${m.createdTimestamp -
+    const msg = await message.channel.send('Ping?');
+    msg.edit(
+      `Pong! Latency is ${msg.createdTimestamp -
         message.createdTimestamp}ms. API Latency is ${Math.round(message.client.ws.ping)}ms`
     );
   }

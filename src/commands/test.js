@@ -5,7 +5,8 @@ module.exports = {
   usage: '<user> <role>',
   guildOnly: true,
   cooldown: 5,
-  execute(message, args) {
+  permissionLVL: 2,
+  async execute(message, args) {
     message.channel.send(`Pong with args: ${args}`);
   }
 };

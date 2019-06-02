@@ -1,11 +1,11 @@
 {
   "name": "Junko",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "Junko.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon src/Junko.js",
+    "start": "node src/Junko.js"
   },
   "dependencies": {
     "@discordjs/uws": "^11.149.1",

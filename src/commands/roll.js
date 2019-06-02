@@ -5,6 +5,7 @@ module.exports = {
   usage: '<user> <role>',
   guildOnly: true,
   cooldown: 1,
+  permissionLVL: 0,
   async execute(message, args) {
     const webhook = await message.channel.createWebhook('Dice', {
       avatar: './src/static/dice.jpg'

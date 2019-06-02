@@ -7,22 +7,21 @@ module.exports = {
   usage: '<message>',
   guildOnly: true,
   cooldown: 15,
+  permissionLVL: 0,
   async execute(message, args) {
     const text = args.toString().toLowerCase();
-    let newText = '';
+    let boldText = '';
     for (let i = 0; i < text.length; i++) {
       let letter = text.charAt(i);
       if (letter === ',') {
-        newText += '  ';
+        boldText += '  ';
       } else if (letter.match(/[a-z]/)) {
-        newText += `${emojis[letter]} `;
-      } else if (letter === '\n') {
-        newText += `\n`;
+        boldText += `${emojis[letter]} `;
       } else if (!isNaN(letter)) {
         letter = `d${letter}`;
-        newText += `${emojis[letter]} `;
+        boldText += `${emojis[letter]} `;
       }
     }
-    message.channel.send(newText);
+    message.channel.send(boldText);
   }
 };

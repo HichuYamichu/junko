@@ -1,13 +1,32 @@
 const { Collection } = require('discord.js');
+const UserError = require('../modules/userError');
 const passive = require('../modules/passiveMessage');
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
   if (message.author.bot) return;
   passive.randomBully(message);
   passive.reactFag(message);
-  if (!message.content.startsWith(client.config.prefix)) return;
 
-  const args = message.content.slice(client.config.prefix.length).split(/ +/);
+  let args;
+  let prefix;
+
+  if (message.guild) {
+    if (message.content.startsWith(client.config.prefix)) {
+      prefix = client.config.prefix;
+    } else {
+      const guildPrefix = await client.store.hgetAsync(message.guild.id, 'prefix');
+      if (message.content.startsWith(guildPrefix)) prefix = guildPrefix;
+    }
+
+    if (!prefix) return;
+    args = message.content.slice(prefix.length).split(/\s+/);
+  } else {
+    const slice = message.content.startsWith(client.config.prefix)
+      ? client.config.prefix.length
+      : 0;
+    args = message.content.slice(slice).split(/\s+/);
+  }
+
   const commandName = args.shift().toLowerCase();
 
   if (!client.commands.has(commandName)) return;
@@ -21,12 +40,17 @@ module.exports = (client, message) => {
     let reply = `You didn't provide any arguments, ${message.author}!`;
 
     if (command.usage) {
-      reply += `\nThe proper usage would be: \`${client.config.prefix}${command.name} ${
-        command.usage
-      }\``;
+      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
     }
 
     return message.channel.send(reply);
+  }
+
+  if (command.permissionLVL > 0) {
+    const userPermissionLVL = await client.store.hgetAsync(message.guild.id, message.author.id);
+    if (userPermissionLVL < command.permissionLVL) {
+      return message.reply('your permission lvl is to low. Fuck you.');
+    }
   }
 
   if (!client.cooldowns.has(command.name)) {
@@ -52,11 +76,14 @@ module.exports = (client, message) => {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  client.UserError = UserError;
   message.client = client;
-  try {
-    command.execute(message, args);
-  } catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
-  }
+  command.execute(message, args).catch(error => {
+    if (error instanceof UserError) {
+      message.reply(`ERROR: ${error.message}`);
+    } else {
+      console.error(error);
+      message.reply('there was an error trying to execute that command!');
+    }
+  });
 };
