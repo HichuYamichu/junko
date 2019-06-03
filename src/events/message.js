@@ -46,7 +46,7 @@ module.exports = async (client, message) => {
     return message.channel.send(reply);
   }
 
-  if (command.permissionLVL > 0) {
+  if (command.permissionLVL > 0 && !message.member.hasPermission('ADMINISTRATOR')) {
     const userPermissionLVL = await client.store.hgetAsync(message.guild.id, message.author.id);
     if (userPermissionLVL < command.permissionLVL) {
       return message.reply('your permission lvl is to low. Fuck you.');

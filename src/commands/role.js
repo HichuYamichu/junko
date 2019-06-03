@@ -16,6 +16,6 @@ module.exports = {
       msg.edit(text);
       msg.react(emoji);
     });
-    message.client.store.set(message.guild.id, msg.id);
+    message.client.store.hset(message.guild.id, msg.id, 1);
   }
 };

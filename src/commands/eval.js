@@ -8,9 +8,12 @@ module.exports = {
   aliases: [],
   permissionLVL: 2,
   async execute(message, args) {
+    const { UserError } = message.client;
     const code = args.join(' ');
-    console.log(code);
-    const res = eval(code);
-    message.channel.send(res);
+    try {
+      eval(code);
+    } catch (error) {
+      throw new UserError(error);
+    }
   }
 };
