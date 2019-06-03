@@ -2,9 +2,10 @@ module.exports = {
   name: 'help',
   description: 'Helps you',
   args: false,
-  usage: 'help [command name]',
+  usage: 'help <command name>',
   guildOnly: false,
   cooldown: 5,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, args) {
     const data = [];

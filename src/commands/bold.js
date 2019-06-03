@@ -7,6 +7,7 @@ module.exports = {
   usage: '<message>',
   guildOnly: true,
   cooldown: 15,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, args) {
     const text = args.toString().toLowerCase();

@@ -2,15 +2,17 @@ module.exports = {
   name: 'roll',
   description: 'Rolles a dice for you.',
   args: false,
-  usage: '<user> <role>',
+  usage: '<range>',
   guildOnly: true,
   cooldown: 1,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, args) {
     const webhook = await message.channel.createWebhook('Dice', {
       avatar: './src/static/dice.jpg'
     });
-    const roll = await Math.floor(Math.random() * 6 + 1);
+    const range = args[0] || 6;
+    const roll = await Math.floor((Math.random() * range) + 1);
     await webhook.send({
       username: 'DICE',
       embeds: [

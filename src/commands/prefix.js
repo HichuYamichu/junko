@@ -5,6 +5,7 @@ module.exports = {
   usage: '<prefix>',
   guildOnly: true,
   cooldown: 5,
+  aliases: ['setprefix'],
   permissionLVL: 2,
   async execute(message, args) {
     message.client.store.hsetAsync(message.guild.id, 'prefix', args[0]);

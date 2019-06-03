@@ -9,6 +9,7 @@ module.exports = {
   usage: '<valid booru tags>',
   guildOnly: true,
   cooldown: 10,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, args) {
     const { UserError } = message.client;

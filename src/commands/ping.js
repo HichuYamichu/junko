@@ -2,9 +2,10 @@ module.exports = {
   name: 'ping',
   description: 'Ping!',
   args: false,
-  usage: '<user> <role>',
+  usage: '<nil>',
   guildOnly: true,
   cooldown: 1,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, args) {
     const msg = await message.channel.send('Ping?');

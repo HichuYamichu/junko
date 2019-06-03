@@ -5,6 +5,7 @@ module.exports = {
   usage: '',
   guildOnly: true,
   cooldown: 1,
+  aliases: [],
   permissionLVL: 0,
   async execute(message, roleNames) {
     let text = 'Rect with right emoji to obtain corresponding role\n';
