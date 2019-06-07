@@ -3,7 +3,7 @@ module.exports = async (client, messageReaction, user) => {
   if (user.bot) return;
   const matchMessage = await client.store.hgetAsync(
     messageReaction.message.guild.id,
-    messageReaction.message.id
+    `roleMsg-${messageReaction.message.id}`
   );
   if (!matchMessage) {
     return;

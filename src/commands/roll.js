@@ -9,7 +9,7 @@ module.exports = {
   permissionLVL: 0,
   async execute(message, args) {
     const webhook = await message.channel.createWebhook('Dice', {
-      avatar: './src/static/dice.jpg'
+      avatar: './static/dice.jpg'
     });
     const range = args[0] || 6;
     const roll = await Math.floor((Math.random() * range) + 1);

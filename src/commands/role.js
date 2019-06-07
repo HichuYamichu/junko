@@ -16,6 +16,6 @@ module.exports = {
       msg.edit(text);
       msg.react(emoji);
     });
-    message.client.store.hset(message.guild.id, msg.id, 1);
+    message.client.store.hset(message.guild.id, `roleMsg-${msg.id}`, 1);
   }
 };

@@ -19,7 +19,7 @@ module.exports = {
       throw new UserError('Invalid permission lvl. Should be integer from 0 to 2.');
     }
 
-    message.client.store.hsetAsync(message.guild.id, user.id, lvl);
+    message.client.store.hsetAsync(message.guild.id, `perm-${user.id}`, lvl);
     message.channel.send(`Succesfuly changed ${user.displayName}'s permission level`);
   }
 };
