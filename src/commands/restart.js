@@ -8,6 +8,7 @@ module.exports = {
   permissionLVL: 2,
   aliases: ['rs'],
   async execute(message, args) {
+    message.client.store.hset('config', 'lastRestart', new Date().toUTCString());
     process.exit();
   }
 };

@@ -17,6 +17,14 @@ module.exports = {
       message.client.users.get(args[0]) ||
       message.author;
 
+    if (user.id === message.client.user.id) {
+      return message.channel.send(`Can't bully me!`, { files: ['./static/me.gif'] });
+    }
+
+    if (user.id === message.client.config.ownerID) {
+      return message.channel.send(`Can't bully The Creator!`, { files: ['./static/me.gif'] });
+    }
+
     let canvas;
     let ctx;
     let base;

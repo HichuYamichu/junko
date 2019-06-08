@@ -7,10 +7,20 @@ module.exports = async (client, message) => {
   passive.randomBully(message);
   passive.reactFag(message);
 
+  const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   let args;
   let prefix;
 
   if (message.guild) {
+    if (message.content.match(prefixMention)) {
+      const guildPrefix = await client.store.hgetAsync(message.guild.id, 'prefix');
+      return message.reply(
+        `My prefix on this server is set to \`${guildPrefix}\` and my global prefix is \`${
+          client.config.prefix
+        }\``
+      );
+    }
+
     if (message.content.startsWith(client.config.prefix)) {
       prefix = client.config.prefix;
     } else {
@@ -29,8 +39,11 @@ module.exports = async (client, message) => {
 
   const commandName = args.shift().toLowerCase();
 
-  if (!client.commands.has(commandName)) return;
-  const command = client.commands.get(commandName);
+  const command =
+    client.commands.get(commandName) ||
+    client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+  if (!command) return;
 
   if (command.guildOnly && message.channel.type !== 'text') {
     return message.reply("I can't execute that command inside DMs!");

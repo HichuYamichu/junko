@@ -12,7 +12,6 @@
     "bluebird": "^3.5.4",
     "canvas": "^2.5.0",
     "discord.js": "discordjs/discord.js",
-    "dotenv": "^7.0.0",
     "kaori": "^1.2.0",
     "redis": "^2.8.0"
   },
