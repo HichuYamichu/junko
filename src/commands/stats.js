@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'stats',
   description: 'Displayes process stats',
-  args: false,
+  args: 0,
   usage: '<nil>',
   guildOnly: false,
   cooldown: 1,
@@ -19,7 +19,7 @@ module.exports = {
     const lastRS = await message.client.store.hgetAsync('config', 'lastRestart');
 
     const embed = new MessageEmbed()
-      .setTitle('My stats')
+      .setTitle('**Stats:**')
       .setColor('#fc2041')
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`)
       .addField('Uptime:', `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`)

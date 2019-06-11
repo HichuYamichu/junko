@@ -1,7 +1,7 @@
 module.exports = {
   name: 'ping',
   description: 'Ping!',
-  args: false,
+  args: 0,
   usage: '<nil>',
   guildOnly: true,
   cooldown: 1,

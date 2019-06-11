@@ -1,7 +1,7 @@
 module.exports = {
   name: 'tag',
   description: 'saves a tag',
-  args: true,
+  args: 2,
   usage: '<set OR get OR del OR list> <tagName> <tagContent>',
   guildOnly: false,
   cooldown: 2,
@@ -11,16 +11,18 @@ module.exports = {
     const { UserError } = message.client;
     const tagPrefix = 'tag-';
     let res;
+    let tagContent;
 
     switch (args[0]) {
     case 'set':
       if (!args[1] || !args[2]) {
         throw new UserError('Invalid args');
       }
+      tagContent = args.slice(2).join(' ');
       res = await message.client.store.hsetAsync(
         message.guild.id,
         `${tagPrefix}${args[1]}`,
-        args[2]
+        tagContent
       );
       if (res) message.channel.send('Tag succesfuly created');
       else message.channel.send('Tag updated');

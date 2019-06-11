@@ -1,7 +1,7 @@
 module.exports = {
   name: 'help',
   description: 'Helps you',
-  args: false,
+  args: 0,
   usage: 'help <command name>',
   guildOnly: false,
   cooldown: 5,

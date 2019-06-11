@@ -1,7 +1,7 @@
 module.exports = {
   name: 'roll',
   description: 'Rolles a dice for you.',
-  args: false,
+  args: 0,
   usage: '<range>',
   guildOnly: true,
   cooldown: 1,

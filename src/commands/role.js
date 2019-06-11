@@ -1,8 +1,8 @@
 module.exports = {
   name: 'role',
   description: 'Set up user roles',
-  args: false,
-  usage: '',
+  args: 1,
+  usage: '<role-emoji name>',
   guildOnly: true,
   cooldown: 1,
   aliases: [],

@@ -1,7 +1,7 @@
 module.exports = {
   name: 'eval',
   description: 'Evaluates provided code',
-  args: false,
+  args: 1,
   usage: '<code>',
   guildOnly: true,
   cooldown: 2,

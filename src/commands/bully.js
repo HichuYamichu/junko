@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
   name: 'bully',
   description: 'Bullies someone',
-  args: true,
+  args: 1,
   usage: '<mention OR username OR id> <bulling level>',
   guildOnly: true,
   cooldown: 1,

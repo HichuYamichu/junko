@@ -3,7 +3,7 @@ const emojis = require('../modules/emoji.js');
 module.exports = {
   name: 'bold',
   description: 'Sends a B O L D message',
-  args: true,
+  args: 1,
   usage: '<message>',
   guildOnly: true,
   cooldown: 15,

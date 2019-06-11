@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'avatar',
   description: 'Sends user avatar',
-  args: false,
+  args: 1,
   usage: '<mention OR username OR id>',
   guildOnly: true,
   cooldown: 5,

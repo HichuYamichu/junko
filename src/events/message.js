@@ -49,14 +49,16 @@ module.exports = async (client, message) => {
     return message.reply("I can't execute that command inside DMs!");
   }
 
-  if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments, ${message.author}!`;
-
-    if (command.usage) {
+  if (command.args) {
+    if (!args.length) {
+      let reply = `You didn't provide any arguments, ${message.author}!`;
       reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      return message.channel.send(reply);
+    } else if (command.args > args.length) {
+      let reply = `Insufficient amount of arguments, ${message.author}!`;
+      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      return message.channel.send(reply);
     }
-
-    return message.channel.send(reply);
   }
 
   if (command.permissionLVL > 0 && !message.member.hasPermission('ADMINISTRATOR')) {

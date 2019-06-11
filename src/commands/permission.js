@@ -1,7 +1,7 @@
 module.exports = {
   name: 'permission',
   description: 'sets the user permission level',
-  args: true,
+  args: 2,
   usage: '<mention> <level>',
   guildOnly: true,
   cooldown: 5,

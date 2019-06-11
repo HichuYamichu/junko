@@ -1,7 +1,7 @@
 module.exports = {
   name: 'prefix',
   description: 'sets the prefix',
-  args: true,
+  args: 1,
   usage: '<prefix>',
   guildOnly: true,
   cooldown: 5,

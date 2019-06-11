@@ -5,7 +5,7 @@ module.exports = {
   name: 'image',
   description:
     'Sends a random image (always SFW on non-NSFW channels and always NSFW on NSFW channels)!',
-  args: true,
+  args: 1,
   usage: '<valid booru tags>',
   guildOnly: true,
   cooldown: 10,
