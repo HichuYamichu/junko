@@ -1,7 +1,7 @@
 module.exports = {
   name: 'tag',
   description: 'saves a tag',
-  args: 2,
+  args: 1,
   usage: '<set OR get OR del OR list> <tagName> <tagContent>',
   guildOnly: false,
   cooldown: 2,

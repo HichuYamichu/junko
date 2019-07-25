@@ -1,5 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const redis = require('redis');
+const YouTube = require('simple-youtube-api');
+const SpotifyWebApi = require('spotify-web-api-node');
 const fs = require('fs');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -16,11 +18,23 @@ module.exports = class extends Client {
 
     this.cooldowns = new Collection();
 
-    this.store = redis.createClient();
+    this.store = redis.createClient({ host: process.env.REDIS });
+
+    this.yt;
+
+    this.spotify;
   }
 
   async start() {
-    this.config = await this.store.hgetallAsync('config');
+    this.config = await this.store.hgetallAsync('JunkoConf');
+    this.yt = new YouTube(this.config.YTkey);
+
+    this.spotify = new SpotifyWebApi({
+      clientId: this.config.SpotifyID,
+      clientSecret: this.config.SpotifySecret
+    });
+    const { body } = await this.spotify.clientCredentialsGrant();
+    this.spotify.setAccessToken(body.access_token);
 
     const events = await fs.readdirAsync('./src/events/');
     for (const event of events) {

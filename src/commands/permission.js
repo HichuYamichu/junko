@@ -5,7 +5,7 @@ module.exports = {
   usage: '<mention> <level>',
   guildOnly: true,
   cooldown: 5,
-  aliases: [],
+  aliases: ['perm'],
   permissionLVL: 2,
   async execute(message, args) {
     const { UserError } = message.client;
