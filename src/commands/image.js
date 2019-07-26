@@ -1,6 +1,3 @@
-const Kaori = require('kaori');
-const kaori = new Kaori();
-
 module.exports = {
   name: 'image',
   description:
@@ -9,14 +6,14 @@ module.exports = {
   usage: '<valid booru tags>',
   guildOnly: true,
   cooldown: 10,
-  aliases: [],
+  aliases: ['pic'],
   permissionLVL: 0,
   async execute(message, args) {
     const { UserError } = message.client;
     const tag = args.join(' ');
     const rating = message.channel.nsfw ? 'rating%3aexplicit' : 'rating%3Asafe';
 
-    const [result] = await kaori.search('gelbooru', {
+    const [result] = await message.client.booru.search('gelbooru', {
       tags: [rating, tag],
       limit: 1,
       random: true

@@ -7,7 +7,7 @@ module.exports = {
   usage: '<mention | username | id>',
   guildOnly: true,
   cooldown: 5,
-  aliases: ['pfp', 'pic', 'icon'],
+  aliases: ['pfp', 'icon'],
   permissionLVL: 0,
   async execute(message, args) {
     const user =

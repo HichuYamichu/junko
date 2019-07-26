@@ -2,6 +2,7 @@ const { Client, Collection } = require('discord.js');
 const redis = require('redis');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
+const Kaori = require('kaori');
 const fs = require('fs');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -23,6 +24,8 @@ module.exports = class extends Client {
     this.yt;
 
     this.spotify;
+
+    this.booru;
   }
 
   async start() {
@@ -35,6 +38,8 @@ module.exports = class extends Client {
     });
     const { body } = await this.spotify.clientCredentialsGrant();
     this.spotify.setAccessToken(body.access_token);
+    this.booru = new Kaori();
+
 
     const events = await fs.readdirAsync('./src/events/');
     for (const event of events) {

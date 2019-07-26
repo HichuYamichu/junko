@@ -15,7 +15,7 @@ module.exports = {
     const url = 'https://graphql.anilist.co';
     const type = args[0].toUpperCase();
     if (!(type === 'ANIME' || type === 'MANGA')) {
-      throw new UserError('Invalid type (manga, anime supported)');
+      throw new UserError('Invalid query type (manga, anime supported)');
     }
     const search = args.slice(1).join(' ');
     const variables = { search, type };

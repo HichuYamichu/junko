@@ -1,11 +1,11 @@
 const { Collection } = require('discord.js');
 const UserError = require('../modules/userError');
-const passive = require('../modules/passiveMessage');
+const passive = require('../modules/passive');
+const { blacklisted } = require('../modules/replies');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
-  passive.randomBully(message);
-  passive.reactFag(message);
+  passive.randomMsg(message);
 
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   let args;
@@ -44,6 +44,10 @@ module.exports = async (client, message) => {
     client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
+
+  if (await client.store.hgetAsync(message.guild.id, `blacklist-${message.author.id}`)) {
+    return message.reply(blacklisted());
+  }
 
   if (command.guildOnly && message.channel.type !== 'text') {
     return message.reply("I can't execute that command inside DMs!");

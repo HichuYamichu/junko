@@ -1,14 +1,21 @@
 module.exports = {
   name: 'eval',
-  description: 'Evaluates provided code',
+  description: 'Evaluates provided code (DANGEROUS dont use)',
   args: 1,
   usage: '<code>',
   guildOnly: false,
   cooldown: 2,
   aliases: [],
-  permissionLVL: 2,
+  permissionLVL: 0,
   async execute(message, args) {
     const { UserError } = message.client;
+    if (message.author.id !== message.client.config.ownerID) {
+      throw new UserError(
+        `Alarm! Alarm! Data bridge!1! Ur fucked boi alarm has been risen to ->> <@${
+          message.client.config.ownerID
+        }>`
+      );
+    }
     const clean = text => {
       if (typeof text === 'string') {
         return text
