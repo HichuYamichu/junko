@@ -2,7 +2,7 @@ module.exports = {
   name: 'spotify',
   description: 'searches spotify for songs/artists/playlists',
   args: 2,
-  usage: '<song OR artist OR playlist> <query>',
+  usage: '[artist | song | album | playlist] <query>',
   guildOnly: false,
   cooldown: 5,
   aliases: ['spot'],

@@ -5,7 +5,7 @@ module.exports = {
   name: 'anilist',
   description: 'searches anilist',
   args: 2,
-  usage: '<manga OR anime> <title>',
+  usage: '[manga | anime] <title>',
   guildOnly: false,
   cooldown: 5,
   aliases: ['anim'],

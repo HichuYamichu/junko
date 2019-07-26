@@ -2,7 +2,7 @@ module.exports = {
   name: 'restart',
   description: 'restarts the bot\'s process',
   args: 0,
-  usage: '<nil>',
+  usage: '',
   guildOnly: false,
   cooldown: 60,
   permissionLVL: 2,

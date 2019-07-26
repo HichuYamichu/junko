@@ -2,7 +2,7 @@ module.exports = {
   name: 'permission',
   description: 'sets the user permission level',
   args: 2,
-  usage: '<mention> <level>',
+  usage: '<mention | username | id> [0 | 1 | 2]',
   guildOnly: true,
   cooldown: 5,
   aliases: ['perm'],

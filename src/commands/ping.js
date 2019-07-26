@@ -2,7 +2,7 @@ module.exports = {
   name: 'ping',
   description: 'Ping!',
   args: 0,
-  usage: '<nil>',
+  usage: '',
   guildOnly: true,
   cooldown: 1,
   aliases: [],

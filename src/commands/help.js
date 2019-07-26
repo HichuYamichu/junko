@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
   name: 'help',
   description: 'Helps you',
@@ -12,24 +14,19 @@ module.exports = {
     const { commands } = message.client;
 
     if (!args.length) {
-      data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(', '));
-      data.push(
-        `\nYou can send \`${
+      const embed = new MessageEmbed()
+        .setTitle('**Help**')
+        .setColor('#fc2041')
+        .addField('Commands:', data[0])
+        .addField('More help', `You can send \`${
           message.client.config.prefix
-        }help [command name]\` to get info on a specific command!`
-      );
-
-      return message.author
-        .send(data, { split: true })
-        .then(() => {
-          if (message.channel.type === 'dm') return;
-          message.reply("I've sent you a DM with all my commands!");
-        })
-        .catch(error => {
-          console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
-          message.reply("it seems like I can't DM you! Do you have DMs disabled?");
-        });
+        }help [command name]\` to get info on a specific command!`)
+        .addField('Notation', `\`[thing1 | thing2]\` - include one of the options literally
+        \`<thing>\` - fill command with appropriate content
+        \`<thing1 | thing2>\` - multiple content types available
+        \`*<thing>\` - parameter is optional or has a default value`);
+      return message.channel.send(embed);
     }
     const name = args[0].toLowerCase();
     const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));

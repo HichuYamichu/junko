@@ -4,7 +4,7 @@ module.exports = {
   name: 'avatar',
   description: 'Sends user avatar',
   args: 1,
-  usage: '<mention OR username OR id>',
+  usage: '<mention | username | id>',
   guildOnly: true,
   cooldown: 5,
   aliases: ['pfp', 'pic', 'icon'],

@@ -5,7 +5,7 @@ module.exports = {
   name: 'bully',
   description: 'Bullies someone',
   args: 1,
-  usage: '<mention OR username OR id> <bulling level>',
+  usage: '<mention | username | id> *[1 | 2]',
   guildOnly: true,
   cooldown: 1,
   aliases: ['bulli'],

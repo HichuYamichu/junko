@@ -1,8 +1,8 @@
 module.exports = {
   name: 'tag',
-  description: 'saves a tag',
+  description: 'creates/updates/retrives/deletes tag',
   args: 1,
-  usage: '<set OR get OR del OR list> <tagName> <tagContent>',
+  usage: '[set | get | del | list] <tagName> <tagContent>',
   guildOnly: false,
   cooldown: 2,
   aliases: [],

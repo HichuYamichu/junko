@@ -61,7 +61,10 @@ module.exports = async (client, message) => {
     }
   }
 
-  if (command.permissionLVL > 0 && !message.member.hasPermission('ADMINISTRATOR')) {
+  if (command.permissionLVL > 0 && message.author.id !== client.config.ownerID) {
+    if (message.channel.type === 'dm') {
+      return message.reply('cannot execute permision restricted commands insaide DMs');
+    }
     const userPermissionLVL = await client.store.hgetAsync(message.guild.id, message.author.id);
     if (userPermissionLVL < command.permissionLVL) {
       return message.reply('your permission lvl is to low. Fuck you.');
