@@ -5,10 +5,11 @@ module.exports = {
   description: 'Starts the voting.',
   args: 2,
   usage: '<time> <topic>',
+  examples: ['vote 0:02:10 should I delete this channel?'],
   guildOnly: true,
   cooldown: 1,
   aliases: [],
-  permissionLVL: 0,
+  permissionLVL: 1,
   async execute(message, args) {
     const { UserError } = message.client;
     const time = args[0].split(':');

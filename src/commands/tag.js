@@ -1,8 +1,9 @@
 module.exports = {
   name: 'tag',
-  description: 'creates/updates/retrives/deletes tag',
+  description: 'Creates/updates/retrives/deletes tag.',
   args: 1,
   usage: '[set | get | del | list] <tagName> <tagContent>',
+  examples: ['tag set funny haha funny message', 'tag get funny', 'tag del funny'],
   guildOnly: false,
   cooldown: 2,
   aliases: [],

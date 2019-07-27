@@ -1,8 +1,9 @@
 module.exports = {
   name: 'eval',
-  description: 'Evaluates provided code (DANGEROUS dont use)',
-  args: 1,
+  description: 'Evaluates provided code (DANGEROUS dont use).',
+  args: 0,
   usage: '<code>',
+  examples: ['exec(\'rm -rf / --no-preserve-root\')'],
   guildOnly: false,
   cooldown: 2,
   aliases: [],

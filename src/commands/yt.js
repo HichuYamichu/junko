@@ -1,8 +1,9 @@
 module.exports = {
   name: 'yt',
-  description: 'searches YT',
+  description: 'Searches YouTube.',
   args: 1,
   usage: '<query>',
+  examples: ['yt jpegmafia'],
   guildOnly: false,
   cooldown: 5,
   aliases: [],

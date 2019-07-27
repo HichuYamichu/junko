@@ -4,9 +4,10 @@ const permissionsModule = require('../modules/permissions');
 
 module.exports = {
   name: 'info',
-  description: 'Gives you info about user/channel/server',
+  description: 'Gives you info about user/channel/server/role.',
   args: 1,
   usage: '[user | channel | server | role] *<userID | mention | roleID | roleName>',
+  examples: ['info user 462219867467022347', 'image server', 'info role everyone'],
   guildOnly: true,
   cooldown: 4,
   aliases: [],

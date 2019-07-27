@@ -3,9 +3,10 @@ const Discord = require('discord.js');
 
 module.exports = {
   name: 'bully',
-  description: 'Bullies someone',
+  description: 'Bullies someone.',
   args: 1,
   usage: '<mention | username | id> *[1 | 2]',
+  examples: ['bully 462219867467022347', 'bully Junko 2'],
   guildOnly: true,
   cooldown: 1,
   aliases: ['bulli'],

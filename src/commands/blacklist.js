@@ -3,6 +3,7 @@ module.exports = {
   description: 'Makes me hate you even more.',
   args: 2,
   usage: '[add | remove] <mention | username | id>',
+  examples: ['blacklist add 462219867467022347', 'blacklist remove Junko'],
   guildOnly: true,
   cooldown: 1,
   aliases: [],

@@ -1,7 +1,7 @@
 const { Collection } = require('discord.js');
 const UserError = require('../modules/userError');
 const passive = require('../modules/passive');
-const { blacklisted } = require('../modules/replies');
+const { replies } = require('../modules/replies');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
@@ -45,22 +45,22 @@ module.exports = async (client, message) => {
 
   if (!command) return;
 
-  if (await client.store.hgetAsync(message.guild.id, `blacklist-${message.author.id}`)) {
-    return message.reply(blacklisted());
+  if (message.channel.type !== 'dm' && await client.store.hgetAsync(message.guild.id, `blacklist-${message.author.id}`)) {
+    return message.reply(replies.get('blacklisted'));
   }
 
   if (command.guildOnly && message.channel.type !== 'text') {
-    return message.reply("I can't execute that command inside DMs!");
+    return message.reply(replies.get('dms'));
   }
 
   if (command.args) {
     if (!args.length) {
-      let reply = `You didn't provide any arguments, ${message.author}!`;
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      let reply = `${replies.get('noArgs')} ${message.author}!`;
+      reply += `\n${replies.get('properUsage')} \`${command.name} ${command.usage}\``;
       return message.channel.send(reply);
     } else if (command.args > args.length) {
-      let reply = `Insufficient amount of arguments, ${message.author}!`;
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      let reply = `${replies.get('noArgs')} ${message.author}!`;
+      reply += `\n${replies.get('properUsage')} \`${command.name} ${command.usage}\``;
       return message.channel.send(reply);
     }
   }
@@ -71,7 +71,7 @@ module.exports = async (client, message) => {
     }
     const userPermissionLVL = await client.store.hgetAsync(message.guild.id, message.author.id);
     if (userPermissionLVL < command.permissionLVL) {
-      return message.reply('your permission lvl is to low. Fuck you.');
+      return message.reply(replies.get('lowLVL'));
     }
   }
 

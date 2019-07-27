@@ -1,8 +1,9 @@
 module.exports = {
   name: 'mail',
-  description: 'Shh it\'s a secret',
+  description: 'Shh it\'s a secret.',
   args: 3,
   usage: 'Not telling ya!',
+  examples: ['nope'],
   guildOnly: false,
   cooldown: 1,
   aliases: [],

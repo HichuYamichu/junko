@@ -3,6 +3,7 @@ module.exports = {
   description: 'sets the prefix',
   args: 1,
   usage: '<prefix>',
+  examples: ['prefix !'],
   guildOnly: true,
   cooldown: 5,
   aliases: ['setprefix'],

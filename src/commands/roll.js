@@ -3,6 +3,7 @@ module.exports = {
   description: 'Rolles a dice for you.',
   args: 0,
   usage: '<range>',
+  examples: ['roll 6', 'roll 20'],
   guildOnly: true,
   cooldown: 1,
   aliases: [],

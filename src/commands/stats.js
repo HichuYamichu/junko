@@ -3,9 +3,10 @@ const { version } = require('../../package.json');
 
 module.exports = {
   name: 'stats',
-  description: 'Displayes process stats',
+  description: 'Displayes process stats.',
   args: 0,
   usage: '',
+  examples: ['stats'],
   guildOnly: false,
   cooldown: 1,
   aliases: [],

@@ -3,6 +3,7 @@ module.exports = {
   description: 'sets the user permission level',
   args: 2,
   usage: '<mention | username | id> [0 | 1 | 2]',
+  examples: ['permission 462219867467022347 1'],
   guildOnly: true,
   cooldown: 5,
   aliases: ['perm'],

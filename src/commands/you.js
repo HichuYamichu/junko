@@ -1,8 +1,9 @@
 module.exports = {
   name: 'you',
-  description: 'Sends you cute pic of myself',
+  description: 'Sends you cute pic of myself.',
   args: 0,
   usage: '',
+  examples: ['you'],
   guildOnly: false,
   cooldown: 5,
   aliases: [],

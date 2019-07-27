@@ -2,9 +2,10 @@ const emojis = require('../modules/emoji.js');
 
 module.exports = {
   name: 'bold',
-  description: 'Sends a B O L D message',
+  description: 'Sends a B O L D message.',
   args: 1,
   usage: '<message>',
+  examples: ['bold this is bold message'],
   guildOnly: true,
   cooldown: 15,
   aliases: [],

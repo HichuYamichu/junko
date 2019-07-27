@@ -2,10 +2,11 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: 'avatar',
-  description: 'Sends user avatar',
-  args: 1,
+  description: 'Sends user avatar.',
+  args: 0,
   usage: '<mention | username | id>',
-  guildOnly: true,
+  examples: ['avatar 462219867467022347', 'avatar Junko'],
+  guildOnly: false,
   cooldown: 5,
   aliases: ['pfp', 'icon'],
   permissionLVL: 0,

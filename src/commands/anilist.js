@@ -3,9 +3,10 @@ const { anilist: query } = require('../gql/queries');
 
 module.exports = {
   name: 'anilist',
-  description: 'searches anilist',
+  description: 'Searches anilist.',
   args: 2,
   usage: '[manga | anime] <title>',
+  examples: ['anilist anime Gantz', 'anilist manga Slam Dunk'],
   guildOnly: false,
   cooldown: 5,
   aliases: ['anim'],
