@@ -47,7 +47,6 @@ module.exports = {
         `
         )
         .setThumbnail(member.user.displayAvatarURL());
-      message.channel.send(embed);
       break;
 
     case 'channel':
@@ -64,7 +63,6 @@ module.exports = {
 			`
         )
         .setThumbnail(message.guild.iconURL());
-      message.channel.send(embed);
       break;
 
     case 'server':
@@ -101,7 +99,6 @@ module.exports = {
           `
         )
         .setThumbnail(message.guild.iconURL());
-      message.channel.send(embed);
       break;
 
     case 'role':
@@ -134,11 +131,11 @@ module.exports = {
 			`
         )
         .setThumbnail(message.guild.iconURL());
-      message.channel.send(embed);
       break;
 
     default:
       throw new UserError('Invalid query type (user, channel, server, role supported)');
     }
+    message.channel.send(embed);
   }
 };

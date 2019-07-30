@@ -25,7 +25,6 @@ module.exports = {
       break;
 
     case 'song':
-      console.log(query);
       res = await message.client.spotify.searchTracks(query, { limit: 1 });
       if (!res.body.tracks.items.length) {
         throw new UserError('Nothing found! Check command usage if problem reoccurs.');
