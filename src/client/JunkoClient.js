@@ -1,59 +1,70 @@
-const { Client, Collection } = require('discord.js');
-const redis = require('redis');
+const {
+  AkairoClient,
+  CommandHandler,
+  InhibitorHandler,
+  ListenerHandler
+} = require('discord-akairo');
+const { join } = require('path');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
-const Kaori = require('kaori');
-const fs = require('fs');
+const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
-bluebird.promisifyAll(fs);
 
-module.exports = class extends Client {
-  constructor() {
-    super({
-      disableEveryone: true,
-      disabledEvents: ['TYPING_START'],
-      partials: ['MESSAGE', 'CHANNEL', 'USER', 'GUILD_MEMBER']
+module.exports = class extends AkairoClient {
+  constructor(config) {
+    super(
+      {
+        ownerID: config.ownerID
+      },
+      {
+        disableEveryone: true
+      }
+    );
+    this.config = config;
+
+    this.store = redis.createClient({ host: config.redisURI });
+
+    this.yt = new YouTube(config.YouTubeSecret);
+
+    this.spotify = new SpotifyWebApi({
+      clientId: config.SpotifyID,
+      clientSecret: config.SpotifySecret
     });
-    this.commands = new Collection();
 
-    this.cooldowns = new Collection();
+    this.commandHandler = new CommandHandler(this, {
+      directory: join(__dirname, '..', 'commands'),
+      prefix: '!',
+      aliasReplacement: /-/g,
+      allowMention: true,
+      commandUtil: true
+    });
 
-    this.store = redis.createClient({ host: process.env.REDIS });
+    this.inhibitorHandler = new InhibitorHandler(this, {
+      directory: join(__dirname, '..', 'inhibitors')
+    });
 
-    this.yt;
+    this.listenerHandler = new ListenerHandler(this, {
+      directory: join(__dirname, '..', 'listeners')
+    });
+  }
 
-    this.spotify;
+  _init() {
+    this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
+    this.commandHandler.useListenerHandler(this.listenerHandler);
+    this.listenerHandler.setEmitters({
+      commandHandler: this.commandHandler,
+      inhibitorHandler: this.inhibitorHandler,
+      listenerHandler: this.listenerHandler
+    });
 
-    this.booru;
+    this.commandHandler.loadAll();
+    this.inhibitorHandler.loadAll();
+    this.listenerHandler.loadAll();
   }
 
   async start() {
-    this.config = await this.store.hgetallAsync('JunkoConf');
-    this.yt = new YouTube(this.config.YTkey);
-
-    this.spotify = new SpotifyWebApi({
-      clientId: this.config.SpotifyID,
-      clientSecret: this.config.SpotifySecret
-    });
-    const { body } = await this.spotify.clientCredentialsGrant();
-    this.spotify.setAccessToken(body.access_token);
-    this.booru = new Kaori();
-
-
-    const events = await fs.readdirAsync('./src/events/');
-    for (const event of events) {
-      const eventName = event.split('.')[0];
-      const eventModule = require(`../events/${event}`);
-      this.on(eventName, eventModule.bind(null, this));
-    }
-
-    const commandFiles = await fs.readdirAsync('./src/commands');
-    for (const file of commandFiles) {
-      const command = require(`../commands/${file}`);
-      this.commands.set(command.name, command);
-    }
-
+    this._init();
     this.login(this.config.token);
   }
 };

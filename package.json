@@ -2,20 +2,20 @@
   "name": "Junko",
   "version": "1.0.0",
   "main": "Junko.js",
+  "repository": "https://github.com/HichuYamichu/Junko.git",
+  "author": "HichuYamichu <hichuyamichu@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/Junko.js",
     "start": "node src/Junko.js"
   },
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
-    "axios": "^0.19.0",
-    "bluebird": "^3.5.4",
-    "canvas": "^2.5.0",
+    "bluebird": "^3.5.5",
+    "discord-akairo": "1Computer1/discord-akairo",
     "discord.js": "discordjs/discord.js",
+    "dotenv": "^8.0.0",
     "erlpack": "discordapp/erlpack",
-    "kaori": "^1.2.0",
-    "moment": "^2.24.0",
+    "kaori": "^2.0.0",
     "redis": "^2.8.0",
     "simple-youtube-api": "^5.2.1",
     "spotify-web-api-node": "^4.0.0",
@@ -23,9 +23,9 @@
     "zucc": "^0.1.2"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-aqua": "^5.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-aqua": "^6.0.1",
     "nodemon": "^1.19.1",
-    "prettier": "1.17.0"
+    "prettier": "^1.18.2"
   }
 }

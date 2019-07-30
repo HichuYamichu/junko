@@ -1,21 +1,15 @@
+require('dotenv').config();
 const Junko = require('./client/JunkoClient');
-const client = new Junko();
-const moment = require('moment');
 
+const client = new Junko({
+  ownerID: process.env.OWNER_ID,
+  YouTubeSecret: process.env.YT_KEY,
+  SpotifyID: process.env.SPOTIFY_ID,
+  SpotifySecret: process.env.SPOTIFY_SECRET,
+  token: process.env.TOKEN
+});
 client.start();
 
 process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at:', p, 'reason:', reason);
 });
-
-const now = () => moment.utc().format('DD-MM-YYYY[\n]HH:mm:ss');
-
-process.on('exit', () => {
-  client.store.hsetAsync('JunkoConf', 'lastRestart', `${now()} UTC`);
-});
-
-
-process.on('SIGINT', () => {
-  client.store.hsetAsync('JunkoConf', 'lastRestart', `${now()} UTC`);
-});
-
