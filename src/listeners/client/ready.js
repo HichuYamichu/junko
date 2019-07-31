@@ -9,7 +9,11 @@ class ReadyListener extends Listener {
   }
 
   exec() {
-    console.log('I\'m ready!');
+    console.log(
+      `Ready in ${this.client.channels.size} channels on ${
+        this.client.guilds.size
+      } servers, for a total of ${this.client.users.size} users.`
+    );
   }
 }
 

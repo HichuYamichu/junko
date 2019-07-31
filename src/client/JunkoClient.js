@@ -4,6 +4,7 @@ const {
   InhibitorHandler,
   ListenerHandler
 } = require('discord-akairo');
+const { replies } = require('../util/replies');
 const { join } = require('path');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
@@ -18,10 +19,13 @@ module.exports = class extends AkairoClient {
         ownerID: config.ownerID
       },
       {
-        disableEveryone: true
+        disableEveryone: true,
+        disabledEvents: ['TYPING_START']
       }
     );
     this.config = config;
+
+    this.replies = replies;
 
     this.store = redis.createClient({ host: config.redisURI });
 
@@ -34,10 +38,25 @@ module.exports = class extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: '!',
+      prefix: msg => msg.guild ? this.store.hgetAsync(msg.guild.id, 'prefix') : '!',
       aliasReplacement: /-/g,
       allowMention: true,
-      commandUtil: true
+      commandUtil: true,
+      commandUtilLifetime: 3e5,
+      defaultCooldown: 3000,
+      fetchMembers: true,
+      argumentDefaults: {
+        prompt: {
+          modifyStart: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
+          modifyRetry: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
+          timeout: this.replies.get('timeout'),
+          ended: this.replies.get('ended'),
+          cancel: 'The command has been cancelled.',
+          retries: 3,
+          time: 20000
+        },
+        otherwise: ''
+      }
     });
 
     this.inhibitorHandler = new InhibitorHandler(this, {
@@ -49,7 +68,10 @@ module.exports = class extends AkairoClient {
     });
   }
 
-  _init() {
+  async _init() {
+    const { body } = await this.spotify.clientCredentialsGrant();
+    this.spotify.setAccessToken(body.access_token);
+
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
     this.listenerHandler.setEmitters({
@@ -64,7 +86,7 @@ module.exports = class extends AkairoClient {
   }
 
   async start() {
-    this._init();
+    await this._init();
     this.login(this.config.token);
   }
 };

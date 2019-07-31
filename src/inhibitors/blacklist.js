@@ -7,10 +7,9 @@ class BlacklistInhibitor extends Inhibitor {
     });
   }
 
-  exec(message) {
-    // He's a meanie!
-    const blacklist = [''];
-    return blacklist.includes(message.author.id);
+  async exec(message) {
+    const res = await this.client.store.hgetAsync('blacklist', message.author.id);
+    return res;
   }
 }
 
