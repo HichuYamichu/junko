@@ -6,7 +6,7 @@ const permissionsModule = require('../../util/permissions');
 class RoleInfoCommand extends Command {
   constructor() {
     super('role-info', {
-      aliases: ['role-info'],
+      aliases: ['role-info', 'role'],
       ownerOnly: false,
       channel: 'guild',
       args: [

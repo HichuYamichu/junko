@@ -11,7 +11,11 @@ class BoldCommand extends Command {
         {
           id: 'text',
           type: 'lowercase',
-          match: 'content'
+          match: 'content',
+          prompt: {
+            start: message => `${message.author}, provide a text to make it B O L D.`,
+            retry: message => `${message.author}, you have to give me something to work with.`
+          }
         }
       ]
     });

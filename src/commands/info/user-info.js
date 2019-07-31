@@ -5,7 +5,7 @@ const moment = require('moment');
 class UserInfoCommand extends Command {
   constructor() {
     super('user-info', {
-      aliases: ['user-info'],
+      aliases: ['user-info', 'user'],
       ownerOnly: false,
       channel: 'guild',
       args: [

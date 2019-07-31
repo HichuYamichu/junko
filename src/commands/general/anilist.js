@@ -11,7 +11,11 @@ class AnilistCommand extends Command {
       args: [
         {
           id: 'type',
-          type: ['ANIME', 'MANGA']
+          type: ['ANIME', 'MANGA'],
+          prompt: {
+            start: message => `${message.author}, choose what type of media you want to search (anime/manga).`,
+            retry: message => `${message.author}, only manga/anime available.`
+          }
         },
         {
           id: 'search',

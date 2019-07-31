@@ -9,11 +9,19 @@ class SpotifyCommand extends Command {
       args: [
         {
           id: 'option',
-          type: ['song', 'artist', 'album', 'playlist']
+          type: ['song', 'artist', 'album', 'playlist'],
+          prompt: {
+            start: message => `${message.author}, provide content type you would like to search for.`,
+            retry: message => `${message.author}, invalid content type song/artist/album/playlist available.`
+          }
         },
         {
           id: 'query',
-          match: 'rest'
+          match: 'rest',
+          prompt: {
+            start: message => `${message.author}, input your search query.`,
+            retry: message => `${message.author}, you have to provide search query.`
+          }
         }
       ]
     });

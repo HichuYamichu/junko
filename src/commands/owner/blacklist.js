@@ -9,11 +9,19 @@ class BlacklistCommand extends Command {
       args: [
         {
           id: 'action',
-          type: ['add', 'remove']
+          type: ['add', 'remove'],
+          prompt: {
+            start: message => `${message.author}, what are we doing this time?`,
+            retry: message => `${message.author}, remember you can only add/remove from blacklist.`
+          }
         },
         {
           id: 'user',
-          type: 'user'
+          type: 'user',
+          prompt: {
+            start: message => `${message.author}, who?`,
+            retry: message => `${message.author}, seems like an invalid user.`
+          }
         }
       ]
     });

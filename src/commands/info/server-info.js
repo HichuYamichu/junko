@@ -5,7 +5,7 @@ const moment = require('moment');
 class ServerInfoCommand extends Command {
   constructor() {
     super('server-info', {
-      aliases: ['server-info'],
+      aliases: ['server-info', 'server'],
       ownerOnly: false,
       channel: 'guild',
       clientPermissions: ['EMBED_LINKS']

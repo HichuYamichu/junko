@@ -9,7 +9,11 @@ class EvalCommand extends Command {
       args: [
         {
           id: 'code',
-          type: 'content'
+          type: 'content',
+          prompt: {
+            start: message => `${message.author}, C'mon gib code.`,
+            retry: message => `${message.author}, C'mon gib code.`
+          }
         }
       ]
     });

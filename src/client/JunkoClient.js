@@ -47,8 +47,8 @@ module.exports = class extends AkairoClient {
       fetchMembers: true,
       argumentDefaults: {
         prompt: {
-          modifyStart: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
-          modifyRetry: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
+          modifyStart: (_, str) => `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
+          modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
           timeout: this.replies.get('timeout'),
           ended: this.replies.get('ended'),
           cancel: 'The command has been cancelled.',

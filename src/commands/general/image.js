@@ -10,7 +10,11 @@ class ImageCommand extends Command {
       args: [
         {
           id: 'tags',
-          type: 'content'
+          type: 'content',
+          prompt: {
+            start: message => `${message.author}, provide valid booru tags in order to search for an image.`,
+            retry: message => `${message.author}, you have to input at least something.`
+          }
         }
       ],
       clientPermissions: ['ATTACH_FILES']
