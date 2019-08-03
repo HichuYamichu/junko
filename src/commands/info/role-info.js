@@ -7,8 +7,14 @@ class RoleInfoCommand extends Command {
   constructor() {
     super('role-info', {
       aliases: ['role-info', 'role'],
+      category: 'info',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Sends info about role.',
+        usage: '<id | role name | mention>',
+        examples: ['506171893666283520', 'everyone', '@everyone']
+      },
       args: [
         {
           'id': 'role',
@@ -44,7 +50,7 @@ class RoleInfoCommand extends Command {
 			`
       )
       .setThumbnail(message.guild.iconURL());
-    message.util.send(embed);
+    return message.util.send(embed);
   }
 }
 

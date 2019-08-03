@@ -6,8 +6,14 @@ class StatsCommand extends Command {
   constructor() {
     super('stats', {
       aliases: ['stats'],
+      category: 'info',
       ownerOnly: false,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Sends my private info.',
+        usage: '',
+        examples: ['']
+      },
       clientPermissions: ['EMBED_LINKS']
     });
   }
@@ -44,7 +50,7 @@ class StatsCommand extends Command {
       .setThumbnail(message.client.user.displayAvatarURL())
       .setFooter(`Coded with ❤ by ${author}`);
 
-    message.util.send(embed);
+    return message.util.send(embed);
   }
 }
 

@@ -5,8 +5,14 @@ class ImageCommand extends Command {
   constructor() {
     super('image', {
       aliases: ['image', 'pic'],
+      category: 'general',
       ownerOnly: false,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Sends a random image (always SFW on non-NSFW channels and always NSFW on NSFW channels)!',
+        usage: '<valid booru tags>',
+        examples: ['image junko_(touhou)', 'image hug blonde_hair']
+      },
       args: [
         {
           id: 'tags',
@@ -30,11 +36,11 @@ class ImageCommand extends Command {
       random: true
     });
     if (!result) {
-      message.util.send(
+      return message.util.send(
         "No results! Are you sure your query is correct? Read https://danbooru.donmai.us/wiki_pages/43049 and if you still think it's not your fault notify the bot creator"
       );
     }
-    message.util.send({ files: [result.fileURL] });
+    return message.util.send({ files: [result.fileURL] });
   }
 }
 

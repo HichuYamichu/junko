@@ -6,8 +6,14 @@ class ChannelInfoCommand extends Command {
   constructor() {
     super('channel-info', {
       aliases: ['channel-info', 'channel'],
+      category: 'info',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Sends info about current channel.',
+        usage: '',
+        examples: ['']
+      },
       clientPermissions: ['EMBED_LINKS']
     });
   }
@@ -27,7 +33,7 @@ class ChannelInfoCommand extends Command {
 			`
       )
       .setThumbnail(message.guild.iconURL());
-    message.util.send(embed);
+    return message.util.send(embed);
   }
 }
 

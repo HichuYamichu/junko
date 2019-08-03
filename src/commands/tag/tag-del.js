@@ -3,6 +3,7 @@ const { Command } = require('discord-akairo');
 class DelTagCommand extends Command {
   constructor() {
     super('tag-del', {
+      category: 'tags',
       ownerOnly: false,
       channel: 'guild',
       args: [

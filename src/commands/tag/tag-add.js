@@ -3,6 +3,7 @@ const { Command } = require('discord-akairo');
 class SetTagCommand extends Command {
   constructor() {
     super('tag-add', {
+      category: 'tags',
       ownerOnly: false,
       channel: 'guild',
       args: [
@@ -42,7 +43,7 @@ class SetTagCommand extends Command {
       }
     }
     await this.client.store.hsetAsync(message.guild.id, `tag-${name}`, content);
-    message.util.send('Tag succesfuly created');
+    return message.util.send('Tag succesfuly created');
   }
 }
 

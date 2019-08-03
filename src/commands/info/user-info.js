@@ -6,8 +6,14 @@ class UserInfoCommand extends Command {
   constructor() {
     super('user-info', {
       aliases: ['user-info', 'user'],
+      category: 'info',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Sends info about user.',
+        usage: '<id | username | mention>',
+        examples: ['462219867467022347', '@ someone']
+      },
       args: [
         {
           'id': 'member',
@@ -45,7 +51,7 @@ class UserInfoCommand extends Command {
         `
       )
       .setThumbnail(member.user.displayAvatarURL());
-    message.util.send(embed);
+    return message.util.send(embed);
   }
 }
 

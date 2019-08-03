@@ -3,6 +3,7 @@ const { Command, Flag } = require('discord-akairo');
 class TagCommand extends Command {
   constructor() {
     super('tag', {
+      category: 'tags',
       aliases: ['tag'],
       channel: 'guild'
     });

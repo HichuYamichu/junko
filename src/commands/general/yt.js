@@ -4,8 +4,14 @@ class YouTubeCommand extends Command {
   constructor() {
     super('yt', {
       aliases: ['yt'],
+      category: 'general',
       ownerOnly: false,
-      util: ['guild', 'dm'],
+      channel: ['guild', 'dm'],
+      description: {
+        content: 'Searches YouTube.',
+        usage: '<query>',
+        examples: ['jpegmafia']
+      },
       args: [
         {
           id: 'query',

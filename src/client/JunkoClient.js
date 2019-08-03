@@ -38,7 +38,7 @@ module.exports = class extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: msg => msg.guild ? this.store.hgetAsync(msg.guild.id, 'prefix') : '!',
+      prefix: msg => this._getPrefix(msg),
       aliasReplacement: /-/g,
       allowMention: true,
       commandUtil: true,
@@ -66,6 +66,14 @@ module.exports = class extends AkairoClient {
     this.listenerHandler = new ListenerHandler(this, {
       directory: join(__dirname, '..', 'listeners')
     });
+  }
+
+  async _getPrefix(msg) {
+    if (msg.guild) {
+      const token = await this.store.hgetAsync(msg.guild.id, 'prefix');
+      if (token) return token;
+    }
+    return '!';
   }
 
   async _init() {

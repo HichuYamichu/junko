@@ -3,6 +3,7 @@ const { Command } = require('discord-akairo');
 class GetTagCommand extends Command {
   constructor() {
     super('tag-get', {
+      category: 'tags',
       ownerOnly: false,
       channel: 'guild',
       args: [

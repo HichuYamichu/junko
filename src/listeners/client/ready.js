@@ -9,6 +9,14 @@ class ReadyListener extends Listener {
   }
 
   exec() {
+    const statuses = ['👿', '👿👿', '👿👿👿'];
+    this.client.setInterval(() => {
+      const status = statuses[Math.floor(Math.random() * statuses.length)];
+
+      // this.client.user.setPresence({ game: { name: status }, status: 'online' });
+      this.client.user.setPresence({ activity: { name: status }, status: 'online' });
+    }, 10000);
+
     console.log(
       `Ready in ${this.client.channels.size} channels on ${
         this.client.guilds.size

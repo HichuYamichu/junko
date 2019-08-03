@@ -4,8 +4,14 @@ class PrefixCommand extends Command {
   constructor() {
     super('prefix', {
       aliases: ['prefix'],
+      category: 'mod',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Sets prefix for this server.',
+        usage: '<prefix>',
+        examples: ['!', '?', 'longprefix', ',.!']
+      },
       args: [
         {
           id: 'prefix',
@@ -23,7 +29,7 @@ class PrefixCommand extends Command {
 
   async exec(message, { prefix }) {
     await message.client.store.hsetAsync(message.guild.id, 'prefix', prefix);
-    message.channel.send(`My prefix is now \`${prefix}\``);
+    return message.util.send(`My prefix is now \`${prefix}\``);
   }
 }
 

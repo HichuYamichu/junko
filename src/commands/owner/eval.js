@@ -4,8 +4,14 @@ class EvalCommand extends Command {
   constructor() {
     super('eval', {
       aliases: ['eval'],
+      category: 'owner',
       ownerOnly: true,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Evaluates provided code.',
+        usage: '<code>',
+        examples: ['message.util.reply(\'no eval 4 u\')']
+      },
       args: [
         {
           id: 'code',
@@ -23,9 +29,9 @@ class EvalCommand extends Command {
     try {
       let evaled = await eval(code);
       if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
-      message.util.send(evaled, { code: 'xl', split: true });
+      return message.util.send(evaled, { code: 'xl', split: true });
     } catch (err) {
-      message.util.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+      return message.util.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
     }
   }
 }

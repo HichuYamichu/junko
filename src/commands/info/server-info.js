@@ -6,8 +6,14 @@ class ServerInfoCommand extends Command {
   constructor() {
     super('server-info', {
       aliases: ['server-info', 'server'],
+      category: 'info',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Sends info about current server.',
+        usage: '',
+        examples: ['']
+      },
       clientPermissions: ['EMBED_LINKS']
     });
   }
@@ -47,7 +53,7 @@ class ServerInfoCommand extends Command {
         `
       )
       .setThumbnail(message.guild.iconURL());
-    message.util.send(embed);
+    return message.util.send(embed);
   }
 }
 

@@ -5,8 +5,14 @@ class AvatarCommand extends Command {
   constructor() {
     super('avatar', {
       aliases: ['avatar', 'pfp'],
+      category: 'general',
       ownerOnly: false,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Sends user avatar.',
+        usage: '<username | id | mention>',
+        examples: ['462219867467022347', '@ someone']
+      },
       args: [
         {
           'id': 'user',

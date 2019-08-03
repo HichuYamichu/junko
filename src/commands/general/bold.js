@@ -5,8 +5,14 @@ class BoldCommand extends Command {
   constructor() {
     super('bold', {
       aliases: ['bold'],
+      category: 'general',
       ownerOnly: false,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Sends a B O L D message.',
+        usage: '<message>',
+        examples: ['this is bold now']
+      },
       args: [
         {
           id: 'text',
@@ -37,7 +43,7 @@ class BoldCommand extends Command {
         boldText += `${emojis[letter]} `;
       }
     }
-    message.util.send(boldText);
+    return message.util.send(boldText);
   }
 }
 

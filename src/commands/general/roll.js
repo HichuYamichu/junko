@@ -5,8 +5,14 @@ class RollCommand extends Command {
   constructor() {
     super('roll', {
       aliases: ['roll', 'dice'],
+      category: 'general',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'Rolles a dice for you.',
+        usage: '*<threshold>',
+        examples: ['10', '20']
+      },
       args: [
         {
           'id': 'threshold',
@@ -33,7 +39,7 @@ class RollCommand extends Command {
         }
       ]
     });
-    await webhook.delete();
+    return webhook.delete();
   }
 }
 

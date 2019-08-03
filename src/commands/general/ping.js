@@ -4,8 +4,14 @@ class PingCommand extends Command {
   constructor() {
     super('ping', {
       aliases: ['ping'],
+      category: 'general',
       ownerOnly: false,
-      channel: ['guild', 'dm']
+      channel: ['guild', 'dm'],
+      description: {
+        content: 'Ping!',
+        usage: '',
+        examples: ['']
+      }
     });
   }
 
@@ -14,8 +20,8 @@ class PingCommand extends Command {
     const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
     return message.util.reply([
       'Pong!',
-      `🔂 **RTT**: ${timeDiff} ms`,
-      `💟 **Heartbeat**: ${Math.round(this.client.ws.ping)} ms`
+      `Responce time: \`${timeDiff} ms\``,
+      `Gateway latency: \`${Math.round(this.client.ws.ping)} ms\``
     ]);
   }
 }

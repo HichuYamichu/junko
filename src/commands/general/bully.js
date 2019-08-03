@@ -7,8 +7,14 @@ class BullyCommand extends Command {
   constructor() {
     super('bully', {
       aliases: ['bully', 'bulli'],
+      category: 'general',
       ownerOnly: false,
       channel: ['guild', 'dm'],
+      description: {
+        content: 'Bullies someone.',
+        usage: '<mention | username | id> *[1|2]',
+        examples: ['@ someone', '462219867467022347']
+      },
       args: [
         {
           'id': 'user',
@@ -93,7 +99,7 @@ class BullyCommand extends Command {
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer());
 
-    message.util.send(attachment);
+    return message.util.send(attachment);
   }
 }
 
