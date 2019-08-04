@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
+const { stripIndents } = require('common-tags');
 
 class ServerInfoCommand extends Command {
   constructor() {
@@ -19,33 +19,35 @@ class ServerInfoCommand extends Command {
   }
 
   async exec(message, args) {
-    const embed = new MessageEmbed();
+    const embed = this.client.util.embed();
     embed
-      .setColor('#fc2041')
+      .setColor(this.client.color)
       .setDescription(`Info about **${message.guild.name}** (ID: ${message.guild.id})`)
       .addField(
         'Channels:',
-        `
+        /* eslint-disable indent */
+        stripIndents`
         • ${message.guild.channels.filter(ch => ch.type === 'text').size} Text, ${
-  message.guild.channels.filter(ch => ch.type === 'voice').size
-} Voice
-            • AFK: ${
-  message.guild.afkChannelID
-    ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min`
-    : 'None'
-}
+          message.guild.channels.filter(ch => ch.type === 'voice').size
+        } Voice
+        • AFK: ${
+          message.guild.afkChannelID
+            ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min`
+            : 'None'
+        }
         `
+        /* eslint-enable indent */
       )
       .addField(
         'Member:',
-        `
+        stripIndents`
         • ${message.guild.memberCount} members
         • Owner: ${message.guild.owner.user.tag} (ID: ${message.guild.ownerID})
         `
       )
       .addField(
         'Other:',
-        `
+        stripIndents`
         • Roles: ${message.guild.roles.size}
         • Region: ${message.guild.region}
         • Created at: ${moment.utc(message.guild.createdAt).format('YYYY/MM/DD hh:mm:ss')}

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const { version } = require('../../../package.json');
+const { stripIndents } = require('common-tags');
 
 class StatsCommand extends Command {
   constructor() {
@@ -25,26 +25,27 @@ class StatsCommand extends Command {
     const hours = Math.floor((uptime - days * 86400) / 3600);
     const minutes = Math.floor((uptime - hours * 3600) / 60);
     const seconds = Math.floor(uptime - hours * 3600 - minutes * 60);
-    const lastRS = await message.client.store.hgetAsync('JunkoConf', 'lastRestart');
+    const lastRS = await message.client.store.getAsync('LastRestart');
     const author = `${message.client.users.get(message.client.config.ownerID).tag}`;
     const guildsCount = message.client.guilds.size;
     const channelsCount = message.client.channels.size;
     const usersCount = message.client.users.size;
 
-    const embed = new MessageEmbed()
+    const embed = this.client.util.embed()
       .setTitle('**Stats:**')
-      .setColor('#fc2041')
+      .setColor(this.client.color)
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`, true)
       .addField('Uptime:', `${days}d ${hours}h ${minutes}m ${seconds}s`, true)
-      .addField('Last restart:', lastRS, true)
       .addField(
         'General:',
-        `Guilds: ${guildsCount}
+        stripIndents`
+        Guilds: ${guildsCount}
         Channels: ${channelsCount}
-      Users: ${usersCount}
-      `,
+        Users: ${usersCount}
+        `,
         true
       )
+      .addField('Last restart:', lastRS, true)
       .addField('Version:', `v${version}`, true)
       .addField('Sauce:', `[GitHub](https://github.com/HichuYamichu/Junko)`, true)
       .setThumbnail(message.client.user.displayAvatarURL())

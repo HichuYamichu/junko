@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 
-class GetTagCommand extends Command {
+class TagGetCommand extends Command {
   constructor() {
     super('tag-get', {
       category: 'tags',
@@ -28,4 +28,4 @@ class GetTagCommand extends Command {
   }
 }
 
-module.exports = GetTagCommand;
+module.exports = TagGetCommand;

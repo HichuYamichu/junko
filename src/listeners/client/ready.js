@@ -17,7 +17,7 @@ class ReadyListener extends Listener {
       this.client.user.setPresence({ activity: { name: status }, status: 'online' });
     }, 10000);
 
-    console.log(
+    this.client.logger.info(
       `Ready in ${this.client.channels.size} channels on ${
         this.client.guilds.size
       } servers, for a total of ${this.client.users.size} users.`

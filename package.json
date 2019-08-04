@@ -13,7 +13,9 @@
     "axios": "^0.19.0",
     "bluebird": "^3.5.5",
     "canvas": "^2.5.0",
-    "discord-akairo": "1Computer1/discord-akairo",
+    "chalk": "^2.4.2",
+    "common-tags": "^1.8.0",
+    "discord-akairo": "discord-akairo/discord-akairo",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^8.0.0",
     "erlpack": "discordapp/erlpack",
@@ -22,6 +24,7 @@
     "redis": "^2.8.0",
     "simple-youtube-api": "^5.2.1",
     "spotify-web-api-node": "^4.0.0",
+    "winston": "^3.2.1",
     "zlib-sync": "^0.1.4",
     "zucc": "^0.1.2"
   },

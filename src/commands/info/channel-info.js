@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
+const { stripIndents } = require('common-tags');
 
 class ChannelInfoCommand extends Command {
   constructor() {
@@ -19,13 +19,13 @@ class ChannelInfoCommand extends Command {
   }
 
   async exec(message, args) {
-    const embed = new MessageEmbed();
+    const embed = this.client.util.embed();
     embed
-      .setColor('#fc2041')
+      .setColor(this.client.color)
       .setDescription(`Info about **${message.channel.name}** (ID: ${message.channel.id})`)
       .addField(
         'Info:',
-        `
+        stripIndents`
 				• Type: ${message.channel.type}
 				• Topic ${message.channel.topic ? message.channel.topic : 'None'}
 				• NSFW: ${Boolean(message.channel.nsfw)}

@@ -6,6 +6,7 @@ const {
 } = require('discord-akairo');
 const { replies } = require('../util/replies');
 const { join } = require('path');
+const logger = require('../util/logger');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
 const redis = require('redis');
@@ -25,7 +26,11 @@ module.exports = class extends AkairoClient {
     );
     this.config = config;
 
+    this.logger = logger;
+
     this.replies = replies;
+
+    this.color = '#fc2041';
 
     this.store = redis.createClient({ host: config.redisURI });
 

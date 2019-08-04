@@ -1,4 +1,5 @@
 require('dotenv').config();
+const moment = require('moment');
 const JunkoClient = require('./client/JunkoClient');
 
 const client = new JunkoClient({
@@ -10,13 +11,19 @@ const client = new JunkoClient({
   redisURI: process.env.REDIS_URI
 });
 
-client.on('disconnect', () => console.warn('Disconnected'))
-  .on('reconnect', () => console.info('Reconnecting'))
-  .on('error', err => console.error(err))
-  .on('warn', info => console.warn(info));
+client
+  .on('warn', m => client.logger.warn(m))
+  .on('error', m => client.logger.error(m))
+  .on('reconnect', () => client.logger.info('Reconnecting'));
 
 client.start();
 
-process.on('unhandledRejection', (reason, p) => {
-  console.log('Unhandled Rejection at:', p, 'reason:', reason);
+const now = () => moment.utc().format('DD-MM-YYYY[\n]HH:mm:ss');
+
+process.on('exit', () => {
+  client.store.set('LastRestart', `${now()} UTC`);
+});
+
+process.on('SIGINT', () => {
+  client.store.set('LastRestart', `${now()} UTC`);
 });

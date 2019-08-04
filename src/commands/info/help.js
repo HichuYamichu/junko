@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
 
 class HelpCommand extends Command {
   constructor() {
@@ -26,18 +26,19 @@ class HelpCommand extends Command {
   async exec(message, { command }) {
     const prefix = await this.handler.prefix(message);
     if (!command) {
-      const embed = new MessageEmbed()
-        .setColor('#fc2041')
+      const embed = this.client.util.embed()
+        .setColor(this.client.color)
         .addField(
           'More help',
           `You can send \`${prefix}help [command name]\` to get info on a specific command!`
         )
         .addField(
           'Notation',
-          `\`[thing1 | thing2]\` - include one of the options literally
-      \`<thing>\` - fill with appropriate content
-      \`<thing1 | thing2>\` - multiple content types available
-      \`*<thing>\` - parameter is optional or has a default value`
+          stripIndents`
+          \`[thing1 | thing2]\` - include one of the options literally
+          \`<thing>\` - fill with appropriate content
+          \`<thing1 | thing2>\` - multiple content types available
+          \`*<thing>\` - parameter is optional or has a default value`
         )
         .addBlankField();
 
@@ -55,8 +56,8 @@ class HelpCommand extends Command {
       return message.util.send(embed);
     }
 
-    const embed = new MessageEmbed()
-      .setColor('#fc2041')
+    const embed = this.client.util.embed()
+      .setColor(this.client.color)
       .setTitle(
         `\`${command.aliases[0]} ${command.description.usage ? command.description.usage : ''}\``
       )

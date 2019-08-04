@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const Canvas = require('canvas');
 const { join } = require('path');
 
@@ -81,7 +80,7 @@ class BullyCommand extends Command {
         ctx.font = `${(fontSize -= 10)}px sans-serif`;
       } while (ctx.measureText(user.username).width > canvas.width - 300);
       textWidth = ctx.measureText(user.username).width;
-      ctx.fillStyle = '#fc2041';
+      ctx.fillStyle = this.client.color;
       ctx.fillText(user.username, canvas.width / 2 - textWidth / 2, canvas.height / 7.5);
 
       ctx.fillStyle = fontColor;
@@ -97,7 +96,7 @@ class BullyCommand extends Command {
       ctx.drawImage(avatar, 517, 385, 100, 100);
     }
 
-    const attachment = new Discord.MessageAttachment(canvas.toBuffer());
+    const attachment = this.client.util.attachment(canvas.toBuffer());
 
     return message.util.send(attachment);
   }

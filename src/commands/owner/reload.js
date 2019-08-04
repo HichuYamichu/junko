@@ -52,7 +52,7 @@ class ReloadCommand extends Command {
       mod.reload();
       return message.util.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
     } catch (err) {
-      console.log(err);
+      this.client.logger.error(err);
       return message.util.reply(`Failed to reload ${type} \`${mod.id}\`.`);
     }
   }

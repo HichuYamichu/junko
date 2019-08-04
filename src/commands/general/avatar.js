@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 
 class AvatarCommand extends Command {
   constructor() {
@@ -25,7 +24,7 @@ class AvatarCommand extends Command {
   }
 
   async exec(message, { user }) {
-    const embed = new MessageEmbed().setImage(user.avatarURL({ size: 2048 })).setColor('#fc2041');
+    const embed = this.client.util.embed().setImage(user.avatarURL({ size: 2048 })).setColor(this.client.color);
     return message.util.send(embed);
   }
 }

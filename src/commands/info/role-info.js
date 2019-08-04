@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
 const permissionsModule = require('../../util/permissions');
+const { stripIndents } = require('common-tags');
 
 class RoleInfoCommand extends Command {
   constructor() {
@@ -30,13 +30,13 @@ class RoleInfoCommand extends Command {
     const permissions = Object.keys(permissionsModule).filter(
       permission => role.permissions.serialize()[permission]
     );
-    const embed = new MessageEmbed();
+    const embed = this.client.util.embed();
     embed
-      .setColor('#fc2041')
+      .setColor(this.client.color)
       .setDescription(`Info about **${role.name}** (ID: ${role.id})`)
       .addField(
         'Info:',
-        `
+        stripIndents`
 				• Color: ${role.hexColor.toUpperCase()}
 				• Hoisted: ${role.hoist ? 'Yes' : 'No'}
 				• Mentionable: ${role.mentionable ? 'Yes' : 'No'}

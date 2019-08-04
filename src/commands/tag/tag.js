@@ -16,7 +16,7 @@ class TagCommand extends Command {
         ['tag-add', 'add', 'new', 'set'],
         ['tag-del', 'del', 'delete', 'remove', 'rm']
       ],
-      otherwise: async () => 'check help'
+      otherwise: () => 'You must specify a method see `help tag` for more info'
     };
 
     return Flag.continue(method);
