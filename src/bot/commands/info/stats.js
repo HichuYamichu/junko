@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { version } = require('../../../package.json');
+const { version } = require('../../package.json');
 const { stripIndents } = require('common-tags');
 
 class StatsCommand extends Command {

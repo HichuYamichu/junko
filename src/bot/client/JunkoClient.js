@@ -13,6 +13,8 @@ const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
 
+const RPC = require('../rpc/rpc');
+
 module.exports = class extends AkairoClient {
   constructor(config) {
     super(
@@ -24,6 +26,7 @@ module.exports = class extends AkairoClient {
         disabledEvents: ['TYPING_START']
       }
     );
+
     this.config = config;
 
     this.logger = logger;
@@ -41,6 +44,29 @@ module.exports = class extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
+    this.FetcherMethods = {
+      fetchGuilds: (call, callback) => {
+        callback(null, { guilds: this.guilds.array() });
+      },
+      fetchGuild: (call, callback) => {
+        callback(null, this.guilds.get(call.request.id));
+      },
+      fetchUsers: (call, callback) => {
+        callback(null, { users: this.users.array() });
+      },
+      fetchUser: (call, callback) => {
+        callback(null, this.users.get(call.request.id));
+      },
+      fetchChannels: (call, callback) => {
+        callback(null, { channels: this.channels.array() });
+      },
+      fetchChannel: (call, callback) => {
+        callback(null, this.channels.get(call.request.id));
+      }
+    };
+
+    this.rpc = new RPC(this.FetcherMethods);
+
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
       prefix: msg => this._getPrefix(msg),
@@ -52,7 +78,8 @@ module.exports = class extends AkairoClient {
       fetchMembers: true,
       argumentDefaults: {
         prompt: {
-          modifyStart: (_, str) => `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
+          modifyStart: (_, str) =>
+            `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
           modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
           timeout: this.replies.get('timeout'),
           ended: this.replies.get('ended'),

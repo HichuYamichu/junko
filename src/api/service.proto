@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package api;
+
+service Fetcher {
+  rpc fetchGuilds (Void) returns (Guilds) {}
+  rpc fetchGuild (ID) returns (Guild) {}
+
+  rpc fetchUsers (Void) returns (Users) {}
+  rpc fetchUser (ID) returns (User) {}
+  
+  rpc fetchChannels (Void) returns (Channels) {}
+  rpc fetchChannel (ID) returns (Channel) {}
+}
+
+message Void {}
+
+message ID {
+  string id = 1;
+}
+
+message IDStore {
+  repeated string id = 1;
+}
+
+message Guilds {
+  repeated Guild guilds = 1;
+}
+
+message Guild {
+  // repeated Channels channels = 1;
+  string createdAt = 2; 
+  string description = 3;
+  string icon = 4;
+  string id = 5;
+  int32 memberCount = 6;
+  string name = 7;
+  string region = 8;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message User {
+  string avatar = 1;
+  string id = 2;
+}
+
+message Channels {
+  repeated Channel channels = 1;
+}
+
+message Channel {
+  string createdAt = 1;
+  string id = 2;
+  string type = 3;
+}
