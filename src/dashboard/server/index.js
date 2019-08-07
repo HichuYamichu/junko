@@ -2,9 +2,10 @@ const { join } = require('path');
 const protoLoader = require('@grpc/proto-loader');
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
+const bodyParser = require('koa-bodyparser');
 const consola = require('consola');
 const { Nuxt, Builder } = require('nuxt');
-const protoPath = join(__dirname, '../..', 'api/service.proto');
+const protoPath = join(__dirname, '../..', 'api/api.proto');
 const grpc = require('grpc');
 const bluebird = require('bluebird');
 const packageDefinition = protoLoader.loadSync(protoPath, {
@@ -19,7 +20,10 @@ const serviceDeff = grpc.loadPackageDefinition(packageDefinition).api;
 const app = new Koa();
 const router = new KoaRouter();
 
-app.context.rpc = new serviceDeff.Fetcher('localhost:50051', grpc.credentials.createInsecure());
+app.context.rpc = new serviceDeff.GuildFetcher(
+  'localhost:50051',
+  grpc.credentials.createInsecure()
+);
 bluebird.promisifyAll(app.context.rpc);
 
 const config = require('../nuxt.config.js');
@@ -40,13 +44,19 @@ async function start() {
     await nuxt.ready();
   }
 
-  router.get(
-    '/guilds',
-    async ctx => {
-      ctx.body = await ctx.rpc.fetchGuildsAsync({});
-    }
-  );
+  router.get('/api/guilds', async ctx => {
+    ctx.body = await ctx.rpc.fetchGuildsAsync(null);
+  });
 
+  router.get('/api/guild/:id', async ctx => {
+    ctx.body = await ctx.rpc.fetchGuildAsync(ctx.params);
+  });
+
+  router.post('/api/say', async ctx => {
+    ctx.body = await ctx.rpc.sayAsync(ctx.request.body);
+  });
+
+  app.use(bodyParser());
   app.use(router.routes()).use(router.allowedMethods());
 
   app.use(ctx => {

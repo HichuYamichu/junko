@@ -44,28 +44,31 @@ module.exports = class extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
-    this.FetcherMethods = {
+    this.rpc = new RPC({
       fetchGuilds: (call, callback) => {
-        callback(null, { guilds: this.guilds.array() });
+        callback(null, { ids: this.guilds.map(g => g.id) });
       },
       fetchGuild: (call, callback) => {
-        callback(null, this.guilds.get(call.request.id));
-      },
-      fetchUsers: (call, callback) => {
-        callback(null, { users: this.users.array() });
-      },
-      fetchUser: (call, callback) => {
-        callback(null, this.users.get(call.request.id));
-      },
-      fetchChannels: (call, callback) => {
-        callback(null, { channels: this.channels.array() });
-      },
-      fetchChannel: (call, callback) => {
-        callback(null, this.channels.get(call.request.id));
-      }
-    };
+        const guild = this.guilds.get(call.request.id);
 
-    this.rpc = new RPC(this.FetcherMethods);
+        callback(null, {
+          createdAt: guild.createdAt,
+          description: guild.description,
+          icon: guild.icon,
+          id: guild.id,
+          memberCount: guild.memberCount,
+          name: guild.name,
+          region: guild.region,
+          channels: [...guild.channels.values()],
+          members: [...guild.members.values()],
+          roles: [...guild.roles.values()]
+        });
+      },
+      say: (call, callback) => {
+        this.commandHandler.runCommand(null, this.commandHandler.findCommand('say'), call.request);
+        callback(null, null);
+      }
+    });
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),

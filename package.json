@@ -1,11 +1,8 @@
 {
   "private": true,
-  "devDependencies": {
-    "eslint": "^6.1.0",
-    "eslint-config-aqua": "^6.0.1"
-  },
+  "devDependencies": {},
   "workspaces": [
     "src/bot",
     "src/dashboard"
-	]
+  ]
 }

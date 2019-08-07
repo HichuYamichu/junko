@@ -27,3 +27,7 @@ process.on('exit', () => {
 process.on('SIGINT', () => {
   client.store.set('LastRestart', `${now()} UTC`);
 });
+
+process.on('unhandledRejection', (reason, p) => {
+  client.logger.error(reason);
+});

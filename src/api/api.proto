@@ -2,25 +2,26 @@ syntax = "proto3";
 
 package api;
 
-service Fetcher {
-  rpc fetchGuilds (Void) returns (Guilds) {}
+service GuildFetcher {
+  rpc fetchGuilds (Void) returns (IDStore) {}
   rpc fetchGuild (ID) returns (Guild) {}
-
-  rpc fetchUsers (Void) returns (Users) {}
-  rpc fetchUser (ID) returns (User) {}
-  
-  rpc fetchChannels (Void) returns (Channels) {}
-  rpc fetchChannel (ID) returns (Channel) {}
+  rpc say (Msg) returns (Void) {}
 }
 
 message Void {}
+
+message Msg {
+  string guildID = 1;
+  string channelID = 2;
+  string content = 3;
+}
 
 message ID {
   string id = 1;
 }
 
 message IDStore {
-  repeated string id = 1;
+  repeated string ids = 1;
 }
 
 message Guilds {
@@ -28,7 +29,7 @@ message Guilds {
 }
 
 message Guild {
-  // repeated Channels channels = 1;
+  repeated Channel channels = 1;
   string createdAt = 2; 
   string description = 3;
   string icon = 4;
@@ -47,12 +48,11 @@ message User {
   string id = 2;
 }
 
-message Channels {
-  repeated Channel channels = 1;
-}
-
 message Channel {
   string createdAt = 1;
   string id = 2;
   string type = 3;
+  string name = 4;
+  string position = 5;
+  string topic = 6;
 }
