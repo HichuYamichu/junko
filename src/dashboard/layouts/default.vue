@@ -13,7 +13,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="true" fixed app color="black">
-      <v-toolbar-title @click="index">Junko dashboard</v-toolbar-title>
+      <v-toolbar-title @click="index">JUNKO DASHBOARD</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn large depressed color="black">logs</v-btn>
+        <v-btn large depressed color="black">reload</v-btn>
+      </v-toolbar-items>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -35,8 +40,8 @@ export default {
   },
   methods: {
     index: function() {
-      if (this.$route.path !== '/') {
-        this.$router.push('/')
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
       }
     }
   }

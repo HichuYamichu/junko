@@ -16,13 +16,15 @@
       </v-expansion-panel>
       <v-expansion-panel>
         <v-expansion-panel-header class="title">Channels</v-expansion-panel-header>
-        <v-expansion-panel-content>
+        <v-expansion-panel-content class="channelList">
           <guild-channels></guild-channels>
         </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
         <v-expansion-panel-header class="title">Members</v-expansion-panel-header>
-        <v-expansion-panel-content>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-expansion-panel-content>
+        <v-expansion-panel-content class="memberList">
+          <guild-members></guild-members>
+        </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
         <v-expansion-panel-header class="title">Tags</v-expansion-panel-header>
@@ -35,12 +37,14 @@
 <script>
 import GuildInfo from "@/components/GuildInfo";
 import GuildChannels from "@/components/GuildChannels";
+import GuildMembers from "@/components/GuildMembers";
 
 export default {
   name: "Guild",
   components: {
     GuildInfo,
-    GuildChannels
+    GuildChannels,
+    GuildMembers
   },
   computed: {
     guild() {
@@ -49,11 +53,18 @@ export default {
   },
   methods: {
     fetchGuild() {
-      this.$store.dispatch('fetchGuild', this.$route.params.id)
+      this.$store.dispatch("fetchGuild", this.$route.params.id);
     }
   }
 };
 </script>
 
 <style>
+.channelList {
+  max-height: 650px;
+}
+
+.memberList {
+  max-height: 420px;
+}
 </style>

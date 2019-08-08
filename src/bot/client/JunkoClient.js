@@ -5,6 +5,7 @@ const {
   ListenerHandler
 } = require('discord-akairo');
 const { replies } = require('../util/replies');
+const RPCMethods = require('../grpc/methods');
 const { join } = require('path');
 const logger = require('../util/logger');
 const YouTube = require('simple-youtube-api');
@@ -12,8 +13,11 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
-
-const RPC = require('../rpc/rpc');
+const protoPath = join(__dirname, '../..', 'api/api.proto');
+const grpc = require('grpc');
+const protoLoader = require('@grpc/proto-loader');
+const packageDefinition = protoLoader.loadSync(protoPath);
+const serviceDeff = grpc.loadPackageDefinition(packageDefinition).api;
 
 module.exports = class extends AkairoClient {
   constructor(config) {
@@ -44,31 +48,7 @@ module.exports = class extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
-    this.rpc = new RPC({
-      fetchGuilds: (call, callback) => {
-        callback(null, { ids: this.guilds.map(g => g.id) });
-      },
-      fetchGuild: (call, callback) => {
-        const guild = this.guilds.get(call.request.id);
-
-        callback(null, {
-          createdAt: guild.createdAt,
-          description: guild.description,
-          icon: guild.icon,
-          id: guild.id,
-          memberCount: guild.memberCount,
-          name: guild.name,
-          region: guild.region,
-          channels: [...guild.channels.values()],
-          members: [...guild.members.values()],
-          roles: [...guild.roles.values()]
-        });
-      },
-      say: (call, callback) => {
-        this.commandHandler.runCommand(null, this.commandHandler.findCommand('say'), call.request);
-        callback(null, null);
-      }
-    });
+    this.rpc = new grpc.Server();
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
@@ -126,6 +106,10 @@ module.exports = class extends AkairoClient {
     this.commandHandler.loadAll();
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
+
+    this.rpc.addService(serviceDeff.GuildFetcher.service, RPCMethods(this));
+    this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
+    this.rpc.start();
   }
 
   async start() {

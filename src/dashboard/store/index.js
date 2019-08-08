@@ -5,12 +5,8 @@ export const state = () => ({
 });
 
 export const mutations = {
-  SET_GUILDS(state, guildIDs) {
-    state.guilds = guildIDs.map(id => {
-      return {
-        id: id
-      };
-    });
+  SET_GUILDS(state, guilds) {
+    state.guilds = guilds
   },
 
   UPDATE_GUILD(state, guildNew) {
@@ -21,13 +17,12 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ commit }, { req }) {
-    const { ids } = await this.$axios.$get('/api/guilds');
-    commit('SET_GUILDS', ids);
+    const { guilds } = await this.$axios.$get('/api/guilds');
+    commit('SET_GUILDS', guilds);
   },
 
   async fetchGuild({ commit }, id) {
     const res = await this.$axios.$get(`/api/guild/${id}`);
-    console.log(res);
     commit('UPDATE_GUILD', res);
   }
 };

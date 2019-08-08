@@ -21,7 +21,7 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>
-      <span>Guild memberCount:</span>
+      <span>Guild member count:</span>
       {{ guild.memberCount || 'N/A' }}
     </v-card-text>
     <v-divider></v-divider>

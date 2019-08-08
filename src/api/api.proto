@@ -3,7 +3,7 @@ syntax = "proto3";
 package api;
 
 service GuildFetcher {
-  rpc fetchGuilds (Void) returns (IDStore) {}
+  rpc fetchGuilds (Void) returns (Guilds) {}
   rpc fetchGuild (ID) returns (Guild) {}
   rpc say (Msg) returns (Void) {}
 }
@@ -20,32 +20,35 @@ message ID {
   string id = 1;
 }
 
-message IDStore {
-  repeated string ids = 1;
-}
-
 message Guilds {
   repeated Guild guilds = 1;
 }
 
 message Guild {
   repeated Channel channels = 1;
-  string createdAt = 2; 
-  string description = 3;
-  string icon = 4;
-  string id = 5;
-  int32 memberCount = 6;
-  string name = 7;
-  string region = 8;
+  repeated Member members = 2;
+  repeated Role roles = 3;
+  string createdAt = 4; 
+  string description = 5;
+  string icon = 6;
+  string id = 7;
+  int32 memberCount = 8;
+  string name = 9;
+  string region = 10;
 }
 
-message Users {
-  repeated User users = 1;
+message Member {
+  User user = 1;
+  repeated string _roles = 2;
+  string displayName = 3;
+  string joinedAt = 4;
 }
+
 
 message User {
   string avatar = 1;
   string id = 2;
+  string tag = 3;
 }
 
 message Channel {
@@ -53,6 +56,24 @@ message Channel {
   string id = 2;
   string type = 3;
   string name = 4;
-  string position = 5;
+  int32 position = 5;
   string topic = 6;
+  bool nsfw = 7;
+  int32 bitrate = 8;
+  int32 userLimit = 9;
+  string parentID = 10;
+  int32 rateLimitPerUser = 11;
+}
+
+message Role {
+  int32 color = 1;
+  string name = 2;
+  int32 position = 3;
+  string id = 4;
+  Bitfield permissions = 5;
+  bool hoist = 6;
+}
+
+message Bitfield {
+  int32 bitfield = 1;
 }
