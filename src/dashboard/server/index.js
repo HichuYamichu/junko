@@ -21,7 +21,7 @@ const app = new Koa();
 const router = new KoaRouter();
 
 app.context.rpc = new serviceDeff.GuildFetcher(
-  'localhost:50051',
+  process.env.GRPC || 'localhost:50051',
   grpc.credentials.createInsecure()
 );
 bluebird.promisifyAll(app.context.rpc);
