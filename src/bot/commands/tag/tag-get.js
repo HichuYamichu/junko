@@ -20,7 +20,7 @@ class TagGetCommand extends Command {
   }
 
   async exec(message, { name }) {
-    const tag = await this.client.store.hgetAsync(message.guild.id, `tag-${name}`);
+    const tag = await this.client.store.hgetAsync(`tags-${message.guild.id}`, name);
     if (tag) {
       return message.util.send(tag);
     }

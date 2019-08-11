@@ -35,14 +35,14 @@ class TagAddCommand extends Command {
 
   async exec(message, { name, content, force }) {
     if (!force) {
-      const tag = await this.client.store.hgetAsync(message.guild.id, `tag-${name}`);
+      const tag = await this.client.store.hgetAsync(`tags-${message.guild.id}`, name);
       if (tag) {
         return message.util.reply(
           `tag with name \`${name}\` already exists. You can overwire it by running the same command with \`--force\` flag`
         );
       }
     }
-    await this.client.store.hsetAsync(message.guild.id, `tag-${name}`, content);
+    await this.client.store.hsetAsync(`tags-${message.guild.id}`, name, content);
     return message.util.send('Tag succesfuly created');
   }
 }

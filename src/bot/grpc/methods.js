@@ -10,6 +10,7 @@ module.exports = client => ({
     cpy.members = [...guild.members.values()];
     cpy.members.forEach((member, i) => {
       member.joinedAt = [...guild.members.values()][i].joinedAt;
+      member.user.avatar = member.user.displayAvatarURL();
     });
     cpy.channels = [...guild.channels.values()];
     cpy.channels.forEach((channels, i) => {

@@ -32,9 +32,9 @@
             :key="member.id"
             @click="changeMember(member.user.id)"
           >
-          <v-list-item-avatar>
+            <v-list-item-avatar>
               <v-img
-                :src="`https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.webp`"
+                :src="member.user.avatar"
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-title v-text="member.displayName"></v-list-item-title>
@@ -112,17 +112,20 @@ export default {
     },
     getHoistedMembers: function(id) {
       if (this.guild.members) {
-        return this.guild.members.filter(member => member._roles.includes(id));
+        return this.guild.members.filter(member =>
+          member._roles ? member._roles.includes(id) : false
+        );
       }
       return [];
     },
     getNonHoistedMembers: function() {
       if (this.guild.members) {
-        return this.guild.members.filter(
-          member =>
-            !member._roles.some(role =>
-              this.roles.map(r => r.id).includes(role)
-            )
+        return this.guild.members.filter(member =>
+          member._roles
+            ? !member._roles.some(role =>
+                this.roles.map(r => r.id).includes(role)
+              )
+            : true
         );
       }
       return [];
