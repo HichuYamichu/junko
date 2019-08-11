@@ -1,12 +1,12 @@
-const colors = require('vuetify/es5/util/colors').default;
+import colors from 'vuetify/es5/util/colors';
 
-module.exports = {
+export default {
   mode: 'universal',
   /*
    ** Headers of the page
    */
   head: {
-    titleTemplate: `%s - ${process.env.npm_package_name}`,
+    titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },

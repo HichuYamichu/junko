@@ -13,11 +13,11 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
-const protoPath = join(__dirname, '../..', 'api/api.proto');
+const protoPath = join(__dirname, '../..', 'proto/fetcher.proto');
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync(protoPath);
-const serviceDeff = grpc.loadPackageDefinition(packageDefinition).api;
+const serviceDeff = grpc.loadPackageDefinition(packageDefinition).fetcher;
 
 module.exports = class extends AkairoClient {
   constructor(config) {

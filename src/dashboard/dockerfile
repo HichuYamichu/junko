@@ -6,8 +6,7 @@ COPY package.json ./
 RUN yarn
 
 ENV NUXT_HOST= \
-NUXT_PORT= \
-GRPC=
+NUXT_PORT= 
 
 COPY . .
 RUN yarn build && yarn cache clean

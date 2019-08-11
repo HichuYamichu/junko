@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api;
+package fetcher;
 
 service GuildFetcher {
   rpc fetchGuilds (Void) returns (Guilds) {}

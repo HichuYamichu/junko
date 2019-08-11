@@ -16,7 +16,7 @@ module.exports = class RedisTransport extends Transport {
         : ''
     }`;
 
-    this.redis.rpushAsync('logs', msg);
+    this.redis.rpushAsync('bot-logs', msg);
 
     callback();
   }
