@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Load : loads schema
 func Load() (string, error) {
 	root := "./schema"
 	var sb strings.Builder

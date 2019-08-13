@@ -2,6 +2,7 @@ package handler
 
 import "net/http"
 
+// GraphiQL : GraphiQL handler
 type GraphiQL struct{}
 
 func (h GraphiQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {

@@ -7,17 +7,21 @@ import (
 	"github.com/go-redis/redis"
 )
 
+// Resolver : root resolver
 type Resolver struct {
 	RPC fetcher.GuildFetcherClient
 	DB  *redis.Client
 }
 
+// NewResolver : Resolver constructor function
 func NewResolver(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
 	return &Resolver{RPC: rpc, DB: db}
 }
 
+// FetchGuilds : resolves FetchGuilds query
 func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
-	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.Void{})
+	query := ctx.Value("query").(string)
+	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.GuildRequest{Gql: query})
 	if err != nil {
 		return nil, err
 	}
@@ -32,6 +36,7 @@ func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
 	return &res, nil
 }
 
+// FetchGuild : resolves FetchGuild query
 func (r *Resolver) FetchGuild(ctx context.Context, id fetcher.ID) (*GuildResolver, error) {
 	guild, err := r.RPC.FetchGuild(ctx, &id)
 	if err != nil {

@@ -3,7 +3,7 @@ syntax = "proto3";
 package fetcher;
 
 service GuildFetcher {
-  rpc fetchGuilds (Void) returns (Guilds) {}
+  rpc fetchGuilds (GuildRequest) returns (Guilds) {}
   rpc fetchGuild (ID) returns (Guild) {}
   rpc say (Msg) returns (Void) {}
 }
@@ -35,6 +35,10 @@ message Guild {
   int32 memberCount = 8;
   string name = 9;
   string region = 10;
+}
+
+message GuildRequest {
+  string gql = 1;
 }
 
 message Member {
@@ -74,6 +78,3 @@ message Role {
   bool hoist = 6;
 }
 
-message Bitfield {
-  int32 bitfield = 1;
-}

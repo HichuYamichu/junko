@@ -1,8 +1,15 @@
+const gql = require('graphql-tag');
+// const { parse } = require('graphql');
+
 module.exports = client => ({
   fetchGuilds: (call, callback) => {
+    // console.log(parse(call.request.gql).definitions[0].selectionSet.selections[0].selectionSet.selections);
+    const query = gql`${call.request.gql}`.definitions[0].selectionSet.selections[0].selectionSet.selections;
+    console.log(query);
     callback(null, { guilds: [...client.guilds.values()].map(g => ({ id: g.id, name: g.name })) });
   },
   fetchGuild: async (call, callback) => {
+    // console.log(gql`call`)
     const guild = await client.guilds.get(call.request.id).fetch();
     const cpy = JSON.parse(JSON.stringify(guild));
     cpy.createdAt = guild.createdAt;
