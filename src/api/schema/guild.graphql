@@ -1,0 +1,12 @@
+type Guild {
+  channels: [Channel]
+  members: [Member]
+  roles: [Role]
+  createdAt: String
+  description: String
+  icon: String
+  id: String
+  memberCount: Int
+  name: String
+  region: String
+}

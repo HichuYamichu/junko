@@ -1,0 +1,13 @@
+type Channel {
+  id: String
+  name: String
+  createdAt: String
+  type: String
+  position: Int
+  topic: String
+  nsfw: Boolean
+  bitrate: Int
+  userLimit: Int
+  parentID: String
+  rateLimitPerUser: Int
+}

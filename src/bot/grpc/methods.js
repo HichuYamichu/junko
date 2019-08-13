@@ -7,6 +7,9 @@ module.exports = client => ({
     const cpy = JSON.parse(JSON.stringify(guild));
     cpy.createdAt = guild.createdAt;
     cpy.roles = [...guild.roles.values()];
+    cpy.roles.forEach((role, i) => {
+      role.permissions = [...guild.members.values()][i].permissions.bitfield;
+    });
     cpy.members = [...guild.members.values()];
     cpy.members.forEach((member, i) => {
       member.joinedAt = [...guild.members.values()][i].joinedAt;

@@ -4,21 +4,25 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
-	appCtx "github.com/HichuYamichu/fetcher-api/app/context"
-	"github.com/HichuYamichu/fetcher-api/app/handlers"
 	"github.com/HichuYamichu/fetcher-api/fetcher"
+	"github.com/HichuYamichu/fetcher-api/handler"
+	"github.com/HichuYamichu/fetcher-api/resolver"
+	"github.com/HichuYamichu/fetcher-api/schema"
 	"github.com/go-redis/redis"
+	util "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/graph-gophers/graphql-go"
 	"google.golang.org/grpc"
 )
 
 // App : Application struct
 type App struct {
-	Router *mux.Router
-	Ctx    *appCtx.Context
-	Adrr   string
+	Router  http.Handler
+	Handler *handler.GraphQL
+	Adrr    string
 }
 
 // NewServer : Initialize new server instance
@@ -36,30 +40,29 @@ func NewServer(host, port, redisURI, gRPCAddr string) *App {
 	}
 	rpc := fetcher.NewGuildFetcherClient(conn)
 
-	ctx := appCtx.NewContext(db, rpc)
+	s, err := schema.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+	res := resolver.NewResolver(rpc, db)
+	schemaDeff := graphql.MustParseSchema(s, res, graphql.UseStringDescriptions())
+	a.Handler = &handler.GraphQL{Schema: schemaDeff}
 
-	a.Ctx = ctx
-	a.Router = mux.NewRouter()
-	a.setRouters()
+	a.Router = a.setupRouter()
 	a.Adrr = fmt.Sprintf("%s:%s", host, port)
 	return a
 }
 
-func (a *App) setRouters() {
-	a.Router.HandleFunc("/api/guilds", a.handle(handlers.FetchGuilds)).Methods("GET")
-	a.Router.HandleFunc("/api/guild/{id}", a.handle(handlers.FetchGuild)).Methods("GET")
-	a.Router.HandleFunc("/api/say", a.handle(handlers.Say)).Methods("POST")
-}
+func (a *App) setupRouter() http.Handler {
+	r := mux.NewRouter()
+	r.Handle("/gql", a.Handler)
+	r.Handle("/", &handler.GraphiQL{})
 
-type handler func(ctx *appCtx.Context, w http.ResponseWriter, r *http.Request) *handlers.AppError
-
-func (a *App) handle(h handler) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h(a.Ctx, w, r); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Msg, err.Code)
-		}
-	}
+	allowedHeaders := util.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	allowedOrigins := util.AllowedOrigins([]string{"*"})
+	allowedMethods := util.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	h := util.LoggingHandler(os.Stdout, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
+	return h
 }
 
 // Run : Starts the http server
