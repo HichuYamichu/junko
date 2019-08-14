@@ -4,6 +4,7 @@ package fetcher;
 
 service GuildFetcher {
   rpc fetchGuilds (GuildRequest) returns (Guilds) {}
+  rpc fetchGuild (GuildRequest) returns (Guild) {}
   rpc say (Msg) returns (Void) {}
 }
 

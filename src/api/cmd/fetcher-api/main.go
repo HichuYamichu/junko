@@ -12,6 +12,6 @@ var redisURI = flag.String("redisURI", "172.20.61.4:6379", "Redis instance URI")
 var gRPCAddr = flag.String("gRPCAddr", "127.0.0.1:50051", "gRPC server URI")
 
 func main() {
-	srv := app.NewServer(*host, *port, *redisURI, *gRPCAddr)
+	srv := app.New(*host, *port, *redisURI, *gRPCAddr)
 	srv.Run()
 }

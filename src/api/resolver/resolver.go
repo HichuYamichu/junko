@@ -13,8 +13,8 @@ type Resolver struct {
 	DB  *redis.Client
 }
 
-// NewResolver : Resolver constructor function
-func NewResolver(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
+// New : Resolver constructor function
+func New(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
 	return &Resolver{RPC: rpc, DB: db}
 }
 
@@ -36,6 +36,23 @@ func (r *Resolver) FetchGuilds(ctx context.Context, args fetcher.GuildRequest) (
 	return &res, nil
 }
 
+// FetchGuild : resolves FetchGuild query
+func (r *Resolver) FetchGuild(ctx context.Context, args struct{ ID string }) (*GuildResolver, error) {
+	query := ctx.Value("query").(string)
+	id := []string{args.ID}
+	guild, err := r.RPC.FetchGuild(ctx, &fetcher.GuildRequest{Id: id, Gql: query})
+	if err != nil {
+		return nil, err
+	}
+
+	res := GuildResolver{
+		rpc:   r.RPC,
+		guild: guild,
+	}
+
+	return &res, nil
+}
+
 // Say : resolves Say query
 func (r *Resolver) Say(ctx context.Context, args fetcher.Msg) (*string, error) {
 	_, err := r.RPC.Say(ctx, &args)
@@ -45,4 +62,21 @@ func (r *Resolver) Say(ctx context.Context, args fetcher.Msg) (*string, error) {
 	}
 	res := "Message sent successfully"
 	return &res, nil
+}
+
+// FetchLogsArgs : arguments for FetchLogs
+type FetchLogsArgs struct {
+	Source string
+	Start  int32
+	Stop   int32
+}
+
+// FetchLogs : resolves FetchLogs query
+func (r *Resolver) FetchLogs(ctx context.Context, args FetchLogsArgs) (*LogResolver, error) {
+	logs := r.DB.LRange(args.Source, int64(args.Start), int64(args.Stop))
+	res := &LogResolver{
+		logs: logs,
+	}
+
+	return res, nil
 }

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/HichuYamichu/fetcher-api/fetcher"
 	"github.com/HichuYamichu/fetcher-api/handler"
+	"github.com/HichuYamichu/fetcher-api/logger"
 	"github.com/HichuYamichu/fetcher-api/resolver"
 	"github.com/HichuYamichu/fetcher-api/schema"
 	"github.com/go-redis/redis"
@@ -22,17 +22,21 @@ import (
 type App struct {
 	Router  http.Handler
 	Handler *handler.GraphQL
+	Logger  *logger.Logger
 	Adrr    string
 }
 
-// NewServer : Initialize new server instance
-func NewServer(host, port, redisURI, gRPCAddr string) *App {
+// New : Initialize new server instance
+func New(host, port, redisURI, gRPCAddr string) *App {
 	a := &App{}
 	db := redis.NewClient(&redis.Options{
 		Addr:     redisURI,
 		Password: "",
 		DB:       0,
 	})
+
+	a.Logger = logger.New(db)
+	log.SetOutput(a.Logger)
 
 	conn, err := grpc.Dial(gRPCAddr, grpc.WithInsecure())
 	if err != nil {
@@ -44,10 +48,9 @@ func NewServer(host, port, redisURI, gRPCAddr string) *App {
 	if err != nil {
 		log.Fatal(err)
 	}
-	res := resolver.NewResolver(rpc, db)
+	res := resolver.New(rpc, db)
 	schemaDeff := graphql.MustParseSchema(s, res, graphql.UseStringDescriptions())
 	a.Handler = &handler.GraphQL{Schema: schemaDeff}
-
 	a.Router = a.setupRouter()
 	a.Adrr = fmt.Sprintf("%s:%s", host, port)
 	return a
@@ -61,7 +64,7 @@ func (a *App) setupRouter() http.Handler {
 	allowedHeaders := util.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	allowedOrigins := util.AllowedOrigins([]string{"*"})
 	allowedMethods := util.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-	h := util.LoggingHandler(os.Stdout, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
+	h := util.LoggingHandler(a.Logger, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
 	return h
 }
 

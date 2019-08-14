@@ -1,4 +1,6 @@
 type Query {
   fetchGuilds(ID: [String!]!): [Guild]
+  fetchGuild(ID: String!): Guild
   say(GuildID: String!, ChannelID: String!, Content: String!): String
+  fetchLogs(Source: String!, Start: Int!, Stop: Int!): Log
 }
