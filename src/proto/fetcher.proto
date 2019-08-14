@@ -3,8 +3,8 @@ syntax = "proto3";
 package fetcher;
 
 service GuildFetcher {
-  rpc fetchGuilds (GuildRequest) returns (Guilds) {}
-  rpc fetchGuild (ID) returns (Guild) {}
+  rpc fetchGuilds (Void) returns (Guilds) {}
+  rpc fetchGuild (GuildRequest) returns (Guild) {}
   rpc say (Msg) returns (Void) {}
 }
 
@@ -14,10 +14,6 @@ message Msg {
   string guildID = 1;
   string channelID = 2;
   string content = 3;
-}
-
-message ID {
-  string id = 1;
 }
 
 message Guilds {
@@ -38,7 +34,8 @@ message Guild {
 }
 
 message GuildRequest {
-  string gql = 1;
+  string id = 1;
+  string gql = 2;
 }
 
 message Member {

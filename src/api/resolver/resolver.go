@@ -20,8 +20,7 @@ func NewResolver(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
 
 // FetchGuilds : resolves FetchGuilds query
 func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
-	query := ctx.Value("query").(string)
-	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.GuildRequest{Gql: query})
+	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.Void{})
 	if err != nil {
 		return nil, err
 	}
@@ -37,8 +36,9 @@ func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
 }
 
 // FetchGuild : resolves FetchGuild query
-func (r *Resolver) FetchGuild(ctx context.Context, id fetcher.ID) (*GuildResolver, error) {
-	guild, err := r.RPC.FetchGuild(ctx, &id)
+func (r *Resolver) FetchGuild(ctx context.Context, args struct{ ID string }) (*GuildResolver, error) {
+	query := ctx.Value("query").(string)
+	guild, err := r.RPC.FetchGuild(ctx, &fetcher.GuildRequest{Id: args.ID, Gql: query})
 	if err != nil {
 		return nil, err
 	}
