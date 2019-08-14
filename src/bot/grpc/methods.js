@@ -2,16 +2,24 @@ const compose = require('./responceComposer');
 const parse = require('./fieldParser');
 
 module.exports = client => ({
-  fetchGuilds: (call, callback) => {
-    callback(null, { guilds: [...client.guilds.values()].map(g => ({ id: g.id, name: g.name })) });
-  },
-  fetchGuild: async (call, callback) => {
-    const guild = await client.guilds.get(call.request.id).fetch();
-    const requstedFields = parse(call.request.gql);
-    const res = {};
-    compose(guild, res, requstedFields);
-
-    callback(null, res);
+  fetchGuilds: async (call, callback) => {
+    const res = [];
+    let guildIDs = call.request.id;
+    if (!guildIDs) {
+      guildIDs = client.guilds.map(g => g.id);
+    }
+    for (const id of guildIDs) {
+      const base = await client.guilds.get(id).fetch();
+      const requstedFields = parse(call.request.gql);
+      const guild = {};
+      compose(
+        base,
+        guild,
+        requstedFields
+      );
+      res.push(guild);
+    }
+    callback(null, { guilds: res });
   },
   say: (call, callback) => {
     client.commandHandler.runCommand(null, client.commandHandler.findCommand('say'), call.request);

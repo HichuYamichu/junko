@@ -19,8 +19,9 @@ func NewResolver(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
 }
 
 // FetchGuilds : resolves FetchGuilds query
-func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
-	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.Void{})
+func (r *Resolver) FetchGuilds(ctx context.Context, args fetcher.GuildRequest) (*[]*GuildResolver, error) {
+	query := ctx.Value("query").(string)
+	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.GuildRequest{Id: args.Id, Gql: query})
 	if err != nil {
 		return nil, err
 	}
@@ -35,18 +36,13 @@ func (r *Resolver) FetchGuilds(ctx context.Context) (*[]*GuildResolver, error) {
 	return &res, nil
 }
 
-// FetchGuild : resolves FetchGuild query
-func (r *Resolver) FetchGuild(ctx context.Context, args struct{ ID string }) (*GuildResolver, error) {
-	query := ctx.Value("query").(string)
-	guild, err := r.RPC.FetchGuild(ctx, &fetcher.GuildRequest{Id: args.ID, Gql: query})
+// Say : resolves Say query
+func (r *Resolver) Say(ctx context.Context, args fetcher.Msg) (*string, error) {
+	_, err := r.RPC.Say(ctx, &args)
 	if err != nil {
-		return nil, err
+		res := "Failed to send"
+		return &res, err
 	}
-
-	guildRes := GuildResolver{
-		rpc:   r.RPC,
-		guild: guild,
-	}
-
-	return &guildRes, nil
+	res := "Message sent successfully"
+	return &res, nil
 }
