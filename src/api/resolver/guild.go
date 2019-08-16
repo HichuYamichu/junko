@@ -49,11 +49,15 @@ func (g *GuildResolver) Icon(ctx context.Context) *string {
 
 // Channels : resolves guild Channels
 func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, error) {
-	r := make([]*ChannelResolver, len(g.guild.Channels))
-	for i := range g.guild.Channels {
+	fetched, err := g.rpc.FetchChannels(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Channels})
+	if err != nil {
+		return nil, err
+	}
+	r := make([]*ChannelResolver, len(fetched.Channels))
+	for i := range fetched.Channels {
 		r[i] = &ChannelResolver{
 			rpc:     g.rpc,
-			channel: g.guild.Channels[i],
+			channel: fetched.Channels[i],
 		}
 	}
 	return &r, nil
@@ -61,11 +65,15 @@ func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, erro
 
 // Members : resolves guild Members
 func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error) {
-	r := make([]*MemberResolver, len(g.guild.Members))
-	for i := range g.guild.Members {
+	fetched, err := g.rpc.FetchMembers(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Members})
+	if err != nil {
+		return nil, err
+	}
+	r := make([]*MemberResolver, len(fetched.Members))
+	for i := range fetched.Members {
 		r[i] = &MemberResolver{
 			rpc:    g.rpc,
-			member: g.guild.Members[i],
+			member: fetched.Members[i],
 		}
 	}
 	return &r, nil
@@ -73,11 +81,15 @@ func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error)
 
 // Roles : resolves guild Roles
 func (g *GuildResolver) Roles(ctx context.Context) (*[]*RoleResolver, error) {
-	r := make([]*RoleResolver, len(g.guild.Roles))
-	for i := range g.guild.Roles {
+	fetched, err := g.rpc.FetchRoles(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Roles})
+	if err != nil {
+		return nil, err
+	}
+	r := make([]*RoleResolver, len(fetched.Roles))
+	for i := range fetched.Roles {
 		r[i] = &RoleResolver{
 			rpc:  g.rpc,
-			role: g.guild.Roles[i],
+			role: fetched.Roles[i],
 		}
 	}
 	return &r, nil

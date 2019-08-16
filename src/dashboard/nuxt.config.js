@@ -1,12 +1,13 @@
 import colors from 'vuetify/es5/util/colors';
 
 export default {
+  server: {
+    port: 8000
+  },
   mode: 'universal',
-  /*
-   ** Headers of the page
-   */
+
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: `%s - ${process.env.npm_package_name}`,
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -19,38 +20,25 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-  /*
-   ** Customize the progress-bar color
-   */
+
   loading: { color: '#fff' },
-  /*
-   ** Global CSS
-   */
+
   css: [],
-  /*
-   ** Plugins to load before mounting the App
-   */
+
   plugins: [],
-  /*
-   ** Nuxt.js dev-modules
-   */
+
   devModules: ['@nuxtjs/vuetify'],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
-  /*
-   ** vuetify module configuration
-   ** https://github.com/nuxt-community/vuetify-module
-   */
+
+  modules: ['@nuxtjs/apollo'],
+
+  apollo: {
+    clientConfigs: {
+      'default': {
+        httpEndpoint: 'http://localhost:3000/gql'
+      }
+    }
+  },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -68,13 +56,8 @@ export default {
       }
     }
   },
-  /*
-   ** Build configuration
-   */
+
   build: {
-    /*
-     ** You can extend webpack config here
-     */
     extend(config, ctx) {}
   }
 };

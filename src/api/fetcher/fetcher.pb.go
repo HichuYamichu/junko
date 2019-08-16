@@ -55,6 +55,139 @@ func (m *Void) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Void proto.InternalMessageInfo
 
+type ID struct {
+	ID                   string   `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ID) Reset()         { *m = ID{} }
+func (m *ID) String() string { return proto.CompactTextString(m) }
+func (*ID) ProtoMessage()    {}
+func (*ID) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{1}
+}
+
+func (m *ID) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ID.Unmarshal(m, b)
+}
+func (m *ID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ID.Marshal(b, m, deterministic)
+}
+func (m *ID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ID.Merge(m, src)
+}
+func (m *ID) XXX_Size() int {
+	return xxx_messageInfo_ID.Size(m)
+}
+func (m *ID) XXX_DiscardUnknown() {
+	xxx_messageInfo_ID.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ID proto.InternalMessageInfo
+
+func (m *ID) GetID() string {
+	if m != nil {
+		return m.ID
+	}
+	return ""
+}
+
+type MultiFetchRequest struct {
+	GuildID              string   `protobuf:"bytes,1,opt,name=guildID,proto3" json:"guildID,omitempty"`
+	IDs                  []string `protobuf:"bytes,2,rep,name=IDs,proto3" json:"IDs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MultiFetchRequest) Reset()         { *m = MultiFetchRequest{} }
+func (m *MultiFetchRequest) String() string { return proto.CompactTextString(m) }
+func (*MultiFetchRequest) ProtoMessage()    {}
+func (*MultiFetchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{2}
+}
+
+func (m *MultiFetchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MultiFetchRequest.Unmarshal(m, b)
+}
+func (m *MultiFetchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MultiFetchRequest.Marshal(b, m, deterministic)
+}
+func (m *MultiFetchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MultiFetchRequest.Merge(m, src)
+}
+func (m *MultiFetchRequest) XXX_Size() int {
+	return xxx_messageInfo_MultiFetchRequest.Size(m)
+}
+func (m *MultiFetchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MultiFetchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MultiFetchRequest proto.InternalMessageInfo
+
+func (m *MultiFetchRequest) GetGuildID() string {
+	if m != nil {
+		return m.GuildID
+	}
+	return ""
+}
+
+func (m *MultiFetchRequest) GetIDs() []string {
+	if m != nil {
+		return m.IDs
+	}
+	return nil
+}
+
+type SingleFetchRequest struct {
+	GuildID              string   `protobuf:"bytes,1,opt,name=guildID,proto3" json:"guildID,omitempty"`
+	ID                   string   `protobuf:"bytes,2,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SingleFetchRequest) Reset()         { *m = SingleFetchRequest{} }
+func (m *SingleFetchRequest) String() string { return proto.CompactTextString(m) }
+func (*SingleFetchRequest) ProtoMessage()    {}
+func (*SingleFetchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{3}
+}
+
+func (m *SingleFetchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SingleFetchRequest.Unmarshal(m, b)
+}
+func (m *SingleFetchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SingleFetchRequest.Marshal(b, m, deterministic)
+}
+func (m *SingleFetchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SingleFetchRequest.Merge(m, src)
+}
+func (m *SingleFetchRequest) XXX_Size() int {
+	return xxx_messageInfo_SingleFetchRequest.Size(m)
+}
+func (m *SingleFetchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SingleFetchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SingleFetchRequest proto.InternalMessageInfo
+
+func (m *SingleFetchRequest) GetGuildID() string {
+	if m != nil {
+		return m.GuildID
+	}
+	return ""
+}
+
+func (m *SingleFetchRequest) GetID() string {
+	if m != nil {
+		return m.ID
+	}
+	return ""
+}
+
 type Msg struct {
 	GuildID              string   `protobuf:"bytes,1,opt,name=guildID,proto3" json:"guildID,omitempty"`
 	ChannelID            string   `protobuf:"bytes,2,opt,name=channelID,proto3" json:"channelID,omitempty"`
@@ -68,7 +201,7 @@ func (m *Msg) Reset()         { *m = Msg{} }
 func (m *Msg) String() string { return proto.CompactTextString(m) }
 func (*Msg) ProtoMessage()    {}
 func (*Msg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{1}
+	return fileDescriptor_b9a1f4b766c7849a, []int{4}
 }
 
 func (m *Msg) XXX_Unmarshal(b []byte) error {
@@ -121,7 +254,7 @@ func (m *Guilds) Reset()         { *m = Guilds{} }
 func (m *Guilds) String() string { return proto.CompactTextString(m) }
 func (*Guilds) ProtoMessage()    {}
 func (*Guilds) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{2}
+	return fileDescriptor_b9a1f4b766c7849a, []int{5}
 }
 
 func (m *Guilds) XXX_Unmarshal(b []byte) error {
@@ -150,26 +283,26 @@ func (m *Guilds) GetGuilds() []*Guild {
 }
 
 type Guild struct {
-	Channels             []*Channel `protobuf:"bytes,1,rep,name=channels,proto3" json:"channels,omitempty"`
-	Members              []*Member  `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
-	Roles                []*Role    `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
-	CreatedAt            string     `protobuf:"bytes,4,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
-	Description          string     `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	Icon                 string     `protobuf:"bytes,6,opt,name=icon,proto3" json:"icon,omitempty"`
-	Id                   string     `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	MemberCount          int32      `protobuf:"varint,8,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
-	Name                 string     `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	Region               string     `protobuf:"bytes,10,opt,name=region,proto3" json:"region,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Channels             []string `protobuf:"bytes,1,rep,name=channels,proto3" json:"channels,omitempty"`
+	Members              []string `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	Roles                []string `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
+	CreatedAt            string   `protobuf:"bytes,4,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	Description          string   `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	Icon                 string   `protobuf:"bytes,6,opt,name=icon,proto3" json:"icon,omitempty"`
+	Id                   string   `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
+	MemberCount          int32    `protobuf:"varint,8,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
+	Name                 string   `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
+	Region               string   `protobuf:"bytes,10,opt,name=region,proto3" json:"region,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Guild) Reset()         { *m = Guild{} }
 func (m *Guild) String() string { return proto.CompactTextString(m) }
 func (*Guild) ProtoMessage()    {}
 func (*Guild) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{3}
+	return fileDescriptor_b9a1f4b766c7849a, []int{6}
 }
 
 func (m *Guild) XXX_Unmarshal(b []byte) error {
@@ -190,21 +323,21 @@ func (m *Guild) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Guild proto.InternalMessageInfo
 
-func (m *Guild) GetChannels() []*Channel {
+func (m *Guild) GetChannels() []string {
 	if m != nil {
 		return m.Channels
 	}
 	return nil
 }
 
-func (m *Guild) GetMembers() []*Member {
+func (m *Guild) GetMembers() []string {
 	if m != nil {
 		return m.Members
 	}
 	return nil
 }
 
-func (m *Guild) GetRoles() []*Role {
+func (m *Guild) GetRoles() []string {
 	if m != nil {
 		return m.Roles
 	}
@@ -260,58 +393,12 @@ func (m *Guild) GetRegion() string {
 	return ""
 }
 
-type GuildRequest struct {
-	Id                   []string `protobuf:"bytes,1,rep,name=id,proto3" json:"id,omitempty"`
-	Gql                  string   `protobuf:"bytes,2,opt,name=gql,proto3" json:"gql,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GuildRequest) Reset()         { *m = GuildRequest{} }
-func (m *GuildRequest) String() string { return proto.CompactTextString(m) }
-func (*GuildRequest) ProtoMessage()    {}
-func (*GuildRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{4}
-}
-
-func (m *GuildRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GuildRequest.Unmarshal(m, b)
-}
-func (m *GuildRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GuildRequest.Marshal(b, m, deterministic)
-}
-func (m *GuildRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GuildRequest.Merge(m, src)
-}
-func (m *GuildRequest) XXX_Size() int {
-	return xxx_messageInfo_GuildRequest.Size(m)
-}
-func (m *GuildRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GuildRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GuildRequest proto.InternalMessageInfo
-
-func (m *GuildRequest) GetId() []string {
-	if m != nil {
-		return m.Id
-	}
-	return nil
-}
-
-func (m *GuildRequest) GetGql() string {
-	if m != nil {
-		return m.Gql
-	}
-	return ""
-}
-
 type Member struct {
-	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	XRoles               []string `protobuf:"bytes,2,rep,name=_roles,json=Roles,proto3" json:"_roles,omitempty"`
-	DisplayName          string   `protobuf:"bytes,3,opt,name=displayName,proto3" json:"displayName,omitempty"`
-	JoinedAt             string   `protobuf:"bytes,4,opt,name=joinedAt,proto3" json:"joinedAt,omitempty"`
+	UserID               string   `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	GuildID              string   `protobuf:"bytes,2,opt,name=guildID,proto3" json:"guildID,omitempty"`
+	Roles                []string `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
+	DisplayName          string   `protobuf:"bytes,4,opt,name=displayName,proto3" json:"displayName,omitempty"`
+	JoinedTimestamp      int32    `protobuf:"varint,5,opt,name=joinedTimestamp,proto3" json:"joinedTimestamp,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -321,7 +408,7 @@ func (m *Member) Reset()         { *m = Member{} }
 func (m *Member) String() string { return proto.CompactTextString(m) }
 func (*Member) ProtoMessage()    {}
 func (*Member) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{5}
+	return fileDescriptor_b9a1f4b766c7849a, []int{7}
 }
 
 func (m *Member) XXX_Unmarshal(b []byte) error {
@@ -342,16 +429,23 @@ func (m *Member) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Member proto.InternalMessageInfo
 
-func (m *Member) GetUser() *User {
+func (m *Member) GetUserID() string {
 	if m != nil {
-		return m.User
+		return m.UserID
 	}
-	return nil
+	return ""
 }
 
-func (m *Member) GetXRoles() []string {
+func (m *Member) GetGuildID() string {
 	if m != nil {
-		return m.XRoles
+		return m.GuildID
+	}
+	return ""
+}
+
+func (m *Member) GetRoles() []string {
+	if m != nil {
+		return m.Roles
 	}
 	return nil
 }
@@ -363,11 +457,50 @@ func (m *Member) GetDisplayName() string {
 	return ""
 }
 
-func (m *Member) GetJoinedAt() string {
+func (m *Member) GetJoinedTimestamp() int32 {
 	if m != nil {
-		return m.JoinedAt
+		return m.JoinedTimestamp
 	}
-	return ""
+	return 0
+}
+
+type Members struct {
+	Members              []*Member `protobuf:"bytes,1,rep,name=members,proto3" json:"members,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Members) Reset()         { *m = Members{} }
+func (m *Members) String() string { return proto.CompactTextString(m) }
+func (*Members) ProtoMessage()    {}
+func (*Members) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{8}
+}
+
+func (m *Members) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Members.Unmarshal(m, b)
+}
+func (m *Members) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Members.Marshal(b, m, deterministic)
+}
+func (m *Members) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Members.Merge(m, src)
+}
+func (m *Members) XXX_Size() int {
+	return xxx_messageInfo_Members.Size(m)
+}
+func (m *Members) XXX_DiscardUnknown() {
+	xxx_messageInfo_Members.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Members proto.InternalMessageInfo
+
+func (m *Members) GetMembers() []*Member {
+	if m != nil {
+		return m.Members
+	}
+	return nil
 }
 
 type User struct {
@@ -383,7 +516,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{6}
+	return fileDescriptor_b9a1f4b766c7849a, []int{9}
 }
 
 func (m *User) XXX_Unmarshal(b []byte) error {
@@ -425,6 +558,45 @@ func (m *User) GetTag() string {
 	return ""
 }
 
+type Users struct {
+	Users                []*User  `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Users) Reset()         { *m = Users{} }
+func (m *Users) String() string { return proto.CompactTextString(m) }
+func (*Users) ProtoMessage()    {}
+func (*Users) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{10}
+}
+
+func (m *Users) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Users.Unmarshal(m, b)
+}
+func (m *Users) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Users.Marshal(b, m, deterministic)
+}
+func (m *Users) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Users.Merge(m, src)
+}
+func (m *Users) XXX_Size() int {
+	return xxx_messageInfo_Users.Size(m)
+}
+func (m *Users) XXX_DiscardUnknown() {
+	xxx_messageInfo_Users.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Users proto.InternalMessageInfo
+
+func (m *Users) GetUsers() []*User {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
 type Channel struct {
 	CreatedAt            string   `protobuf:"bytes,1,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	Id                   string   `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
@@ -437,6 +609,7 @@ type Channel struct {
 	UserLimit            int32    `protobuf:"varint,9,opt,name=userLimit,proto3" json:"userLimit,omitempty"`
 	ParentID             string   `protobuf:"bytes,10,opt,name=parentID,proto3" json:"parentID,omitempty"`
 	RateLimitPerUser     int32    `protobuf:"varint,11,opt,name=rateLimitPerUser,proto3" json:"rateLimitPerUser,omitempty"`
+	Guild                string   `protobuf:"bytes,12,opt,name=guild,proto3" json:"guild,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -446,7 +619,7 @@ func (m *Channel) Reset()         { *m = Channel{} }
 func (m *Channel) String() string { return proto.CompactTextString(m) }
 func (*Channel) ProtoMessage()    {}
 func (*Channel) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{7}
+	return fileDescriptor_b9a1f4b766c7849a, []int{11}
 }
 
 func (m *Channel) XXX_Unmarshal(b []byte) error {
@@ -544,6 +717,52 @@ func (m *Channel) GetRateLimitPerUser() int32 {
 	return 0
 }
 
+func (m *Channel) GetGuild() string {
+	if m != nil {
+		return m.Guild
+	}
+	return ""
+}
+
+type Channels struct {
+	Channels             []*Channel `protobuf:"bytes,1,rep,name=channels,proto3" json:"channels,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *Channels) Reset()         { *m = Channels{} }
+func (m *Channels) String() string { return proto.CompactTextString(m) }
+func (*Channels) ProtoMessage()    {}
+func (*Channels) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{12}
+}
+
+func (m *Channels) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Channels.Unmarshal(m, b)
+}
+func (m *Channels) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Channels.Marshal(b, m, deterministic)
+}
+func (m *Channels) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Channels.Merge(m, src)
+}
+func (m *Channels) XXX_Size() int {
+	return xxx_messageInfo_Channels.Size(m)
+}
+func (m *Channels) XXX_DiscardUnknown() {
+	xxx_messageInfo_Channels.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Channels proto.InternalMessageInfo
+
+func (m *Channels) GetChannels() []*Channel {
+	if m != nil {
+		return m.Channels
+	}
+	return nil
+}
+
 type Role struct {
 	Color                int32    `protobuf:"varint,1,opt,name=color,proto3" json:"color,omitempty"`
 	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -551,6 +770,7 @@ type Role struct {
 	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	Permissions          int32    `protobuf:"varint,5,opt,name=permissions,proto3" json:"permissions,omitempty"`
 	Hoist                bool     `protobuf:"varint,6,opt,name=hoist,proto3" json:"hoist,omitempty"`
+	Guild                string   `protobuf:"bytes,7,opt,name=guild,proto3" json:"guild,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -560,7 +780,7 @@ func (m *Role) Reset()         { *m = Role{} }
 func (m *Role) String() string { return proto.CompactTextString(m) }
 func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9a1f4b766c7849a, []int{8}
+	return fileDescriptor_b9a1f4b766c7849a, []int{13}
 }
 
 func (m *Role) XXX_Unmarshal(b []byte) error {
@@ -623,62 +843,127 @@ func (m *Role) GetHoist() bool {
 	return false
 }
 
+func (m *Role) GetGuild() string {
+	if m != nil {
+		return m.Guild
+	}
+	return ""
+}
+
+type Roles struct {
+	Roles                []*Role  `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Roles) Reset()         { *m = Roles{} }
+func (m *Roles) String() string { return proto.CompactTextString(m) }
+func (*Roles) ProtoMessage()    {}
+func (*Roles) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9a1f4b766c7849a, []int{14}
+}
+
+func (m *Roles) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Roles.Unmarshal(m, b)
+}
+func (m *Roles) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Roles.Marshal(b, m, deterministic)
+}
+func (m *Roles) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Roles.Merge(m, src)
+}
+func (m *Roles) XXX_Size() int {
+	return xxx_messageInfo_Roles.Size(m)
+}
+func (m *Roles) XXX_DiscardUnknown() {
+	xxx_messageInfo_Roles.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Roles proto.InternalMessageInfo
+
+func (m *Roles) GetRoles() []*Role {
+	if m != nil {
+		return m.Roles
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Void)(nil), "fetcher.Void")
+	proto.RegisterType((*ID)(nil), "fetcher.ID")
+	proto.RegisterType((*MultiFetchRequest)(nil), "fetcher.MultiFetchRequest")
+	proto.RegisterType((*SingleFetchRequest)(nil), "fetcher.SingleFetchRequest")
 	proto.RegisterType((*Msg)(nil), "fetcher.Msg")
 	proto.RegisterType((*Guilds)(nil), "fetcher.Guilds")
 	proto.RegisterType((*Guild)(nil), "fetcher.Guild")
-	proto.RegisterType((*GuildRequest)(nil), "fetcher.GuildRequest")
 	proto.RegisterType((*Member)(nil), "fetcher.Member")
+	proto.RegisterType((*Members)(nil), "fetcher.Members")
 	proto.RegisterType((*User)(nil), "fetcher.User")
+	proto.RegisterType((*Users)(nil), "fetcher.Users")
 	proto.RegisterType((*Channel)(nil), "fetcher.Channel")
+	proto.RegisterType((*Channels)(nil), "fetcher.Channels")
 	proto.RegisterType((*Role)(nil), "fetcher.Role")
+	proto.RegisterType((*Roles)(nil), "fetcher.Roles")
 }
 
 func init() { proto.RegisterFile("fetcher.proto", fileDescriptor_b9a1f4b766c7849a) }
 
 var fileDescriptor_b9a1f4b766c7849a = []byte{
-	// 637 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x54, 0x6d, 0x6b, 0x14, 0x31,
-	0x10, 0xee, 0xbe, 0xde, 0x75, 0xae, 0x2f, 0x47, 0xb0, 0x12, 0x0e, 0x3f, 0x9c, 0xab, 0x48, 0x15,
-	0x29, 0xa5, 0x22, 0x7e, 0x55, 0x5a, 0x94, 0x82, 0x15, 0x09, 0xa8, 0x1f, 0x65, 0xbb, 0x97, 0x6e,
-	0x23, 0x7b, 0x9b, 0x6d, 0x92, 0x53, 0xee, 0x9b, 0x3f, 0xc2, 0x9f, 0xa0, 0xbf, 0xc1, 0xbf, 0x27,
-	0x99, 0x64, 0x5f, 0x7a, 0xd2, 0x6f, 0x79, 0x9e, 0x99, 0xcc, 0x64, 0x9e, 0x99, 0x0c, 0xec, 0x5e,
-	0x71, 0x53, 0x5c, 0x73, 0x75, 0xd4, 0x28, 0x69, 0x24, 0x19, 0x79, 0x98, 0xa5, 0x10, 0x7f, 0x96,
-	0x62, 0x91, 0x7d, 0x81, 0xe8, 0x42, 0x97, 0x84, 0xc2, 0xa8, 0x5c, 0x89, 0x6a, 0x71, 0x7e, 0x46,
-	0x83, 0x79, 0x70, 0xb8, 0xcd, 0x5a, 0x48, 0x1e, 0xc0, 0x76, 0x71, 0x9d, 0xd7, 0x35, 0xaf, 0xce,
-	0xcf, 0x68, 0x88, 0xb6, 0x9e, 0xb0, 0xf7, 0x0a, 0x59, 0x1b, 0x5e, 0x1b, 0x1a, 0xb9, 0x7b, 0x1e,
-	0x66, 0xc7, 0x90, 0xbe, 0xb3, 0x21, 0x34, 0x79, 0x02, 0x29, 0x06, 0xd3, 0x34, 0x98, 0x47, 0x87,
-	0x93, 0x93, 0xbd, 0xa3, 0xf6, 0x4d, 0xe8, 0xc0, 0xbc, 0x35, 0xfb, 0x1b, 0x42, 0x82, 0x0c, 0x79,
-	0x0e, 0x63, 0x9f, 0xa2, 0xbd, 0x33, 0xed, 0xee, 0x9c, 0x3a, 0x03, 0xeb, 0x3c, 0xc8, 0x53, 0x18,
-	0x2d, 0xf9, 0xf2, 0x92, 0x2b, 0x4d, 0x43, 0x74, 0xde, 0xef, 0x9c, 0x2f, 0x90, 0x67, 0xad, 0x9d,
-	0x3c, 0x82, 0x44, 0xc9, 0x8a, 0x6b, 0x1a, 0xa1, 0xe3, 0x6e, 0xe7, 0xc8, 0x64, 0xc5, 0x99, 0xb3,
-	0x61, 0xc5, 0x8a, 0xe7, 0x86, 0x2f, 0xde, 0x18, 0x1a, 0xfb, 0x8a, 0x5b, 0x82, 0xcc, 0x61, 0xb2,
-	0xe0, 0xba, 0x50, 0xa2, 0x31, 0x42, 0xd6, 0x34, 0x41, 0xfb, 0x90, 0x22, 0x04, 0x62, 0x51, 0xc8,
-	0x9a, 0xa6, 0x68, 0xc2, 0x33, 0xd9, 0x83, 0x50, 0x2c, 0xe8, 0x08, 0x99, 0x50, 0x2c, 0x6c, 0x14,
-	0xf7, 0xa6, 0x53, 0xb9, 0xaa, 0x0d, 0x1d, 0xcf, 0x83, 0xc3, 0x84, 0x0d, 0x29, 0x1b, 0xa5, 0xce,
-	0x97, 0x9c, 0x6e, 0xbb, 0x28, 0xf6, 0x4c, 0xee, 0x43, 0xaa, 0x78, 0x69, 0xd3, 0x02, 0xb2, 0x1e,
-	0x65, 0xc7, 0xb0, 0xe3, 0xa4, 0xe4, 0x37, 0x2b, 0xae, 0x8d, 0xcf, 0x66, 0x95, 0x73, 0xd9, 0xa6,
-	0x10, 0x95, 0x37, 0x95, 0xef, 0x9e, 0x3d, 0x66, 0x3f, 0x03, 0x48, 0x9d, 0x38, 0xe4, 0x21, 0xc4,
-	0x2b, 0xcd, 0x15, 0xf6, 0x7d, 0x28, 0xc9, 0x27, 0xcd, 0x15, 0x43, 0x13, 0x39, 0x80, 0xf4, 0xab,
-	0xd3, 0x2d, 0xc4, 0x98, 0x09, 0x43, 0xa1, 0xac, 0x14, 0x42, 0x37, 0x55, 0xbe, 0xfe, 0x60, 0x5f,
-	0x1a, 0x79, 0x29, 0x7a, 0x8a, 0xcc, 0x60, 0xfc, 0x4d, 0x8a, 0x7a, 0xa0, 0x64, 0x87, 0xb3, 0xd7,
-	0x10, 0xdb, 0x14, 0xb6, 0xa8, 0xfc, 0x7b, 0x6e, 0x72, 0xe5, 0x27, 0xcf, 0x23, 0x5f, 0x44, 0xd8,
-	0x49, 0x36, 0x85, 0xc8, 0xe4, 0xa5, 0xcf, 0x62, 0x8f, 0xd9, 0x9f, 0x10, 0x46, 0x7e, 0x1c, 0x6e,
-	0x37, 0x2d, 0xd8, 0x6c, 0xda, 0x66, 0x2c, 0x02, 0xb1, 0x59, 0x37, 0xed, 0x93, 0xf1, 0xdc, 0x09,
-	0x1e, 0x0f, 0x04, 0x9f, 0xc1, 0xb8, 0x91, 0x5a, 0x74, 0x9d, 0x4e, 0x58, 0x87, 0xc9, 0x3d, 0x48,
-	0x8c, 0x6c, 0x44, 0xe1, 0xfb, 0xec, 0x00, 0x46, 0xd1, 0x57, 0x3f, 0xb0, 0xd5, 0x63, 0x86, 0x67,
-	0xfb, 0x49, 0x2e, 0x85, 0x51, 0xb9, 0xe1, 0xbe, 0xd1, 0x2d, 0xb4, 0xaf, 0xb6, 0x02, 0xbf, 0x17,
-	0x4b, 0x61, 0xb0, 0xd3, 0x09, 0xeb, 0x09, 0xcc, 0x9e, 0x2b, 0x5e, 0x9b, 0xf3, 0x33, 0xdf, 0xf0,
-	0x0e, 0x93, 0x67, 0x30, 0xb5, 0x11, 0xd0, 0xf1, 0x23, 0x57, 0x56, 0x49, 0x3a, 0xc1, 0x00, 0xff,
-	0xf1, 0xd9, 0xaf, 0x00, 0x62, 0xdb, 0x31, 0xfb, 0xe4, 0x42, 0x56, 0xd2, 0x29, 0x9d, 0x30, 0x07,
-	0xba, 0xc2, 0xc3, 0x3b, 0x0a, 0x8f, 0x36, 0x0a, 0x77, 0x62, 0xc6, 0xc3, 0x59, 0x6e, 0xb8, 0x5a,
-	0x0a, 0xad, 0x85, 0xac, 0xb5, 0xd7, 0x69, 0x48, 0xd9, 0xbc, 0xd7, 0x52, 0x68, 0x83, 0x52, 0x8d,
-	0x99, 0x03, 0x27, 0xbf, 0x03, 0x3f, 0xb6, 0x6f, 0xdd, 0xc4, 0x91, 0x57, 0x30, 0xc1, 0xe1, 0xf3,
-	0x7b, 0xe3, 0x60, 0x63, 0x4f, 0xb8, 0xe1, 0x9e, 0xed, 0xdf, 0xa6, 0x75, 0xb6, 0x45, 0x5e, 0x02,
-	0xf4, 0x17, 0xef, 0xba, 0xb7, 0xb1, 0x76, 0xb2, 0x2d, 0xf2, 0x18, 0x22, 0x9d, 0xaf, 0xc9, 0x4e,
-	0xbf, 0x2e, 0x74, 0x39, 0xeb, 0x3f, 0x00, 0xee, 0xc7, 0xad, 0xcb, 0x14, 0x37, 0xe7, 0x8b, 0x7f,
-	0x01, 0x00, 0x00, 0xff, 0xff, 0x2b, 0x22, 0x4b, 0xc3, 0x4a, 0x05, 0x00, 0x00,
+	// 839 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x56, 0xdb, 0x6e, 0x33, 0x35,
+	0x10, 0x4e, 0xf6, 0x90, 0xc3, 0x24, 0x6d, 0x53, 0xab, 0x42, 0xab, 0x85, 0x8b, 0xc8, 0x45, 0x28,
+	0x40, 0x55, 0x50, 0xe1, 0x02, 0x90, 0x68, 0x8b, 0x1a, 0x15, 0x45, 0x22, 0x08, 0x2d, 0xa7, 0xeb,
+	0x6d, 0xe2, 0xa6, 0x46, 0x9b, 0xf5, 0xb2, 0x76, 0x40, 0xbd, 0x45, 0xe2, 0x2d, 0x78, 0x02, 0x5e,
+	0x81, 0x97, 0x43, 0x63, 0x7b, 0xbd, 0x9b, 0xed, 0xff, 0x47, 0xbd, 0x89, 0x3c, 0xe3, 0xf1, 0x7c,
+	0xe3, 0xef, 0x9b, 0xf1, 0x06, 0x8e, 0x1e, 0x99, 0x5a, 0x3d, 0xb1, 0xf2, 0xb2, 0x28, 0x85, 0x12,
+	0xa4, 0x6f, 0x4d, 0xda, 0x83, 0xe0, 0x17, 0xc1, 0xd7, 0xf4, 0x0c, 0xbc, 0xc5, 0x9c, 0x1c, 0xe3,
+	0x6f, 0xd4, 0x9d, 0x76, 0x67, 0xc3, 0xc4, 0x5b, 0xcc, 0xe9, 0x0d, 0x9c, 0x2e, 0x77, 0x99, 0xe2,
+	0xf7, 0x18, 0x9d, 0xb0, 0xdf, 0x77, 0x4c, 0x2a, 0x12, 0x41, 0x7f, 0xb3, 0xe3, 0xd9, 0xda, 0x45,
+	0x56, 0x26, 0x99, 0x80, 0xbf, 0x98, 0xcb, 0xc8, 0x9b, 0xfa, 0xb3, 0x61, 0x82, 0x4b, 0x7a, 0x0d,
+	0xe4, 0x47, 0x9e, 0x6f, 0x32, 0xf6, 0xca, 0x0c, 0xa6, 0x00, 0xcf, 0x15, 0xf0, 0x2b, 0xf8, 0x4b,
+	0xb9, 0x39, 0x70, 0xe0, 0x3d, 0x18, 0xae, 0x9e, 0xd2, 0x3c, 0x67, 0x99, 0x3b, 0x57, 0x3b, 0xf0,
+	0xdc, 0x4a, 0xe4, 0x8a, 0xe5, 0x2a, 0xf2, 0xcd, 0x39, 0x6b, 0xd2, 0x4f, 0xa1, 0xf7, 0x2d, 0xa6,
+	0x90, 0xe4, 0x03, 0xe8, 0xe9, 0x64, 0x32, 0xea, 0x4e, 0xfd, 0xd9, 0xe8, 0xea, 0xf8, 0xb2, 0xa2,
+	0x4a, 0x07, 0x24, 0x76, 0x97, 0xfe, 0xed, 0x41, 0xa8, 0x3d, 0x24, 0x86, 0x81, 0x85, 0x30, 0x67,
+	0x86, 0x89, 0xb3, 0x11, 0x71, 0xcb, 0xb6, 0x0f, 0xac, 0xac, 0x68, 0xa8, 0x4c, 0x72, 0x06, 0x61,
+	0x29, 0x32, 0x26, 0x23, 0x5f, 0xfb, 0x8d, 0xa1, 0xeb, 0x2f, 0x59, 0xaa, 0xd8, 0xfa, 0x1b, 0x15,
+	0x05, 0xb6, 0xfe, 0xca, 0x41, 0xa6, 0x30, 0x5a, 0x33, 0xb9, 0x2a, 0x79, 0xa1, 0xb8, 0xc8, 0xa3,
+	0x50, 0xef, 0x37, 0x5d, 0x84, 0x40, 0xc0, 0x57, 0x22, 0x8f, 0x7a, 0x7a, 0x4b, 0xaf, 0x91, 0x44,
+	0xbe, 0x8e, 0xfa, 0x86, 0x44, 0xbe, 0xc6, 0x2c, 0xa6, 0x88, 0x3b, 0xb1, 0xcb, 0x55, 0x34, 0x98,
+	0x76, 0x67, 0x61, 0xd2, 0x74, 0x61, 0x96, 0x3c, 0xdd, 0xb2, 0x68, 0x68, 0xb2, 0xe0, 0x9a, 0xbc,
+	0x03, 0xbd, 0x92, 0x6d, 0x10, 0x16, 0xb4, 0xd7, 0x5a, 0xf4, 0x9f, 0x2e, 0xf4, 0x96, 0xfa, 0x2c,
+	0x86, 0xec, 0x24, 0x2b, 0x9d, 0x2a, 0xd6, 0x6a, 0xca, 0xe5, 0xed, 0xcb, 0xf5, 0x66, 0x12, 0xf0,
+	0x9a, 0x5c, 0x16, 0x59, 0xfa, 0xfc, 0x3d, 0x56, 0x11, 0xd8, 0x6b, 0xd6, 0x2e, 0x32, 0x83, 0x93,
+	0xdf, 0x04, 0xcf, 0xd9, 0xfa, 0x27, 0xbe, 0x65, 0x52, 0xa5, 0xdb, 0x42, 0x93, 0x11, 0x26, 0x6d,
+	0x37, 0xfd, 0x1c, 0xfa, 0x4b, 0xcb, 0xf8, 0x87, 0xb5, 0x16, 0x46, 0xda, 0x13, 0x27, 0xad, 0x09,
+	0x71, 0xe2, 0xd0, 0x5b, 0x08, 0x7e, 0x96, 0xe6, 0x46, 0xe9, 0x1f, 0xa9, 0x4a, 0xcb, 0xea, 0x46,
+	0xc6, 0xb2, 0x94, 0x7a, 0x8e, 0xd2, 0x09, 0xf8, 0x2a, 0xdd, 0xd8, 0xa6, 0xc2, 0x25, 0xbd, 0x80,
+	0x10, 0x33, 0x48, 0x72, 0x0e, 0x21, 0xd2, 0x50, 0x61, 0x1e, 0x39, 0x4c, 0xdc, 0x4e, 0xcc, 0x1e,
+	0xfd, 0xcf, 0x83, 0xfe, 0x9d, 0xe9, 0x99, 0xfd, 0x16, 0xe8, 0xb6, 0x5b, 0xa0, 0x8d, 0x4c, 0x20,
+	0x50, 0xcf, 0x05, 0xb3, 0xd0, 0x7a, 0xed, 0xe4, 0x0b, 0x1a, 0xf2, 0xc5, 0x30, 0x28, 0x84, 0xe4,
+	0xae, 0x6f, 0xc2, 0xc4, 0xd9, 0xa8, 0x82, 0x12, 0x05, 0x5f, 0xd9, 0xae, 0x31, 0x86, 0xce, 0x22,
+	0x1f, 0xff, 0xd4, 0x8d, 0x33, 0x48, 0xf4, 0x1a, 0x95, 0x7c, 0xe0, 0xaa, 0x4c, 0x15, 0xb3, 0x6d,
+	0x53, 0x99, 0x58, 0x35, 0x5e, 0xe5, 0x3b, 0xbe, 0xe5, 0x4a, 0xf7, 0x4d, 0x98, 0xd4, 0x0e, 0x8d,
+	0x9e, 0x96, 0x2c, 0x57, 0x8b, 0xb9, 0x6d, 0x1f, 0x67, 0x93, 0x8f, 0x60, 0x82, 0x19, 0x74, 0xe0,
+	0x0f, 0xac, 0x44, 0x5a, 0xa2, 0x91, 0x4e, 0xf0, 0xc2, 0x8f, 0x95, 0xea, 0xd6, 0x89, 0xc6, 0xa6,
+	0x52, 0x6d, 0xd0, 0x2f, 0x60, 0x70, 0x57, 0x0d, 0xdc, 0x45, 0x6b, 0x18, 0x47, 0x57, 0x13, 0xc7,
+	0xb8, 0x0d, 0xaa, 0xc7, 0x93, 0xfe, 0xdb, 0x85, 0x20, 0x11, 0x19, 0xc3, 0xc4, 0x2b, 0x91, 0x09,
+	0xa3, 0x73, 0x98, 0x18, 0xc3, 0x11, 0xe9, 0xbd, 0x85, 0x48, 0xbf, 0x45, 0xa4, 0x11, 0x27, 0x68,
+	0x4e, 0x5a, 0xc1, 0xca, 0x2d, 0x97, 0x92, 0x8b, 0x5c, 0x5a, 0xde, 0x9b, 0x2e, 0xc4, 0x7d, 0x12,
+	0x5c, 0x2a, 0x4d, 0xfd, 0x20, 0x31, 0x46, 0x7d, 0xcd, 0x7e, 0xf3, 0x9a, 0x17, 0x10, 0x26, 0x7a,
+	0x3e, 0xce, 0xab, 0xa9, 0x69, 0xb7, 0x14, 0x6e, 0xdb, 0x21, 0xba, 0xfa, 0x2b, 0x84, 0xb1, 0x7e,
+	0x9f, 0xee, 0xcd, 0x26, 0xf9, 0x04, 0x46, 0x3a, 0xce, 0xbe, 0x73, 0xf5, 0x29, 0x7c, 0xf0, 0xe3,
+	0x93, 0xfd, 0x67, 0x4e, 0xd2, 0x0e, 0xf9, 0x18, 0xa0, 0x3e, 0x40, 0x46, 0x2e, 0x60, 0x31, 0x8f,
+	0x5b, 0x8f, 0x22, 0xed, 0x90, 0x5b, 0xfb, 0x49, 0x71, 0x42, 0xc4, 0xf5, 0x70, 0xb5, 0x3f, 0x19,
+	0xf1, 0x69, 0x5b, 0x12, 0x84, 0xbb, 0x81, 0x71, 0x33, 0x03, 0x79, 0xd7, 0x05, 0xbd, 0xfc, 0x64,
+	0xc4, 0x2f, 0x44, 0xa5, 0x1d, 0x72, 0x6d, 0x13, 0x54, 0xf3, 0x7e, 0xa8, 0x82, 0x49, 0x6b, 0xf4,
+	0xb1, 0x80, 0xaf, 0x2d, 0x41, 0xf6, 0x35, 0x3b, 0x88, 0xdf, 0x7e, 0x3a, 0x68, 0x87, 0x7c, 0x65,
+	0xe9, 0x32, 0x1a, 0x1d, 0x02, 0x3f, 0xde, 0x13, 0x0c, 0xa1, 0xbf, 0x84, 0xa1, 0x3b, 0x7b, 0x18,
+	0x78, 0x5f, 0xec, 0x06, 0xac, 0x79, 0x6d, 0x5e, 0x07, 0xab, 0x63, 0x1b, 0xb0, 0x7a, 0xb6, 0x5e,
+	0x09, 0x8b, 0xb1, 0xb4, 0x43, 0xde, 0x07, 0x5f, 0xa6, 0xcf, 0x64, 0x5c, 0xe3, 0xc9, 0x4d, 0xbc,
+	0xdf, 0x53, 0xb4, 0xf3, 0xd0, 0xd3, 0x7f, 0x2f, 0x3e, 0xfb, 0x3f, 0x00, 0x00, 0xff, 0xff, 0x6e,
+	0x3d, 0x19, 0x59, 0x6f, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -693,8 +978,16 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GuildFetcherClient interface {
-	FetchGuilds(ctx context.Context, in *GuildRequest, opts ...grpc.CallOption) (*Guilds, error)
-	FetchGuild(ctx context.Context, in *GuildRequest, opts ...grpc.CallOption) (*Guild, error)
+	FetchGuilds(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Guilds, error)
+	FetchGuild(ctx context.Context, in *ID, opts ...grpc.CallOption) (*Guild, error)
+	FetchChannels(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Channels, error)
+	FetchChannel(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Channel, error)
+	FetchMembers(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Members, error)
+	FetchMember(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Member, error)
+	FetchRoles(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Roles, error)
+	FetchRole(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Role, error)
+	FetchUsers(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Users, error)
+	FetchUser(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*User, error)
 	Say(ctx context.Context, in *Msg, opts ...grpc.CallOption) (*Void, error)
 }
 
@@ -706,7 +999,7 @@ func NewGuildFetcherClient(cc *grpc.ClientConn) GuildFetcherClient {
 	return &guildFetcherClient{cc}
 }
 
-func (c *guildFetcherClient) FetchGuilds(ctx context.Context, in *GuildRequest, opts ...grpc.CallOption) (*Guilds, error) {
+func (c *guildFetcherClient) FetchGuilds(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Guilds, error) {
 	out := new(Guilds)
 	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchGuilds", in, out, opts...)
 	if err != nil {
@@ -715,9 +1008,81 @@ func (c *guildFetcherClient) FetchGuilds(ctx context.Context, in *GuildRequest, 
 	return out, nil
 }
 
-func (c *guildFetcherClient) FetchGuild(ctx context.Context, in *GuildRequest, opts ...grpc.CallOption) (*Guild, error) {
+func (c *guildFetcherClient) FetchGuild(ctx context.Context, in *ID, opts ...grpc.CallOption) (*Guild, error) {
 	out := new(Guild)
 	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchGuild", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchChannels(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Channels, error) {
+	out := new(Channels)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchChannels", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchChannel(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Channel, error) {
+	out := new(Channel)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchChannel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchMembers(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Members, error) {
+	out := new(Members)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchMembers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchMember(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Member, error) {
+	out := new(Member)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchMember", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchRoles(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Roles, error) {
+	out := new(Roles)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchRoles", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchRole(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*Role, error) {
+	out := new(Role)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchRole", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchUsers(ctx context.Context, in *MultiFetchRequest, opts ...grpc.CallOption) (*Users, error) {
+	out := new(Users)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchUsers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildFetcherClient) FetchUser(ctx context.Context, in *SingleFetchRequest, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -735,8 +1100,16 @@ func (c *guildFetcherClient) Say(ctx context.Context, in *Msg, opts ...grpc.Call
 
 // GuildFetcherServer is the server API for GuildFetcher service.
 type GuildFetcherServer interface {
-	FetchGuilds(context.Context, *GuildRequest) (*Guilds, error)
-	FetchGuild(context.Context, *GuildRequest) (*Guild, error)
+	FetchGuilds(context.Context, *Void) (*Guilds, error)
+	FetchGuild(context.Context, *ID) (*Guild, error)
+	FetchChannels(context.Context, *MultiFetchRequest) (*Channels, error)
+	FetchChannel(context.Context, *SingleFetchRequest) (*Channel, error)
+	FetchMembers(context.Context, *MultiFetchRequest) (*Members, error)
+	FetchMember(context.Context, *SingleFetchRequest) (*Member, error)
+	FetchRoles(context.Context, *MultiFetchRequest) (*Roles, error)
+	FetchRole(context.Context, *SingleFetchRequest) (*Role, error)
+	FetchUsers(context.Context, *MultiFetchRequest) (*Users, error)
+	FetchUser(context.Context, *SingleFetchRequest) (*User, error)
 	Say(context.Context, *Msg) (*Void, error)
 }
 
@@ -744,11 +1117,35 @@ type GuildFetcherServer interface {
 type UnimplementedGuildFetcherServer struct {
 }
 
-func (*UnimplementedGuildFetcherServer) FetchGuilds(ctx context.Context, req *GuildRequest) (*Guilds, error) {
+func (*UnimplementedGuildFetcherServer) FetchGuilds(ctx context.Context, req *Void) (*Guilds, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FetchGuilds not implemented")
 }
-func (*UnimplementedGuildFetcherServer) FetchGuild(ctx context.Context, req *GuildRequest) (*Guild, error) {
+func (*UnimplementedGuildFetcherServer) FetchGuild(ctx context.Context, req *ID) (*Guild, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FetchGuild not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchChannels(ctx context.Context, req *MultiFetchRequest) (*Channels, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchChannels not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchChannel(ctx context.Context, req *SingleFetchRequest) (*Channel, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchChannel not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchMembers(ctx context.Context, req *MultiFetchRequest) (*Members, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchMembers not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchMember(ctx context.Context, req *SingleFetchRequest) (*Member, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchMember not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchRoles(ctx context.Context, req *MultiFetchRequest) (*Roles, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchRoles not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchRole(ctx context.Context, req *SingleFetchRequest) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchRole not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchUsers(ctx context.Context, req *MultiFetchRequest) (*Users, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchUsers not implemented")
+}
+func (*UnimplementedGuildFetcherServer) FetchUser(ctx context.Context, req *SingleFetchRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchUser not implemented")
 }
 func (*UnimplementedGuildFetcherServer) Say(ctx context.Context, req *Msg) (*Void, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Say not implemented")
@@ -759,7 +1156,7 @@ func RegisterGuildFetcherServer(s *grpc.Server, srv GuildFetcherServer) {
 }
 
 func _GuildFetcher_FetchGuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GuildRequest)
+	in := new(Void)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -771,13 +1168,13 @@ func _GuildFetcher_FetchGuilds_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/fetcher.GuildFetcher/FetchGuilds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchGuilds(ctx, req.(*GuildRequest))
+		return srv.(GuildFetcherServer).FetchGuilds(ctx, req.(*Void))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _GuildFetcher_FetchGuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GuildRequest)
+	in := new(ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -789,7 +1186,151 @@ func _GuildFetcher_FetchGuild_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/fetcher.GuildFetcher/FetchGuild",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchGuild(ctx, req.(*GuildRequest))
+		return srv.(GuildFetcherServer).FetchGuild(ctx, req.(*ID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchChannels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchChannels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchChannels",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchChannels(ctx, req.(*MultiFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchChannel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchChannel(ctx, req.(*SingleFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchMembers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchMembers(ctx, req.(*MultiFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchMember",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchMember(ctx, req.(*SingleFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchRoles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchRoles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchRoles",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchRoles(ctx, req.(*MultiFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchRole",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchRole(ctx, req.(*SingleFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchUsers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchUsers(ctx, req.(*MultiFetchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildFetcher_FetchUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleFetchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildFetcherServer).FetchUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/fetcher.GuildFetcher/FetchUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildFetcherServer).FetchUser(ctx, req.(*SingleFetchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -823,6 +1364,38 @@ var _GuildFetcher_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "fetchGuild",
 			Handler:    _GuildFetcher_FetchGuild_Handler,
+		},
+		{
+			MethodName: "fetchChannels",
+			Handler:    _GuildFetcher_FetchChannels_Handler,
+		},
+		{
+			MethodName: "fetchChannel",
+			Handler:    _GuildFetcher_FetchChannel_Handler,
+		},
+		{
+			MethodName: "fetchMembers",
+			Handler:    _GuildFetcher_FetchMembers_Handler,
+		},
+		{
+			MethodName: "fetchMember",
+			Handler:    _GuildFetcher_FetchMember_Handler,
+		},
+		{
+			MethodName: "fetchRoles",
+			Handler:    _GuildFetcher_FetchRoles_Handler,
+		},
+		{
+			MethodName: "fetchRole",
+			Handler:    _GuildFetcher_FetchRole_Handler,
+		},
+		{
+			MethodName: "fetchUsers",
+			Handler:    _GuildFetcher_FetchUsers_Handler,
+		},
+		{
+			MethodName: "fetchUser",
+			Handler:    _GuildFetcher_FetchUser_Handler,
 		},
 		{
 			MethodName: "say",

@@ -1,5 +1,5 @@
 module.exports = {
-  "extends": "aqua/node",
+  "extends": "aqua/vue",
   rules: {
     "indent": ["error", 2],
     "max-depth": ["error", 4],

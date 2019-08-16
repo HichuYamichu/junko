@@ -18,10 +18,9 @@ func New(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
 	return &Resolver{RPC: rpc, DB: db}
 }
 
-// FetchGuilds : resolves FetchGuilds query
-func (r *Resolver) FetchGuilds(ctx context.Context, args fetcher.GuildRequest) (*[]*GuildResolver, error) {
-	query := ctx.Value("query").(string)
-	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.GuildRequest{Id: args.Id, Gql: query})
+// Guilds : resolves Guilds query
+func (r *Resolver) Guilds(ctx context.Context) (*[]*GuildResolver, error) {
+	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.Void{})
 	if err != nil {
 		return nil, err
 	}
@@ -36,11 +35,9 @@ func (r *Resolver) FetchGuilds(ctx context.Context, args fetcher.GuildRequest) (
 	return &res, nil
 }
 
-// FetchGuild : resolves FetchGuild query
-func (r *Resolver) FetchGuild(ctx context.Context, args struct{ ID string }) (*GuildResolver, error) {
-	query := ctx.Value("query").(string)
-	id := []string{args.ID}
-	guild, err := r.RPC.FetchGuild(ctx, &fetcher.GuildRequest{Id: id, Gql: query})
+// Guild : resolves Guild query
+func (r *Resolver) Guild(ctx context.Context, args fetcher.ID) (*GuildResolver, error) {
+	guild, err := r.RPC.FetchGuild(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -48,6 +45,66 @@ func (r *Resolver) FetchGuild(ctx context.Context, args struct{ ID string }) (*G
 	res := GuildResolver{
 		rpc:   r.RPC,
 		guild: guild,
+	}
+
+	return &res, nil
+}
+
+// Channel : resolves Channel query
+func (r *Resolver) Channel(ctx context.Context, args fetcher.SingleFetchRequest) (*ChannelResolver, error) {
+	channel, err := r.RPC.FetchChannel(ctx, &args)
+	if err != nil {
+		return nil, err
+	}
+
+	res := ChannelResolver{
+		rpc:     r.RPC,
+		channel: channel,
+	}
+
+	return &res, nil
+}
+
+// Member : resolves Member query
+func (r *Resolver) Member(ctx context.Context, args fetcher.SingleFetchRequest) (*MemberResolver, error) {
+	member, err := r.RPC.FetchMember(ctx, &args)
+	if err != nil {
+		return nil, err
+	}
+
+	res := MemberResolver{
+		rpc:    r.RPC,
+		member: member,
+	}
+
+	return &res, nil
+}
+
+// Role : resolves Role query
+func (r *Resolver) Role(ctx context.Context, args fetcher.SingleFetchRequest) (*RoleResolver, error) {
+	role, err := r.RPC.FetchRole(ctx, &args)
+	if err != nil {
+		return nil, err
+	}
+
+	res := RoleResolver{
+		rpc:  r.RPC,
+		role: role,
+	}
+
+	return &res, nil
+}
+
+// User : resolves User query
+func (r *Resolver) User(ctx context.Context, args fetcher.SingleFetchRequest) (*UserResolver, error) {
+	user, err := r.RPC.FetchUser(ctx, &args)
+	if err != nil {
+		return nil, err
+	}
+
+	res := UserResolver{
+		rpc:  r.RPC,
+		user: user,
 	}
 
 	return &res, nil
@@ -64,15 +121,15 @@ func (r *Resolver) Say(ctx context.Context, args fetcher.Msg) (*string, error) {
 	return &res, nil
 }
 
-// FetchLogsArgs : arguments for FetchLogs
-type FetchLogsArgs struct {
+// LogsArgs : arguments for Logs
+type LogsArgs struct {
 	Source string
 	Start  int32
 	Stop   int32
 }
 
-// FetchLogs : resolves FetchLogs query
-func (r *Resolver) FetchLogs(ctx context.Context, args FetchLogsArgs) (*LogResolver, error) {
+// Logs : resolves Logs query
+func (r *Resolver) Logs(ctx context.Context, args LogsArgs) (*LogResolver, error) {
 	logs := r.DB.LRange(args.Source, int64(args.Start), int64(args.Stop))
 	res := &LogResolver{
 		logs: logs,

@@ -3,12 +3,34 @@ syntax = "proto3";
 package fetcher;
 
 service GuildFetcher {
-  rpc fetchGuilds (GuildRequest) returns (Guilds) {}
-  rpc fetchGuild (GuildRequest) returns (Guild) {}
+  rpc fetchGuilds (Void) returns (Guilds) {}
+  rpc fetchGuild (ID) returns (Guild) {}
+  rpc fetchChannels (MultiFetchRequest) returns (Channels) {}
+  rpc fetchChannel (SingleFetchRequest) returns (Channel) {}
+  rpc fetchMembers (MultiFetchRequest) returns (Members) {}
+  rpc fetchMember (SingleFetchRequest) returns (Member) {}
+  rpc fetchRoles (MultiFetchRequest) returns (Roles) {}
+  rpc fetchRole (SingleFetchRequest) returns (Role) {}
+  rpc fetchUsers (MultiFetchRequest) returns (Users) {}
+  rpc fetchUser (SingleFetchRequest) returns (User) {}
   rpc say (Msg) returns (Void) {}
 }
 
 message Void {}
+
+message ID {
+  string ID = 1;
+}
+
+message MultiFetchRequest {
+  string guildID = 1;
+  repeated string IDs = 2;
+}
+
+message SingleFetchRequest {
+  string guildID = 1;
+  string ID = 2;
+}
 
 message Msg {
   string guildID = 1;
@@ -21,9 +43,9 @@ message Guilds {
 }
 
 message Guild {
-  repeated Channel channels = 1;
-  repeated Member members = 2;
-  repeated Role roles = 3;
+  repeated string channels = 1;
+  repeated string members = 2;
+  repeated string roles = 3;
   string createdAt = 4; 
   string description = 5;
   string icon = 6;
@@ -33,23 +55,26 @@ message Guild {
   string region = 10;
 }
 
-message GuildRequest {
-  repeated string id = 1;
-  string gql = 2;
-}
-
 message Member {
-  User user = 1;
-  repeated string _roles = 2;
-  string displayName = 3;
-  string joinedAt = 4;
+  string userID = 1;
+  string guildID = 2;
+  repeated string roles = 3;
+  string displayName = 4;
+  int32 joinedTimestamp = 5;
 }
 
+message Members {
+  repeated Member members = 1;
+}
 
 message User {
   string avatar = 1;
   string id = 2;
   string tag = 3;
+}
+
+message Users {
+  repeated User users = 1;
 }
 
 message Channel {
@@ -64,6 +89,11 @@ message Channel {
   int32 userLimit = 9;
   string parentID = 10;
   int32 rateLimitPerUser = 11;
+  string guild = 12;
+}
+
+message Channels {
+  repeated Channel channels = 1;
 }
 
 message Role {
@@ -73,5 +103,10 @@ message Role {
   string id = 4;
   int32 permissions = 5;
   bool hoist = 6;
+  string guild = 7;
+}
+
+message Roles {
+  repeated Role roles = 1;
 }
 

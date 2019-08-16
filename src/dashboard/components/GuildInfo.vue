@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="guild">
     <v-card-text>
       <span>Guild ID:</span>
       {{ guild.id }}
@@ -7,44 +7,61 @@
     <v-divider></v-divider>
     <v-card-text>
       <span>Guild icon:</span>
-      {{ guild.icon || 'N/A' }}
+      {{ guild.icon }}
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>
       <span>Guild created at:</span>
-      {{ guild.createdAt || 'N/A' }}
+      {{ guild.createdAt }}
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>
       <span>Guild description:</span>
-      {{ guild.description || 'N/A' }}
+      {{ guild.description }}
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>
       <span>Guild member count:</span>
-      {{ guild.memberCount || 'N/A' }}
+      {{ guild.memberCount }}
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>
       <span>Guild region:</span>
-      {{ guild.region || 'N/A' }}
+      {{ guild.region }}
     </v-card-text>
   </div>
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
-  computed: {
-    guild() {
-      return this.$store.getters.guild(this.$route.params.id);
+  apollo: {
+    guild: {
+      query: gql`
+        query Guild($id: String!) {
+          guild: Guild(ID: $id) {
+            id
+            name
+            icon
+            createdAt
+            description
+            memberCount
+            region
+          }
+        }
+      `,
+      variables() {
+        return { id: this.$route.params.id};
+      }
     }
   }
 };
 </script>
 
 <style>
-  span {
-    font-weight: 700;
-    font-size: 1.2em
-  }
+span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
 </style>

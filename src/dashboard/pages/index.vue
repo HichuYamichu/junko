@@ -1,12 +1,10 @@
 <template>
-  <!-- <stats></stats> -->
+  <div></div>
 </template>
 
 <script>
-import Stats from "@/components/Stats";
+
 export default {
-  components: {
-    Stats
-  }
+
 };
 </script>

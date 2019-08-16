@@ -2,12 +2,12 @@
   <v-app dark>
     <v-navigation-drawer :clipped="true" fixed app>
       <v-list>
-        <v-list-item v-for="(guild, i) in guilds" :key="i" nuxt :to="`/guild/${guild.id}`">
+        <v-list-item v-for="(guild, i) in guilds" :key="i" nuxt :to="`/guilds/${guild.id}`">
           <v-list-item-avatar v-if="guild.icon">
             <v-img :src="`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title v-text="guild.name || guild.id" />
+            <v-list-item-title v-text="guild.name" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -32,11 +32,22 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
-  data() {
-    return {
-      guilds: this.$store.getters.guilds
-    };
+  apollo: {
+    guilds: {
+      query: gql`
+        {
+          Guilds {
+            id
+            name
+            icon
+          }
+        }
+      `,
+      update: ({ Guilds }) => Guilds,
+    }
   },
   methods: {
     index: function() {

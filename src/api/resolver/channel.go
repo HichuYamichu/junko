@@ -66,3 +66,16 @@ func (c *ChannelResolver) ParentID(ctx context.Context) *string {
 func (c *ChannelResolver) RateLimitPerUser(ctx context.Context) *int32 {
 	return &c.channel.RateLimitPerUser
 }
+
+// Guild : resolves channel Guild
+func (c *ChannelResolver) Guild(ctx context.Context) (*GuildResolver, error) {
+	guild, err := c.rpc.FetchGuild(ctx, &fetcher.ID{ID: c.channel.Guild})
+	if err != nil {
+		return nil, err
+	}
+	r := &GuildResolver{
+		rpc:   c.rpc,
+		guild: guild,
+	}
+	return r, nil
+}

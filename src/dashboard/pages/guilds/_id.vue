@@ -1,9 +1,9 @@
 <template>
-  <v-card>
+  <v-card v-if="guild">
     <v-app-bar flat color="secondary">
-      <v-toolbar-title class="font-weight-medium display-1">Guild name: {{ guild.name || 'N/A'}}</v-toolbar-title>
+      <v-toolbar-title class="font-weight-medium display-1">Guild name: {{ guild.name }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="fetchGuild">
+      <v-btn>
         <v-icon>fetch</v-icon>
       </v-btn>
     </v-app-bar>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
 import GuildInfo from "@/components/GuildInfo";
 import GuildChannels from "@/components/GuildChannels";
 import GuildMembers from "@/components/GuildMembers";
@@ -42,19 +43,26 @@ import GuildMembers from "@/components/GuildMembers";
 export default {
   name: "Guild",
   components: {
-    GuildInfo,
-    GuildChannels,
-    GuildMembers
+    GuildInfo
   },
-  computed: {
-    guild() {
-      return this.$store.getters.guild(this.$route.params.id);
+  apollo: {
+    guild: {
+      query: gql`
+        query Guild($id: String!) {
+          guild: Guild(ID: $id) {
+            name
+          }
+        }
+      `,
+      variables() {
+        return { id: this.$route.params.id };
+      }
     }
   },
-  methods: {
-    fetchGuild() {
-      this.$store.dispatch("fetchGuild", this.$route.params.id);
-    }
+  head() {
+    return {
+      title: this.guild ? `${this.guild.name}` : "Loading"
+    };
   }
 };
 </script>

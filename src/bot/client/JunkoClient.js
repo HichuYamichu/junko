@@ -26,6 +26,10 @@ module.exports = class extends AkairoClient {
         ownerID: config.ownerID
       },
       {
+        messageCacheMaxSize: 50,
+        messageCacheLifetime: 60 * 15,
+        messageSweepInterval: 60 * 45,
+        fetchAllMembers: true,
         disableEveryone: true,
         disabledEvents: ['TYPING_START']
       }

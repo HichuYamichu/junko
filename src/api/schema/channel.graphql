@@ -10,4 +10,5 @@ type Channel {
   userLimit: Int
   parentID: String
   rateLimitPerUser: Int
+  guild: Guild
 }

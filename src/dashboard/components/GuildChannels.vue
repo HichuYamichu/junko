@@ -110,7 +110,6 @@
 </template>
 
 <script>
-import GuildApi from '@/api/guilds'
 
 export default {
   data() {

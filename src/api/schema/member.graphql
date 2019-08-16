@@ -1,6 +1,7 @@
 type Member {
   user: User
-  _roles: [String!]
+  guild: Guild
+  roles: [Role]
   displayName: String
-  joinedAt: String
+  joinedTimestamp: Int
 }
