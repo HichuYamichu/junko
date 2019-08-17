@@ -1,34 +1,42 @@
 <template>
-  <div v-if="guild">
-    <v-card-text>
-      <span>Guild ID:</span>
-      {{ guild.id }}
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
-      <span>Guild icon:</span>
-      {{ guild.icon }}
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
-      <span>Guild created at:</span>
-      {{ guild.createdAt }}
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
-      <span>Guild description:</span>
-      {{ guild.description }}
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
-      <span>Guild member count:</span>
-      {{ guild.memberCount }}
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
-      <span>Guild region:</span>
-      {{ guild.region }}
-    </v-card-text>
+  <div>
+    <v-overlay v-if="!guild" absolute>
+      <v-progress-circular
+      indeterminate
+      color="primary"
+    ></v-progress-circular>
+    </v-overlay>
+    <div v-else>
+      <v-card-text>
+        <span>Guild ID:</span>
+        {{ guild.id }}
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <span>Guild icon:</span>
+        {{ guild.icon }}
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <span>Guild created at:</span>
+        {{ guild.createdAt }}
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <span>Guild description:</span>
+        {{ guild.description }}
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <span>Guild member count:</span>
+        {{ guild.memberCount }}
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-text>
+        <span>Guild region:</span>
+        {{ guild.region }}
+      </v-card-text>
+    </div>
   </div>
 </template>
 
@@ -52,7 +60,7 @@ export default {
         }
       `,
       variables() {
-        return { id: this.$route.params.id};
+        return { id: this.$route.params.id };
       }
     }
   }

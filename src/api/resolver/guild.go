@@ -22,9 +22,9 @@ func (g *GuildResolver) Name(ctx context.Context) *string {
 	return &g.guild.Name
 }
 
-// CreatedAt : resolves guild creation date
-func (g *GuildResolver) CreatedAt(ctx context.Context) *string {
-	return &g.guild.CreatedAt
+// CreatedTimestamp : resolves guild CreatedTimestamp
+func (g *GuildResolver) CreatedTimestamp(ctx context.Context) *string {
+	return &g.guild.CreatedTimestamp
 }
 
 // Description : resolves guild Description

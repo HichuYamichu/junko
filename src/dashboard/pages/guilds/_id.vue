@@ -37,19 +37,21 @@
 <script>
 import gql from "graphql-tag";
 import GuildInfo from "@/components/GuildInfo";
-import GuildChannels from "@/components/GuildChannels";
-import GuildMembers from "@/components/GuildMembers";
+import GuildChannels from "@/components/GuildChannels/GuildChannels";
+// import GuildMembers from "@/components/GuildMembers";
 
 export default {
   name: "Guild",
   components: {
-    GuildInfo
+    GuildInfo,
+    GuildChannels
   },
   apollo: {
     guild: {
       query: gql`
         query Guild($id: String!) {
           guild: Guild(ID: $id) {
+            id
             name
           }
         }

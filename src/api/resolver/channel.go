@@ -22,9 +22,9 @@ func (c *ChannelResolver) Name(ctx context.Context) *string {
 	return &c.channel.Name
 }
 
-// CreatedAt : resolves channel creation date
-func (c *ChannelResolver) CreatedAt(ctx context.Context) *string {
-	return &c.channel.CreatedAt
+// CreatedTimestamp : resolves channel CreatedTimestamp
+func (c *ChannelResolver) CreatedTimestamp(ctx context.Context) *string {
+	return &c.channel.CreatedTimestamp
 }
 
 // Type : resolves channel Type
@@ -32,9 +32,9 @@ func (c *ChannelResolver) Type(ctx context.Context) *string {
 	return &c.channel.Type
 }
 
-// Position : resolves channel Position
-func (c *ChannelResolver) Position(ctx context.Context) *int32 {
-	return &c.channel.Position
+// RawPosition : resolves channel RawPosition
+func (c *ChannelResolver) RawPosition(ctx context.Context) *int32 {
+	return &c.channel.RawPosition
 }
 
 // Topic : resolves channel Topic

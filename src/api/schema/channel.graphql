@@ -1,9 +1,9 @@
 type Channel {
   id: String
   name: String
-  createdAt: String
+  createdTimestamp: String
   type: String
-  position: Int
+  rawPosition: Int
   topic: String
   nsfw: Boolean
   bitrate: Int

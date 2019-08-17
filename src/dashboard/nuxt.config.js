@@ -33,9 +33,7 @@ export default {
 
   apollo: {
     clientConfigs: {
-      'default': {
-        httpEndpoint: 'http://localhost:3000/gql'
-      }
+      'default': '@/plugins/apollo-config.js'
     }
   },
 

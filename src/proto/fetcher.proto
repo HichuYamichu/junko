@@ -46,7 +46,7 @@ message Guild {
   repeated string channels = 1;
   repeated string members = 2;
   repeated string roles = 3;
-  string createdAt = 4; 
+  string createdTimestamp = 4; 
   string description = 5;
   string icon = 6;
   string id = 7;
@@ -78,11 +78,11 @@ message Users {
 }
 
 message Channel {
-  string createdAt = 1;
+  string createdTimestamp = 1;
   string id = 2;
   string type = 3;
   string name = 4;
-  int32 position = 5;
+  int32 rawPosition = 5;
   string topic = 6;
   bool nsfw = 7;
   int32 bitrate = 8;
