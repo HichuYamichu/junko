@@ -1,7 +1,7 @@
 type Role {
   color: Int
   name: String
-  position: Int
+  rawPosition: Int
   id: String
   permissions: Int
   hoist: Boolean

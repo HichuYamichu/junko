@@ -22,9 +22,9 @@ func (r *RoleResolver) Name(ctx context.Context) *string {
 	return &r.role.Name
 }
 
-// Position : resolves role Position
-func (r *RoleResolver) Position(ctx context.Context) *int32 {
-	return &r.role.Position
+// RawPosition : resolves role RawPosition
+func (r *RoleResolver) RawPosition(ctx context.Context) *int32 {
+	return &r.role.RawPosition
 }
 
 // ID : resolves role Id

@@ -1,41 +1,16 @@
 <template>
   <div>
     <v-overlay v-if="!guild" absolute>
-      <v-progress-circular
-      indeterminate
-      color="primary"
-    ></v-progress-circular>
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </v-overlay>
     <div v-else>
-      <v-card-text>
-        <span>Guild ID:</span>
-        {{ guild.id }}
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-text>
-        <span>Guild icon:</span>
-        {{ guild.icon }}
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-text>
-        <span>Guild created at:</span>
-        {{ guild.createdAt }}
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-text>
-        <span>Guild description:</span>
-        {{ guild.description }}
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-text>
-        <span>Guild member count:</span>
-        {{ guild.memberCount }}
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-text>
-        <span>Guild region:</span>
-        {{ guild.region }}
-      </v-card-text>
+      <div v-for="(field, name) in fields" :key="name">
+        <v-card-text>
+          <span>{{ field }}</span>
+          {{ guild[name] }}
+        </v-card-text>
+        <v-divider></v-divider>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +19,19 @@
 import gql from "graphql-tag";
 
 export default {
+  data() {
+    return {
+      fields: {
+        id: "ID:",
+        name: "name:",
+        description: "description",
+        region: "region:",
+        createdTimestamp: "created timestamp:",
+        icon: "icon:",
+        memberCount: "member count:",
+      }
+    };
+  },
   apollo: {
     guild: {
       query: gql`
@@ -52,7 +40,7 @@ export default {
             id
             name
             icon
-            createdAt
+            createdTimestamp
             description
             memberCount
             region

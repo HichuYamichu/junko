@@ -99,7 +99,7 @@ message Channels {
 message Role {
   int32 color = 1;
   string name = 2;
-  int32 position = 3;
+  int32 rawPosition = 3;
   string id = 4;
   int32 permissions = 5;
   bool hoist = 6;

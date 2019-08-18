@@ -38,13 +38,14 @@
 import gql from "graphql-tag";
 import GuildInfo from "@/components/GuildInfo";
 import GuildChannels from "@/components/GuildChannels/GuildChannels";
-// import GuildMembers from "@/components/GuildMembers";
+import GuildMembers from "@/components/GuildMembers/GuildMembers";
 
 export default {
   name: "Guild",
   components: {
     GuildInfo,
-    GuildChannels
+    GuildChannels,
+    GuildMembers
   },
   apollo: {
     guild: {
