@@ -1,0 +1,25 @@
+FROM golang:latest AS build
+
+WORKDIR /build
+
+ENV GO111MODULE=on
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o fetcher-api ./cmd/fetcher-api/main.go
+
+FROM scratch
+
+WORKDIR /app
+
+COPY --from=build /build/fetcher-api /app/
+
+COPY ./schema ./schema
+
+EXPOSE 3000
+
+CMD ["./fetcher-api", "-port=3000", "-host=0.0.0.0" ,"-redisURI=redis:6379", "-gRPCAddr=bot:50051"]

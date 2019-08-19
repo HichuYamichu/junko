@@ -2,7 +2,12 @@ import colors from 'vuetify/es5/util/colors';
 
 export default {
   server: {
-    port: 8000
+    port: process.env.NUXT_PORT || 8080,
+    host: process.env.NUXT_HOST || '127.0.0.1'
+  },
+  env: {
+    API_SERVER_SIDE: process.env.API_SERVER_SIDE,
+    API_CLIENT_SIDE: process.env.API_CLIENT_SIDE
   },
   mode: 'universal',
 
@@ -29,7 +34,7 @@ export default {
 
   devModules: ['@nuxtjs/vuetify'],
 
-  modules: ['@nuxtjs/apollo'],
+  modules: ['@nuxtjs/apollo', '@nuxtjs/dotenv'],
 
   apollo: {
     clientConfigs: {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/HichuYamichu/fetcher-api/fetcher"
@@ -15,6 +16,7 @@ import (
 	util "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/graph-gophers/graphql-go"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
 
@@ -60,11 +62,12 @@ func (a *App) setupRouter() http.Handler {
 	r := mux.NewRouter()
 	r.Handle("/gql", a.Handler)
 	r.Handle("/", &handler.GraphiQL{})
+	r.Handle("/metrics", promhttp.Handler())
 
 	allowedHeaders := util.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	allowedOrigins := util.AllowedOrigins([]string{"*"})
 	allowedMethods := util.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-	h := util.LoggingHandler(a.Logger, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
+	h := util.LoggingHandler(os.Stdout, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
 	return h
 }
 

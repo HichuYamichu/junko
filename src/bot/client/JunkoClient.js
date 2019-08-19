@@ -18,6 +18,10 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync(protoPath);
 const serviceDeff = grpc.loadPackageDefinition(packageDefinition).fetcher;
+const { Counter, register, collectDefaultMetrics } = require('prom-client');
+const { createServer } = require('http');
+const { parse } = require('url');
+collectDefaultMetrics();
 
 module.exports = class extends AkairoClient {
   constructor(config) {
@@ -53,6 +57,22 @@ module.exports = class extends AkairoClient {
     });
 
     this.rpc = new grpc.Server();
+
+    this.prometheus = {
+      commandCounter: new Counter({
+        name: 'total_commands_used',
+        help: 'Total number of used commands'
+      }),
+      register
+    };
+
+    this.promSrv = createServer((req, res) => {
+      if (parse(req.url).pathname === '/metrics') {
+        res.writeHead(200, { 'Content-Type': this.prometheus.register.contentType });
+        res.write(this.prometheus.register.metrics());
+      }
+      res.end();
+    });
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
@@ -114,6 +134,8 @@ module.exports = class extends AkairoClient {
     this.rpc.addService(serviceDeff.GuildFetcher.service, RPCMethods(this));
     this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
     this.rpc.start();
+
+    this.promSrv.listen(9091);
   }
 
   async start() {

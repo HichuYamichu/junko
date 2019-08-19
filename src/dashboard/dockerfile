@@ -6,11 +6,13 @@ COPY package.json ./
 RUN yarn
 
 ENV NUXT_HOST= \
-NUXT_PORT= 
+  NUXT_PORT= \
+  API_SERVER_SIDE= \
+  API_CLIENT_SIDE=
 
 COPY . .
 RUN yarn build && yarn cache clean
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["yarn", "start"]
