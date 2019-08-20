@@ -20,4 +20,6 @@ SPOTIFY_SECRET= \
 OWNER_ID= \
 REDIS_URI= 
 
+EXPOSE 5000
+
 CMD ["yarn", "start"]

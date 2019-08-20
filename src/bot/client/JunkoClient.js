@@ -5,20 +5,21 @@ const {
   ListenerHandler
 } = require('discord-akairo');
 const { replies } = require('../util/replies');
-const RPCMethods = require('../grpc/methods');
-const { join } = require('path');
 const createLogger = require('../logger/logger');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
+const { join } = require('path');
 const protoPath = join(__dirname, '../..', 'proto/fetcher.proto');
 const grpc = require('grpc');
+const interceptors = require('@hpidcock/node-grpc-interceptors');
 const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync(protoPath);
 const serviceDeff = grpc.loadPackageDefinition(packageDefinition).fetcher;
-const { Counter, register, collectDefaultMetrics } = require('prom-client');
+const RPCHandler = require('../grpc/handler');
+const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-client');
 const { createServer } = require('http');
 const { parse } = require('url');
 collectDefaultMetrics();
@@ -56,12 +57,30 @@ module.exports = class extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
-    this.rpc = new grpc.Server();
+    this.rpc = interceptors.serverProxy(new grpc.Server());
+
+    this.RPCHandler = new RPCHandler(this);
 
     this.prometheus = {
       commandCounter: new Counter({
         name: 'total_commands_used',
         help: 'Total number of used commands'
+      }),
+      grpcServerStartedTotal: new Counter({
+        labelNames: ['grpc_type', 'grpc_service', 'grpc_method'],
+        name: 'grpc_server_started_total',
+        help: 'Total number of RPCs started.'
+      }),
+      grpcServerHandledTotal: new Counter({
+        labelNames: ['grpc_type', 'grpc_service', 'grpc_method', 'grpc_code'],
+        name: 'grpc_server_handled_total',
+        help: 'Total number of RPCs completed.'
+      }),
+      grpcServerHandleTime: new Histogram({
+        labelNames: ['grpc_type', 'grpc_service', 'grpc_method', 'grpc_code'],
+        name: 'grpc_server_handle_time',
+        buckets: [0.1, 5, 15, 50, 100, 500],
+        help: 'Response latency of gRPC.'
       }),
       register
     };
@@ -131,11 +150,12 @@ module.exports = class extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
-    this.rpc.addService(serviceDeff.GuildFetcher.service, RPCMethods(this));
+    this.rpc.use(this.RPCHandler.promMiddleware);
+    this.rpc.addService(serviceDeff.GuildFetcher.service, this.RPCHandler);
     this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
     this.rpc.start();
 
-    this.promSrv.listen(9091);
+    this.promSrv.listen(5000);
   }
 
   async start() {

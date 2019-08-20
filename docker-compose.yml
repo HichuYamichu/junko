@@ -11,6 +11,8 @@ services:
       - ./src/bot/.env
     volumes:
       - ./src/proto:/usr/src/proto
+    ports:
+      - '5000:5000'
   api:
     container_name: api
     restart: always

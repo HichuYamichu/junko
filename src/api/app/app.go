@@ -16,16 +16,19 @@ import (
 	util "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/graph-gophers/graphql-go"
+	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
 
 // App : Application struct
 type App struct {
-	Router  http.Handler
-	Handler *handler.GraphQL
-	Logger  *logger.Logger
-	Adrr    string
+	Router   http.Handler
+	Handler  *handler.GraphQL
+	Registry *prometheus.Registry
+	Logger   *logger.Logger
+	Adrr     string
 }
 
 // New : Initialize new server instance
@@ -40,10 +43,23 @@ func New(host, port, redisURI, gRPCAddr string) *App {
 	a.Logger = logger.New(db)
 	log.SetOutput(a.Logger)
 
-	conn, err := grpc.Dial(gRPCAddr, grpc.WithInsecure())
+	reg := prometheus.NewRegistry()
+	grpcMetrics := grpc_prometheus.NewClientMetrics()
+	reg.MustRegister(grpcMetrics)
+	reg.MustRegister(prometheus.NewGoCollector())
+	reg.MustRegister(prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}))
+	a.Registry = reg
+
+	conn, err := grpc.Dial(
+		gRPCAddr,
+		grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
+		grpc.WithStreamInterceptor(grpcMetrics.StreamClientInterceptor()),
+		grpc.WithInsecure(),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	rpc := fetcher.NewGuildFetcherClient(conn)
 
 	s, err := schema.Load()
@@ -62,7 +78,7 @@ func (a *App) setupRouter() http.Handler {
 	r := mux.NewRouter()
 	r.Handle("/gql", a.Handler)
 	r.Handle("/", &handler.GraphiQL{})
-	r.Handle("/metrics", promhttp.Handler())
+	r.Handle("/metrics", promhttp.HandlerFor(a.Registry, promhttp.HandlerOpts{}))
 
 	allowedHeaders := util.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	allowedOrigins := util.AllowedOrigins([]string{"*"})
