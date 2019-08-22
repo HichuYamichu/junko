@@ -8,7 +8,7 @@ class BlacklistInhibitor extends Inhibitor {
   }
 
   async exec(message) {
-    const res = await this.client.store.hgetAsync('blacklist', message.author.id);
+    const res = await this.client.store.checkBlackList(message.author.id);
     return res;
   }
 }

@@ -4,27 +4,25 @@ const {
   InhibitorHandler,
   ListenerHandler
 } = require('discord-akairo');
-const { replies } = require('../util/replies');
-const createLogger = require('../logger/logger');
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
-const redis = require('redis');
-const bluebird = require('bluebird');
-bluebird.promisifyAll(redis);
 const { join } = require('path');
 const protoPath = join(__dirname, '../..', 'proto/fetcher.proto');
 const grpc = require('grpc');
-const interceptors = require('@hpidcock/node-grpc-interceptors');
+const { serverProxy } = require('@hpidcock/node-grpc-interceptors');
 const protoLoader = require('@grpc/proto-loader');
-const packageDefinition = protoLoader.loadSync(protoPath);
-const serviceDeff = grpc.loadPackageDefinition(packageDefinition).fetcher;
-const RPCHandler = require('../grpc/handler');
+const packageDeff = protoLoader.loadSync(protoPath);
+const serviceDeff = grpc.loadPackageDefinition(packageDeff).fetcher;
+const Store = require('./Store');
+const RPCHandler = require('./RPCHandler');
+const Logger = require('./Logger');
+const ReplyManager = require('./ReplyManager');
 const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-client');
 const { createServer } = require('http');
 const { parse } = require('url');
 collectDefaultMetrics();
 
-module.exports = class extends AkairoClient {
+module.exports = class JunkoClient extends AkairoClient {
   constructor(config) {
     super(
       {
@@ -42,13 +40,11 @@ module.exports = class extends AkairoClient {
 
     this.config = config;
 
-    this.replies = replies;
+    this.store = Store;
 
-    this.color = '#fc2041';
+    this.logger = Logger;
 
-    this.store = redis.createClient({ host: config.redisURI });
-
-    this.logger = createLogger(this.store);
+    this.replyManager = ReplyManager;
 
     this.yt = new YouTube(config.YouTubeSecret);
 
@@ -57,7 +53,7 @@ module.exports = class extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
-    this.rpc = interceptors.serverProxy(new grpc.Server());
+    this.rpc = serverProxy(new grpc.Server());
 
     this.RPCHandler = new RPCHandler(this);
 
@@ -95,7 +91,7 @@ module.exports = class extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: msg => this._getPrefix(msg),
+      prefix: msg => this.store.getGuildPrefix(msg),
       aliasReplacement: /-/g,
       allowMention: true,
       commandUtil: true,
@@ -107,8 +103,8 @@ module.exports = class extends AkairoClient {
           modifyStart: (_, str) =>
             `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
           modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
-          timeout: this.replies.get('timeout'),
-          ended: this.replies.get('ended'),
+          timeout: msg => this.replyManager.reply(msg, 'timeout'),
+          ended: msg => this.replyManager.reply(msg, 'ended'),
           cancel: 'The command has been cancelled.',
           retries: 3,
           time: 20000
@@ -126,15 +122,11 @@ module.exports = class extends AkairoClient {
     });
   }
 
-  async _getPrefix(msg) {
-    if (msg.guild) {
-      const token = await this.store.hgetAsync(msg.guild.id, 'prefix');
-      if (token) return token;
-    }
-    return '!';
-  }
-
   async _init() {
+    this.store._init(this.config.redisURI);
+    this.logger._init(this.store);
+    this.replyManager._init(this.store);
+
     const { body } = await this.spotify.clientCredentialsGrant();
     this.spotify.setAccessToken(body.access_token);
 

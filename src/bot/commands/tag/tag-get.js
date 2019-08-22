@@ -14,16 +14,22 @@ class TagGetCommand extends Command {
             start: message => `${message.author}, enter the tag name.`,
             retry: message => `${message.author}, you have to enter valid tag name.`
           }
+        },
+        {
+          id: 'silent',
+          match: 'flag',
+          flag: '--silent'
         }
       ]
     });
   }
 
-  async exec(message, { name }) {
-    const tag = await this.client.store.hgetAsync(`tags-${message.guild.id}`, name);
+  async exec(message, { name, silent }) {
+    const tag = await this.client.store.getTag(message.guild.id, name);
     if (tag) {
       return message.util.send(tag);
     }
+    if (silent) return;
     return message.util.send('No such tag');
   }
 }

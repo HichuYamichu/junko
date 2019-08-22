@@ -28,7 +28,7 @@ class UserInfoCommand extends Command {
   async exec(message, { member }) {
     const embed = this.client.util.embed();
     embed
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .setDescription(`Info about **${member.user.tag}** (ID: ${member.id})`)
       .addField(
         'Member Details:',

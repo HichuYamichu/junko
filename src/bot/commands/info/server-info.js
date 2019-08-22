@@ -21,7 +21,7 @@ class ServerInfoCommand extends Command {
   async exec(message, args) {
     const embed = this.client.util.embed();
     embed
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .setDescription(`Info about **${message.guild.name}** (ID: ${message.guild.id})`)
       .addField(
         'Channels:',

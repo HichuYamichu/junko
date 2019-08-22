@@ -25,15 +25,16 @@ class StatsCommand extends Command {
     const hours = Math.floor((uptime - days * 86400) / 3600);
     const minutes = Math.floor((uptime - hours * 3600) / 60);
     const seconds = Math.floor(uptime - hours * 3600 - minutes * 60);
-    const lastRS = await message.client.store.getAsync('LastRestart');
+    const lastRS = await message.client.store.getLastRestartDate();
     const author = `${message.client.users.get(message.client.config.ownerID).tag}`;
     const guildsCount = message.client.guilds.size;
     const channelsCount = message.client.channels.size;
     const usersCount = message.client.users.size;
 
-    const embed = this.client.util.embed()
+    const embed = this.client.util
+      .embed()
       .setTitle('**Stats:**')
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`, true)
       .addField('Uptime:', `${days}d ${hours}h ${minutes}m ${seconds}s`, true)
       .addField(

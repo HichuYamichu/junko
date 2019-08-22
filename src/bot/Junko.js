@@ -1,5 +1,4 @@
 require('dotenv').config();
-const moment = require('moment');
 const JunkoClient = require('./client/JunkoClient');
 
 const client = new JunkoClient({
@@ -8,7 +7,8 @@ const client = new JunkoClient({
   SpotifyID: process.env.SPOTIFY_ID,
   SpotifySecret: process.env.SPOTIFY_SECRET,
   token: process.env.TOKEN,
-  redisURI: process.env.REDIS_URI
+  redisURI: process.env.REDIS_URI,
+  color: '#fc2041'
 });
 
 client
@@ -18,16 +18,14 @@ client
 
 client.start();
 
-const now = () => moment.utc().format('DD-MM-YYYY[\n]HH:mm:ss');
-
 process.on('exit', () => {
-  client.store.set('LastRestart', `${now()} UTC`);
+  client.store.saveProcessExitDate();
 });
 
 process.on('SIGINT', () => {
-  client.store.set('LastRestart', `${now()} UTC`);
+  client.store.saveProcessExitDate();
 });
 
-process.on('unhandledRejection', (reason, p) => {
+process.on('unhandledRejection', reason => {
   client.logger.error(reason);
 });

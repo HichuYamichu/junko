@@ -1,4 +1,16 @@
-module.exports.replies = {
+const junko = {
+  blacklisted: ['Impure beings like you have no right to ask me anything', 'Impure shall perish'],
+  gay: ['Why bring that up'],
+  guildOnly: ["This place is impure, let's go elsewhere", 'Not here'],
+  ownerOnly: ['There are only few people that can ask me for that'],
+  timeout: ["We can't waste time like that"],
+  ended: ['Command ended'],
+  cooldown: ["Impatient aren't you?"],
+  noArgs: ['Provide arguments'],
+  properUsage: ['Thats how you do it =>']
+};
+
+const mean = {
   blacklisted: [
     "I'm not talking with you.",
     'Fuck off',
@@ -10,7 +22,6 @@ module.exports.replies = {
     'We know. Now shut up.',
     "You've said that before"
   ],
-  derp: ['is that all you can say?'],
   guildOnly: ["I'm not doing that inside DMs.", 'Leave me alone.', 'How about no.'],
   ownerOnly: [
     "You're not my owner, so you can fuck off",
@@ -20,15 +31,18 @@ module.exports.replies = {
     "I don't feel like waiting eternity for you to make up your mind. The command has been timed out.",
     'Try to be faster next time. Time out!'
   ],
-  ended: ['Okay that\'s enough canceled', 'How can you mess up 3 times in a row? Canceled'],
+  ended: ["Okay that's enough canceled", 'How can you mess up 3 times in a row? Canceled'],
   cooldown: ["Impatient aren't you?"],
   noArgs: ["I can't work with this.", 'Arguments maybe?', 'Did you read help for this command?'],
   properUsage: [
     'Thats how you do it =>',
     "I can't balive I have to show you this again =>",
     'Well, that was embarasing. Do it like this next time =>'
-  ],
-  get(set) {
-    return this[set][Math.floor(Math.random() * this[set].length)];
-  }
+  ]
 };
+
+const tsun = {};
+
+const oneesan = {};
+
+module.exports = { junko, mean, tsun, oneesan };

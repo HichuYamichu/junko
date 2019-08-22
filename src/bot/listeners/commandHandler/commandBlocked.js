@@ -10,9 +10,9 @@ class CommandBlockedListener extends Listener {
 
   exec(message, command, reason) {
     const responce = {
-      owner: () => this.client.replies.get('ownerOnly'),
-      guild: () => this.client.replies.get('guildOnly'),
-      blacklist: () => this.client.replies.get('blacklisted')
+      owner: () => this.client.replyManager.reply(message, 'ownerOnly'),
+      guild: () => this.client.replyManager.reply(message, 'guildOnly'),
+      blacklist: () => this.client.replyManager.reply(message, 'blacklisted')
     }[reason];
 
 

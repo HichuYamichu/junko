@@ -12,7 +12,7 @@ class CooldownListener extends Listener {
     const time = remaining / 1000;
 
     if (message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true) {
-      message.reply(`${this.client.replies.get('cooldown')} You have to wait ${time.toFixed(1)} seconds.`);
+      return this.client.replyManager.reply(message, 'cooldown', ` You have to wait ${time.toFixed(1)} seconds.`);
     }
   }
 }

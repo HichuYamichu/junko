@@ -32,7 +32,7 @@ class testCommand extends Command {
 
     const embed = this.client.util
       .embed()
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .addField('Results', res.map((vid, i) => `**${i + 1}:** ${vid.title}`))
       .setFooter(`Input a value from 1 to ${res.length}`);
 

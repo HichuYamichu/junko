@@ -21,7 +21,7 @@ class ChannelInfoCommand extends Command {
   async exec(message, args) {
     const embed = this.client.util.embed();
     embed
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .setDescription(`Info about **${message.channel.name}** (ID: ${message.channel.id})`)
       .addField(
         'Info:',

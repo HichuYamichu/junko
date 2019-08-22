@@ -1,11 +1,11 @@
 const { status } = require('grpc');
 
-const statusCodes = Object.keys(status).reduce((acc, value, i) => {
+const statusCodes = Object.keys(status).reduce((acc, value) => {
   acc[status[value]] = value;
   return acc;
 }, {});
 
-class RPCHandler {
+module.exports = class RPCHandler {
   constructor(client) {
     this.client = client;
 
@@ -125,6 +125,4 @@ class RPCHandler {
         .observe(Date.now() - startEpoch);
     };
   }
-}
-
-module.exports = RPCHandler;
+};

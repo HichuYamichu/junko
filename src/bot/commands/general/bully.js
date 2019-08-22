@@ -32,7 +32,9 @@ class BullyCommand extends Command {
 
   async exec(message, { user, lvl }) {
     if (user.id === message.client.user.id) {
-      return message.channel.send(`Can't bully me!`, { files: [join(__dirname, '../..', 'static/me.gif')] });
+      return message.channel.send(`Can't bully me!`, {
+        files: [join(__dirname, '../..', 'static/me.gif')]
+      });
     }
 
     if (user.id === this.client.config.ownerID) {
@@ -77,10 +79,10 @@ class BullyCommand extends Command {
       ctx.fillText('milions rejoice as', canvas.width / 30, canvas.height / 18);
 
       do {
-        ctx.font = `${(fontSize -= 10)}px sans-serif`;
+        ctx.font = `${fontSize -= 10}px sans-serif`;
       } while (ctx.measureText(user.username).width > canvas.width - 300);
       textWidth = ctx.measureText(user.username).width;
-      ctx.fillStyle = this.client.color;
+      ctx.fillStyle = this.client.config.color;
       ctx.fillText(user.username, canvas.width / 2 - textWidth / 2, canvas.height / 7.5);
 
       ctx.fillStyle = fontColor;

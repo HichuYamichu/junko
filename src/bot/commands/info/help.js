@@ -27,7 +27,7 @@ class HelpCommand extends Command {
     const prefix = await this.handler.prefix(message);
     if (!command) {
       const embed = this.client.util.embed()
-        .setColor(this.client.color)
+        .setColor(this.client.config.color)
         .addField(
           'More help',
           `You can send \`${prefix}help [command name]\` to get info on a specific command!`
@@ -57,7 +57,7 @@ class HelpCommand extends Command {
     }
 
     const embed = this.client.util.embed()
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .setTitle(
         `\`${command.aliases[0]} ${command.description.usage ? command.description.usage : ''}\``
       )

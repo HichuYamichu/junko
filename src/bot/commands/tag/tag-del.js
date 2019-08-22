@@ -20,7 +20,7 @@ class TagDelCommand extends Command {
   }
 
   async exec(message, { name }) {
-    const tag = await this.client.store.hdelAsync(`tags-${message.guild.id}`, name);
+    const tag = await this.client.store.deleteTag(message.guild.id, name);
     if (tag) {
       return message.util.send(`Succesfuly deleted \`${name}\` `);
     }

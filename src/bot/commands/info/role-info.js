@@ -32,7 +32,7 @@ class RoleInfoCommand extends Command {
     );
     const embed = this.client.util.embed();
     embed
-      .setColor(this.client.color)
+      .setColor(this.client.config.color)
       .setDescription(`Info about **${role.name}** (ID: ${role.id})`)
       .addField(
         'Info:',
