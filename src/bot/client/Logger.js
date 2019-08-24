@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { inspect } = require('util');
 
 let store;
 
@@ -23,10 +24,16 @@ module.exports = class Logger {
   }
 
   static write(content, level) {
-    const out = level === 'ERROR' ? process.stdout : process.stderr;
+    const out = level === 'ERROR' ? process.stderr : process.stdout;
     const now = moment.utc().format('DD/MM/YYYY HH:mm:ss');
-    const log = `[${now}][${level}]: ${content}\n`;
+    const log = `[${now}][${level}]: ${this.clean(content)}\n`;
     out.write(log);
     store.saveLog(log);
+  }
+
+  static clean(item) {
+    if (typeof item === 'string') return item;
+    const cleaned = inspect(item, { depth: Infinity });
+    return cleaned;
   }
 };

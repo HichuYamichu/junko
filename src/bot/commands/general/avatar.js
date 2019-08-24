@@ -24,7 +24,10 @@ class AvatarCommand extends Command {
   }
 
   async exec(message, { user }) {
-    const embed = this.client.util.embed().setImage(user.displayAvatarURL({ size: 2048 })).setColor(this.client.config.color);
+    const embed = this.client.util
+      .embed()
+      .setImage(user.displayAvatarURL({ size: 2048 }))
+      .setColor(this.client.config.color);
     return message.util.send(embed);
   }
 }

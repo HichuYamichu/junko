@@ -1,9 +1,9 @@
 const { Command } = require('discord-akairo');
 
-class SetPresetCommand extends Command {
+class PresetCommand extends Command {
   constructor() {
-    super('setPreset', {
-      aliases: ['setPreset', 'preset'],
+    super('preset', {
+      aliases: ['preset', 'setpreset', 'ser-preset'],
       category: 'mod',
       ownerOnly: false,
       channel: 'guild',
@@ -33,4 +33,4 @@ class SetPresetCommand extends Command {
   }
 }
 
-module.exports = SetPresetCommand;
+module.exports = PresetCommand;

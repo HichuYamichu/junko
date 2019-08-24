@@ -7,7 +7,8 @@ const junko = {
   ended: ['Command ended'],
   cooldown: ["Impatient aren't you?"],
   noArgs: ['Provide arguments'],
-  properUsage: ['Thats how you do it =>']
+  properUsage: ['Thats how you do it =>'],
+  owo: ['no']
 };
 
 const mean = {
@@ -38,7 +39,8 @@ const mean = {
     'Thats how you do it =>',
     "I can't balive I have to show you this again =>",
     'Well, that was embarasing. Do it like this next time =>'
-  ]
+  ],
+  owo: ['fuck you']
 };
 
 const tsun = {};

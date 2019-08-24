@@ -103,8 +103,8 @@ module.exports = class JunkoClient extends AkairoClient {
           modifyStart: (_, str) =>
             `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
           modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
-          timeout: msg => this.replyManager.reply(msg, 'timeout'),
-          ended: msg => this.replyManager.reply(msg, 'ended'),
+          timeout: msg => this.replyManager.getReply(msg, 'timeout'),
+          ended: msg => this.replyManager.getReply(msg, 'ended'),
           cancel: 'The command has been cancelled.',
           retries: 3,
           time: 20000

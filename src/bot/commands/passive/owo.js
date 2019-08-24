@@ -10,7 +10,8 @@ class OwoCommand extends Command {
   }
 
   async exec(message, args) {
-    return message.util.send('Fuck you');
+    const reply = await this.client.replyManager.getReply(message, 'owo');
+    return message.util.send(reply);
   }
 }
 

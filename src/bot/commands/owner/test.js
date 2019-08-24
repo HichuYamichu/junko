@@ -16,7 +16,7 @@ class TestCommand extends Command {
   }
 
   async exec(message, args) {
-
+    throw new Error('aaaaaaa');
   }
 }
 

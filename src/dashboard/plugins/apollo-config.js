@@ -33,10 +33,10 @@ export const resolvers = {
 };
 
 export default function(context) {
-  let httpEndpoint = process.env.API_SERVER_SIDE || 'http://localhost:3000/gql';
+  let httpEndpoint = process.env.API_SERVER_SIDE || 'http://localhost:4000/gql';
 
   if (process.client) {
-    httpEndpoint = process.env.API_CLIENT_SIDE || 'http://localhost:3000/gql';
+    httpEndpoint = process.env.API_CLIENT_SIDE || 'http://localhost:4000/gql';
   }
   return {
     httpEndpoint,

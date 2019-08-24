@@ -7,11 +7,11 @@ module.exports = class ReplyManager {
     store = storeInstance;
   }
 
-  static async reply(message, category, appendText) {
+  static async getReply(message, category, appendText) {
     const preset = await store.getGuildPreset(message.guild);
     let text =
       replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
-    appendText ? text += appendText : text;
-    return message.util.reply(text);
+    appendText ? text += appendText : '';
+    return text;
   }
 };
