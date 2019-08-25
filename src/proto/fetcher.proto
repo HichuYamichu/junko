@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package fetcher;
+
+service GuildFetcher {
+  rpc fetchGuilds (Void) returns (Guilds) {}
+  rpc fetchGuild (ID) returns (Guild) {}
+  rpc fetchChannels (MultiFetchRequest) returns (Channels) {}
+  rpc fetchChannel (SingleFetchRequest) returns (Channel) {}
+  rpc fetchMembers (MultiFetchRequest) returns (Members) {}
+  rpc fetchMember (SingleFetchRequest) returns (Member) {}
+  rpc fetchRoles (MultiFetchRequest) returns (Roles) {}
+  rpc fetchRole (SingleFetchRequest) returns (Role) {}
+  rpc fetchUsers (MultiFetchRequest) returns (Users) {}
+  rpc fetchUser (SingleFetchRequest) returns (User) {}
+  rpc say (Msg) returns (Void) {}
+}
+
+message Void {}
+
+message ID {
+  string ID = 1;
+}
+
+message MultiFetchRequest {
+  string guildID = 1;
+  repeated string IDs = 2;
+}
+
+message SingleFetchRequest {
+  string guildID = 1;
+  string ID = 2;
+}
+
+message Msg {
+  string guildID = 1;
+  string channelID = 2;
+  string content = 3;
+}
+
+message Guilds {
+  repeated Guild guilds = 1;
+}
+
+message Guild {
+  repeated string channels = 1;
+  repeated string members = 2;
+  repeated string roles = 3;
+  string createdTimestamp = 4; 
+  string description = 5;
+  string icon = 6;
+  string id = 7;
+  int32 memberCount = 8;
+  string name = 9;
+  string region = 10;
+}
+
+message Member {
+  string userID = 1;
+  string guildID = 2;
+  repeated string roles = 3;
+  string displayName = 4;
+  int32 joinedTimestamp = 5;
+}
+
+message Members {
+  repeated Member members = 1;
+}
+
+message User {
+  string avatar = 1;
+  string id = 2;
+  string tag = 3;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message Channel {
+  string createdTimestamp = 1;
+  string id = 2;
+  string type = 3;
+  string name = 4;
+  int32 rawPosition = 5;
+  string topic = 6;
+  bool nsfw = 7;
+  int32 bitrate = 8;
+  int32 userLimit = 9;
+  string parentID = 10;
+  int32 rateLimitPerUser = 11;
+  string guild = 12;
+}
+
+message Channels {
+  repeated Channel channels = 1;
+}
+
+message Role {
+  int32 color = 1;
+  string name = 2;
+  int32 rawPosition = 3;
+  string id = 4;
+  int32 permissions = 5;
+  bool hoist = 6;
+  string guild = 7;
+}
+
+message Roles {
+  repeated Role roles = 1;
+}
+

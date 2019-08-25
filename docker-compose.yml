@@ -3,13 +3,29 @@ services:
   redis:
     container_name: redis
     image: redis
-    ports: 
-      - '6379:6379'
   bot:
-    container_name: junko
+    container_name: bot
     restart: always
-    build: .
-    depends_on:
-      - redis
+    build: ./src/bot
     env_file:
-      - .env
+      - ./src/bot/.env
+    volumes:
+      - ./src/proto:/usr/src/proto
+    ports:
+      - '5000:5000'
+  api:
+    container_name: api
+    restart: always
+    build: ./src/api
+    volumes:
+      - ./src/proto:/usr/src/proto
+    ports:
+      - '3000:3000'
+  dashboard:
+    container_name: dashboard
+    restart: always
+    build: ./src/dashboard
+    env_file:
+      - ./src/dashboard/.env
+    ports:
+      - '8080:8080'
