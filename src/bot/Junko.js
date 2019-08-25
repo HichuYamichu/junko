@@ -8,6 +8,7 @@ const client = new JunkoClient({
   SpotifySecret: process.env.SPOTIFY_SECRET,
   token: process.env.TOKEN,
   redisURI: process.env.REDIS_URI,
+  rasa: process.env.RASA,
   color: '#fc2041'
 });
 

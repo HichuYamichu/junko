@@ -16,6 +16,10 @@ service GuildFetcher {
   rpc say (Msg) returns (Void) {}
 }
 
+service GuildChatter {
+  rpc send (ChatMessage) returns (ChatMessage) {}
+}
+
 message Void {}
 
 message ID {
@@ -110,3 +114,7 @@ message Roles {
   repeated Role roles = 1;
 }
 
+message ChatMessage {
+  string content = 1;
+  string userID = 2;
+}

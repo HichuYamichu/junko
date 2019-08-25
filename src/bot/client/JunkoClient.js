@@ -22,6 +22,8 @@ const { createServer } = require('http');
 const { parse } = require('url');
 collectDefaultMetrics();
 
+const { promisifyAll } = require('bluebird');
+
 module.exports = class JunkoClient extends AkairoClient {
   constructor(config) {
     super(
@@ -46,6 +48,8 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.replyManager = ReplyManager;
 
+    this.rasa = new serviceDeff.GuildChatter(this.config.rasa, grpc.credentials.createInsecure());
+
     this.yt = new YouTube(config.YouTubeSecret);
 
     this.spotify = new SpotifyWebApi({
@@ -53,7 +57,7 @@ module.exports = class JunkoClient extends AkairoClient {
       clientSecret: config.SpotifySecret
     });
 
-    this.rpc = serverProxy(new grpc.Server());
+    this.rpc = new grpc.Server();
 
     this.RPCHandler = new RPCHandler(this);
 
@@ -127,6 +131,8 @@ module.exports = class JunkoClient extends AkairoClient {
     this.logger._init(this.store);
     this.replyManager._init(this.store);
 
+    promisifyAll(this.rasa);
+
     const { body } = await this.spotify.clientCredentialsGrant();
     this.spotify.setAccessToken(body.access_token);
 
@@ -142,6 +148,7 @@ module.exports = class JunkoClient extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
+    serverProxy(this.rpc);
     this.rpc.use(this.RPCHandler.promMiddleware);
     this.rpc.addService(serviceDeff.GuildFetcher.service, this.RPCHandler);
     this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
