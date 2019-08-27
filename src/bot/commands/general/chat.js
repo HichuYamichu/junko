@@ -16,24 +16,24 @@ class ChatCommand extends Command {
   }
 
   async exec(message) {
-    message.util.send('Chat started!');
+    const userID = message.author.id + Date.now();
+    const res = await this.client.rasa.sendAsync({ content: 'hi', userID });
+    await message.util.send(res);
     for (;;) {
       try {
         const filter = m => m.author.id === message.author.id;
         const collected = await message.channel.awaitMessages(filter, {
           max: 1,
-          time: 1000 * 10,
+          time: 1000 * 20,
           errors: ['time']
         });
-        const { content, author: { id } } = collected.first();
-        console.log({ content, userID: id });
-        if (content === 'stop') break;
-        const res = await this.client.rasa.sendAsync({ content, userID: id });
-        console.log(res);
+        const { content } = collected.first();
+        if (content === 'stop' || 'end' || 'cancel') break;
+        const res = await this.client.rasa.sendAsync({ content, userID });
+        if (!res.content) continue;
         message.channel.send(res.content);
       } catch (e) {
-        console.log(e);
-        return message.util.sendNew("Time's up");
+        return message.util.sendNew('No input for 20 seconds. Closing the chat!');
       }
     }
   }
