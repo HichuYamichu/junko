@@ -13,6 +13,8 @@ services:
       - ./src/proto:/usr/src/proto
     ports:
       - '5000:5000'
+    logging:
+      driver: "fluentd"
   api:
     container_name: api
     restart: always
@@ -20,7 +22,9 @@ services:
     volumes:
       - ./src/proto:/usr/src/proto
     ports:
-      - '3000:3000'
+      - '4000:4000'
+    logging:
+      driver: "fluentd"
   dashboard:
     container_name: dashboard
     restart: always
@@ -29,3 +33,5 @@ services:
       - ./src/dashboard/.env
     ports:
       - '8080:8080'
+    logging:
+      driver: "fluentd"
