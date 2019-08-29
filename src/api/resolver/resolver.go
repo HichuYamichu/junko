@@ -127,13 +127,3 @@ type LogsArgs struct {
 	Start  int32
 	Stop   int32
 }
-
-// Logs : resolves Logs query
-func (r *Resolver) Logs(ctx context.Context, args LogsArgs) (*LogResolver, error) {
-	logs := r.DB.LRange(args.Source, int64(args.Start), int64(args.Stop))
-	res := &LogResolver{
-		logs: logs,
-	}
-
-	return res, nil
-}

@@ -16,6 +16,8 @@ class testCommand extends Command {
   }
 
   async *args(message) {
+    if (!this.client.yt) return {};
+
     const query = yield {
       match: 'content',
       prompt: {
@@ -53,7 +55,8 @@ class testCommand extends Command {
   }
 
   async exec(message, { id }) {
-    message.util.send(`https://www.youtube.com/watch?v=${id}`);
+    if (!this.client.yt) return message.util.send('YT functionality not enabled! You cannot use this command.');
+    return message.util.send(`https://www.youtube.com/watch?v=${id}`);
   }
 }
 

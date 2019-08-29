@@ -6,5 +6,4 @@ type Query {
   Role(GuildID: String!, ID: String!): Role
   User(GuildID: String!, ID: String!): User
   Say(GuildID: String!, ChannelID: String!, Content: String!): String
-  Logs(Source: String!, Start: Int!, Stop: Int!): Log
 }

@@ -3,7 +3,10 @@ FROM node:10-alpine
 WORKDIR /usr/src/dashboard
 
 COPY package.json ./
-RUN yarn
+RUN apk add --update \
+&& apk add --no-cache --virtual .build-deps make python g++  \
+&& yarn \
+&& apk del .build-deps
 
 ENV NUXT_HOST= \
   NUXT_PORT= \

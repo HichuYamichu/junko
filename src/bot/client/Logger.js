@@ -1,13 +1,7 @@
 const moment = require('moment');
 const { inspect } = require('util');
 
-let store;
-
 module.exports = class Logger {
-  static _init(storeInstance) {
-    store = storeInstance;
-  }
-
   static info(content) {
     const level = 'INFO';
     this.write(content, level);
@@ -28,7 +22,6 @@ module.exports = class Logger {
     const now = moment.utc().format('DD/MM/YYYY HH:mm:ss');
     const log = `[${now}][${level}]: ${this.clean(content)}\n`;
     out.write(log);
-    store.saveLog(log);
   }
 
   static clean(item) {

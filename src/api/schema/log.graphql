@@ -1,5 +1,0 @@
-type Log {
-  # date: String!
-  # level: String!
-  content: [String]
-}

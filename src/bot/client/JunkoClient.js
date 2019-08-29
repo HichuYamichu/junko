@@ -14,15 +14,13 @@ const protoLoader = require('@grpc/proto-loader');
 const packageDeff = protoLoader.loadSync(protoPath);
 const serviceDeff = grpc.loadPackageDefinition(packageDeff).fetcher;
 const Store = require('./Store');
-const RPCHandler = require('./RPCHandler');
+const RPCHandler = require('./rpcHandler');
 const Logger = require('./Logger');
 const ReplyManager = require('./ReplyManager');
 const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-client');
 const { createServer } = require('http');
 const { parse } = require('url');
 collectDefaultMetrics();
-
-const { promisifyAll } = require('bluebird');
 
 module.exports = class JunkoClient extends AkairoClient {
   constructor(config) {
@@ -48,18 +46,20 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.replyManager = ReplyManager;
 
-    this.rasa = new serviceDeff.GuildChatter(this.config.rasa, grpc.credentials.createInsecure());
+    if (config.YouTubeSecret) {
+      this.yt = new YouTube(config.YouTubeSecret);
+    }
 
-    this.yt = new YouTube(config.YouTubeSecret);
-
-    this.spotify = new SpotifyWebApi({
-      clientId: config.SpotifyID,
-      clientSecret: config.SpotifySecret
-    });
+    if (config.SpotifyID && config.SpotifySecret) {
+      this.spotify = new SpotifyWebApi({
+        clientId: config.SpotifyID,
+        clientSecret: config.SpotifySecret
+      });
+    }
 
     this.rpc = new grpc.Server();
 
-    this.RPCHandler = new RPCHandler(this);
+    this.rpcHandler = new RPCHandler(this);
 
     this.prometheus = {
       commandCounter: new Counter({
@@ -128,13 +128,7 @@ module.exports = class JunkoClient extends AkairoClient {
 
   async _init() {
     this.store._init(this.config.redisURI);
-    this.logger._init(this.store);
     this.replyManager._init(this.store);
-
-    promisifyAll(this.rasa);
-
-    const { body } = await this.spotify.clientCredentialsGrant();
-    this.spotify.setAccessToken(body.access_token);
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -148,9 +142,16 @@ module.exports = class JunkoClient extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
+    if (this.spotify) {
+      const { body } = await this.spotify.clientCredentialsGrant();
+      this.spotify.setAccessToken(body.access_token);
+    } else {
+      this.commandHandler.findCategory('spotify').removeAll();
+    }
+
     serverProxy(this.rpc);
-    this.rpc.use(this.RPCHandler.promMiddleware);
-    this.rpc.addService(serviceDeff.GuildFetcher.service, this.RPCHandler);
+    this.rpc.use(this.rpcHandler.promMiddleware);
+    this.rpc.addService(serviceDeff.GuildFetcher.service, this.rpcHandler);
     this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
     this.rpc.start();
 
