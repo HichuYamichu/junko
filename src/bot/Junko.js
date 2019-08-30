@@ -3,12 +3,8 @@ const JunkoClient = require('./client/JunkoClient');
 
 const client = new JunkoClient({
   ownerID: process.env.OWNER_ID,
-  YouTubeSecret: process.env.YT_KEY,
-  SpotifyID: process.env.SPOTIFY_ID,
-  SpotifySecret: process.env.SPOTIFY_SECRET,
   token: process.env.TOKEN,
   redisURI: process.env.REDIS_URI,
-  rasa: process.env.RASA,
   color: '#fc2041'
 });
 

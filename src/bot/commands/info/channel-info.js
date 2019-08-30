@@ -18,7 +18,7 @@ class ChannelInfoCommand extends Command {
     });
   }
 
-  async exec(message, args) {
+  async exec(message) {
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)

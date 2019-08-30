@@ -18,13 +18,13 @@ class StatsCommand extends Command {
     });
   }
 
-  async exec(message, args) {
+  async exec(message) {
     const used = process.memoryUsage().heapUsed / 1024 / 1024;
     const uptime = process.uptime();
     const days = Math.floor(uptime / 86400);
-    const hours = Math.floor((uptime - days * 86400) / 3600);
-    const minutes = Math.floor((uptime - hours * 3600) / 60);
-    const seconds = Math.floor(uptime - hours * 3600 - minutes * 60);
+    const hours = Math.floor((uptime - (days * 86400)) / 3600);
+    const minutes = Math.floor((uptime - (hours * 3600)) / 60);
+    const seconds = Math.floor(uptime - (hours * 3600) - (minutes * 60));
     const lastRS = await message.client.store.getLastRestartDate();
     const author = `${message.client.users.get(message.client.config.ownerID).tag}`;
     const guildsCount = message.client.guilds.size;

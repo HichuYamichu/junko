@@ -46,14 +46,14 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.replyManager = ReplyManager;
 
-    if (config.YouTubeSecret) {
-      this.yt = new YouTube(config.YouTubeSecret);
+    if (process.env.YT_KEY) {
+      this.yt = new YouTube(process.env.YT_KEY);
     }
 
-    if (config.SpotifyID && config.SpotifySecret) {
+    if (process.env.SPOTIFY_ID && process.env.SPOTIFY_SECRET) {
       this.spotify = new SpotifyWebApi({
-        clientId: config.SpotifyID,
-        clientSecret: config.SpotifySecret
+        clientId: process.env.SPOTIFY_ID,
+        clientSecret: process.env.SPOTIFY_SECRET
       });
     }
 
