@@ -9,7 +9,6 @@ import (
 
 	"github.com/HichuYamichu/fetcher-api/fetcher"
 	"github.com/HichuYamichu/fetcher-api/handler"
-	"github.com/HichuYamichu/fetcher-api/logger"
 	"github.com/HichuYamichu/fetcher-api/resolver"
 	"github.com/HichuYamichu/fetcher-api/schema"
 	"github.com/go-redis/redis"
@@ -27,7 +26,6 @@ type App struct {
 	Router   http.Handler
 	Handler  *handler.GraphQL
 	Registry *prometheus.Registry
-	Logger   *logger.Logger
 	Adrr     string
 }
 
@@ -39,9 +37,6 @@ func New(host, port, redisURI, gRPCAddr string) *App {
 		Password: "",
 		DB:       0,
 	})
-
-	a.Logger = logger.New(db)
-	log.SetOutput(a.Logger)
 
 	reg := prometheus.NewRegistry()
 	grpcMetrics := grpc_prometheus.NewClientMetrics()

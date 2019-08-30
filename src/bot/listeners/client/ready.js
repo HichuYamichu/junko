@@ -9,7 +9,7 @@ class ReadyListener extends Listener {
   }
 
   exec() {
-    const statuses = ['👿', '👿👿', '👿👿👿'];
+    const statuses = ['🌙', '🌙🌙', '🌙🌙🌙'];
     this.client.setInterval(() => {
       const status = statuses[Math.floor(Math.random() * statuses.length)];
 

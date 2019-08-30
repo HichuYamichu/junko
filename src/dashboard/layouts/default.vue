@@ -16,7 +16,6 @@
       <v-toolbar-title @click="index">JUNKO DASHBOARD</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn large depressed color="black" nuxt to="/logs">logs</v-btn>
         <v-btn large depressed color="black">reload</v-btn>
       </v-toolbar-items>
     </v-app-bar>

@@ -17,7 +17,7 @@ class YouCommand extends Command {
     });
   }
 
-  async exec(message, args) {
+  async exec(message) {
     const [result] = await search('gelbooru', {
       tags: ['rating%3Asafe', 'junko_(touhou)'],
       limit: 1,

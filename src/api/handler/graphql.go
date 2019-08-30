@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 
@@ -25,7 +24,6 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	ctx = context.WithValue(ctx, "query", params.Query)
 
 	response := h.Schema.Exec(ctx, params.Query, params.OperationName, params.Variables)
 	responseJSON, err := json.Marshal(response)

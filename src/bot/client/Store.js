@@ -34,10 +34,6 @@ module.exports = class Store {
     return 'junko';
   }
 
-  static async saveLog(log) {
-    await store.rpushAsync('bot-logs', log);
-  }
-
   static getLastRestartDate() {
     return store.getAsync('LastRestart');
   }

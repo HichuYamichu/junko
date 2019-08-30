@@ -8,7 +8,7 @@ class CommandBlockedListener extends Listener {
     });
   }
 
-  exec(message, command, reason) {
+  exec() {
     this.client.prometheus.commandCounter.inc();
   }
 }

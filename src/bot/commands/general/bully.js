@@ -16,14 +16,14 @@ class BullyCommand extends Command {
       },
       args: [
         {
-          'id': 'user',
-          'type': 'user',
-          'default': message => message.author
+          id: 'user',
+          type: 'user',
+          default: message => message.author
         },
         {
-          'id': 'lvl',
-          'type': 'number',
-          'default': 1
+          id: 'lvl',
+          type: 'number',
+          default: 1
         }
       ],
       clientPermissions: ['ATTACH_FILES']
@@ -83,7 +83,7 @@ class BullyCommand extends Command {
       } while (ctx.measureText(user.username).width > canvas.width - 300);
       textWidth = ctx.measureText(user.username).width;
       ctx.fillStyle = this.client.config.color;
-      ctx.fillText(user.username, canvas.width / 2 - textWidth / 2, canvas.height / 7.5);
+      ctx.fillText(user.username, (canvas.width / 2) - (textWidth / 2), canvas.height / 7.5);
 
       ctx.fillStyle = fontColor;
       ctx.font = '70px sans-serif';

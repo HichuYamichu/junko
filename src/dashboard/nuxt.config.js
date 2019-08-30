@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors';
+import colors from 'vuetify/es5/util/colors'
 
 export default {
   server: {
@@ -61,6 +61,6 @@ export default {
   },
 
   build: {
-    extend(config, ctx) {}
+    extend (config, ctx) {}
   }
-};
+}

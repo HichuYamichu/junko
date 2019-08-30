@@ -27,8 +27,6 @@ class EvalCommand extends Command {
   }
 
   async exec(message, { code }) {
-    if (code.includes('client.config')) return message.util.reply('**Security breach**');
-
     const token = this.client.token.split('').join('[^]{0,2}');
     const rev = this.client.token
       .split('')
@@ -37,6 +35,7 @@ class EvalCommand extends Command {
     const tokenRegex = new RegExp(`${token}|${rev}`, 'g');
 
     try {
+      // eslint-disable-next-line no-eval
       let evaled = await eval(code);
       if (evaled !== null && typeof evaled.then === 'function') evaled = await evaled;
 

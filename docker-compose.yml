@@ -3,6 +3,9 @@ services:
   redis:
     container_name: redis
     image: redis
+    restart: always
+    logging:
+      driver: "fluentd"
   bot:
     container_name: bot
     restart: always
