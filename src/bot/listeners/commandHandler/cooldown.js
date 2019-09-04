@@ -14,7 +14,7 @@ class CooldownListener extends Listener {
     if (
       message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true
     ) {
-      const reply = await this.client.replyManager.getReply(
+      const reply = await this.client.getReply(
         message,
         'cooldown',
         ` You have to wait ${time.toFixed(1)} seconds.`

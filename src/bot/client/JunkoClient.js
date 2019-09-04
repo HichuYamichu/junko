@@ -13,10 +13,11 @@ const { serverProxy } = require('@hpidcock/node-grpc-interceptors');
 const protoLoader = require('@grpc/proto-loader');
 const packageDeff = protoLoader.loadSync(protoPath);
 const serviceDeff = grpc.loadPackageDefinition(packageDeff).fetcher;
-const Store = require('./Store');
-const RPCHandler = require('./rpcHandler');
-const Logger = require('./Logger');
-const ReplyManager = require('./ReplyManager');
+const Database = require('../structs/Database');
+const Store = require('../structs/Store');
+const RPCHandler = require('../structs/RPCHandler');
+const Logger = require('../structs/Logger');
+const replies = require('../util/replies');
 const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-client');
 const { createServer } = require('http');
 const { parse } = require('url');
@@ -32,7 +33,6 @@ module.exports = class JunkoClient extends AkairoClient {
         messageCacheMaxSize: 50,
         messageCacheLifetime: 60 * 15,
         messageSweepInterval: 60 * 45,
-        fetchAllMembers: true,
         disableEveryone: true,
         disabledEvents: ['TYPING_START']
       }
@@ -40,11 +40,9 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.config = config;
 
-    this.store = Store;
-
     this.logger = Logger;
 
-    this.replyManager = ReplyManager;
+    this.store = Store;
 
     if (process.env.YT_KEY) {
       this.yt = new YouTube(process.env.YT_KEY);
@@ -95,7 +93,7 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: msg => this.store.getGuildPrefix(msg),
+      prefix: msg => msg.guild ? this.store.getGuildPrefix(msg.guild) : '!',
       aliasReplacement: /-/g,
       allowMention: true,
       commandUtil: true,
@@ -107,8 +105,8 @@ module.exports = class JunkoClient extends AkairoClient {
           modifyStart: (_, str) =>
             `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
           modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
-          timeout: msg => this.replyManager.getReply(msg, 'timeout'),
-          ended: msg => this.replyManager.getReply(msg, 'ended'),
+          timeout: msg => this.getReply(msg, 'timeout'),
+          ended: msg => this.getReply(msg, 'ended'),
           cancel: 'The command has been cancelled.',
           retries: 3,
           time: 20000
@@ -126,9 +124,16 @@ module.exports = class JunkoClient extends AkairoClient {
     });
   }
 
-  async _init() {
-    this.store._init(this.config.redisURI);
-    this.replyManager._init(this.store);
+  async getReply(message, category, appendText) {
+    const preset = await this.store.getGuildPreset(message.guild);
+    let text =
+      replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
+    appendText ? text += appendText : '';
+    return text;
+  }
+
+  async init() {
+    await Database.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -159,7 +164,7 @@ module.exports = class JunkoClient extends AkairoClient {
   }
 
   async start() {
-    await this._init();
+    await this.init();
     this.login(this.config.token);
   }
 };

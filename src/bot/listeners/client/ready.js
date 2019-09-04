@@ -14,7 +14,7 @@ class ReadyListener extends Listener {
       const status = statuses[Math.floor(Math.random() * statuses.length)];
 
       this.client.user.setPresence({ activity: { name: status }, status: 'online' });
-    }, 10000);
+    }, 20000);
 
     this.client.logger.info(
       `Ready in ${this.client.channels.size} channels on ${

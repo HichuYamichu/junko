@@ -10,7 +10,7 @@ class gayCommand extends Command {
   }
 
   async exec(message) {
-    const reply = await this.client.replyManager.getReply(message, 'gay');
+    const reply = await this.client.getReply(message, 'gay');
     return message.util.send(reply);
   }
 }
