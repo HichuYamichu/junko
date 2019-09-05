@@ -4,7 +4,6 @@ const JunkoClient = require('./client/JunkoClient');
 const client = new JunkoClient({
   ownerID: process.env.OWNER_ID,
   token: process.env.TOKEN,
-  redisURI: process.env.REDIS_URI,
   color: '#fc2041'
 });
 
@@ -14,14 +13,6 @@ client
   .on('reconnect', () => client.logger.info('Reconnecting'));
 
 client.start();
-
-process.on('exit', () => {
-  client.store.saveProcessExitDate();
-});
-
-process.on('SIGINT', () => {
-  client.store.saveProcessExitDate();
-});
 
 process.on('unhandledRejection', reason => {
   client.logger.error(reason);

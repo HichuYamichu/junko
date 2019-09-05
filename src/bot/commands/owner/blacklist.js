@@ -37,11 +37,11 @@ class BlacklistCommand extends Command {
     if (!user) return message.util.send('Please specify a valid user');
     switch (action) {
     case 'add':
-      await this.client.store.hset('blacklist', user.id, 1);
+      await this.client.store.addToBlacklist(user.id);
       return message.util.send('That fucker is on my blacklist now!');
     case 'remove':
-      await this.client.store.hdel('blacklist', user.id);
-      return message.util.send('Removed from blacklist! I\'ll keep my an eye on him.');
+      await this.client.store.removeFromBlacklist(user.id);
+      return message.util.send('Removed from blacklist! I\'ll keep my an eye on them.');
 
     default:
       return message.util.send(`Unknown option:\`${action}\``);
