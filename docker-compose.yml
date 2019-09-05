@@ -1,14 +1,25 @@
 version: '3'
 services:
   redis:
-    container_name: redis
-    image: redis
+    image: redis:alpine
+    networks:
+      - junko_net
+    restart: always
+    logging:
+      driver: "fluentd"
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+       - postgres:/var/lib/postgresql/data
+    networks:
+      - junko_net
     restart: always
     logging:
       driver: "fluentd"
   bot:
-    container_name: bot
-    restart: always
     build: ./src/bot
     env_file:
       - ./src/bot/.env
@@ -16,25 +27,39 @@ services:
       - ./src/proto:/usr/src/proto
     ports:
       - '5000:5000'
+    networks:
+      - junko_net
+    depends_on:
+      - redis
+      - postgres
+    restart: always
     logging:
       driver: "fluentd"
   api:
-    container_name: api
-    restart: always
     build: ./src/api
     volumes:
       - ./src/proto:/usr/src/proto
     ports:
       - '4000:4000'
+    networks:
+      - junko_net
+    restart: always
     logging:
       driver: "fluentd"
   dashboard:
-    container_name: dashboard
-    restart: always
     build: ./src/dashboard
     env_file:
       - ./src/dashboard/.env
     ports:
       - '8080:8080'
+    networks:
+      - junko_net
+    restart: always
     logging:
       driver: "fluentd"
+
+networks:
+  junko_net:
+
+volumes:
+  postgres:

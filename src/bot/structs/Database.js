@@ -1,23 +1,23 @@
+const logger = require('./Logger');
 const { join } = require('path');
 const bluebird = require('bluebird');
 const redis = require('redis');
 const Sequelize = require('sequelize');
-const readdir = require('util').promisify(require('fs').readdir);
-const cache = redis.createClient();
+const { promisify } = require('util');
+const readdir = promisify(require('fs').readdir);
+const cache = redis.createClient({ host: process.env.REDIS_HOST });
 bluebird.promisifyAll(cache);
 
-const db = new Sequelize('postgres', 'postgres', 'changeme', {
-  host: 'localhost',
-  dialect: 'postgres',
-  logging: false,
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
+const db = new Sequelize(
+  process.env.POSTGRES_DB,
+  process.env.POSTGRES_USER,
+  process.env.POSTGRES_PASSWORD,
+  {
+    host: process.env.POSTGRES_HOST,
+    dialect: 'postgres',
+    logging: false
   }
-});
+);
 
 module.exports = class Database {
   static async init() {
@@ -32,7 +32,8 @@ module.exports = class Database {
         await require(filePath).sync({ alter: true });
       }
     } catch (e) {
-      console.log(e);
+      logger.error(e);
+      process.exit(1);
     }
   }
 

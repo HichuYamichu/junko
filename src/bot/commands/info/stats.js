@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const { version } = require('../../package.json');
 const { stripIndents } = require('common-tags');
+const moment = require('moment');
 
 class StatsCommand extends Command {
   constructor() {
@@ -25,7 +26,7 @@ class StatsCommand extends Command {
     const hours = Math.floor((uptime - (days * 86400)) / 3600);
     const minutes = Math.floor((uptime - (hours * 3600)) / 60);
     const seconds = Math.floor(uptime - (hours * 3600) - (minutes * 60));
-    const lastRS = await message.client.store.getLastRestartDate();
+    const lastRestart = Date.now() - (Math.floor(uptime) * 1000);
     const author = `${message.client.users.get(message.client.config.ownerID).tag}`;
     const guildsCount = message.client.guilds.size;
     const channelsCount = message.client.channels.size;
@@ -46,7 +47,7 @@ class StatsCommand extends Command {
         `,
         true
       )
-      .addField('Last restart:', lastRS, true)
+      .addField('Last restart:', `${moment.utc(lastRestart).format('DD-MM-YYYY[\n]HH:mm:ss')} UTC`, true)
       .addField('Version:', `v${version}`, true)
       .addField('Sauce:', `[GitHub](https://github.com/HichuYamichu/Junko)`, true)
       .setThumbnail(message.client.user.displayAvatarURL())

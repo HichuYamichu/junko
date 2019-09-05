@@ -25,7 +25,7 @@ class TagGetCommand extends Command {
   }
 
   async exec(message, { name, silent }) {
-    const tag = await this.client.store.getTag(message.guild.id, name);
+    const tag = await this.client.store.getTag(name);
     if (tag) {
       return message.util.send(tag);
     }

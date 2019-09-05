@@ -1,6 +1,7 @@
 const { cache } = require('./Database');
 const Guild = require('../models/Guild');
 const Blacklist = require('../models/Blacklist');
+const Tag = require('../models/Tag');
 
 module.exports = class Store {
   static async checkCache(modelName, id) {
@@ -90,9 +91,23 @@ module.exports = class Store {
     await this.invalidateCache('blacklist', '');
   }
 
-  static getTag(guildID, tagName) {}
+  static async getTag(name) {
+    const res = await Tag.findOne({ where: { name } });
+    if (res) {
+      return res.toJSON();
+    }
+    return null;
+  }
 
-  static addTag(guildID, tagName, tagContent) {}
+  static addTag(guildID, name, content) {
+    return Tag.create({ guildID, name, content });
+  }
 
-  static deleteTag(guildID, tagName) {}
+  static deleteTag(name) {
+    return Tag.destroy({
+      where: {
+        name
+      }
+    });
+  }
 };
