@@ -44,20 +44,11 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.store = Store;
 
-    if (process.env.YT_KEY) {
-      this.yt = new YouTube(process.env.YT_KEY);
-    }
+    this.APIs = {};
 
-    if (process.env.SPOTIFY_ID && process.env.SPOTIFY_SECRET) {
-      this.spotify = new SpotifyWebApi({
-        clientId: process.env.SPOTIFY_ID,
-        clientSecret: process.env.SPOTIFY_SECRET
-      });
-    }
+    this.RPC = new grpc.Server();
 
-    this.rpc = new grpc.Server();
-
-    this.rpcHandler = new RPCHandler(this);
+    this.RPCHandler = new RPCHandler(this);
 
     this.prometheus = {
       commandCounter: new Counter({
@@ -147,18 +138,26 @@ module.exports = class JunkoClient extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
-    if (this.spotify) {
-      const { body } = await this.spotify.clientCredentialsGrant();
-      this.spotify.setAccessToken(body.access_token);
+    if (process.env.YT_KEY) {
+      this.APIs.yt = new YouTube(process.env.YT_KEY);
+    }
+
+    if (process.env.SPOTIFY_ID && process.env.SPOTIFY_SECRET) {
+      this.APIs.spotify = new SpotifyWebApi({
+        clientId: process.env.SPOTIFY_ID,
+        clientSecret: process.env.SPOTIFY_SECRET
+      });
+      const { body } = await this.APIs.spotify.clientCredentialsGrant();
+      this.APIs.spotify.setAccessToken(body.access_token);
     } else {
       this.commandHandler.findCategory('spotify').removeAll();
     }
 
-    serverProxy(this.rpc);
-    this.rpc.use(this.rpcHandler.promMiddleware);
-    this.rpc.addService(serviceDeff.GuildFetcher.service, this.rpcHandler);
-    this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
-    this.rpc.start();
+    serverProxy(this.RPC);
+    this.RPC.use(this.RPCHandler.promMiddleware);
+    this.RPC.addService(serviceDeff.GuildFetcher.service, this.RPCHandler);
+    this.RPC.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
+    this.RPC.start();
 
     this.promSrv.listen(5000);
   }

@@ -20,7 +20,7 @@ class SpotifyTrackCommand extends Command {
   }
 
   async exec(message, { track }) {
-    const res = await message.client.spotify.searchTracks(track, { limit: 1 });
+    const res = await message.client.APIs.spotify.searchTracks(track, { limit: 1 });
     if (!res.body.tracks.items.length) {
       return message.util.reply('Nothing found! Check command usage if problem reoccurs.');
     }

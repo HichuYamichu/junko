@@ -20,7 +20,7 @@ class SpotifyAlbumCommand extends Command {
   }
 
   async exec(message, { album }) {
-    const res = await message.client.spotify.searchAlbums(album, { limit: 1 });
+    const res = await message.client.APIs.spotify.searchAlbums(album, { limit: 1 });
     if (!res.body.albums.items.length) {
       return message.util.reply('Nothing found!');
     }

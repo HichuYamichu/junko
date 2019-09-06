@@ -20,7 +20,7 @@ class SpotifyArtistCommand extends Command {
   }
 
   async exec(message, { artist }) {
-    const res = await message.client.spotify.searchArtists(artist, { limit: 1 });
+    const res = await message.client.APIs.spotify.searchArtists(artist, { limit: 1 });
     if (!res.body.artists.items.length) {
       return message.util.reply('Nothing found!');
     }

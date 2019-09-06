@@ -16,7 +16,7 @@ class testCommand extends Command {
   }
 
   async *args(message) {
-    if (!this.client.yt) return {};
+    if (!this.client.APIs.yt) return {};
 
     const query = yield {
       match: 'content',
@@ -26,7 +26,7 @@ class testCommand extends Command {
       }
     };
 
-    const res = await this.client.yt.searchVideos(query, 10);
+    const res = await this.client.APIs.yt.searchVideos(query, 10);
     if (!res.length) {
       await message.util.send('Nothing found!');
       return Flag.cancel();
@@ -55,7 +55,7 @@ class testCommand extends Command {
   }
 
   async exec(message, { id }) {
-    if (!this.client.yt) return message.util.send('YT functionality not enabled! You cannot use this command.');
+    if (!this.client.APIs.yt) return message.util.send('YT functionality not enabled! You cannot use this command.');
     return message.util.send(`https://www.youtube.com/watch?v=${id}`);
   }
 }

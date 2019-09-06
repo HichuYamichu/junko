@@ -20,7 +20,7 @@ class SpotifyPlaylistCommand extends Command {
   }
 
   async exec(message, { playlist }) {
-    const res = await message.client.spotify.searchPlaylists(playlist, { limit: 1 });
+    const res = await message.client.APIs.spotify.searchPlaylists(playlist, { limit: 1 });
     if (!res.body.playlists.items.length) {
       return message.util.reply('Nothing found!');
     }
