@@ -1,128 +1,88 @@
-const { status } = require('grpc');
-
-const statusCodes = Object.keys(status).reduce((acc, value) => {
-  acc[status[value]] = value;
-  return acc;
-}, {});
-
 module.exports = class RPCHandler {
   constructor(client) {
-    this.client = client;
+    this.say = ctx => {
+      client.commandHandler.runCommand(null, client.commandHandler.findCommand('say'), ctx.req);
+      ctx.res = null;
+    };
 
-    this.fetchGuilds = (call, callback) => {
+    this.fetchGuilds = ctx => {
       const res = [];
-      this.client.guilds.each(guild => {
+      client.guilds.each(guild => {
         res.push({ id: guild.id, name: guild.name, icon: guild.icon });
       });
-      callback(null, { guilds: res });
+      ctx.res = { guilds: res };
     };
 
-    this.fetchGuild = (call, callback) => {
-      const guild = this.client.guilds.get(call.request.ID);
+    this.fetchGuild = ctx => {
+      const guild = client.guilds.get(ctx.req.ID);
       const res = guild.toJSON();
-      callback(null, res);
+      ctx.res = res;
     };
 
-    this.fetchChannels = (call, callback) => {
+    this.fetchChannels = ctx => {
       const res = [];
-      for (const id of call.request.IDs) {
-        res.push(this.client.channels.get(id).toJSON());
+      for (const id of ctx.req.IDs) {
+        res.push(client.channels.get(id).toJSON());
       }
-      callback(null, { channels: res });
+      ctx.res = { channels: res };
     };
 
-    this.fetchChannel = (call, callback) => {
-      const channel = this.client.channels.get(call.request.ID);
+    this.fetchChannel = ctx => {
+      const channel = client.channels.get(ctx.req.ID);
       const res = channel.toJSON();
-      callback(null, res);
+      ctx.res = res;
     };
 
-    this.fetchMembers = (call, callback) => {
+    this.fetchMembers = ctx => {
       const res = [];
-      for (const id of call.request.IDs) {
+      for (const id of ctx.req.IDs) {
         res.push(
-          this.client.guilds
-            .get(call.request.guildID)
+          client.guilds
+            .get(ctx.req.guildID)
             .members.get(id)
             .toJSON()
         );
       }
-      callback(null, { members: res });
+      ctx.res = { members: res };
     };
 
-    this.fetchMember = (call, callback) => {
-      const member = this.client.guilds.get(call.request.guildID).members.get(call.request.ID);
+    this.fetchMember = ctx => {
+      const member = client.guilds.get(ctx.req.guildID).members.get(ctx.req.ID);
       const res = member.toJSON();
-      callback(null, { members: res });
+      ctx.res = { members: res };
     };
 
-    this.fetchRoles = (call, callback) => {
+    this.fetchRoles = ctx => {
       const res = [];
-      for (const id of call.request.IDs) {
+      for (const id of ctx.req.IDs) {
         res.push(
-          this.client.guilds
-            .get(call.request.guildID)
+          client.guilds
+            .get(ctx.req.guildID)
             .roles.get(id)
             .toJSON()
         );
       }
-      callback(null, { roles: res });
+      ctx.res = { roles: res };
     };
 
-    this.fetchRole = (call, callback) => {
-      const role = this.client.guilds.get(call.request.guildID).roles.get(call.request.ID);
+    this.fetchRole = ctx => {
+      const role = client.guilds.get(ctx.req.guildID).roles.get(ctx.req.ID);
       const res = role.toJSON();
-      callback(null, { roles: res });
+      ctx.res = { roles: res };
     };
 
-    this.fetchUsers = (call, callback) => {
+    this.fetchUsers = ctx => {
       const res = [];
-      for (const id of call.request.IDs) {
-        res.push(this.client.users.get(id).toJSON());
+      for (const id of ctx.req.IDs) {
+        res.push(client.users.get(id).toJSON());
       }
-      callback(null, { users: res });
+      ctx.res = { users: res };
     };
 
-    this.fetchUser = (call, callback) => {
-      const user = this.client.users.get(call.request.ID);
+    this.fetchUser = ctx => {
+      const user = client.users.get(ctx.req.ID);
       const res = user.toJSON();
-      callback(null, res);
-    };
-
-    this.say = (call, callback) => {
-      this.client.commandHandler.runCommand(
-        null,
-        this.client.commandHandler.findCommand('say'),
-        call.request
-      );
-      callback(null, null);
-    };
-
-    this.promMiddleware = async (ctx, next) => {
-      const startEpoch = Date.now();
-      this.client.prometheus.grpcServerStartedTotal
-        .labels(ctx.service.type, ctx.service.name, ctx.service.method)
-        .inc();
-
-      await next();
-
-      this.client.prometheus.grpcServerHandledTotal
-        .labels(
-          ctx.service.type,
-          ctx.service.name,
-          ctx.service.method,
-          statusCodes[ctx.status.code]
-        )
-        .inc();
-
-      this.client.prometheus.grpcServerHandleTime
-        .labels(
-          ctx.service.type,
-          ctx.service.name,
-          ctx.service.method,
-          statusCodes[ctx.status.code]
-        )
-        .observe(Date.now() - startEpoch);
+      ctx.res = res;
     };
   }
 };

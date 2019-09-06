@@ -8,11 +8,6 @@ const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
 const { join } = require('path');
 const protoPath = join(__dirname, '../..', 'proto/fetcher.proto');
-const grpc = require('grpc');
-const { serverProxy } = require('@hpidcock/node-grpc-interceptors');
-const protoLoader = require('@grpc/proto-loader');
-const packageDeff = protoLoader.loadSync(protoPath);
-const serviceDeff = grpc.loadPackageDefinition(packageDeff).fetcher;
 const Database = require('../structs/Database');
 const Store = require('../structs/Store');
 const RPCHandler = require('../structs/RPCHandler');
@@ -22,6 +17,8 @@ const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-cl
 const { createServer } = require('http');
 const { parse } = require('url');
 collectDefaultMetrics();
+
+const Mali = require('mali');
 
 module.exports = class JunkoClient extends AkairoClient {
   constructor(config) {
@@ -55,9 +52,11 @@ module.exports = class JunkoClient extends AkairoClient {
       });
     }
 
-    this.rpc = new grpc.Server();
+    this.rpc = new Mali(protoPath, 'GuildFetcher');
 
-    this.rpcHandler = new RPCHandler(this);
+    this.say = ctx => {
+      ctx.res = null;
+    };
 
     this.prometheus = {
       commandCounter: new Counter({
@@ -154,11 +153,8 @@ module.exports = class JunkoClient extends AkairoClient {
       this.commandHandler.findCategory('spotify').removeAll();
     }
 
-    serverProxy(this.rpc);
-    this.rpc.use(this.rpcHandler.promMiddleware);
-    this.rpc.addService(serviceDeff.GuildFetcher.service, this.rpcHandler);
-    this.rpc.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
-    this.rpc.start();
+    this.rpc.use(Object.assign({}, new RPCHandler(this)));
+    this.rpc.start('0.0.0.0:50051');
 
     this.promSrv.listen(5000);
   }
