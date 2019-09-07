@@ -1,11 +1,20 @@
 const { Command, Flag } = require('discord-akairo');
+const { stripIndents } = require('common-tags');
 
 class TagCommand extends Command {
   constructor() {
     super('tag', {
       category: 'tags',
       aliases: ['tag'],
-      channel: 'guild'
+      channel: 'guild',
+      description: {
+        content: stripIndents`Use one of the following:
+        • get \`<tag>\`
+        • add \`<tag> <content>\`
+        • del \`<tag>\``,
+        usage: '<method> <...args>',
+        examples: ['get tagName', 'add tagName TagContent', 'del tagName']
+      }
     });
   }
 

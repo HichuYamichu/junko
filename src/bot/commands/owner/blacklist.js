@@ -31,11 +31,11 @@ class BlacklistCommand extends Command {
       const index = blacklist.indexOf(user.id);
       blacklist.splice(index, 1);
       await this.client.store.setBlacklist(message.guild, blacklist);
-      return message.util.send(`**${user.tag}** removed from the blacklist.`);
+      return message.util.send(`**${user.tag}** has been removed from the blacklist.`);
     }
     blacklist.push(user.id);
     await this.client.store.setBlacklist(message.guild, blacklist);
-    return message.util.send(`**${user.tag}** added to the blacklist.`);
+    return message.util.send(`**${user.tag}** has been added to the blacklist.`);
   }
 }
 

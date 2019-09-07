@@ -1,7 +1,9 @@
 const { Command } = require('discord-akairo');
 const { version } = require('../../package.json');
 const { stripIndents } = require('common-tags');
-const moment = require('moment');
+const moment = require('moment-timezone');
+const momentDurationFormatSetup = require('moment-duration-format');
+momentDurationFormatSetup(moment);
 
 class StatsCommand extends Command {
   constructor() {
@@ -21,12 +23,7 @@ class StatsCommand extends Command {
 
   async exec(message) {
     const used = process.memoryUsage().heapUsed / 1024 / 1024;
-    const uptime = process.uptime();
-    const days = Math.floor(uptime / 86400);
-    const hours = Math.floor((uptime - (days * 86400)) / 3600);
-    const minutes = Math.floor((uptime - (hours * 3600)) / 60);
-    const seconds = Math.floor(uptime - (hours * 3600) - (minutes * 60));
-    const lastRestart = Date.now() - (Math.floor(uptime) * 1000);
+    const lastRestart = Date.now() - (Math.floor(this.client.uptime) * 1000);
     const author = `${message.client.users.get(message.client.config.ownerID).tag}`;
     const guildsCount = message.client.guilds.size;
     const channelsCount = message.client.channels.size;
@@ -37,7 +34,7 @@ class StatsCommand extends Command {
       .setTitle('**Stats:**')
       .setColor(this.client.config.color)
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`, true)
-      .addField('Uptime:', `${days}d ${hours}h ${minutes}m ${seconds}s`, true)
+      .addField('Uptime:', moment.duration(this.client.uptime).format('d[d ]h[h ]m[m ]s[s]'), true)
       .addField(
         'General:',
         stripIndents`

@@ -20,7 +20,7 @@ class SayCommand extends Command {
   }
 
   async exec(message, { guildID, channelID, content }) {
-    if (message) return message.util.send('Fuck off! I\'m not saying that.');
+    if (message) return message.util.send('Not happening.');
     return this.client.guilds
       .get(guildID)
       .channels.get(channelID)

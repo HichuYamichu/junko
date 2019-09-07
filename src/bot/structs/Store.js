@@ -38,6 +38,22 @@ module.exports = class Store extends SequelizeProvider {
     return this.set(guild, 'blacklist', blacklist);
   }
 
+  getModChannel(guild, defaultValue) {
+    return this.get(guild, 'modChannel', defaultValue);
+  }
+
+  setModChannel(guild, channelID) {
+    return this.set(guild, 'modChannel', channelID);
+  }
+
+  delModChannel(guild) {
+    return this.delete(guild, 'modChannel');
+  }
+
+  removeGuildConfig(guild) {
+    return this.clear(guild);
+  }
+
   async getTag(name) {
     const res = await Tag.findOne({ where: { name } });
     if (res) return res.toJSON();
@@ -65,10 +81,10 @@ module.exports = class Store extends SequelizeProvider {
     return res;
   }
 
-  set(guild, key, prefix) {
+  set(guild, key, value) {
     const id = this.constructor.getGuildID(guild);
     this.constructor.invalidateCacheValue(id, key);
-    return super.set(id, key, prefix);
+    return super.set(id, key, value);
   }
 
   delete(guild, key) {

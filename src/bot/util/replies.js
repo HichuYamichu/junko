@@ -1,6 +1,5 @@
 const junko = {
   blacklisted: ['Impure beings like you have no right to ask me anything', 'Impure shall perish'],
-  gay: ['Why bring that up'],
   guildOnly: ["This place is impure, let's go elsewhere", 'Not here'],
   ownerOnly: ['There are only few people that can ask me for that'],
   timeout: ["We can't waste time like that"],
@@ -17,11 +16,6 @@ const mean = {
     'Fuck off',
     "Ur on my blacklist don't even try.",
     'No.'
-  ],
-  gay: [
-    'yes you are and nobody cares sit down and fuck off',
-    'We know. Now shut up.',
-    "You've said that before"
   ],
   guildOnly: ["I'm not doing that inside DMs.", 'Leave me alone.', 'How about no.'],
   ownerOnly: [
