@@ -7,11 +7,6 @@ const client = new JunkoClient({
   color: '#fc2041'
 });
 
-client
-  .on('warn', m => client.logger.warn(m))
-  .on('error', m => client.logger.error(m))
-  .on('reconnect', () => client.logger.info('Reconnecting'));
-
 client.start();
 
 process.on('unhandledRejection', reason => {

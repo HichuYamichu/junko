@@ -14,14 +14,6 @@ class BlacklistCommand extends Command {
       },
       args: [
         {
-          id: 'action',
-          type: ['add', 'remove'],
-          prompt: {
-            start: message => `${message.author}, what are we doing this time?`,
-            retry: message => `${message.author}, remember you can only add/remove from blacklist.`
-          }
-        },
-        {
           id: 'user',
           type: 'user',
           prompt: {
@@ -33,19 +25,15 @@ class BlacklistCommand extends Command {
     });
   }
 
-  async exec(message, { action, user }) {
+  async exec(message, { user }) {
     if (!user) return message.util.send('Please specify a valid user');
-    switch (action) {
-    case 'add':
-      await this.client.store.addToBlacklist(user.id);
-      return message.util.send('That fucker is on my blacklist now!');
-    case 'remove':
+    const blacklist = await this.client.store.getBlacklist();
+    if (blacklist.includes(user.id)) {
       await this.client.store.removeFromBlacklist(user.id);
-      return message.util.send('Removed from blacklist! I\'ll keep my an eye on them.');
-
-    default:
-      return message.util.send(`Unknown option:\`${action}\``);
+      return message.util.send('User removed from blacklist!');
     }
+    await this.client.store.addToBlacklist(user.id);
+    return message.util.send('User blacklisted!');
   }
 }
 

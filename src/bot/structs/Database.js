@@ -1,12 +1,11 @@
 const logger = require('./Logger');
 const { join } = require('path');
-const bluebird = require('bluebird');
 const redis = require('redis');
+const { promisifyAll, promisify } = require('bluebird');
 const Sequelize = require('sequelize');
-const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const cache = redis.createClient({ host: process.env.REDIS_HOST });
-bluebird.promisifyAll(cache);
+promisifyAll(cache);
 
 const db = new Sequelize(
   process.env.POSTGRES_DB,
