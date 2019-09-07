@@ -42,7 +42,7 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.logger = Logger;
 
-    this.store = Store;
+    this.store = new Store();
 
     this.APIs = {};
 
@@ -84,7 +84,7 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: msg => msg.guild ? this.store.getGuildPrefix(msg.guild) : '!',
+      prefix: msg => this.store.getGuildPrefix(msg.guild, '!'),
       aliasReplacement: /-/g,
       allowMention: true,
       commandUtil: true,
@@ -116,7 +116,7 @@ module.exports = class JunkoClient extends AkairoClient {
   }
 
   async getReply(message, category, appendText) {
-    const preset = await this.store.getGuildPreset(message.guild);
+    const preset = await this.store.getGuildPreset(message.guild, 'junko');
     let text =
       replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
     appendText ? text += appendText : '';

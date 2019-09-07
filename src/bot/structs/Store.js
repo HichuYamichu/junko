@@ -1,113 +1,111 @@
+const { Guild } = require('discord.js');
+const { SequelizeProvider } = require('discord-akairo');
 const { cache } = require('./Database');
-const Guild = require('../models/Guild');
-const Blacklist = require('../models/Blacklist');
+const Settings = require('../models/Settings');
 const Tag = require('../models/Tag');
 
-module.exports = class Store {
-  static async checkCache(modelName, id) {
-    const cached = await cache.getAsync(`${modelName}_${id}`);
-    if (cached) {
-      return JSON.parse(cached);
-    }
-    return null;
-  }
-
-  static async saveToCache(modelName, id, data) {
-    await cache.setAsync(`${modelName}_${id}`, JSON.stringify(data));
-  }
-
-  static async invalidateCache(modelName, id) {
-    await cache.delAsync(`${modelName}_${id}`);
-  }
-
-  static async setGuildPrefix(guildID, prefix) {
-    await Guild.upsert({ guildID, prefix });
-    await this.invalidateCache('guild', guildID);
-  }
-
-  static async getGuildPrefix({ id: guildID }) {
-    const cached = await this.checkCache('guild', guildID);
-    if (cached && cached.prefix) {
-      return cached.prefix;
-    }
-    const res = await Guild.findByPk(guildID);
-    if (res) {
-      const guildObj = res.toJSON();
-      await this.saveToCache('guild', guildID, guildObj);
-      if (guildObj.prefix) {
-        return guildObj.prefix;
-      }
-    }
-    return '!';
-  }
-
-  static async setGuildPreset(guildID, preset) {
-    await Guild.upsert({ guildID, preset });
-    await this.invalidateCache('guild', guildID);
-  }
-
-  static async getGuildPreset({ id: guildID }) {
-    const cached = await this.checkCache('guild', guildID);
-    if (cached && cached.preset) {
-      return cached.preset;
-    }
-    const res = await Guild.findByPk(guildID);
-    if (res) {
-      const guildObj = res.toJSON();
-      await this.saveToCache('guild', guildID, guildObj);
-      if (guildObj.preset) {
-        return guildObj.preset;
-      }
-    }
-    return 'junko';
-  }
-
-  static async getBlacklist() {
-    const cached = await this.checkCache('blacklist', '');
-    if (cached) {
-      return cached;
-    }
-    const res = await Blacklist.findAll();
-    if (res.length) {
-      const blacklist = res.map(val => val.toJSON().userID);
-      await this.saveToCache('blacklist', '', blacklist);
-      return blacklist;
-    }
-
-    return [];
-  }
-
-  static async addToBlacklist(userID) {
-    await Blacklist.create({ userID });
-    await this.invalidateCache('blacklist', '');
-  }
-
-  static async removeFromBlacklist(userID) {
-    await Blacklist.destroy({
-      where: {
-        userID
-      }
+module.exports = class Store extends SequelizeProvider {
+  constructor() {
+    super(Settings, {
+      idColumn: 'guildID',
+      dataColumn: 'settings'
     });
-    await this.invalidateCache('blacklist', '');
   }
 
-  static async getTag(name) {
+  getGuildPrefix(guild, defaultValue) {
+    return this.get(guild, 'prefix', defaultValue);
+  }
+
+  setGuildPrefix(guild, prefix) {
+    return this.set(guild, 'prefix', prefix);
+  }
+
+  getGuildPreset(guild, defaultValue) {
+    return this.get(guild, 'preset', defaultValue);
+  }
+
+  setGuildPreset(guild, preset) {
+    return this.set(guild, 'preset', preset);
+  }
+
+  async getBlacklist(guild, defaultValue) {
+    const res = await this.get(guild, 'blacklist', defaultValue);
+    const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
+    return blacklist;
+  }
+
+  setBlacklist(guild, blacklist) {
+    return this.set(guild, 'blacklist', blacklist);
+  }
+
+  async getTag(name) {
     const res = await Tag.findOne({ where: { name } });
-    if (res) {
-      return res.toJSON();
-    }
+    if (res) return res.toJSON();
     return null;
   }
 
-  static addTag(guildID, name, content) {
-    return Tag.create({ guildID, name, content });
+  addTag(name, content) {
+    return Tag.create({ name, content });
   }
 
-  static deleteTag(name) {
+  deleteTag(name) {
     return Tag.destroy({
       where: {
         name
       }
     });
+  }
+
+  async get(guild, key, defaultValue) {
+    const id = this.constructor.getGuildID(guild);
+    const cached = await this.constructor.checkCache(id, key);
+    if (cached) return cached;
+    const res = await super.get(id, key, defaultValue);
+    if (res !== defaultValue) await this.constructor.saveToCache(id, key, res);
+    return res;
+  }
+
+  set(guild, key, prefix) {
+    const id = this.constructor.getGuildID(guild);
+    this.constructor.invalidateCacheValue(id, key);
+    return super.set(id, key, prefix);
+  }
+
+  delete(guild, key) {
+    const id = this.constructor.getGuildID(guild);
+    this.constructor.invalidateCacheValue(id, key);
+    return super.delete(id, key);
+  }
+
+  clear(guild) {
+    const id = this.constructor.getGuildID(guild);
+    this.constructor.removeCacheEntry(id);
+    return super.clear(id);
+  }
+
+  static checkCache(id, key) {
+    return cache.hgetAsync(`settings_${id}`, key);
+  }
+
+  static saveToCache(id, key, data) {
+    const cacheObject = typeof data === 'object' ? JSON.stringify(data) : data;
+    return cache.hsetAsync(`settings_${id}`, key, cacheObject);
+  }
+
+  static invalidateCacheValue(id, key) {
+    return cache.hdelAsync(`settings_${id}`, key);
+  }
+
+  static removeCacheEntry(id) {
+    return cache.delAsync(`settings_${id}`);
+  }
+
+  static getGuildID(guild) {
+    if (guild instanceof Guild) return guild.id;
+    if (guild === 'global' || guild === null) return 'global';
+    if (typeof guild === 'string' && /^\d+$/.test(guild)) return guild;
+    throw new TypeError(
+      'Invalid guild specified. Must be a Guild instance, guild ID, "global", or null.'
+    );
   }
 };

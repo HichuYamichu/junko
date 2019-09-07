@@ -26,14 +26,16 @@ class BlacklistCommand extends Command {
   }
 
   async exec(message, { user }) {
-    if (!user) return message.util.send('Please specify a valid user');
-    const blacklist = await this.client.store.getBlacklist();
+    const blacklist = await this.client.store.getBlacklist(message.guild, []);
     if (blacklist.includes(user.id)) {
-      await this.client.store.removeFromBlacklist(user.id);
-      return message.util.send('User removed from blacklist!');
+      const index = blacklist.indexOf(user.id);
+      blacklist.splice(index, 1);
+      await this.client.store.setBlacklist(message.guild, blacklist);
+      return message.util.send(`**${user.tag}** removed from the blacklist.`);
     }
-    await this.client.store.addToBlacklist(user.id);
-    return message.util.send('User blacklisted!');
+    blacklist.push(user.id);
+    await this.client.store.setBlacklist(message.guild, blacklist);
+    return message.util.send(`**${user.tag}** added to the blacklist.`);
   }
 }
 

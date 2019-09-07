@@ -42,7 +42,7 @@ class TagAddCommand extends Command {
         );
       }
     }
-    await this.client.store.addTag(message.guild.id, name, content);
+    await this.client.store.addTag(name, content);
     return message.util.send('Tag succesfuly created');
   }
 }
