@@ -11,9 +11,15 @@ class TagCommand extends Command {
         content: stripIndents`Use one of the following:
         • get \`<tag>\`
         • add \`<tag> <content>\`
-        • del \`<tag>\``,
+        • del \`<tag>\`
+        • edit \`<tag> <content>\``,
         usage: '<method> <...args>',
-        examples: ['get tagName', 'add tagName TagContent', 'del tagName']
+        examples: [
+          'get tagName',
+          'add tagName TagContent',
+          'del tagName',
+          'edit tagName TagContent'
+        ]
       }
     });
   }
@@ -23,7 +29,9 @@ class TagCommand extends Command {
       type: [
         ['tag-get', 'get', 'show'],
         ['tag-add', 'add', 'new', 'set'],
-        ['tag-del', 'del', 'delete', 'remove', 'rm']
+        ['tag-del', 'del', 'delete', 'remove', 'rm'],
+        ['tag-edit', 'edit', 'update', 'change'],
+        ['tag-list', 'list', 'show']
       ],
       otherwise: () => 'You must specify a method see `help tag` for more info'
     };

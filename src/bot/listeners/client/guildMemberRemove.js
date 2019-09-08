@@ -12,21 +12,21 @@ class GuildMemberRemoveListener extends Listener {
   }
 
   async exec(member) {
-    const modLogID = await this.client.store.getModChannel(member.guild, null);
+    const modLogID = await this.client.store.get(member.guild.id, 'logChannel', null);
     if (!modLogID) return;
     const modChannel = this.client.channels.get(modLogID);
     if (!modChannel) return;
     const embed = this.client.util
       .embed()
-      .setThumbnail(member.user.displayAvatarURL())
+      .setAuthor(`${member.user.tag} (${member.user.id})`, member.user.displayAvatarURL())
       .setColor(this.client.config.color)
-      .setTitle('Member left the guild.')
-      .addField('**Tag:**', member.user.tag, true)
-      .addField(
-        '**Left after:**',
-        moment.duration(Date.now() - member.joinedTimestamp).format('d[d ]h[h ]m[m ]s[s]'),
-        true
-      );
+      .setDescription(
+        `**Left after:** ${moment
+          .duration(Date.now() - member.joinedTimestamp)
+          .format('d[d ]h[h ]m[m ]s[s]')}`
+      )
+      .setFooter('Left')
+      .setTimestamp(Date.now());
     return modChannel.send(embed);
   }
 }

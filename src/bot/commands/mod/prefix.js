@@ -28,7 +28,7 @@ class PrefixCommand extends Command {
   }
 
   async exec(message, { prefix }) {
-    await message.client.store.setGuildPrefix(message.guild.id, prefix);
+    await message.client.store.set(message.guild.id, 'prefix', prefix);
     return message.util.send(`My prefix is now \`${prefix}\``);
   }
 }

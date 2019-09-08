@@ -9,7 +9,7 @@ class GuildDeleteListener extends Listener {
   }
 
   async exec(guild) {
-    await this.client.store.removeGuildConfig(guild);
+    await this.client.store.clear(guild.id);
     this.client.logger.info(`Guild ${guild.name} {${guild.id}} has been deleted.`);
   }
 }

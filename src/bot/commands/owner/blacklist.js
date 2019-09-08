@@ -26,15 +26,16 @@ class BlacklistCommand extends Command {
   }
 
   async exec(message, { user }) {
-    const blacklist = await this.client.store.getBlacklist(message.guild, []);
+    const res = await this.client.store.get(message.guild.id, 'blacklist', []);
+    const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
     if (blacklist.includes(user.id)) {
       const index = blacklist.indexOf(user.id);
       blacklist.splice(index, 1);
-      await this.client.store.setBlacklist(message.guild, blacklist);
+      await this.client.store.set(message.guild.id, 'blacklist', blacklist);
       return message.util.send(`**${user.tag}** has been removed from the blacklist.`);
     }
     blacklist.push(user.id);
-    await this.client.store.setBlacklist(message.guild, blacklist);
+    await this.client.store.set(message.guild.id, 'blacklist', blacklist);
     return message.util.send(`**${user.tag}** has been added to the blacklist.`);
   }
 }

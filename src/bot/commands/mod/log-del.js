@@ -17,7 +17,7 @@ class LogDelCommand extends Command {
   }
 
   async exec(message) {
-    await message.client.store.delModChannel(message.guild.id);
+    await message.client.store.del(message.guild.id, 'logChannel');
     return message.util.send('Log channel disabled.');
   }
 }

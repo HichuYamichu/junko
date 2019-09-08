@@ -12,64 +12,8 @@ module.exports = class Store extends SequelizeProvider {
     });
   }
 
-  getGuildPrefix(guild, defaultValue) {
-    return this.get(guild, 'prefix', defaultValue);
-  }
-
-  setGuildPrefix(guild, prefix) {
-    return this.set(guild, 'prefix', prefix);
-  }
-
-  getGuildPreset(guild, defaultValue) {
-    return this.get(guild, 'preset', defaultValue);
-  }
-
-  setGuildPreset(guild, preset) {
-    return this.set(guild, 'preset', preset);
-  }
-
-  async getBlacklist(guild, defaultValue) {
-    const res = await this.get(guild, 'blacklist', defaultValue);
-    const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
-    return blacklist;
-  }
-
-  setBlacklist(guild, blacklist) {
-    return this.set(guild, 'blacklist', blacklist);
-  }
-
-  getModChannel(guild, defaultValue) {
-    return this.get(guild, 'modChannel', defaultValue);
-  }
-
-  setModChannel(guild, channelID) {
-    return this.set(guild, 'modChannel', channelID);
-  }
-
-  delModChannel(guild) {
-    return this.delete(guild, 'modChannel');
-  }
-
-  removeGuildConfig(guild) {
-    return this.clear(guild);
-  }
-
-  async getTag(name) {
-    const res = await Tag.findOne({ where: { name } });
-    if (res) return res.toJSON();
-    return null;
-  }
-
-  addTag(name, content) {
-    return Tag.create({ name, content });
-  }
-
-  deleteTag(name) {
-    return Tag.destroy({
-      where: {
-        name
-      }
-    });
+  get Tag() {
+    return Tag;
   }
 
   async get(guild, key, defaultValue) {

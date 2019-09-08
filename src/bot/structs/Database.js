@@ -17,7 +17,10 @@ const db = new Sequelize(
   {
     host: process.env.POSTGRES_HOST,
     dialect: 'postgres',
-    logging: false
+    logging: false,
+    define: {
+      timestamps: false
+    }
   }
 );
 
@@ -31,7 +34,7 @@ module.exports = class Database {
       for (const file of files) {
         const filePath = join(modelsPath, file);
         if (!filePath.endsWith('.js')) continue;
-        await require(filePath).sync({ alter: true });
+        await require(filePath).sync();
       }
     } catch (e) {
       logger.error(e);

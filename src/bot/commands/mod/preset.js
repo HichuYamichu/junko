@@ -28,7 +28,7 @@ class PresetCommand extends Command {
   }
 
   async exec(message, { preset }) {
-    await message.client.store.setGuildPreset(message.guild.id, preset);
+    await message.client.store.set(message.guild.id, 'preset', preset);
     return message.util.send(`Changed preset to \`${preset}\``);
   }
 }

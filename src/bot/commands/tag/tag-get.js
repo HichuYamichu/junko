@@ -9,7 +9,7 @@ class TagGetCommand extends Command {
       args: [
         {
           id: 'name',
-          type: 'string',
+          type: 'lowercase',
           prompt: {
             start: message => `${message.author}, enter the tag name.`,
             retry: message => `${message.author}, you have to enter valid tag name.`
@@ -21,9 +21,11 @@ class TagGetCommand extends Command {
 
   async exec(message, { name }) {
     if (!name) return;
-    const tag = await this.client.store.getTag(name);
-    if (!tag) return;
-    return message.util.send(tag);
+    const tag = await this.client.store.Tag.findOne({ where: { guildID: message.guild.id, name } });
+    if (tag) {
+      tag.toJSON();
+      return message.util.send(tag.content);
+    }
   }
 }
 

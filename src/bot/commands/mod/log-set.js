@@ -27,7 +27,7 @@ class LogSetCommand extends Command {
   }
 
   async exec(message, { chan }) {
-    await message.client.store.setModChannel(message.guild.id, chan.id);
+    await message.client.store.set(message.guild.id, 'logChannel', chan.id);
     return message.util.send(`Log channel has been set to ${chan}`);
   }
 }

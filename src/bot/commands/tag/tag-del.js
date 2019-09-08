@@ -9,7 +9,7 @@ class TagDelCommand extends Command {
       args: [
         {
           id: 'name',
-          type: 'string',
+          type: 'lowercase',
           prompt: {
             start: message => `${message.author}, enter the tag name.`,
             retry: message => `${message.author}, you have to enter valid tag name.`
@@ -20,11 +20,19 @@ class TagDelCommand extends Command {
   }
 
   async exec(message, { name }) {
-    const tag = await this.client.store.deleteTag(name);
-    if (tag) {
-      return message.util.send(`Succesfuly deleted \`${name}\` `);
+    const guildID = message.guild.id;
+    const tag = await this.client.store.Tag.findOne({ where: { name, guildID } });
+    if (!tag) return message.util.reply("there's no such tag.");
+    if (tag.author !== message.author.id) {
+      return message.util.reply('you must be this tag owner to do that.');
     }
-    return message.util.send('No such tag');
+    await this.client.store.Tag.destroy({
+      where: {
+        guildID,
+        name
+      }
+    });
+    return message.util.send(`Succesfuly deleted \`${name}\` `);
   }
 }
 
