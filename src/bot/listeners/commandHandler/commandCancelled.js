@@ -9,7 +9,9 @@ class CommandCancelledListener extends Listener {
   }
 
   exec(message, command) {
-    const channel = message.guild ? `${message.guild.name} {${message.guild.id}}` : 'DM';
+    const channel = message.guild
+      ? `Guild: ${message.guild.name} (${message.guild.id})`
+      : `DM: ${message.author.tag} (${message.author.id})`;
     const log = `Cancelled ${command.id} on ${channel}`;
     this.client.logger.info(log);
   }

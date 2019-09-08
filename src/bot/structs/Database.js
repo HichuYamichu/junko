@@ -1,11 +1,14 @@
 const logger = require('./Logger');
 const { join } = require('path');
-const redis = require('redis');
-const { promisifyAll, promisify } = require('bluebird');
 const Sequelize = require('sequelize');
+const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
-const cache = redis.createClient({ host: process.env.REDIS_HOST });
-promisifyAll(cache);
+const Redis = require('ioredis');
+
+const cache = new Redis({
+  host: process.env.REDIS_HOST,
+  keyPrefix: 'settings:'
+});
 
 const db = new Sequelize(
   process.env.POSTGRES_DB,
@@ -32,7 +35,7 @@ module.exports = class Database {
       }
     } catch (e) {
       logger.error(e);
-      process.exit(1);
+      setTimeout(this.init, 5000);
     }
   }
 

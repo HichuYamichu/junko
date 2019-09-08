@@ -100,28 +100,25 @@ module.exports = class Store extends SequelizeProvider {
   }
 
   static checkCache(id, key) {
-    return cache.hgetAsync(`settings_${id}`, key);
+    return cache.hget(id, key);
   }
 
   static saveToCache(id, key, data) {
     const cacheObject = typeof data === 'object' ? JSON.stringify(data) : data;
-    return cache.hsetAsync(`settings_${id}`, key, cacheObject);
+    return cache.hset(id, key, cacheObject);
   }
 
   static invalidateCacheValue(id, key) {
-    return cache.hdelAsync(`settings_${id}`, key);
+    return cache.hdel(id, key);
   }
 
   static removeCacheEntry(id) {
-    return cache.delAsync(`settings_${id}`);
+    return cache.del(id);
   }
 
   static getGuildID(guild) {
     if (guild instanceof Guild) return guild.id;
-    if (guild === 'global' || guild === null) return 'global';
     if (typeof guild === 'string' && /^\d+$/.test(guild)) return guild;
-    throw new TypeError(
-      'Invalid guild specified. Must be a Guild instance, guild ID, "global", or null.'
-    );
+    throw new TypeError('Invalid guild. Must be a Guild instance or guild ID');
   }
 };

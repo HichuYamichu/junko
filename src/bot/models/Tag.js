@@ -14,7 +14,7 @@ const Tag = db.define(
       allowNull: false
     },
     content: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false
     }
   },

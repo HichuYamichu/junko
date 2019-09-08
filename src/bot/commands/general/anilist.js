@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { anilist: query } = require('../../util/gql');
 const axios = require('axios');
 
 class AnilistCommand extends Command {
@@ -33,7 +32,13 @@ class AnilistCommand extends Command {
 
   async exec(message, { search, type }) {
     const url = 'https://graphql.anilist.co';
+    const query = `query ($search: String, $type: MediaType) {
+      Media (search: $search, type: $type) {
+        id
+      }
+    }`;
     const variables = { search, type };
+
     try {
       const {
         data: { data }

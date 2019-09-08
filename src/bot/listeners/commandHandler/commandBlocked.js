@@ -9,7 +9,9 @@ class CommandBlockedListener extends Listener {
   }
 
   async exec(message, command, reason) {
-    const channel = message.guild ? `${message.guild.name} {${message.guild.id}}` : 'DM';
+    const channel = message.guild
+      ? `Guild: ${message.guild.name} (${message.guild.id})`
+      : `DM: ${message.author.tag} (${message.author.id})`;
     const log = `Blocked ${command.id} on ${channel} reason: ${reason}`;
     this.client.logger.info(log);
 
