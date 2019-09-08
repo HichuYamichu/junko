@@ -93,12 +93,17 @@ module.exports = class JunkoClient extends AkairoClient {
       fetchMembers: true,
       argumentDefaults: {
         prompt: {
-          modifyStart: (_, str) =>
-            `${str}\nListening for input! Type \`cancel\` to cancel the command.`,
-          modifyRetry: (_, str) => `${str}\nRetrying now! Type \`cancel\` to cancel the command.`,
-          timeout: msg => this.getReply(msg, 'timeout'),
-          ended: msg => this.getReply(msg, 'ended'),
-          cancel: 'The command has been cancelled.',
+          modifyStart: (msg, text) =>
+            `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
+          modifyRetry: (msg, text) =>
+            `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
+          timeout: async msg => `${msg.author} **//** ${await this.getReply(msg, 'timeout')}`,
+          ended: async msg =>
+            `${msg.author} **//** ${await this.getReply(
+              msg,
+              'ended'
+            )}\nCommand has been cancelled.`,
+          cancel: msg => `${msg.author} **//** Command has been cancelled.`,
           retries: 3,
           time: 20000
         },
@@ -115,12 +120,11 @@ module.exports = class JunkoClient extends AkairoClient {
     });
   }
 
-  async getReply(message, category, appendText) {
+  async getReply(message, category) {
     const preset = await this.store.get(message.guild, 'preset', this.config.defaultPreset);
-    let text =
+    const reply =
       replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
-    appendText ? text += appendText : '';
-    return text;
+    return reply;
   }
 
   async init() {

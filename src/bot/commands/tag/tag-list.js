@@ -11,7 +11,7 @@ class TagListCommand extends Command {
 
   async exec(message) {
     const tags = await this.client.store.Tag.findAll({ guildID: message.guild.id });
-    if (!tags.length) return message.util.send('No tags available for this guild');
+    if (!tags.length) return message.util.send('No tags available for this guild!');
 
     const guildTags = tags
       .map(tag => `\`${tag.name}\``)

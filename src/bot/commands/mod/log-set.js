@@ -17,8 +17,8 @@ class LogSetCommand extends Command {
           id: 'chan',
           type: 'channel',
           prompt: {
-            start: message => `${message.author}, provide a channel.`,
-            retry: message => `${message.author}, seems like an invalid channel.`
+            start: 'Provide a channel.',
+            retry: 'Seems like an invalid channel.'
           }
         }
       ],
@@ -28,7 +28,7 @@ class LogSetCommand extends Command {
 
   async exec(message, { chan }) {
     await message.client.store.set(message.guild.id, 'logChannel', chan.id);
-    return message.util.send(`Log channel has been set to ${chan}`);
+    return message.util.send(`Log channel has been set to ${chan}!`);
   }
 }
 

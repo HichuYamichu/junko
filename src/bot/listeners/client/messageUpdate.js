@@ -12,6 +12,7 @@ class MessageUpdateListener extends Listener {
   }
 
   async exec(oldMessage, newMessage) {
+    if (!newMessage.guild.me.hasPermission('EMBED_LINKS')) return;
     if (oldMessage.author.bot || newMessage.author.bot) return;
     if (!newMessage.guild) return;
     if (Util.escapeMarkdown(oldMessage.content) === Util.escapeMarkdown(newMessage.content)) return;

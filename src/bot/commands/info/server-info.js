@@ -10,7 +10,7 @@ class ServerInfoCommand extends Command {
       ownerOnly: false,
       channel: 'guild',
       description: {
-        content: 'Sends info about current server.',
+        content: 'Sends info about this guild.',
         usage: '',
         examples: ['']
       },

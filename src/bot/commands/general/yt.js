@@ -21,8 +21,8 @@ class testCommand extends Command {
     const query = yield {
       match: 'content',
       prompt: {
-        start: message => `${message.author}, input your search query.`,
-        retry: message => `${message.author}, you have to provide search query.`
+        start: 'Input your search query.',
+        retry: 'You have to provide valid search query.'
       }
     };
 
@@ -47,7 +47,7 @@ class testCommand extends Command {
           const mention = message.author;
           return { mention, embed };
         },
-        retry: message => `${message.author}, you have to provide valid id.`
+        retry: 'You have to provide valid id.'
       }
     };
 

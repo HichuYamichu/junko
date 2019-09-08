@@ -17,9 +17,8 @@ class PresetCommand extends Command {
           id: 'preset',
           type: ['junko', 'mean', 'tsun', 'oneesan'],
           prompt: {
-            start: message => `${message.author}, provide a preset name.`,
-            retry: message =>
-              `${message.author}, you have to choose from available presets.`
+            start: 'Provide a preset name.',
+            retry: 'you have to choose from available presets.'
           }
         }
       ],

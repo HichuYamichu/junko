@@ -11,8 +11,8 @@ class SpotifyAlbumCommand extends Command {
           id: 'album',
           match: 'content',
           prompt: {
-            start: message => `${message.author}, input album name.`,
-            retry: message => `${message.author}, you have to provide album name.`
+            start: 'Input album name.',
+            retry: 'You have to provide album name.'
           }
         }
       ]

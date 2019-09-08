@@ -11,8 +11,8 @@ class SpotifyPlaylistCommand extends Command {
           id: 'playlist',
           match: 'content',
           prompt: {
-            start: message => `${message.author}, input playlist name.`,
-            retry: message => `${message.author}, you have to provide playlist name.`
+            start: 'Input playlist name.',
+            retry: 'You have to provide playlist name.'
           }
         }
       ]

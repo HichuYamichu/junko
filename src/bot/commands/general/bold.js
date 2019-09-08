@@ -19,8 +19,8 @@ class BoldCommand extends Command {
           type: 'lowercase',
           match: 'content',
           prompt: {
-            start: message => `${message.author}, provide a text to make it B O L D.`,
-            retry: message => `${message.author}, you have to give me something to work with.`
+            start: 'Provide a text to make it B O L D.',
+            retry: 'You have to give me something to work with.'
           }
         }
       ]
@@ -28,9 +28,6 @@ class BoldCommand extends Command {
   }
 
   async exec(message, { text }) {
-    if (!text) {
-      return message.util.reply('You have to provide some text');
-    }
     let boldText = '';
     for (let i = 0; i < text.length; i++) {
       let letter = text.charAt(i);

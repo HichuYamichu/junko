@@ -11,6 +11,7 @@ class MessageDeleteListener extends Listener {
   }
 
   async exec(message) {
+    if (!message.guild.me.hasPermission('EMBED_LINKS')) return;
     if (message.author.bot) return;
     if (!message.guild) return;
     if (!message.content) return;

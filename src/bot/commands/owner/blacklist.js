@@ -17,8 +17,8 @@ class BlacklistCommand extends Command {
           id: 'user',
           type: 'user',
           prompt: {
-            start: message => `${message.author}, who?`,
-            retry: message => `${message.author}, seems like an invalid user.`
+            start: 'Whom?',
+            retry: 'Seems like an invalid user.'
           }
         }
       ]

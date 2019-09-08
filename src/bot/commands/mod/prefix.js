@@ -18,8 +18,8 @@ class PrefixCommand extends Command {
           match: 'content',
           type: Argument.validate('string', (m, p) => !/\s/.test(p) && p.length <= 10),
           prompt: {
-            start: message => `${message.author}, provide a prefix you would like to use.`,
-            retry: message => `${message.author}, prefix must not contain spaces and be less then 10 characters.`
+            start: 'Provide a prefix you would like to use.',
+            retry: 'Prefix must not contain spaces and be less then 10 characters.'
           }
         }
       ],

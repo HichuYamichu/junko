@@ -11,8 +11,8 @@ class TagDelCommand extends Command {
           id: 'name',
           type: 'lowercase',
           prompt: {
-            start: message => `${message.author}, enter the tag name.`,
-            retry: message => `${message.author}, you have to enter valid tag name.`
+            start: 'Enter the tag name.',
+            retry: 'You have to enter valid tag name.'
           }
         }
       ]
@@ -32,7 +32,7 @@ class TagDelCommand extends Command {
         name
       }
     });
-    return message.util.send(`Succesfuly deleted \`${name}\` `);
+    return message.util.send(`Succesfuly deleted \`${name}\`.`);
   }
 }
 

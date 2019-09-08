@@ -1,12 +1,13 @@
 const junko = {
-  blacklisted: ['Impure beings like you have no right to ask me anything', 'Impure shall perish'],
-  guildOnly: ["This place is impure, let's go elsewhere", 'Not here'],
-  ownerOnly: ['There are only few people that can ask me for that'],
-  timeout: ["We can't waste time like that"],
-  ended: ['Command ended'],
-  cooldown: ["Impatient aren't you?"],
-  noArgs: ['Provide arguments'],
-  properUsage: ['Thats how you do it =>'],
+  blacklisted: [
+    'Get out of my sight before I obliterate you.',
+    "Such impure being can't ask me for anything."
+  ],
+  guildOnly: ["Can't do that in such impure place.", 'Not here.'],
+  ownerOnly: ["You can't ask me for that.", 'Not happening.'],
+  timeout: ["Don't waste my time."],
+  ended: ['This is worthless.', 'What a waste of time.'],
+  cooldown: ["Impatient aren't you?", 'Calm down!', "Can't you wait for a bit?"],
   owo: ['no']
 };
 
@@ -17,28 +18,28 @@ const mean = {
     "Ur on my blacklist don't even try.",
     'No.'
   ],
-  guildOnly: ["I'm not doing that inside DMs.", 'Leave me alone.', 'How about no.'],
-  ownerOnly: [
-    "You're not my owner, so you can fuck off",
-    'Pretending to be my owner? Nice try but no.'
-  ],
+  guildOnly: ["I'm not doing that inside DMs.", 'Leave me alone.', 'How about no?'],
   timeout: [
-    "I don't feel like waiting eternity for you to make up your mind. The command has been timed out.",
-    'Try to be faster next time. Time out!'
+    "I don't feel like waiting eternity for you to make up your mind.",
+    'Try to be faster next time.'
   ],
-  ended: ["Okay that's enough canceled", 'How can you mess up 3 times in a row? Canceled'],
+  ended: ["Okay that's enough.", 'How can you mess up 3 times in a row?'],
   cooldown: ["Impatient aren't you?"],
-  noArgs: ["I can't work with this.", 'Arguments maybe?', 'Did you read help for this command?'],
-  properUsage: [
-    'Thats how you do it =>',
-    "I can't balive I have to show you this again =>",
-    'Well, that was embarasing. Do it like this next time =>'
-  ],
   owo: ['fuck you']
 };
 
-const tsun = {};
+const oneesan = {
+  blacklisted: [
+    "Oh you can't do that.",
+    "What a shame I can't do that for you.",
+    'You must have done something really bad to end up on the blacklist.',
+    "Ara ara... someone's on the blacklist"
+  ],
+  ownerOnly: ["Mhm... Can't do that with you.", 'Ara ara...'],
+  timeout: ['Oh... you have to be faster~', 'Sorry gotta do something else.'],
+  ended: ["Whew... I guess that's enough.", "There's no shame in not being able to do it."],
+  cooldown: ["Impatient aren't you?"],
+  owo: ['ara ara']
+};
 
-const oneesan = {};
-
-module.exports = { junko, mean, tsun, oneesan };
+module.exports = { junko, mean, oneesan };

@@ -23,7 +23,7 @@ class LogCommand extends Command {
         ['log-set', 'set', 'enable'],
         ['log-del', 'del', 'rm', 'disable']
       ],
-      otherwise: () => 'You must specify a method see `help log` for more info'
+      otherwise: () => 'You must specify a method like \`set\` or \`del\`. See `help log` for more info.'
     };
 
     return Flag.continue(method);

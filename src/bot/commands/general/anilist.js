@@ -16,15 +16,19 @@ class AnilistCommand extends Command {
       args: [
         {
           id: 'type',
-          type: [['ANIME', 'a', 'ani'], ['MANGA', 'm']],
+          type: [['ANIME', 'a', 'ani'], ['MANGA', 'm', 'mango']],
           prompt: {
-            start: message => `${message.author}, choose what type of media you want to search (anime/manga).`,
-            retry: message => `${message.author}, only manga/anime available.`
+            start: 'Choose what type of media you want to search (anime/manga).',
+            retry: 'Only manga/anime available.'
           }
         },
         {
           id: 'search',
-          match: 'rest'
+          match: 'rest',
+          prompt: {
+            start: 'Provide search query.',
+            retry: 'Provide valid search query.'
+          }
         }
       ]
     });

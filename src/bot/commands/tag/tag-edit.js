@@ -11,16 +11,16 @@ class TagEditCommand extends Command {
           id: 'name',
           type: 'lowercase',
           prompt: {
-            start: message => `${message.author}, enter the tag name.`,
-            retry: message => `${message.author}, you have to enter tag name you want to edit.`
+            start: 'Enter the tag name.',
+            retry: 'You have to enter tag name you want to edit.'
           }
         },
         {
           id: 'content',
           match: 'rest',
           prompt: {
-            start: message => `${message.author}, enter tag content.`,
-            retry: message => `${message.author}, tag must have some content.`
+            start: 'Enter tag content.',
+            retry: 'Tag must have some content.'
           }
         }
       ]
@@ -40,7 +40,7 @@ class TagEditCommand extends Command {
     const tag = await this.client.store.Tag.findOne({ where: { name, guildID } });
     if (!tag) return message.util.reply("there's no such tag.");
     tag.toJSON();
-    if (tag.author !== author && author !== this.client.ownerID) {
+    if (tag.author !== author && !this.client.isOwner(message.author)) {
       return message.util.reply('You must be this tag owner to edit it');
     }
 

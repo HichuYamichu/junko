@@ -12,6 +12,7 @@ class GuildMemberRemoveListener extends Listener {
   }
 
   async exec(member) {
+    if (!member.guild.me.hasPermission('EMBED_LINKS')) return;
     const modLogID = await this.client.store.get(member.guild.id, 'logChannel', null);
     if (!modLogID) return;
     const modChannel = this.client.channels.get(modLogID);
