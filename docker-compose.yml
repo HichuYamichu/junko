@@ -37,8 +37,6 @@ services:
       driver: "fluentd"
   api:
     build: ./src/api
-    volumes:
-      - ./src/proto:/usr/src/proto
     ports:
       - '4000:4000'
     networks:
