@@ -9,28 +9,23 @@ class TagGetCommand extends Command {
       args: [
         {
           id: 'name',
-          type: 'string',
+          type: 'lowercase',
           prompt: {
-            start: message => `${message.author}, enter the tag name.`,
-            retry: message => `${message.author}, you have to enter valid tag name.`
+            start: 'Enter the tag name.',
+            retry: 'You have to enter valid tag name.'
           }
-        },
-        {
-          id: 'silent',
-          match: 'flag',
-          flag: '--silent'
         }
       ]
     });
   }
 
-  async exec(message, { name, silent }) {
-    const tag = await this.client.store.getTag(name);
+  async exec(message, { name }) {
+    if (!name) return;
+    const tag = await this.client.store.Tag.findOne({ where: { guildID: message.guild.id, name } });
     if (tag) {
-      return message.util.send(tag);
+      tag.toJSON();
+      return message.util.send(tag.content);
     }
-    if (silent) return;
-    return message.util.send('No such tag');
   }
 }
 

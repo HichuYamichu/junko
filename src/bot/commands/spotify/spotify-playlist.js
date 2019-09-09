@@ -11,8 +11,8 @@ class SpotifyPlaylistCommand extends Command {
           id: 'playlist',
           match: 'content',
           prompt: {
-            start: message => `${message.author}, input playlist name.`,
-            retry: message => `${message.author}, you have to provide playlist name.`
+            start: 'Input playlist name.',
+            retry: 'You have to provide playlist name.'
           }
         }
       ]
@@ -20,7 +20,7 @@ class SpotifyPlaylistCommand extends Command {
   }
 
   async exec(message, { playlist }) {
-    const res = await message.client.spotify.searchPlaylists(playlist, { limit: 1 });
+    const res = await message.client.APIs.spotify.searchPlaylists(playlist, { limit: 1 });
     if (!res.body.playlists.items.length) {
       return message.util.reply('Nothing found!');
     }

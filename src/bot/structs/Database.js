@@ -1,12 +1,14 @@
 const logger = require('./Logger');
 const { join } = require('path');
-const bluebird = require('bluebird');
-const redis = require('redis');
 const Sequelize = require('sequelize');
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
-const cache = redis.createClient({ host: process.env.REDIS_HOST });
-bluebird.promisifyAll(cache);
+const Redis = require('ioredis');
+
+const cache = new Redis({
+  host: process.env.REDIS_HOST,
+  keyPrefix: 'settings:'
+});
 
 const db = new Sequelize(
   process.env.POSTGRES_DB,
@@ -15,7 +17,10 @@ const db = new Sequelize(
   {
     host: process.env.POSTGRES_HOST,
     dialect: 'postgres',
-    logging: false
+    logging: false,
+    define: {
+      timestamps: false
+    }
   }
 );
 
@@ -29,11 +34,11 @@ module.exports = class Database {
       for (const file of files) {
         const filePath = join(modelsPath, file);
         if (!filePath.endsWith('.js')) continue;
-        await require(filePath).sync({ alter: true });
+        await require(filePath).sync();
       }
     } catch (e) {
       logger.error(e);
-      process.exit(1);
+      setTimeout(this.init, 5000);
     }
   }
 

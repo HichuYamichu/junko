@@ -10,7 +10,7 @@ class ServerInfoCommand extends Command {
       ownerOnly: false,
       channel: 'guild',
       description: {
-        content: 'Sends info about current server.',
+        content: 'Sends info about this guild.',
         usage: '',
         examples: ['']
       },
@@ -39,7 +39,7 @@ class ServerInfoCommand extends Command {
         /* eslint-enable indent */
       )
       .addField(
-        'Member:',
+        'Members:',
         stripIndents`
         • ${message.guild.memberCount} members
         • Owner: ${message.guild.owner.user.tag} (ID: ${message.guild.ownerID})

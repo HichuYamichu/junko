@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const { anilist: query } = require('../../util/gql');
 const axios = require('axios');
 
 class AnilistCommand extends Command {
@@ -17,15 +16,19 @@ class AnilistCommand extends Command {
       args: [
         {
           id: 'type',
-          type: [['ANIME', 'a', 'ani'], ['MANGA', 'm']],
+          type: [['ANIME', 'a', 'ani'], ['MANGA', 'm', 'mango']],
           prompt: {
-            start: message => `${message.author}, choose what type of media you want to search (anime/manga).`,
-            retry: message => `${message.author}, only manga/anime available.`
+            start: 'Choose what type of media you want to search (anime/manga).',
+            retry: 'Only manga/anime available.'
           }
         },
         {
           id: 'search',
-          match: 'rest'
+          match: 'rest',
+          prompt: {
+            start: 'Provide search query.',
+            retry: 'Provide valid search query.'
+          }
         }
       ]
     });
@@ -33,7 +36,13 @@ class AnilistCommand extends Command {
 
   async exec(message, { search, type }) {
     const url = 'https://graphql.anilist.co';
+    const query = `query ($search: String, $type: MediaType) {
+      Media (search: $search, type: $type) {
+        id
+      }
+    }`;
     const variables = { search, type };
+
     try {
       const {
         data: { data }

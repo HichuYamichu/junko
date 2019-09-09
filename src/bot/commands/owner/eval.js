@@ -18,8 +18,8 @@ class EvalCommand extends Command {
           id: 'code',
           type: 'content',
           prompt: {
-            start: message => `${message.author}, C'mon gib code.`,
-            retry: message => `${message.author}, C'mon gib code.`
+            start: 'Code please.',
+            retry: 'Code please.'
           }
         }
       ]

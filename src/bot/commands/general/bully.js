@@ -37,7 +37,7 @@ class BullyCommand extends Command {
       });
     }
 
-    if (user.id === this.client.config.ownerID) {
+    if (this.client.isOwner(user)) {
       return message.util.send(`Can't bully The Creator!`, {
         files: [join(__dirname, '../..', 'static/me.gif')]
       });
@@ -57,7 +57,7 @@ class BullyCommand extends Command {
       canvas = Canvas.createCanvas(1068, 821);
       ctx = canvas.getContext('2d');
       join(__dirname, '..', 'inhibitors');
-      base = await Canvas.loadImage(join(__dirname, '../..', 'static/original.jpg'));
+      base = await Canvas.loadImage(join(__dirname, '../..', 'static/bully1.jpg'));
       ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
 
       ctx.beginPath();
@@ -71,7 +71,7 @@ class BullyCommand extends Command {
     case 2:
       canvas = Canvas.createCanvas(1100, 1095);
       ctx = canvas.getContext('2d');
-      base = await Canvas.loadImage(join(__dirname, '../..', 'static/milions.jpg'));
+      base = await Canvas.loadImage(join(__dirname, '../..', 'static/bully2.jpg'));
       ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
 
       ctx.font = `${fontSize}px sans-serif`;

@@ -14,38 +14,29 @@ class BlacklistCommand extends Command {
       },
       args: [
         {
-          id: 'action',
-          type: ['add', 'remove'],
-          prompt: {
-            start: message => `${message.author}, what are we doing this time?`,
-            retry: message => `${message.author}, remember you can only add/remove from blacklist.`
-          }
-        },
-        {
           id: 'user',
           type: 'user',
           prompt: {
-            start: message => `${message.author}, who?`,
-            retry: message => `${message.author}, seems like an invalid user.`
+            start: 'Whom?',
+            retry: 'Seems like an invalid user.'
           }
         }
       ]
     });
   }
 
-  async exec(message, { action, user }) {
-    if (!user) return message.util.send('Please specify a valid user');
-    switch (action) {
-    case 'add':
-      await this.client.store.addToBlacklist(user.id);
-      return message.util.send('That fucker is on my blacklist now!');
-    case 'remove':
-      await this.client.store.removeFromBlacklist(user.id);
-      return message.util.send('Removed from blacklist! I\'ll keep my an eye on them.');
-
-    default:
-      return message.util.send(`Unknown option:\`${action}\``);
+  async exec(message, { user }) {
+    const res = await this.client.store.get(message.guild.id, 'blacklist', []);
+    const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
+    if (blacklist.includes(user.id)) {
+      const index = blacklist.indexOf(user.id);
+      blacklist.splice(index, 1);
+      await this.client.store.set(message.guild.id, 'blacklist', blacklist);
+      return message.util.send(`**${user.tag}** has been removed from the blacklist.`);
     }
+    blacklist.push(user.id);
+    await this.client.store.set(message.guild.id, 'blacklist', blacklist);
+    return message.util.send(`**${user.tag}** has been added to the blacklist.`);
   }
 }
 

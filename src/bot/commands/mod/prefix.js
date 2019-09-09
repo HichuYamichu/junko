@@ -18,8 +18,8 @@ class PrefixCommand extends Command {
           match: 'content',
           type: Argument.validate('string', (m, p) => !/\s/.test(p) && p.length <= 10),
           prompt: {
-            start: message => `${message.author}, provide a prefix you would like to use.`,
-            retry: message => `${message.author}, prefix must not contain spaces and be less then 10 characters.`
+            start: 'Provide a prefix you would like to use.',
+            retry: 'Prefix must not contain spaces and be less then 10 characters.'
           }
         }
       ],
@@ -28,7 +28,7 @@ class PrefixCommand extends Command {
   }
 
   async exec(message, { prefix }) {
-    await message.client.store.setGuildPrefix(message.guild.id, prefix);
+    await message.client.store.set(message.guild.id, 'prefix', prefix);
     return message.util.send(`My prefix is now \`${prefix}\``);
   }
 }

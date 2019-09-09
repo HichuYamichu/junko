@@ -9,18 +9,9 @@ class ReadyListener extends Listener {
   }
 
   exec() {
-    const statuses = ['🌙', '🌙🌙', '🌙🌙🌙'];
-    this.client.setInterval(() => {
-      const status = statuses[Math.floor(Math.random() * statuses.length)];
-
-      this.client.user.setPresence({ activity: { name: status }, status: 'online' });
-    }, 20000);
-
-    this.client.logger.info(
-      `Ready in ${this.client.channels.size} channels on ${
-        this.client.guilds.size
-      } servers, for a total of ${this.client.users.size} users.`
-    );
+    this.client.user.setPresence({ activity: { name: '🌙' }, status: 'online' });
+    const log = `Ready in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users.`;
+    this.client.logger.info(log);
   }
 }
 
