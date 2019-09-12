@@ -4,18 +4,16 @@ import (
 	"context"
 
 	"github.com/HichuYamichu/fetcher-api/fetcher"
-	"github.com/go-redis/redis"
 )
 
 // Resolver : root resolver
 type Resolver struct {
 	RPC fetcher.GuildFetcherClient
-	DB  *redis.Client
 }
 
 // New : Resolver constructor function
-func New(rpc fetcher.GuildFetcherClient, db *redis.Client) *Resolver {
-	return &Resolver{RPC: rpc, DB: db}
+func New(rpc fetcher.GuildFetcherClient) *Resolver {
+	return &Resolver{RPC: rpc}
 }
 
 // Guilds : resolves Guilds query

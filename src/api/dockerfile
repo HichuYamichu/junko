@@ -22,4 +22,4 @@ COPY ./schema ./schema
 
 EXPOSE 3000
 
-CMD ["./fetcher-api", "-port=3000", "-host=0.0.0.0" ,"-redisURI=redis:6379", "-gRPCAddr=bot:50051"]
+CMD ["./fetcher-api", "-port=3000", "-host=0.0.0.0", "-gRPCAddr=bot:50051"]

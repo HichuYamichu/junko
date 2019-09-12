@@ -11,7 +11,6 @@ import (
 	"github.com/HichuYamichu/fetcher-api/handler"
 	"github.com/HichuYamichu/fetcher-api/resolver"
 	"github.com/HichuYamichu/fetcher-api/schema"
-	"github.com/go-redis/redis"
 	util "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/graph-gophers/graphql-go"
@@ -30,13 +29,8 @@ type App struct {
 }
 
 // New : Initialize new server instance
-func New(host, port, redisURI, gRPCAddr string) *App {
+func New(host, port, gRPCAddr string) *App {
 	a := &App{}
-	db := redis.NewClient(&redis.Options{
-		Addr:     redisURI,
-		Password: "",
-		DB:       0,
-	})
 
 	reg := prometheus.NewRegistry()
 	grpcMetrics := grpc_prometheus.NewClientMetrics()
@@ -61,7 +55,7 @@ func New(host, port, redisURI, gRPCAddr string) *App {
 	if err != nil {
 		log.Fatal(err)
 	}
-	res := resolver.New(rpc, db)
+	res := resolver.New(rpc)
 	schemaDeff := graphql.MustParseSchema(s, res, graphql.UseStringDescriptions())
 	a.Handler = &handler.GraphQL{Schema: schemaDeff}
 	a.Router = a.setupRouter()

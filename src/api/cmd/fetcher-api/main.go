@@ -8,11 +8,10 @@ import (
 
 var port = flag.String("port", "4000", "http service port")
 var host = flag.String("host", "127.0.0.1", "http service host")
-var redisURI = flag.String("redisURI", "172.18.16.90:6379", "Redis instance URI")
 var gRPCAddr = flag.String("gRPCAddr", "127.0.0.1:50051", "gRPC server URI")
 
 func main() {
 	flag.Parse()
-	srv := app.New(*host, *port, *redisURI, *gRPCAddr)
+	srv := app.New(*host, *port, *gRPCAddr)
 	srv.Run()
 }
