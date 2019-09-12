@@ -34,7 +34,7 @@ module.exports = class Database {
       for (const file of files) {
         const filePath = join(modelsPath, file);
         if (!filePath.endsWith('.js')) continue;
-        await require(filePath).sync();
+        await require(filePath).sync({ alter: true });
       }
     } catch (e) {
       logger.error(e);

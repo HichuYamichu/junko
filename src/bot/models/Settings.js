@@ -7,10 +7,17 @@ const Setting = db.define('settings', {
     primaryKey: true,
     allowNull: false
   },
-  settings: {
-    type: Sequelize.JSONB,
-    allowNull: false,
-    default: {}
+  prefix: {
+    type: Sequelize.STRING
+  },
+  preset: {
+    type: Sequelize.STRING
+  },
+  logChannel: {
+    type: Sequelize.STRING
+  },
+  blacklist: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 });
 

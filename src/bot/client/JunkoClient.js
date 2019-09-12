@@ -7,7 +7,7 @@ const {
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
 const { join } = require('path');
-const protoPath = join(__dirname, '../..', 'proto/fetcher.proto');
+const protoPath = join(__dirname, '../..', 'proto/services.proto');
 const Mali = require('mali');
 const Database = require('../structs/Database');
 const Store = require('../structs/Store');
