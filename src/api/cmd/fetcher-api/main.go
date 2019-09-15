@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/HichuYamichu/fetcher-api/app"
+	"github.com/hichuyamichu/fetcher-api/app"
 )
 
 var port = flag.String("port", "4000", "http service port")

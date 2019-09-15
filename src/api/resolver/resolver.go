@@ -3,7 +3,7 @@ package resolver
 import (
 	"context"
 
-	"github.com/HichuYamichu/fetcher-api/fetcher"
+	"github.com/hichuyamichu/fetcher-api/fetcher"
 )
 
 // Resolver : root resolver
