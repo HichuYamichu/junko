@@ -53,6 +53,7 @@ module.exports = class SettingsProvider {
   static getGuildID(guild) {
     if (guild instanceof Guild) return guild.id;
     if (typeof guild === 'string' && /^\d+$/.test(guild)) return guild;
-    throw new TypeError('Invalid guild. Must be a Guild instance or guild ID');
+    if (!guild) return 'global';
+    throw new TypeError('Invalid guild.');
   }
 };

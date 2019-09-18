@@ -8,7 +8,7 @@ class BlacklistInhibitor extends Inhibitor {
   }
 
   async exec(message) {
-    const res = await this.client.store.get(message.guild.id, 'blacklist', []);
+    const res = await this.client.store.get(message.guild, 'blacklist', []);
     const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
     return blacklist.includes(message.author.id);
   }

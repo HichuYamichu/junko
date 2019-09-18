@@ -12,11 +12,11 @@ class MessageUpdateListener extends Listener {
   }
 
   async exec(oldMessage, newMessage) {
+    if (!newMessage.guild) return;
     if (!newMessage.guild.me.hasPermission('EMBED_LINKS')) return;
     if (oldMessage.author.bot || newMessage.author.bot) return;
-    if (!newMessage.guild) return;
     if (Util.escapeMarkdown(oldMessage.content) === Util.escapeMarkdown(newMessage.content)) return;
-    const modLogID = await this.client.store.get(newMessage.guild.id, 'logChannel', null);
+    const modLogID = await this.client.store.get(newMessage.guild, 'logChannel', null);
     if (!modLogID) return;
     const modChannel = this.client.channels.get(modLogID);
     if (!modChannel) return;

@@ -26,7 +26,7 @@ class BlacklistCommand extends Command {
   }
 
   async exec(message, { user }) {
-    const res = await this.client.store.get(message.guild.id, 'blacklist', []);
+    const res = await this.client.store.get(message.guild, 'blacklist', []);
     const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
     if (blacklist.includes(user.id)) {
       const index = blacklist.indexOf(user.id);

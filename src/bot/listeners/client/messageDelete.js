@@ -15,7 +15,7 @@ class MessageDeleteListener extends Listener {
     if (message.author.bot) return;
     if (!message.guild) return;
     if (!message.content) return;
-    const modLogID = await this.client.store.get(message.guild.id, 'logChannel', null);
+    const modLogID = await this.client.store.get(message.guild, 'logChannel', null);
     if (!modLogID) return;
     const modChannel = this.client.channels.get(modLogID);
     if (!modChannel) return;

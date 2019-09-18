@@ -7,17 +7,12 @@ const {
 const YouTube = require('simple-youtube-api');
 const SpotifyWebApi = require('spotify-web-api-node');
 const { join } = require('path');
-const protoPath = join(__dirname, '../..', 'proto/services.proto');
-const Mali = require('mali');
 const Database = require('../structs/Database');
 const Store = require('../structs/Store');
-const RPCHandler = require('../structs/RPCHandler');
+const RPCServer = require('../structs/RPCServer');
 const Logger = require('../structs/Logger');
+const Prometheus = require('../structs/Prometheus');
 const replies = require('../util/replies');
-const { collectDefaultMetrics, Counter, Histogram, register } = require('prom-client');
-const { createServer } = require('http');
-const { parse } = require('url');
-collectDefaultMetrics();
 
 module.exports = class JunkoClient extends AkairoClient {
   constructor(config) {
@@ -38,53 +33,13 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.logger = Logger;
 
-    this.store = new Store();
-
     this.APIs = {};
 
-    this.RPC = new Mali(protoPath, 'GuildFetcher');
+    this.store = new Store();
 
-    this.prometheus = {
-      commandCounter: new Counter({
-        name: 'total_commands_used',
-        help: 'Total number of used commands'
-      }),
-      grpcServerStartedTotal: new Counter({
-        labelNames: ['grpc_type', 'grpc_method'],
-        name: 'grpc_server_started_total',
-        help: 'Total number of RPCs started.'
-      }),
-      grpcServerHandledTotal: new Counter({
-        labelNames: ['grpc_type', 'grpc_service'],
-        name: 'grpc_server_handled_total',
-        help: 'Total number of RPCs completed.'
-      }),
-      grpcServerHandleTime: new Histogram({
-        labelNames: ['grpc_type', 'grpc_service'],
-        name: 'grpc_server_handle_time',
-        buckets: [0.1, 5, 15, 50, 100, 500],
-        help: 'Response latency of gRPC.'
-      }),
-      register
-    };
+    this.prometheus = new Prometheus();
 
-    this.promServer = createServer((req, res) => {
-      if (parse(req.url).pathname === '/metrics') {
-        res.writeHead(200, { 'Content-Type': this.prometheus.register.contentType });
-        res.write(this.prometheus.register.metrics());
-      }
-      res.end();
-    });
-
-    this.promMiddleware = async (ctx, next) => {
-      const startEpoch = Date.now();
-      this.prometheus.grpcServerStartedTotal.labels(ctx.type, ctx.name).inc();
-      await next();
-      this.prometheus.grpcServerHandledTotal.labels(ctx.type, ctx.name).inc();
-      this.prometheus.grpcServerHandleTime
-        .labels(ctx.type, ctx.name)
-        .observe(Date.now() - startEpoch);
-    };
+    this.rpc = new RPCServer(this);
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
@@ -159,12 +114,8 @@ module.exports = class JunkoClient extends AkairoClient {
       this.commandHandler.findCategory('spotify').removeAll();
     }
 
-    this.RPC.use(this.promMiddleware);
-    // hacky workaround of the current mail limitation
-    this.RPC.use(Object.assign({}, new RPCHandler(this)));
-    this.RPC.start('0.0.0.0:50051');
-
-    this.promServer.listen(5000);
+    this.rpc.listen();
+    this.prometheus.listen();
   }
 
   async start() {
