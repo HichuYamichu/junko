@@ -7,7 +7,8 @@ const Redis = require('ioredis');
 
 const cache = new Redis({
   host: process.env.REDIS_HOST,
-  keyPrefix: 'settings:'
+  keyPrefix: 'settings:',
+  autoResendUnfulfilledCommands: false
 });
 
 const db = new Sequelize(
@@ -25,6 +26,14 @@ const db = new Sequelize(
 );
 
 module.exports = class Database {
+  static get db() {
+    return db;
+  }
+
+  static get cache() {
+    return cache;
+  }
+
   static async init() {
     try {
       await db.authenticate();
@@ -38,15 +47,7 @@ module.exports = class Database {
       }
     } catch (e) {
       logger.error(e);
-      setTimeout(this.init, 5000);
+      process.exit(1);
     }
-  }
-
-  static get db() {
-    return db;
-  }
-
-  static get cache() {
-    return cache;
   }
 };

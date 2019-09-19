@@ -37,14 +37,17 @@ class TagEditCommand extends Command {
 
     const guildID = message.guild.id;
     const author = message.author.id;
-    const tag = await this.client.store.Tag.findOne({ where: { name, guildID } });
-    if (!tag) return message.util.reply("there's no such tag.");
-    tag.toJSON();
-    if (tag.author !== author && !this.client.isOwner(message.author)) {
-      return message.util.reply('You must be this tag owner to edit it');
-    }
 
-    await this.client.store.Tag.update({ content }, { where: { tagID: tag.tagID } });
+    const where = this.client.isOwner(message.author)
+      ? { guildID, name }
+      : { guildID, name, author };
+
+    const [updated] = await this.client.store.Tag.update({ content }, { where });
+    if (!updated) {
+      return message.util.send(
+        `Couldn't edit that tag! Either you don't own it or this tag does not exist.`
+      );
+    }
     return message.util.send('Tag succesfuly updated.');
   }
 }

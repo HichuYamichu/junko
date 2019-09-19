@@ -21,17 +21,17 @@ class TagDelCommand extends Command {
 
   async exec(message, { name }) {
     const guildID = message.guild.id;
-    const tag = await this.client.store.Tag.findOne({ where: { name, guildID } });
-    if (!tag) return message.util.reply("there's no such tag.");
-    if (tag.author !== message.author.id) {
-      return message.util.reply('you must be this tag owner to do that.');
-    }
-    await this.client.store.Tag.destroy({
+    const author = message.author.id;
+    const deleted = await this.client.store.Tag.destroy({
       where: {
         guildID,
-        name
+        name,
+        author
       }
     });
+    if (!deleted) {
+      return message.util.send(`Couldn't delete that tag! Either you don't own it or this tag does not exist.`);
+    }
     return message.util.send(`Succesfuly deleted \`${name}\`.`);
   }
 }

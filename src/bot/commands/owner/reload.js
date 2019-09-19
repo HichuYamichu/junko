@@ -18,7 +18,7 @@ class ReloadCommand extends Command {
   *args() {
     const type = yield {
       'match': 'option',
-      'flag': ['type:'],
+      'flag': ['--type='],
       'type': [['command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
       'default': 'command'
     };

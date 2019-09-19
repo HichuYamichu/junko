@@ -34,19 +34,23 @@ module.exports = class SettingsProvider {
   }
 
   static getCached(id, key) {
+    if (cache.status !== 'ready') return null;
     return cache.hget(id, key);
   }
 
   static setCache(id, key, data) {
+    if (cache.status !== 'ready') return null;
     const cacheObject = typeof data === 'object' ? JSON.stringify(data) : data;
     return cache.hset(id, key, cacheObject);
   }
 
   static delCached(id, key) {
+    if (cache.status !== 'ready') return null;
     return cache.hdel(id, key);
   }
 
   static clearCached(id) {
+    if (cache.status !== 'ready') return null;
     return cache.del(id);
   }
 

@@ -37,15 +37,6 @@ class TagAddCommand extends Command {
 
     const guildID = message.guild.id;
     const author = message.author.id;
-    const tag = await this.client.store.Tag.findOne({ where: { name, guildID } });
-    if (tag) {
-      tag.toJSON();
-      const isAuthor = tag.author === author;
-      const reply = `Tag with such name already exists in this guild. ${
-        isAuthor ? 'But as that tag owner you can edit it with `tag-edit`.' : ''
-      }`;
-      return message.util.send(reply);
-    }
 
     const userTagCount = await this.client.store.Tag.count({
       where: { guildID, author }
@@ -56,12 +47,24 @@ class TagAddCommand extends Command {
       );
     }
 
-    await this.client.store.Tag.create({
-      guildID,
-      author,
-      name,
-      content
+    const [tag, created] = await this.client.store.Tag.findOrCreate({
+      where: { name, guildID },
+      defaults: {
+        guildID,
+        author,
+        name,
+        content
+      }
     });
+    if (!created) {
+      tag.toJSON();
+      const isAuthor = tag.author === author;
+      const reply = `Tag with such name already exists in this guild. ${
+        isAuthor ? 'But as that tag owner you can edit it with `tag-edit`.' : ''
+      }`;
+      return message.util.send(reply);
+    }
+
     return message.util.send('Tag succesfuly created.');
   }
 }
