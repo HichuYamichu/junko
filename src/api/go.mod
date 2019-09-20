@@ -15,6 +15,10 @@ require (
 	github.com/jinzhu/gorm v1.9.10
 	github.com/lib/pq v1.1.1
 	github.com/prometheus/client_golang v1.1.0
+	golang.org/x/net v0.0.0-20190918130420-a8b05e9114ab // indirect
+	golang.org/x/sys v0.0.0-20190919044723-0c1ff786ef13 // indirect
+	golang.org/x/text v0.3.2 // indirect
 	golang.org/x/tools/gopls v0.1.5 // indirect
+	google.golang.org/genproto v0.0.0-20190916214212-f660b8655731 // indirect
 	google.golang.org/grpc v1.23.1
 )

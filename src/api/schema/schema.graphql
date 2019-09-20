@@ -5,10 +5,6 @@ schema {
 type Query {
   Guilds(): [Guild]
   Guild(ID: String!): Guild
-  Channel(GuildID: String!, ID: String!): Channel
-  Member(GuildID: String!, ID: String!): Member
-  Role(GuildID: String!, ID: String!): Role
-  User(GuildID: String!, ID: String!): User
   Say(GuildID: String!, ChannelID: String!, Content: String!): String
 }
 
@@ -39,12 +35,10 @@ type Channel {
   userLimit: Int
   parentID: String
   rateLimitPerUser: Int
-  guild: Guild
 }
 
 type Member {
   user: User
-  guild: Guild
   roles: [Role]
   displayName: String
   joinedTimestamp: Int
@@ -63,7 +57,6 @@ type Role {
   id: String
   permissions: Int
   hoist: Boolean
-  guild: Guild
 }
 
 type Settings {

@@ -4,31 +4,18 @@ package fetcher;
 
 service GuildFetcher {
   rpc fetchGuilds (Void) returns (Guilds) {}
-  rpc fetchGuild (ID) returns (Guild) {}
-  rpc fetchChannels (MultiFetchRequest) returns (Channels) {}
-  rpc fetchChannel (SingleFetchRequest) returns (Channel) {}
-  rpc fetchMembers (MultiFetchRequest) returns (Members) {}
-  rpc fetchMember (SingleFetchRequest) returns (Member) {}
-  rpc fetchRoles (MultiFetchRequest) returns (Roles) {}
-  rpc fetchRole (SingleFetchRequest) returns (Role) {}
-  rpc fetchUsers (MultiFetchRequest) returns (Users) {}
-  rpc fetchUser (SingleFetchRequest) returns (User) {}
+  rpc fetchGuild (FetchRequest) returns (Guild) {}
+  rpc fetchChannel (FetchRequest) returns (Channel) {}
+  rpc fetchMember (FetchRequest) returns (Member) {}
+  rpc fetchRole (FetchRequest) returns (Role) {}
+  rpc fetchUser (FetchRequest) returns (User) {}
   rpc say (Msg) returns (Void) {}
 }
 
 message Void {}
 
-message ID {
-  string ID = 1;
-}
-
-message MultiFetchRequest {
-  string guildID = 1;
-  repeated string IDs = 2;
-}
-
-message SingleFetchRequest {
-  string guildID = 1;
+message FetchRequest {
+  string GuildID = 1;
   string ID = 2;
 }
 
@@ -71,10 +58,6 @@ message User {
   string avatar = 1;
   string id = 2;
   string tag = 3;
-}
-
-message Users {
-  repeated User users = 1;
 }
 
 message Channel {

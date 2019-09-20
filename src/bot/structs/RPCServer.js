@@ -22,64 +22,22 @@ module.exports = class RPCServer extends Mali {
       ctx.res = res;
     };
 
-    this.fetchChannels = ctx => {
-      const res = [];
-      for (const id of ctx.req.IDs) {
-        res.push(this.client.channels.get(id).toJSON());
-      }
-      ctx.res = { channels: res };
-    };
-
     this.fetchChannel = ctx => {
       const channel = this.client.channels.get(ctx.req.ID);
       const res = channel.toJSON();
       ctx.res = res;
     };
 
-    this.fetchMembers = ctx => {
-      const res = [];
-      for (const id of ctx.req.IDs) {
-        res.push(
-          this.client.guilds
-            .get(ctx.req.guildID)
-            .members.get(id)
-            .toJSON()
-        );
-      }
-      ctx.res = { members: res };
-    };
-
     this.fetchMember = ctx => {
-      const member = this.client.guilds.get(ctx.req.guildID).members.get(ctx.req.ID);
+      const member = this.client.guilds.get(ctx.req.GuildID).members.get(ctx.req.ID);
       const res = member.toJSON();
-      ctx.res = { members: res };
-    };
-
-    this.fetchRoles = ctx => {
-      const res = [];
-      for (const id of ctx.req.IDs) {
-        res.push(
-          this.client.guilds
-            .get(ctx.req.guildID)
-            .roles.get(id)
-            .toJSON()
-        );
-      }
-      ctx.res = { roles: res };
+      ctx.res = res;
     };
 
     this.fetchRole = ctx => {
-      const role = this.client.guilds.get(ctx.req.guildID).roles.get(ctx.req.ID);
+      const role = this.client.guilds.get(ctx.req.GuildID).roles.get(ctx.req.ID);
       const res = role.toJSON();
-      ctx.res = { roles: res };
-    };
-
-    this.fetchUsers = ctx => {
-      const res = [];
-      for (const id of ctx.req.IDs) {
-        res.push(this.client.users.get(id).toJSON());
-      }
-      ctx.res = { users: res };
+      ctx.res = res;
     };
 
     this.fetchUser = ctx => {
@@ -89,7 +47,11 @@ module.exports = class RPCServer extends Mali {
     };
 
     this.say = ctx => {
-      this.client.commandHandler.runCommand(null, this.client.commandHandler.findCommand('say'), ctx.req);
+      this.client.commandHandler.runCommand(
+        null,
+        this.client.commandHandler.findCommand('say'),
+        ctx.req
+      );
       ctx.res = null;
     };
   }
@@ -98,13 +60,9 @@ module.exports = class RPCServer extends Mali {
     this.use(this.client.prometheus.rpcMiddleware);
     this.use({ fetchGuilds: this.fetchGuilds });
     this.use({ fetchGuild: this.fetchGuild });
-    this.use({ fetchChannels: this.fetchChannels });
     this.use({ fetchChannel: this.fetchChannel });
-    this.use({ fetchMembers: this.fetchMembers });
     this.use({ fetchMember: this.fetchMember });
-    this.use({ fetchRoles: this.fetchRoles });
     this.use({ fetchRole: this.fetchRole });
-    this.use({ fetchUsers: this.fetchUsers });
     this.use({ fetchUser: this.fetchUser });
     this.use({ say: this.say });
   }

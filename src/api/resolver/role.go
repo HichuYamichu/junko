@@ -8,7 +8,6 @@ import (
 
 // RoleResolver : resolves role
 type RoleResolver struct {
-	rpc  *fetcher.GuildFetcherClient
 	role *fetcher.Role
 }
 
@@ -40,17 +39,4 @@ func (r *RoleResolver) Permissions(ctx context.Context) *int32 {
 // Hoist : resolves role Hoist
 func (r *RoleResolver) Hoist(ctx context.Context) *bool {
 	return &r.role.Hoist
-}
-
-// Guild : resolves role Guild
-func (r *RoleResolver) Guild(ctx context.Context) (*GuildResolver, error) {
-	guild, err := (*r.rpc).FetchGuild(ctx, &fetcher.ID{ID: r.role.Guild})
-	if err != nil {
-		return nil, err
-	}
-	res := &GuildResolver{
-		rpc:   r.rpc,
-		guild: guild,
-	}
-	return res, nil
 }

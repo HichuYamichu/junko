@@ -52,15 +52,14 @@ func (g *GuildResolver) Icon(ctx context.Context) *string {
 
 // Channels : resolves guild Channels
 func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, error) {
-	fetched, err := (*g.rpc).FetchChannels(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Channels})
-	if err != nil {
-		return nil, err
-	}
-	r := make([]*ChannelResolver, len(fetched.Channels))
-	for i := range fetched.Channels {
+	r := make([]*ChannelResolver, len(g.guild.Channels))
+	for i, id := range g.guild.Channels {
+		fetched, err := (*g.rpc).FetchChannel(ctx, &fetcher.FetchRequest{GuildID: g.guild.Id, ID: id})
+		if err != nil {
+			return nil, err
+		}
 		r[i] = &ChannelResolver{
-			rpc:     g.rpc,
-			channel: fetched.Channels[i],
+			channel: fetched,
 		}
 	}
 	return &r, nil
@@ -68,15 +67,15 @@ func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, erro
 
 // Members : resolves guild Members
 func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error) {
-	fetched, err := (*g.rpc).FetchMembers(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Members})
-	if err != nil {
-		return nil, err
-	}
-	r := make([]*MemberResolver, len(fetched.Members))
-	for i := range fetched.Members {
+	r := make([]*MemberResolver, len(g.guild.Members))
+	for i, id := range g.guild.Members {
+		fetched, err := (*g.rpc).FetchMember(ctx, &fetcher.FetchRequest{GuildID: g.guild.Id, ID: id})
+		if err != nil {
+			return nil, err
+		}
 		r[i] = &MemberResolver{
 			rpc:    g.rpc,
-			member: fetched.Members[i],
+			member: fetched,
 		}
 	}
 	return &r, nil
@@ -84,15 +83,14 @@ func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error)
 
 // Roles : resolves guild Roles
 func (g *GuildResolver) Roles(ctx context.Context) (*[]*RoleResolver, error) {
-	fetched, err := (*g.rpc).FetchRoles(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Roles})
-	if err != nil {
-		return nil, err
-	}
-	r := make([]*RoleResolver, len(fetched.Roles))
-	for i := range fetched.Roles {
+	r := make([]*RoleResolver, len(g.guild.Roles))
+	for i, id := range g.guild.Roles {
+		fetched, err := (*g.rpc).FetchRole(ctx, &fetcher.FetchRequest{GuildID: g.guild.Id, ID: id})
+		if err != nil {
+			return nil, err
+		}
 		r[i] = &RoleResolver{
-			rpc:  g.rpc,
-			role: fetched.Roles[i],
+			role: fetched,
 		}
 	}
 	return &r, nil

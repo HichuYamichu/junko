@@ -33,7 +33,7 @@ type App struct {
 }
 
 // New : Initialize new server instance
-func New(host, port, gRPCAddr string) *App {
+func New(host, port string) *App {
 	a := &App{}
 	a.db = a.connectDB()
 	a.reg = prometheus.NewRegistry()
