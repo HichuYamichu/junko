@@ -4,16 +4,13 @@ import (
 	"context"
 
 	"github.com/hichuyamichu/fetcher-api/fetcher"
+	"github.com/jinzhu/gorm"
 )
 
 // Resolver : root resolver
 type Resolver struct {
 	RPC *fetcher.GuildFetcherClient
-}
-
-// New : Resolver constructor function
-func New(rpc *fetcher.GuildFetcherClient) *Resolver {
-	return &Resolver{RPC: rpc}
+	DB  *gorm.DB
 }
 
 // Guilds : resolves Guilds query
@@ -26,6 +23,7 @@ func (r *Resolver) Guilds(ctx context.Context) (*[]*GuildResolver, error) {
 	for i := range fetched.Guilds {
 		res[i] = &GuildResolver{
 			rpc:   r.RPC,
+			db:    r.DB,
 			guild: fetched.Guilds[i],
 		}
 	}
@@ -42,6 +40,7 @@ func (r *Resolver) Guild(ctx context.Context, args fetcher.ID) (*GuildResolver, 
 
 	res := GuildResolver{
 		rpc:   r.RPC,
+		db:    r.DB,
 		guild: guild,
 	}
 

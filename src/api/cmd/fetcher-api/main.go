@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	"github.com/hichuyamichu/fetcher-api/app"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var port = flag.String("port", "4000", "http service port")

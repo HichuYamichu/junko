@@ -4,11 +4,14 @@ import (
 	"context"
 
 	"github.com/hichuyamichu/fetcher-api/fetcher"
+	"github.com/hichuyamichu/fetcher-api/models"
+	"github.com/jinzhu/gorm"
 )
 
 // GuildResolver : resolves guild
 type GuildResolver struct {
 	rpc   *fetcher.GuildFetcherClient
+	db    *gorm.DB
 	guild *fetcher.Guild
 }
 
@@ -92,5 +95,35 @@ func (g *GuildResolver) Roles(ctx context.Context) (*[]*RoleResolver, error) {
 			role: fetched.Roles[i],
 		}
 	}
+	return &r, nil
+}
+
+// Settings : resolves guild Settings
+func (g *GuildResolver) Settings(ctx context.Context) (*SettingsResolver, error) {
+	var settings models.Settings
+	settings.GuildID = g.guild.Id
+	g.db.Where(&models.Settings{GuildID: g.guild.Id}).Find(&settings)
+
+	r := &SettingsResolver{
+		db:       g.db,
+		settings: &settings,
+	}
+
+	return r, nil
+}
+
+// Tags : resolves guild Tags
+func (g *GuildResolver) Tags(ctx context.Context) (*[]*TagResolver, error) {
+	var tags []models.Tag
+	g.db.Where(&models.Tag{GuildID: g.guild.Id}).Find(&tags)
+
+	r := make([]*TagResolver, len(tags))
+	for i := range tags {
+		r[i] = &TagResolver{
+			db:  g.db,
+			tag: &tags[i],
+		}
+	}
+
 	return &r, nil
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"path"
 	"time"
 
@@ -17,6 +18,7 @@ import (
 	"github.com/hichuyamichu/fetcher-api/fetcher"
 	"github.com/hichuyamichu/fetcher-api/handler"
 	"github.com/hichuyamichu/fetcher-api/resolver"
+	"github.com/jinzhu/gorm"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -27,11 +29,13 @@ type App struct {
 	srv *http.Server
 	rpc *fetcher.GuildFetcherClient
 	reg *prometheus.Registry
+	db  *gorm.DB
 }
 
 // New : Initialize new server instance
 func New(host, port, gRPCAddr string) *App {
 	a := &App{}
+	a.db = a.connectDB()
 	a.reg = prometheus.NewRegistry()
 	a.rpc = a.setupRPC()
 	a.srv = &http.Server{}
@@ -75,7 +79,7 @@ func (a *App) setupSchema() *graphql.Schema {
 	if err != nil {
 		panic(err)
 	}
-	res := resolver.New(a.rpc)
+	res := &resolver.Resolver{RPC: a.rpc, DB: a.db}
 	schemaDeff := graphql.MustParseSchema(schema, res, graphql.UseStringDescriptions())
 	return schemaDeff
 }
@@ -98,6 +102,20 @@ func (a *App) setupRPC() *fetcher.GuildFetcherClient {
 
 	rpc := fetcher.NewGuildFetcherClient(conn)
 	return &rpc
+}
+
+func (a *App) connectDB() *gorm.DB {
+	host := os.Getenv("POSTGRES_HOST")
+	user := os.Getenv("POSTGRES_USER")
+	dbname := os.Getenv("POSTGRES_DB")
+	password := os.Getenv("POSTGRES_PASSWORD")
+
+	uri := fmt.Sprintf("host=%s port=5432 user=%s dbname=%s password=%s sslmode=disable", host, user, dbname, password)
+	db, err := gorm.Open("postgres", uri)
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
 
 // Run : Starts the app

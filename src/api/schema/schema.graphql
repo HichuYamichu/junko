@@ -16,6 +16,8 @@ type Guild {
   channels: [Channel]
   members: [Member]
   roles: [Role]
+  tags: [Tag]
+  settings: Settings
   createdTimestamp: String
   description: String
   icon: String
@@ -62,4 +64,20 @@ type Role {
   permissions: Int
   hoist: Boolean
   guild: Guild
+}
+
+type Settings {
+  guildID: String,
+  prefix: String,
+  preset: String,
+  logChannel: String,
+  blacklist: [String!]
+}
+
+type Tag {
+  tagID: String,
+  guildID: String,
+  author: String,
+  name: String,
+  content: String,
 }
