@@ -8,7 +8,7 @@ import (
 
 // ChannelResolver : rosolves channels
 type ChannelResolver struct {
-	rpc     fetcher.GuildFetcherClient
+	rpc     *fetcher.GuildFetcherClient
 	channel *fetcher.Channel
 }
 
@@ -69,7 +69,7 @@ func (c *ChannelResolver) RateLimitPerUser(ctx context.Context) *int32 {
 
 // Guild : resolves channel Guild
 func (c *ChannelResolver) Guild(ctx context.Context) (*GuildResolver, error) {
-	guild, err := c.rpc.FetchGuild(ctx, &fetcher.ID{ID: c.channel.Guild})
+	guild, err := (*c.rpc).FetchGuild(ctx, &fetcher.ID{ID: c.channel.Guild})
 	if err != nil {
 		return nil, err
 	}

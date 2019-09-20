@@ -1,9 +1,0 @@
-type Query {
-  Guilds(): [Guild]
-  Guild(ID: String!): Guild
-  Channel(GuildID: String!, ID: String!): Channel
-  Member(GuildID: String!, ID: String!): Member
-  Role(GuildID: String!, ID: String!): Role
-  User(GuildID: String!, ID: String!): User
-  Say(GuildID: String!, ChannelID: String!, Content: String!): String
-}

@@ -8,7 +8,7 @@ import (
 
 // UserResolver : resolves user
 type UserResolver struct {
-	rpc  fetcher.GuildFetcherClient
+	rpc  *fetcher.GuildFetcherClient
 	user *fetcher.User
 }
 

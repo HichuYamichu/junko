@@ -23,7 +23,7 @@ var graphiql = []byte(`
 		<div id="graphiql" style="height: 100vh;">Loading...</div>
 		<script>
 			function fetchGQL(params) {
-				return fetch("/gql", {
+				return fetch("/query", {
 					method: "post",
 					body: JSON.stringify(params),
 					credentials: "include",

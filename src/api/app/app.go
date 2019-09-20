@@ -1,20 +1,22 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
+	"path"
 	"time"
 
-	util "github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
+	"github.com/gobuffalo/packr"
 	"github.com/graph-gophers/graphql-go"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/hichuyamichu/fetcher-api/fetcher"
 	"github.com/hichuyamichu/fetcher-api/handler"
 	"github.com/hichuyamichu/fetcher-api/resolver"
-	"github.com/hichuyamichu/fetcher-api/schema"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -22,68 +24,93 @@ import (
 
 // App : Application struct
 type App struct {
-	Router   http.Handler
-	Handler  *handler.GraphQL
-	Registry *prometheus.Registry
-	Adrr     string
+	srv *http.Server
+	rpc *fetcher.GuildFetcherClient
+	reg *prometheus.Registry
 }
 
 // New : Initialize new server instance
 func New(host, port, gRPCAddr string) *App {
 	a := &App{}
+	a.reg = prometheus.NewRegistry()
+	a.rpc = a.setupRPC()
+	a.srv = &http.Server{}
+	a.srv.Addr = fmt.Sprintf("%s:%s", host, port)
+	a.srv.Handler = a.setupHandler()
+	a.srv.WriteTimeout = 15 * time.Second
+	a.srv.ReadTimeout = 15 * time.Second
+	return a
+}
 
-	reg := prometheus.NewRegistry()
+func (a *App) setupHandler() http.Handler {
+	r := chi.NewRouter()
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Timeout(60 * time.Second))
+
+	cors := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	})
+	r.Use(cors.Handler)
+
+	schema := a.setupSchema()
+	r.Method("POST", "/query", &handler.GraphQL{Schema: schema})
+	r.Method("GET", "/", &handler.GraphiQL{})
+	r.Method("GET", "/metrics", promhttp.HandlerFor(a.reg, promhttp.HandlerOpts{}))
+
+	return r
+}
+
+func (a *App) setupSchema() *graphql.Schema {
+	schemaPath := path.Join("../schema")
+	box := packr.NewBox(schemaPath)
+	schema, err := box.FindString("schema.graphql")
+	if err != nil {
+		panic(err)
+	}
+	res := resolver.New(a.rpc)
+	schemaDeff := graphql.MustParseSchema(schema, res, graphql.UseStringDescriptions())
+	return schemaDeff
+}
+
+func (a *App) setupRPC() *fetcher.GuildFetcherClient {
 	grpcMetrics := grpc_prometheus.NewClientMetrics()
-	reg.MustRegister(grpcMetrics)
-	reg.MustRegister(prometheus.NewGoCollector())
-	reg.MustRegister(prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}))
-	a.Registry = reg
+	a.reg.MustRegister(grpcMetrics)
+	a.reg.MustRegister(prometheus.NewGoCollector())
+	a.reg.MustRegister(prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}))
 
 	conn, err := grpc.Dial(
-		gRPCAddr,
+		"127.0.0.1:50051",
 		grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
 		grpc.WithStreamInterceptor(grpcMetrics.StreamClientInterceptor()),
 		grpc.WithInsecure(),
 	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	rpc := fetcher.NewGuildFetcherClient(conn)
-
-	s, err := schema.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-	res := resolver.New(rpc)
-	schemaDeff := graphql.MustParseSchema(s, res, graphql.UseStringDescriptions())
-	a.Handler = &handler.GraphQL{Schema: schemaDeff}
-	a.Router = a.setupRouter()
-	a.Adrr = fmt.Sprintf("%s:%s", host, port)
-	return a
+	return &rpc
 }
 
-func (a *App) setupRouter() http.Handler {
-	r := mux.NewRouter()
-	r.Handle("/gql", a.Handler)
-	r.Handle("/", &handler.GraphiQL{})
-	r.Handle("/metrics", promhttp.HandlerFor(a.Registry, promhttp.HandlerOpts{}))
-
-	allowedHeaders := util.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
-	allowedOrigins := util.AllowedOrigins([]string{"*"})
-	allowedMethods := util.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-	h := util.LoggingHandler(os.Stdout, util.CORS(allowedOrigins, allowedHeaders, allowedMethods)(r))
-	return h
-}
-
-// Run : Starts the http server
+// Run : Starts the app
 func (a *App) Run() {
-	srv := &http.Server{
-		Handler:      a.Router,
-		Addr:         a.Adrr,
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
+	log.Printf("Listening on: http://%s\n", a.srv.Addr)
+	log.Fatal(a.srv.ListenAndServe())
+}
+
+// Shutdown : Stops the app
+func (a *App) Shutdown() {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := a.srv.Shutdown(ctx); err != nil {
+		log.Fatalf("Server Shutdown Failed:%+v", err)
 	}
-	fmt.Printf("Listening on: %s\n", a.Adrr)
-	log.Fatal(srv.ListenAndServe())
 }

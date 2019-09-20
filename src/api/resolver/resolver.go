@@ -8,17 +8,17 @@ import (
 
 // Resolver : root resolver
 type Resolver struct {
-	RPC fetcher.GuildFetcherClient
+	RPC *fetcher.GuildFetcherClient
 }
 
 // New : Resolver constructor function
-func New(rpc fetcher.GuildFetcherClient) *Resolver {
+func New(rpc *fetcher.GuildFetcherClient) *Resolver {
 	return &Resolver{RPC: rpc}
 }
 
 // Guilds : resolves Guilds query
 func (r *Resolver) Guilds(ctx context.Context) (*[]*GuildResolver, error) {
-	fetched, err := r.RPC.FetchGuilds(ctx, &fetcher.Void{})
+	fetched, err := (*r.RPC).FetchGuilds(ctx, &fetcher.Void{})
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (r *Resolver) Guilds(ctx context.Context) (*[]*GuildResolver, error) {
 
 // Guild : resolves Guild query
 func (r *Resolver) Guild(ctx context.Context, args fetcher.ID) (*GuildResolver, error) {
-	guild, err := r.RPC.FetchGuild(ctx, &args)
+	guild, err := (*r.RPC).FetchGuild(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (r *Resolver) Guild(ctx context.Context, args fetcher.ID) (*GuildResolver, 
 
 // Channel : resolves Channel query
 func (r *Resolver) Channel(ctx context.Context, args fetcher.SingleFetchRequest) (*ChannelResolver, error) {
-	channel, err := r.RPC.FetchChannel(ctx, &args)
+	channel, err := (*r.RPC).FetchChannel(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (r *Resolver) Channel(ctx context.Context, args fetcher.SingleFetchRequest)
 
 // Member : resolves Member query
 func (r *Resolver) Member(ctx context.Context, args fetcher.SingleFetchRequest) (*MemberResolver, error) {
-	member, err := r.RPC.FetchMember(ctx, &args)
+	member, err := (*r.RPC).FetchMember(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (r *Resolver) Member(ctx context.Context, args fetcher.SingleFetchRequest) 
 
 // Role : resolves Role query
 func (r *Resolver) Role(ctx context.Context, args fetcher.SingleFetchRequest) (*RoleResolver, error) {
-	role, err := r.RPC.FetchRole(ctx, &args)
+	role, err := (*r.RPC).FetchRole(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (r *Resolver) Role(ctx context.Context, args fetcher.SingleFetchRequest) (*
 
 // User : resolves User query
 func (r *Resolver) User(ctx context.Context, args fetcher.SingleFetchRequest) (*UserResolver, error) {
-	user, err := r.RPC.FetchUser(ctx, &args)
+	user, err := (*r.RPC).FetchUser(ctx, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (r *Resolver) User(ctx context.Context, args fetcher.SingleFetchRequest) (*
 
 // Say : resolves Say query
 func (r *Resolver) Say(ctx context.Context, args fetcher.Msg) (*string, error) {
-	_, err := r.RPC.Say(ctx, &args)
+	_, err := (*r.RPC).Say(ctx, &args)
 	if err != nil {
 		res := "Failed to send"
 		return &res, err

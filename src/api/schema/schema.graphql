@@ -1,3 +1,65 @@
 schema {
   query: Query
 }
+
+type Query {
+  Guilds(): [Guild]
+  Guild(ID: String!): Guild
+  Channel(GuildID: String!, ID: String!): Channel
+  Member(GuildID: String!, ID: String!): Member
+  Role(GuildID: String!, ID: String!): Role
+  User(GuildID: String!, ID: String!): User
+  Say(GuildID: String!, ChannelID: String!, Content: String!): String
+}
+
+type Guild {
+  channels: [Channel]
+  members: [Member]
+  roles: [Role]
+  createdTimestamp: String
+  description: String
+  icon: String
+  id: String
+  memberCount: Int
+  name: String
+  region: String
+}
+
+type Channel {
+  id: String
+  name: String
+  createdTimestamp: String
+  type: String
+  rawPosition: Int
+  topic: String
+  nsfw: Boolean
+  bitrate: Int
+  userLimit: Int
+  parentID: String
+  rateLimitPerUser: Int
+  guild: Guild
+}
+
+type Member {
+  user: User
+  guild: Guild
+  roles: [Role]
+  displayName: String
+  joinedTimestamp: Int
+}
+
+type User {
+  avatar: String
+  id: String
+  tag: String
+}
+
+type Role {
+  color: Int
+  name: String
+  rawPosition: Int
+  id: String
+  permissions: Int
+  hoist: Boolean
+  guild: Guild
+}

@@ -8,7 +8,7 @@ import (
 
 // GuildResolver : resolves guild
 type GuildResolver struct {
-	rpc   fetcher.GuildFetcherClient
+	rpc   *fetcher.GuildFetcherClient
 	guild *fetcher.Guild
 }
 
@@ -49,7 +49,7 @@ func (g *GuildResolver) Icon(ctx context.Context) *string {
 
 // Channels : resolves guild Channels
 func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, error) {
-	fetched, err := g.rpc.FetchChannels(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Channels})
+	fetched, err := (*g.rpc).FetchChannels(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Channels})
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (g *GuildResolver) Channels(ctx context.Context) (*[]*ChannelResolver, erro
 
 // Members : resolves guild Members
 func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error) {
-	fetched, err := g.rpc.FetchMembers(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Members})
+	fetched, err := (*g.rpc).FetchMembers(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Members})
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (g *GuildResolver) Members(ctx context.Context) (*[]*MemberResolver, error)
 
 // Roles : resolves guild Roles
 func (g *GuildResolver) Roles(ctx context.Context) (*[]*RoleResolver, error) {
-	fetched, err := g.rpc.FetchRoles(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Roles})
+	fetched, err := (*g.rpc).FetchRoles(ctx, &fetcher.MultiFetchRequest{GuildID: g.guild.Id, IDs: g.guild.Roles})
 	if err != nil {
 		return nil, err
 	}

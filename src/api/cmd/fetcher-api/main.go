@@ -2,6 +2,9 @@ package main
 
 import (
 	"flag"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/hichuyamichu/fetcher-api/app"
 )
@@ -13,5 +16,13 @@ var gRPCAddr = flag.String("gRPCAddr", "127.0.0.1:50051", "gRPC server URI")
 func main() {
 	flag.Parse()
 	srv := app.New(*host, *port, *gRPCAddr)
+
+	go func() {
+		done := make(chan os.Signal, 1)
+		signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+		<-done
+		srv.Shutdown()
+	}()
+
 	srv.Run()
 }
