@@ -16,10 +16,10 @@ class MessageUpdateListener extends Listener {
     if (!newMessage.guild.me.hasPermission('EMBED_LINKS')) return;
     if (oldMessage.author.bot || newMessage.author.bot) return;
     if (Util.escapeMarkdown(oldMessage.content) === Util.escapeMarkdown(newMessage.content)) return;
-    const modLogID = await this.client.store.get(newMessage.guild, 'logChannel', null);
-    if (!modLogID) return;
-    const modChannel = this.client.channels.get(modLogID);
-    if (!modChannel) return;
+    const messageLog = await this.client.store.get(newMessage.guild, 'messageLog', null);
+    if (!messageLog) return;
+    const messageLogChannel = this.client.channels.get(messageLog);
+    if (!messageLogChannel) return;
 
     const embed = this.client.util
       .embed()
@@ -40,7 +40,7 @@ class MessageUpdateListener extends Listener {
       )
       .setTimestamp(oldMessage.editedAt || newMessage.editedAt || new Date())
       .setFooter('Edited');
-    return modChannel.send(embed);
+    return messageLogChannel.send(embed);
   }
 }
 

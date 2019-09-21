@@ -37,6 +37,8 @@ services:
       driver: "fluentd"
   api:
     build: ./src/api
+    env_file:
+      - ./src/api/.env
     ports:
       - '4000:4000'
     networks:

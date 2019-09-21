@@ -4,15 +4,15 @@ const { stripIndents } = require('common-tags');
 class LogCommand extends Command {
   constructor() {
     super('log', {
-      category: 'log',
+      category: 'mod',
       aliases: ['log'],
       channel: 'guild',
       description: {
         content: stripIndents`Use one of the following:
-        • set \`<channel mention | channel id | channel name>\`
-        • del `,
+        • member \`<channel mention | channel id | channel name>\`
+        • message \`<channel mention | channel id | channel name>\``,
         usage: '<method> <...args>',
-        examples: ['set #general']
+        examples: ['member #member-logs']
       }
     });
   }
@@ -20,10 +20,10 @@ class LogCommand extends Command {
   *args() {
     const method = yield {
       type: [
-        ['log-set', 'set', 'enable'],
-        ['log-del', 'del', 'rm', 'disable']
+        ['log-member', 'member', 'mem'],
+        ['log-message', 'message', 'msg']
       ],
-      otherwise: () => 'You must specify a method like \`set\` or \`del\`. See `help log` for more info.'
+      otherwise: () => 'You must specify a method like \`log-member\` or \`log-message\`. See `help log` for more info.'
     };
 
     return Flag.continue(method);

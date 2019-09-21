@@ -10,17 +10,17 @@ class GuildMemberAddListener extends Listener {
 
   async exec(member) {
     if (!member.guild.me.hasPermission('EMBED_LINKS')) return;
-    const modLogID = await this.client.store.get(member.guild, 'logChannel', null);
-    if (!modLogID) return;
-    const modChannel = this.client.channels.get(modLogID);
-    if (!modChannel) return;
+    const memberLog = await this.client.store.get(member.guild, 'memberLog', null);
+    if (!memberLog) return;
+    const memberLogChannel = this.client.channels.get(memberLog);
+    if (!memberLogChannel) return;
     const embed = this.client.util
       .embed()
       .setAuthor(`${member.user.tag} (${member.user.id})`, member.user.displayAvatarURL())
       .setColor(this.client.config.color)
       .setFooter('Joined')
       .setTimestamp(member.joinedTimestamp);
-    return modChannel.send(embed);
+    return memberLogChannel.send(embed);
   }
 }
 

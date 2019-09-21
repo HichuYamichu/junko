@@ -13,7 +13,10 @@ const Setting = db.define('settings', {
   preset: {
     type: Sequelize.STRING
   },
-  logChannel: {
+  memberLog: {
+    type: Sequelize.STRING
+  },
+  messageLog: {
     type: Sequelize.STRING
   },
   blacklist: {

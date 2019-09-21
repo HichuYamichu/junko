@@ -11,7 +11,7 @@ class CommandCancelledListener extends Listener {
 
   clean(item) {
     if (typeof item === 'string') return item;
-    const cleaned = inspect(item);
+    const cleaned = inspect(item, { depth: 1 });
     return cleaned;
   }
 

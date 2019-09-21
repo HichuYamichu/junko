@@ -15,10 +15,10 @@ class MessageDeleteListener extends Listener {
     if (message.author.bot) return;
     if (!message.guild) return;
     if (!message.content) return;
-    const modLogID = await this.client.store.get(message.guild, 'logChannel', null);
-    if (!modLogID) return;
-    const modChannel = this.client.channels.get(modLogID);
-    if (!modChannel) return;
+    const messageLog = await this.client.store.get(message.guild, 'messageLog', null);
+    if (!messageLog) return;
+    const messageLogChannel = this.client.channels.get(messageLog);
+    if (!messageLogChannel) return;
     const attachment = message.attachments.first();
 
     const embed = this.client.util
@@ -37,7 +37,7 @@ class MessageDeleteListener extends Listener {
       .setFooter('Deleted');
 
     if (attachment) embed.addField('**Attachment(s):**', attachment ? attachment.url : 'None');
-    return modChannel.send(embed);
+    return messageLogChannel.send(embed);
   }
 }
 

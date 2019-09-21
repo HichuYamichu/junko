@@ -22,9 +22,15 @@ module.exports = class SettingsProvider {
   async set(guild, key, value) {
     const id = this.constructor.getGuildID(guild);
     await this.constructor.delCached(id, key);
-    const data = { guildID: id };
-    data[key] = value;
+    const data = { guildID: id, [key]: value };
     return Settings.upsert(data);
+  }
+
+  async del(guild, key) {
+    const id = this.constructor.getGuildID(guild);
+    await this.constructor.delCached(id, key);
+    const data = { [key]: null };
+    return Settings.update(data, { where: { guildID: id } });
   }
 
   async clear(guild) {
