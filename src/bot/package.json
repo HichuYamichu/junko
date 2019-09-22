@@ -37,7 +37,6 @@
     "nodemon": "^1.19.1"
   },
   "optionalDependencies": {
-    "bufferutil": "^4.0.1",
-    "zlib-sync": "^0.1.5"
+    "bufferutil": "^4.0.1"
   }
 }

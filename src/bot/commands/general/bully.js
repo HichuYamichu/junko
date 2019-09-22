@@ -11,7 +11,7 @@ class BullyCommand extends Command {
       channel: ['guild', 'dm'],
       description: {
         content: 'Bullies someone.',
-        usage: '<mention | username | id> *[1|2]',
+        usage: '<mention | username | id> <level>',
         examples: ['@ someone', '462219867467022347']
       },
       args: [

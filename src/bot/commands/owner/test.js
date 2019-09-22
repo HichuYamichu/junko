@@ -17,7 +17,7 @@ class TestCommand extends Command {
 
   // eslint-disable-next-line no-unused-vars
   async exec(message, args) {
-    this.client.emit('guildMemberAdd', message.member);
+    this.client.emit('guildMemberRemove', message.member);
   }
 }
 

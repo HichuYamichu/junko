@@ -35,13 +35,14 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import GuildInfo from "@/components/GuildInfo";
-import GuildChannels from "@/components/GuildChannels/GuildChannels";
-import GuildMembers from "@/components/GuildMembers/GuildMembers";
+import gql from 'graphql-tag';
+import GuildInfo from '@/components/Admin/GuildInfo';
+import GuildChannels from '@/components/Admin/GuildChannels/GuildChannels';
+import GuildMembers from '@/components/Admin/GuildMembers/GuildMembers';
 
 export default {
-  name: "Guild",
+  name: 'Guild',
+  middleware: 'admin',
   components: {
     GuildInfo,
     GuildChannels,
@@ -61,11 +62,6 @@ export default {
         return { id: this.$route.params.id };
       }
     }
-  },
-  head() {
-    return {
-      title: this.guild ? `${this.guild.name}` : "Loading"
-    };
   }
 };
 </script>

@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/es5/util/colors';
 
 export default {
   server: {
@@ -38,19 +38,27 @@ export default {
 
   apollo: {
     clientConfigs: {
-      'default': '@/plugins/apollo-config.js'
+      default: '@/plugins/apollo-config.js'
     }
   },
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
       themes: {
         dark: {
-          primary: '#fc2041',
-          accent: colors.grey.darken4,
+          primary: '#000',
+          accent: '#f271cd',
           secondary: '#F12B49',
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        },
+        light: {
+          primary: '#000',
+          accent: '#000',
+          secondary: '#000',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
@@ -61,6 +69,6 @@ export default {
   },
 
   build: {
-    extend (config, ctx) {}
+    extend(config, ctx) {}
   }
-}
+};

@@ -35,10 +35,9 @@ class HelpCommand extends Command {
         .addField(
           'Notation',
           stripIndents`
-          \`[thing1 | thing2]\` - include one of the options literally
           \`<thing>\` - fill with appropriate content
           \`<thing1 | thing2>\` - multiple content types available
-          \`*<thing>\` - parameter is optional or has a default value`
+          \`[thing]\` - parameter is optional or has a default value`
         )
         .addBlankField();
 
