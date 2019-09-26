@@ -15,9 +15,9 @@ import (
 	"github.com/gobuffalo/packr"
 	"github.com/graph-gophers/graphql-go"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/hichuyamichu/fetcher-api/fetcher"
-	"github.com/hichuyamichu/fetcher-api/handler"
-	"github.com/hichuyamichu/fetcher-api/resolver"
+	"github.com/hichuyamichu/junko-api/fetcher"
+	"github.com/hichuyamichu/junko-api/handler"
+	"github.com/hichuyamichu/junko-api/resolver"
 	"github.com/jinzhu/gorm"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -65,8 +65,9 @@ func (a *App) setupHandler() http.Handler {
 	r.Use(cors.Handler)
 
 	schema := a.setupSchema()
-	r.Method("POST", "/query", &handler.GraphQL{Schema: schema})
 	r.Method("GET", "/", &handler.GraphiQL{})
+	r.Method("POST", "/auth", &handler.Authorization{})
+	r.Method("POST", "/query", &handler.GraphQL{Schema: schema})
 	r.Method("GET", "/metrics", promhttp.HandlerFor(a.reg, promhttp.HandlerOpts{}))
 
 	return r
@@ -90,8 +91,13 @@ func (a *App) setupRPC() *fetcher.GuildFetcherClient {
 	a.reg.MustRegister(prometheus.NewGoCollector())
 	a.reg.MustRegister(prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}))
 
+	grpcAddr := os.Getenv("RPC_ADDR")
+	if grpcAddr == "" {
+		grpcAddr = "127.0.0.1:50051"
+	}
+
 	conn, err := grpc.Dial(
-		"127.0.0.1:50051",
+		grpcAddr,
 		grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
 		grpc.WithStreamInterceptor(grpcMetrics.StreamClientInterceptor()),
 		grpc.WithInsecure(),

@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/hichuyamichu/fetcher-api/app"
+	"github.com/hichuyamichu/junko-api/app"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

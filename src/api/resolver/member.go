@@ -3,7 +3,7 @@ package resolver
 import (
 	"context"
 
-	"github.com/hichuyamichu/fetcher-api/fetcher"
+	"github.com/hichuyamichu/junko-api/fetcher"
 )
 
 // MemberResolver : resolves member

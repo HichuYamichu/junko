@@ -3,8 +3,8 @@ package resolver
 import (
 	"context"
 
-	"github.com/hichuyamichu/fetcher-api/fetcher"
-	"github.com/hichuyamichu/fetcher-api/models"
+	"github.com/hichuyamichu/junko-api/fetcher"
+	"github.com/hichuyamichu/junko-api/models"
 	"github.com/jinzhu/gorm"
 )
 
