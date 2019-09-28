@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -74,8 +73,7 @@ func (a *App) setupHandler() http.Handler {
 }
 
 func (a *App) setupSchema() *graphql.Schema {
-	schemaPath := path.Join("../schema")
-	box := packr.NewBox(schemaPath)
+	box := packr.NewBox("../schema")
 	schema, err := box.FindString("schema.graphql")
 	if err != nil {
 		panic(err)
@@ -91,7 +89,7 @@ func (a *App) setupRPC() *fetcher.GuildFetcherClient {
 	a.reg.MustRegister(prometheus.NewGoCollector())
 	a.reg.MustRegister(prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}))
 
-	grpcAddr := os.Getenv("RPC_ADDR")
+	grpcAddr := os.Getenv("RPC_URI")
 	if grpcAddr == "" {
 		grpcAddr = "127.0.0.1:50051"
 	}
@@ -119,8 +117,11 @@ func (a *App) connectDB() *gorm.DB {
 	uri := fmt.Sprintf("host=%s port=5432 user=%s dbname=%s password=%s sslmode=disable", host, user, dbname, password)
 	db, err := gorm.Open("postgres", uri)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		time.Sleep(5 * time.Second)
+		a.connectDB()
 	}
+	log.Println("Connected to db")
 	return db
 }
 

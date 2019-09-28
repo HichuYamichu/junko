@@ -9,8 +9,10 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+// Authorization : handler for /auth route
 type Authorization struct{}
 
+// Credentials : login payload struct
 type Credentials struct {
 	Password string `json:"password"`
 	Login    string `json:"login"`
@@ -35,7 +37,7 @@ func (Authorization) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	expirationTime := time.Now().Add(5 * time.Minute)
 	token := jwt.New(jwt.SigningMethodHS256)
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString([]byte(jwtKey))
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return

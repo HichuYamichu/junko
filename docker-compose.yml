@@ -43,6 +43,8 @@ services:
       - '4000:4000'
     networks:
       - junko_net
+    depends_on:
+      - postgres
     restart: always
     logging:
       driver: "fluentd"
@@ -57,7 +59,20 @@ services:
     restart: always
     logging:
       driver: "fluentd"
-
+  nginx: 
+    image: nginx:alpine
+    volumes:
+      - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - junko_net
+    depends_on:
+      - api
+      - dashboard
+    restart: always
+    
 networks:
   junko_net:
 

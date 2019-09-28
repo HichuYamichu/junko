@@ -10,14 +10,16 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o fetcher-api ./cmd/junko-api/main.go
+RUN go get -u github.com/gobuffalo/packr/packr
+
+RUN CGO_ENABLED=0 GOOS=linux packr build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o junko-api ./cmd/junko-api/main.go
 
 FROM scratch
 
 WORKDIR /app
 
-COPY --from=build /build/fetcher-api /app/
+COPY --from=build /build/junko-api /app/
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["./fetcher-api", "-port=3000", "-host=0.0.0.0", "-gRPCAddr=bot:50051"]
+CMD ["./junko-api", "-port=4000", "-host=0.0.0.0"]

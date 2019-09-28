@@ -1,8 +1,7 @@
 const logger = require('./Logger');
 const { join } = require('path');
 const Sequelize = require('sequelize');
-const { promisify } = require('util');
-const readdir = promisify(require('fs').readdir);
+const { readdir } = require('fs').promises;
 const Redis = require('ioredis');
 
 const cache = new Redis({

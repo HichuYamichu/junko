@@ -9,12 +9,14 @@ export const typeDefs = gql`
   type Query {
     SelectedChannel: Channel
     SelectedMember: Member
+    isLoggedIn: Boolean
   }
 `
 
 export const defaults = {
   SelectedChannel: null,
-  SelectedMember: null
+  SelectedMember: null,
+  IsLoggedIn: false
 }
 
 export const resolvers = {
@@ -28,16 +30,21 @@ export const resolvers = {
       const data = { SelectedMember: Member }
       cache.writeData({ data })
       return null
+    },
+    login: (_, { State }, { cache }) => {
+      const data = { IsLoggedIn: State }
+      cache.writeData({ data })
+      return null
     }
   }
 }
 
 export default function () {
-  let httpEndpoint = process.env.API_SERVER_SIDE || 'http://localhost:4000/query'
+  const httpEndpoint = '/api/query'
 
-  if (process.client) {
-    httpEndpoint = process.env.API_CLIENT_SIDE || 'http://localhost:4000/query'
-  }
+  // if (process.client) {
+  //   httpEndpoint = process.env.API_CLIENT_SIDE || 'http://localhost:4000/query'
+  // }
   return {
     httpEndpoint,
     typeDefs,
