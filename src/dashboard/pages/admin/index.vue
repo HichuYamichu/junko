@@ -5,11 +5,14 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
   apollo: {
     guild: {
+      error(error) {
+        return this.$router.push('/404');
+      },
       query: gql`
         query Guild($id: String!) {
           guild: Guild(ID: $id) {
@@ -19,26 +22,9 @@ export default {
         }
       `,
       variables() {
-        return { id: this.$route.params.id };
+        return { id: '506150345391603722' };
       }
     }
   }
-  // middleware(ctx) {
-  //   const variables = {
-  //     guildID: '506150345391603722',
-  //     channelID: '506150345391603724',
-  //     content: 'aaaaa'
-  //   };
-  //   const query = gql`
-  //     query IsLoggedIn() {
-  //       IsLoggedIn() {
-  //         State
-  //       }
-  //     }
-  //   `;
-  //   console.log(ctx);
-  //   ctx.app.apolloProvider.defaultClient.query({ query });
-  //   return ctx.redirect('/404');
-  // }
 };
 </script>

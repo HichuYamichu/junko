@@ -72,6 +72,8 @@ services:
       - api
       - dashboard
     restart: always
+    logging:
+      driver: "fluentd"
     
 networks:
   junko_net:

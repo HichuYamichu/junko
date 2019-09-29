@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
   data() {
@@ -23,30 +23,19 @@ export default {
   methods: {
     send: async function() {
       try {
-        const response = await fetch('http://localhost:4000/auth', {
+        let response = await fetch('/api/auth', {
           method: 'POST',
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'same-origin',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json'
           },
-          redirect: 'follow',
-          referrer: 'no-referrer',
-          body: JSON.stringify({ login: this.login, password: this.password })
+          body: JSON.stringify({
+            login: this.login,
+            password: this.password
+          })
         });
-        if (response.status === 200) {
-          const variables = {
-            state: true
-          };
-          const mutation = gql`
-            mutation login($state: Boolean) {
-              login(State: $state) @client
-            }
-          `;
-          this.$apollo.mutate({ mutation, variables });
-          this.$router.push('/admin');
-        }
+        console.log(response)
+        this.$router.push('/admin');
       } catch (error) {
         console.error(error);
       }

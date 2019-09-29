@@ -5,14 +5,11 @@ export default {
     port: process.env.NUXT_PORT || 8080,
     host: process.env.NUXT_HOST || '127.0.0.1'
   },
-  env: {
-    API_SERVER_SIDE: process.env.API_SERVER_SIDE,
-    API_CLIENT_SIDE: process.env.API_CLIENT_SIDE
-  },
+
   mode: 'universal',
 
   head: {
-    titleTemplate: `%s - ${process.env.npm_package_name}`,
+    titleTemplate: `Junko Dashboard`,
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -34,7 +31,25 @@ export default {
 
   devModules: ['@nuxtjs/vuetify'],
 
-  modules: ['@nuxtjs/apollo', '@nuxtjs/dotenv'],
+  modules: [
+    '@nuxtjs/apollo',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
+  ],
+
+  axios: {
+    proxy: true,
+    credentials: true
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:4000',
+      pathRewrite: { '^/api/': '' },
+      changeOrigin: true
+    }
+  },
 
   apollo: {
     clientConfigs: {
