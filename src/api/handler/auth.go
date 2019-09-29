@@ -49,3 +49,28 @@ func (Authorization) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 	})
 }
+
+func authenticate(r *http.Request) bool {
+	if dev := os.Getenv("DEVELOPMENT"); dev == "true" {
+		return true
+	}
+
+	c, err := r.Cookie("token")
+	if err != nil {
+		return false
+	}
+
+	tknStr := c.Value
+	tkn, err := jwt.Parse(tknStr, func(token *jwt.Token) (interface{}, error) {
+		return []byte(jwtKey), nil
+	})
+	if err != nil {
+		return false
+	}
+
+	if !tkn.Valid {
+		return false
+	}
+
+	return true
+}

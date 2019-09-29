@@ -6,6 +6,10 @@ import "net/http"
 type GraphiQL struct{}
 
 func (h GraphiQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if pass := authenticate(r); !pass {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
 	w.Write(graphiql)
 }
 

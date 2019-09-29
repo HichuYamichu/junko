@@ -23,18 +23,14 @@ export default {
   methods: {
     send: async function() {
       try {
-        let response = await fetch('/api/auth', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
+        this.$axios.post(
+          '/api/auth',
+          {
             login: this.login,
             password: this.password
-          })
-        });
-        console.log(response)
+          },
+          { withCredentials: true }
+        );
         this.$router.push('/admin');
       } catch (error) {
         console.error(error);

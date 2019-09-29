@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors';
+import colors from 'vuetify/es5/util/colors'
 
 export default {
   server: {
@@ -9,15 +9,15 @@ export default {
   mode: 'universal',
 
   head: {
-    titleTemplate: `Junko Dashboard`,
-    title: process.env.npm_package_name || '',
+    titleTemplate: 'Junko Dashboard',
+    title: '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: ''
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -84,6 +84,6 @@ export default {
   },
 
   build: {
-    extend(config, ctx) {}
+    extend (config, ctx) {}
   }
-};
+}

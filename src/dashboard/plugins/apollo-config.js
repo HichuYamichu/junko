@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const typeDefs = gql`
+const typeDefs = gql`
   type Mutation {
     selectChannel(Channel: Channel): Channel
     selectMember(Member: Member): Member
@@ -12,12 +12,12 @@ export const typeDefs = gql`
   }
 `
 
-export const defaults = {
+const defaults = {
   SelectedChannel: null,
   SelectedMember: null
 }
 
-export const resolvers = {
+const resolvers = {
   Mutation: {
     selectChannel: (_, { Channel }, { cache }) => {
       const data = { SelectedChannel: Channel }
@@ -32,17 +32,16 @@ export const resolvers = {
   }
 }
 
-export default function () {
-  const httpEndpoint =
-    process.env.NODE_ENV === 'production'
-      ? '/api/query'
-      : 'http://localhost:4000/query'
+const httpLinkOptions = {
+  credentials: 'include'
+}
 
+const httpEndpoint = '/api/query'
+
+export default function () {
   return {
     httpEndpoint,
-    httpLinkOptions: {
-      credentials: 'include'
-    },
+    httpLinkOptions,
     typeDefs,
     resolvers,
     defaults
