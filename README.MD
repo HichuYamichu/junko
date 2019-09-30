@@ -25,7 +25,6 @@ make sure to rename .env.example to .env and provide required stuff
 ```bash
 # with docker:
 docker-compose up
-# if you don't have fluentd running you will get an error so comment/remove logging section in docker-compose.yml or set up fluentd on your server
 
 # without docker:
 ¯\_(ツ)_/¯
