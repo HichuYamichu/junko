@@ -46,7 +46,7 @@ module.exports = class Database {
       }
     } catch (e) {
       logger.error(e);
-      process.exit(1);
+      setTimeout(() => this.init(), 5e3);
     }
   }
 };

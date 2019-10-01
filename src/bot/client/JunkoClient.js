@@ -4,14 +4,13 @@ const {
   InhibitorHandler,
   ListenerHandler
 } = require('discord-akairo');
-const YouTube = require('simple-youtube-api');
-const SpotifyWebApi = require('spotify-web-api-node');
 const { join } = require('path');
+const Logger = require('../structs/Logger');
 const Database = require('../structs/Database');
 const Store = require('../structs/Store');
-const RPCServer = require('../structs/RPCServer');
-const Logger = require('../structs/Logger');
 const Prometheus = require('../structs/Prometheus');
+const RPCServer = require('../structs/RPCServer');
+const APIManager = require('../structs/APIManager');
 const replies = require('../util/replies');
 
 module.exports = class JunkoClient extends AkairoClient {
@@ -33,13 +32,13 @@ module.exports = class JunkoClient extends AkairoClient {
 
     this.logger = Logger;
 
-    this.APIs = {};
-
     this.store = new Store();
 
     this.prometheus = new Prometheus();
 
     this.rpc = new RPCServer(this);
+
+    this.APIManager = APIManager;
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
@@ -56,12 +55,14 @@ module.exports = class JunkoClient extends AkairoClient {
             `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
           modifyRetry: (msg, text) =>
             `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
-          timeout: async msg => `${msg.author} **//** ${await this.getReply(msg, 'timeout')}`,
-          ended: async msg =>
-            `${msg.author} **//** ${await this.getReply(
-              msg,
-              'ended'
-            )}\nCommand has been cancelled.`,
+          timeout: async msg => {
+            const reply = await this.getReply(msg, 'timeout');
+            return `${msg.author} **//** ${reply}`;
+          },
+          ended: async msg => {
+            const reply = await this.getReply(msg, 'ended');
+            return `${msg.author} **//** ${reply}\nCommand has been cancelled.`;
+          },
           cancel: msg => `${msg.author} **//** Command has been cancelled.`,
           retries: 3,
           time: 20000
@@ -86,6 +87,7 @@ module.exports = class JunkoClient extends AkairoClient {
 
   async init() {
     await Database.init();
+    await APIManager.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -98,21 +100,6 @@ module.exports = class JunkoClient extends AkairoClient {
     this.commandHandler.loadAll();
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
-
-    if (process.env.YT_KEY) {
-      this.APIs.yt = new YouTube(process.env.YT_KEY);
-    }
-
-    if (process.env.SPOTIFY_ID && process.env.SPOTIFY_SECRET) {
-      this.APIs.spotify = new SpotifyWebApi({
-        clientId: process.env.SPOTIFY_ID,
-        clientSecret: process.env.SPOTIFY_SECRET
-      });
-      const { body } = await this.APIs.spotify.clientCredentialsGrant();
-      this.APIs.spotify.setAccessToken(body.access_token);
-    } else {
-      this.commandHandler.findCategory('spotify').removeAll();
-    }
 
     this.rpc.listen();
     this.prometheus.listen();
