@@ -4,11 +4,13 @@
 
 ## What is this?
 
-This repo contains my Discord bot, as well as it's api and a dashboard. It's not meant to be top tier production ready stuff, but rather a platform, on which I can implement/try/learn whatever I feel like.
+This repo started as a simple discord bot and has grown significantly since then. Now it's more like a platform, on top of which I can try out and implement whatever cool thing I find. This project includes 3 core services: Bot, API and Dashboard powered by Postgres and Redis, as well as some amazing [cncf](https://www.cncf.io/) projects like Prometheus and Loki. Below is a quick round up of what does what and how. 
+
+~~this is going to be more Touhou themed someday~~
 
 ## BOT
 
-Made with Discord.js/Akairo. Doesn't have all that may commands and doesn't provide much functionality either, but it uses gRPC to communicate with other services, exposes metrics for Promethes and has some cool ideas here and there (like modular responce system).
+Made with Discord.js/Akairo. Doesn't have all that may commands and doesn't provide much functionality overall, but it uses gRPC to communicate with other services, exposes metrics for Promethes and has some cool ideas here and there.
 
 ## API
 
@@ -16,11 +18,11 @@ Written in Go works as Graphql interface for gRPC connection between BOT and API
 
 ## Dashboard
 
-Made with Nuxt.js displays some data fetched from Discord client. It's not all that good <s> sorry Im not a frontend dev </s> but there are some cool things about it too, like the fact that it doesn't use vuex, instead all of the state managment is done by Apollo Graphql client.
+Made with Nuxt.js. Just a regular info dashboard on the surface but it also has a admin panel with Discord client data and settings. It's not all that good <s> I'm quite bad at frontend </s> but there are some cool things about it too, like the fact that it doesn't use vuex, instead all of the state managment is done by Apollo Graphql client.
 
-## Running the bot
+## Get your own
 
-make sure to rename .env.example to .env and provide required stuff
+go to env directory, rename all .env.example files to .env and fill them with apropriate data
 
 ```bash
 # with docker:

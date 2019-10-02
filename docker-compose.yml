@@ -1,128 +1,86 @@
-version: '3'
+version: '3.4'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  networks:
+    - junko_net
+  logging:
+    driver: loki
+    options:
+      loki-url: "http://localhost:3100/api/prom/push"
+  
 services:
   redis:
+    <<: *defaults
     image: redis:alpine
-    networks:
-      - junko_net
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
-    
+
   postgres:
+    <<: *defaults
     image: postgres:alpine
     env_file:
       - ./env/postgres/.env
     volumes:
        - postgres_vol:/var/lib/postgresql/data
-    networks:
-      - junko_net
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
-    
+   
   bot:
+    <<: *defaults
     build: ./src/bot
     env_file:
       - ./env/bot/.env
     volumes:
       - ./src/proto:/usr/src/proto
-    networks:
-      - junko_net
     depends_on:
       - redis
       - postgres
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
     
   api:
+    <<: *defaults
     build: ./src/api
     env_file:
       - ./env/api/.env
-    networks:
-      - junko_net
     depends_on:
       - postgres
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
     
   dashboard:
+    <<: *defaults
     build: ./src/dashboard
     env_file:
       - ./env/dashboard/.env
-    networks:
-      - junko_net
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
     
   nginx: 
+    <<: *defaults
     image: nginx:alpine
     volumes:
       - ./env/nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
       - 443:443
-    networks:
-      - junko_net
     depends_on:
       - api
       - dashboard
-    restart: unless-stopped
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
+      - grafana
 
   prometheus:
+    <<: *defaults
     build: ./env/prometheus
-    restart: unless-stopped
     volumes:
       - prometheus_vol:/prometheus
-    networks:
-      - junko_net
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
 
   grafana:
+    <<: *defaults
     image: 'grafana/grafana:latest'
-    restart: unless-stopped
     env_file:
       - ./env/grafana/.env
     volumes:
       - grafana_vol:/var/lib/grafana
-    networks:
-      - junko_net
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
-  
+    
   loki:
+    <<: *defaults
     image: grafana/loki:latest
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - 3100:3100
-    networks:
-      - junko_net
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/api/prom/push"
-       
+
 networks:
   junko_net:
 
