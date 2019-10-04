@@ -1,0 +1,62 @@
+import { Message } from 'discord.js';
+import { Command, AkairoModule } from 'discord-akairo';
+
+export default class ReloadCommand extends Command {
+  constructor() {
+    super('reload', {
+      aliases: ['reload', 'r'],
+      category: 'owner',
+      ownerOnly: true,
+      description: {
+        content: 'Reloads a module.',
+        usage: '<module> [type:]',
+        examples: ['eval', 'type:l cooldown']
+      }
+    });
+  }
+
+  *args() {
+    const type = yield {
+      'match': 'option',
+      'flag': ['--type='],
+      'type': [['command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
+      'default': 'command'
+    };
+
+    const mod = yield {
+      type: (msg: Message, phrase: string) => {
+        if (!phrase) return null;
+        const resolver = this.handler.resolver.type(
+          // @ts-ignore
+          {
+            command: 'commandAlias',
+            inhibitor: 'inhibitor',
+            listener: 'listener'
+          }[type]
+        );
+
+        return resolver(msg, phrase);
+      }
+    };
+
+    return { type, mod };
+  }
+
+  exec(message: Message, { type, mod }: {type: string, mod: AkairoModule }) {
+    if (!mod) {
+      return message.util!.reply(
+        `Invalid ${type} ${type === 'command' ? 'alias' : 'ID'} specified to reload.`
+      );
+    }
+
+    try {
+      mod.reload();
+      return message.util!.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
+    } catch (err) {
+      this.client.logger.error(err);
+      return message.util!.reply(`Failed to reload ${type} \`${mod.id}\`.`);
+    }
+  }
+}
+
+module.exports = ReloadCommand;

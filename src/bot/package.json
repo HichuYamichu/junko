@@ -8,8 +8,8 @@
   "private": true,
   "scripts": {
     "test": "eslint ./",
-    "dev": "nodemon Junko.js",
-    "start": "node Junko.js"
+    "dev": "nodemon dist/Junko.js",
+    "start": "node dist/Junko.js"
   },
   "dependencies": {
     "@grpc/proto-loader": "^0.5.2",
@@ -29,12 +29,20 @@
     "prom-client": "^11.5.3",
     "sequelize": "^5.18.1",
     "simple-youtube-api": "^5.2.1",
-    "spotify-web-api-node": "^4.0.0"
+    "spotify-web-api-node": "^4.0.0",
+    "typeorm": "^0.2.19"
   },
   "devDependencies": {
+    "@types/common-tags": "^1.8.0",
+    "@types/ioredis": "^4.0.18",
+    "@types/sequelize": "^4.28.5",
+    "@types/spotify-web-api-node": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
     "eslint": "^6.1.0",
-    "eslint-config-aqua": "^6.0.1",
-    "nodemon": "^1.19.1"
+    "eslint-config-marine": "^5.0.0",
+    "nodemon": "^1.19.1",
+    "typescript": "^3.6.3"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",

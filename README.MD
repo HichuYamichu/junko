@@ -10,7 +10,7 @@ This repo started as a simple discord bot and has grown significantly since then
 
 ## BOT
 
-Made with Discord.js/Akairo. Doesn't have all that may commands and doesn't provide much functionality overall, but it uses gRPC to communicate with other services, exposes metrics for Promethes and has some cool ideas here and there.
+Made with Discord.js/Akairo. Doesn't have all that may commands and doesn't provide much functionality overall, but it uses gRPC to communicate with other services, exposes metrics for Promethes and has some cool ideas here and there. It doesn't focus on one thing rather its general purpose bot with some ~~worthless~~ fun commands.
 
 ## API
 
@@ -32,3 +32,6 @@ docker-compose up
 ¯\_(ツ)_/¯
 # you need build tools for sure also Go modules can come in handy
 ```
+
+
+# This is havely inspired by [yukikaze](https://github.com/Naval-Base/yukikaze) and [hoshi](https://github.com/1Computer1/hoshi). Credits to their owners for creating such amazing bots.
