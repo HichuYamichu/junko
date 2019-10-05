@@ -1,50 +1,66 @@
 import { Guild } from 'discord.js';
-import { cache } from './Database';
-import Settings from '../models/Settings';
+import { Repository } from 'typeorm';
+import { Settings } from '../models/Settings';
+import cache from './Cache';
 
 export default class SettingsProvider {
-  public async get(guild: Guild | null, key: string, defaultValue: string) {
+  public constructor(private readonly repo: Repository<Settings>) {}
+
+  public async get(guild: string | Guild, key: string, defaultValue: any): Promise<any> {
     const id = SettingsProvider.getGuildID(guild);
-    const cached = await SettingsProvider.getCached(id, key);
+    const cached = await cache.get(id, key);
     if (cached) return cached;
 
-    const res = await Settings.findByPk(id, { attributes: [key] });
+    const res = await this.repo
+      .createQueryBuilder()
+      .select(`Settings.${key}`, key)
+      .where('Settings.guild = :id', { id })
+      .getRawOne();
     if (!res) return defaultValue;
-
-    res.toJSON();
-    const value = res[key];
-    if (!value) return defaultValue;
-
-    await SettingsProvider.setCache(id, key, value);
+    // @ts-ignore
+    const value = (res as Settings)[key];
+    await cache.set(id, key, value);
     return value;
   }
 
-  public async set(guild: Guild | null, key: string, value: string) {
+  public async set(guild: string | Guild, key: string, value: string): Promise<any> {
     const id = SettingsProvider.getGuildID(guild);
-    await SettingsProvider.delCached(id, key);
-    const data = { guildID: id, [key]: value };
-    return Settings.upsert(data);
+    await cache.del(id, key);
+    return this.repo
+      .createQueryBuilder()
+      .insert()
+      .into(Settings)
+      .values({ guild: id, [key]: value })
+      .onConflict(`("guild") DO UPDATE SET "${key}" = :${key}`)
+      .setParameter(key, value)
+      .execute();
   }
 
-  public async del(guild: Guild | null, key: string) {
+  public async del(guild: string | Guild, key: string) {
     const id = SettingsProvider.getGuildID(guild);
-    await SettingsProvider.delCached(id, key);
-    const data = { [key]: null };
-    return Settings.update(data, { where: { guildID: id } });
+    await cache.del(id, key);
+    return this.repo
+      .createQueryBuilder()
+      .update()
+      .where(id)
+      .set({ [key]: null })
+      .execute();
   }
 
-  public async clear(guild: Guild | null) {
+  public async clear(guild: string | Guild) {
     const id = SettingsProvider.getGuildID(guild);
-    await SettingsProvider.clearCached(id);
-    return Settings.destroy({ where: { guildID: id } });
+    await cache.clear(id);
+    return this.repo
+      .createQueryBuilder()
+      .delete()
+      .where(id)
+      .execute();
   }
 
-  
-
-  private static getGuildID(guild: any) {
+  private static getGuildID(guild: string | Guild) {
     if (guild instanceof Guild) return guild.id;
+    if (guild === 'global' || guild === null) return 'global';
     if (typeof guild === 'string' && /^\d+$/.test(guild)) return guild;
-    if (!guild) return 'global';
-    throw new TypeError('Invalid guild.');
+    throw new TypeError('Invalid guild');
   }
 }

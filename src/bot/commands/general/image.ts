@@ -3,7 +3,7 @@ import { Command } from 'discord-akairo';
 import { search } from 'kaori';
 
 export default class ImageCommand extends Command {
-  constructor() {
+  public constructor() {
     super('image', {
       aliases: ['image', 'pic'],
       category: 'general',
@@ -28,7 +28,7 @@ export default class ImageCommand extends Command {
     });
   }
 
-  async exec(message: Message, { tags }: { tags: string }) {
+  public async exec(message: Message, { tags }: { tags: string }) {
     // @ts-ignore
     const rating = message.channel.nsfw ? 'rating%3aexplicit' : 'rating%3Asafe';
 

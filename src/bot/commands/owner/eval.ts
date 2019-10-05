@@ -3,7 +3,7 @@ import { Command } from 'discord-akairo';
 import util from 'util';
 
 export default class EvalCommand extends Command {
-  constructor() {
+  public constructor() {
     super('eval', {
       aliases: ['eval'],
       category: 'owner',
@@ -26,7 +26,7 @@ export default class EvalCommand extends Command {
     });
   }
 
-  async exec(message: Message, { code }: { code: string }) {
+  public async exec(message: Message, { code }: { code: string }) {
     const token = this.client.token!.split('').join('[^]{0,2}');
     const rev = this.client.token!
       .split('')

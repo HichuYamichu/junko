@@ -1,32 +1,26 @@
 const YouTube = require('simple-youtube-api');
-import SpotifyWebApi from 'spotify-web-api-node';
-import logger from './Logger';
-
-let yt: any;
-let spotify: SpotifyWebApi;
+import * as SpotifyWebApi  from 'spotify-web-api-node';
+import Logger from './Logger';
 
 export default class APIManager {
-  static get yt() {
-    return yt;
+  spotify: SpotifyWebApi;
+  yt: any;
+
+  public constructor() {
+    this.spotify = new SpotifyWebApi({
+      clientId: process.env.SPOTIFY_ID,
+      clientSecret: process.env.SPOTIFY_SECRET
+    });
+
+    this.yt = new YouTube(process.env.YT_KEY);
   }
 
-  static get spotify() {
-    return spotify;
-  }
-
-  static async init() {
+  public async init() {
     try {
-      yt = new YouTube(process.env.YT_KEY);
-
-      spotify = new SpotifyWebApi({
-        clientId: process.env.SPOTIFY_ID,
-        clientSecret: process.env.SPOTIFY_SECRET
-      });
-
-      const { body } = await spotify.clientCredentialsGrant();
-      spotify.setAccessToken(body.access_token);
+      const { body } = await this.spotify.clientCredentialsGrant();
+      this.spotify.setAccessToken(body.access_token);
     } catch (e) {
-      logger.error(e);
+      Logger.error(e);
     }
   }
 }

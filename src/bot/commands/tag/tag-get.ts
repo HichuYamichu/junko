@@ -1,8 +1,9 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
+import { Tag } from '../../models/Tag';
 
 export default class TagGetCommand extends Command {
-  constructor() {
+  public constructor() {
     super('tag-get', {
       category: 'tags',
       ownerOnly: false,
@@ -20,11 +21,16 @@ export default class TagGetCommand extends Command {
     });
   }
 
-  async exec(message: Message, { name }: { name: string }) {
+  public async exec(message: Message, { name }: { name: string }) {
     if (!name) return;
-    const tag = await this.client.settings.Tag.findOne({ where: { guildID: message.guild!.id, name } });
+    const repo = this.client.db.getRepository(Tag);
+    const tag = await repo
+      .createQueryBuilder()
+      .select('Tag.content', 'content')
+      .where({ guild: message.guild!.id, name })
+      .getRawOne();
+
     if (tag) {
-      tag.toJSON();
       return message.util!.send(tag.content);
     }
   }

@@ -2,13 +2,13 @@ import { Message, TextChannel } from 'discord.js';
 import { Inhibitor } from 'discord-akairo';
 
 export default class SendMessagesInhibitor extends Inhibitor {
-  constructor() {
+  public constructor() {
     super('sendMessages', {
       reason: 'sendMessages'
     });
   }
 
-  exec(message: Message) {
+  public exec(message: Message) {
     if (!message.guild) return false;
     return !(message.channel as TextChannel)
       .permissionsFor(this.client.user!)!

@@ -2,7 +2,7 @@ import { Command, Flag } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class LogCommand extends Command {
-  constructor() {
+  public constructor() {
     super('log', {
       category: 'mod',
       aliases: ['log'],
@@ -17,7 +17,7 @@ export default class LogCommand extends Command {
     });
   }
 
-  *args() {
+  public *args() {
     const method = yield {
       type: [['log-member', 'member', 'mem'], ['log-message', 'message', 'msg']],
       otherwise: () =>

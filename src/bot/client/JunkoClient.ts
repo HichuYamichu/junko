@@ -2,11 +2,9 @@ import { Message } from 'discord.js';
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
 import { Connection } from 'typeorm';
 import { join } from 'path';
-import Logger from '../structs/Logger';
 import Database from '../structs/Database';
 import { Settings } from '../models/Settings';
-import SettingsProvider from '../structs/Store';
-import SettingsCache from '../structs/Cache';
+import SettingsProvider from '../structs/SettingsProvider';
 import Prometheus from '../structs/Prometheus';
 import RPCServer from '../structs/RPCServer';
 import APIManager from '../structs/APIManager';
@@ -23,7 +21,6 @@ interface JunkoConf {
 declare module 'discord-akairo' {
   interface AkairoClient {
     config: JunkoConf;
-    logger: Logger;
     db: Connection;
     settings: SettingsProvider;
     prometheus: Prometheus;
@@ -37,7 +34,7 @@ declare module 'discord-akairo' {
 }
 
 export default class JunkoClient extends AkairoClient {
-  constructor(config: JunkoConf) {
+  public constructor(config: JunkoConf) {
     super(
       {
         ownerID: config.ownerID
@@ -53,17 +50,15 @@ export default class JunkoClient extends AkairoClient {
 
     this.config = config;
 
-    this.logger = Logger;
-
     this.prometheus = new Prometheus();
 
     this.rpc = new RPCServer(this);
 
-    this.APIManager = APIManager;
+    this.APIManager = new APIManager();
 
     this.commandHandler = new CommandHandler(this, {
       directory: join(__dirname, '..', 'commands'),
-      prefix: (msg: Message) => this.settings.get(msg.guild, 'prefix', this.config.defaultPrefix),
+      prefix: (msg: Message) => this.settings.get(msg.guild!, 'prefix', this.config.defaultPrefix),
       aliasReplacement: /-/g,
       allowMention: true,
       commandUtil: true,
@@ -101,16 +96,17 @@ export default class JunkoClient extends AkairoClient {
     });
   }
 
-  async getReply(message: Message, category: string): Promise<string> {
-    const preset = await this.settings.get(message.guild, 'preset', this.config.defaultPreset);
+  public async getReply(message: Message, category: string): Promise<string> {
+    const preset = await this.settings.get(message.guild!, 'preset', this.config.defaultPreset);
     // @ts-ignore
     return replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
   }
 
-  async init() {
+  private async init() {
     this.db = Database.get('junko');
-		await this.db.connect();
-    this.settings = new SettingsProvider(this.db.getRepository(Settings), new SettingsCache());
+    await this.db.connect();
+    this.settings = new SettingsProvider(this.db.getRepository(Settings));
+    await this.APIManager.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -128,7 +124,7 @@ export default class JunkoClient extends AkairoClient {
     this.prometheus.listen();
   }
 
-  async start() {
+  public async start() {
     await this.init();
     this.login(this.config.token);
   }

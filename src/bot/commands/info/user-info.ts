@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { stripIndents } from 'common-tags';
 
 export default class UserInfoCommand extends Command {
-  constructor() {
+  public constructor() {
     super('user-info', {
       aliases: ['user-info', 'user'],
       category: 'info',
@@ -26,7 +26,7 @@ export default class UserInfoCommand extends Command {
     });
   }
 
-  async exec(message: Message, { member }: { member: GuildMember }) {
+  public async exec(message: Message, { member }: { member: GuildMember }) {
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)

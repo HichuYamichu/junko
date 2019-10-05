@@ -3,7 +3,7 @@ import { Listener } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class MessageUpdateListener extends Listener {
-  constructor() {
+  public constructor() {
     super('messageUpdate', {
       emitter: 'client',
       event: 'messageUpdate',
@@ -11,7 +11,7 @@ export default class MessageUpdateListener extends Listener {
     });
   }
 
-  async exec(oldMessage: Message, newMessage: Message) {
+  public async exec(oldMessage: Message, newMessage: Message) {
     if (!newMessage.guild) return;
     if (!newMessage.guild.me!.hasPermission('EMBED_LINKS')) return;
     if (oldMessage.author!.bot || newMessage.author!.bot) return;

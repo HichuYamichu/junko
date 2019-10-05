@@ -1,8 +1,9 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
+import { Tag } from '../../models/Tag';
 
 export default class TagEditCommand extends Command {
-  constructor() {
+  public constructor() {
     super('tag-edit', {
       category: 'tags',
       ownerOnly: false,
@@ -28,7 +29,7 @@ export default class TagEditCommand extends Command {
     });
   }
 
-  async exec(message: Message, { name, content }: { name: string; content: string }) {
+  public async exec(message: Message, { name, content }: { name: string; content: string }) {
     if (name && name.length >= 255) {
       return message.util!.reply('tag name must be less then 255 characters.');
     }
@@ -36,15 +37,15 @@ export default class TagEditCommand extends Command {
       return message.util!.reply('tag content must be less then 1900 characters (discord limits).');
     }
 
-    const guildID = message.guild!.id;
+    const guild = message.guild!.id;
     const author = message.author!.id;
 
-    const where = this.client.isOwner(message.author!)
-      ? { guildID, name }
-      : { guildID, name, author };
+    const where = this.client.isOwner(message.author!) ? { guild, name } : { guild, name, author };
 
-    const [updated] = await this.client.settings.Tag.update({ content }, { where });
-    if (!updated) {
+    const repo = this.client.db.getRepository(Tag);
+    const result = await repo.update(where, { content });
+
+    if (result.affected === 0) {
       return message.util!.send(
         `Couldn't edit that tag! Either you don't own it or this tag does not exist.`
       );

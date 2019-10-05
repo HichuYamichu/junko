@@ -2,14 +2,14 @@ import { GuildMember, TextChannel } from 'discord.js';
 import { Listener } from 'discord-akairo';
 
 export default class GuildMemberAddListener extends Listener {
-  constructor() {
+  public constructor() {
     super('guildMemberAdd', {
       emitter: 'client',
       event: 'guildMemberAdd'
     });
   }
 
-  async exec(member: GuildMember) {
+  public async exec(member: GuildMember) {
     if (!member.guild.me!.hasPermission('EMBED_LINKS')) return;
     const memberLog = await this.client.settings.get(member.guild, 'memberLog', null);
     if (!memberLog) return;

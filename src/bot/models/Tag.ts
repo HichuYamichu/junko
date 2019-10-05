@@ -1,19 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn  } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, Unique } from 'typeorm';
 
-@Entity('settings')
+@Entity('tags')
+@Unique('guild_name', ['guild', 'name'])
 export class Tag {
   @PrimaryGeneratedColumn()
-  id!: number;
+  public id!: number;
+
+  @Index()
+  @Column()
+  public guild!: string;
 
   @Column()
-  guild!: string;
+  public author!: string;
+
+  @Index()
+  @Column()
+  public name!: string;
 
   @Column()
-  author!: string;
-
-  @Column()
-  name!: string;
-
-  @Column()
-  content!: string;
+  public content!: string;
 }

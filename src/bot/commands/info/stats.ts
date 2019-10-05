@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import 'moment-duration-format';
 
 export default class StatsCommand extends Command {
-  constructor() {
+  public constructor() {
     super('stats', {
       aliases: ['stats'],
       category: 'info',
@@ -20,7 +20,7 @@ export default class StatsCommand extends Command {
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     const used = process.memoryUsage().heapUsed / 1024 / 1024;
     const lastRestart = Date.now() - Math.floor(this.client.uptime!) * 1000;
     const author = `${message.client.users.get(this.client.config.ownerID)!.tag}`;
@@ -33,7 +33,7 @@ export default class StatsCommand extends Command {
       .setTitle('**Stats:**')
       .setColor(this.client.config.color)
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`, true)
-      .addField('Uptime:', moment.utc(this.client.uptime!).format('d[d ]h[h ]m[m ]s[s]'), true)
+      .addField('Uptime:', moment.duration(this.client.uptime!).format('d[d ]h[h ]m[m ]s[s]'), true)
       .addField(
         'General:',
         stripIndents`

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { stripIndents } from 'common-tags';
 
 export default class ChannelInfoCommand extends Command {
-  constructor() {
+  public constructor() {
     super('channel-info', {
       aliases: ['channel-info', 'channel'],
       category: 'info',
@@ -27,7 +27,7 @@ export default class ChannelInfoCommand extends Command {
     });
   }
 
-  async exec(message: Message, { channel }: { channel: TextChannel }) {
+  public async exec(message: Message, { channel }: { channel: TextChannel }) {
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)

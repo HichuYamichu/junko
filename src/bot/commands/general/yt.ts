@@ -2,7 +2,7 @@ import { Command, Argument, Flag } from 'discord-akairo';
 import { Message, MessageEmbed } from 'discord.js';
 
 export default class YTCommand extends Command {
-  constructor() {
+  public constructor() {
     super('yt', {
       aliases: ['yt'],
       category: 'general',
@@ -15,7 +15,7 @@ export default class YTCommand extends Command {
     });
   }
 
-  async *args(message: Message) {
+  public async *args(message: Message) {
     if (!this.client.APIManager.yt) return Flag.continue('not-enabled');
 
     const query = yield {
@@ -54,7 +54,7 @@ export default class YTCommand extends Command {
     return { id: res[pick - 1].id };
   }
 
-  async exec(message: Message, { id }: { id: string }) {
+  public async exec(message: Message, { id }: { id: string }) {
     return message.util!.send(`https://www.youtube.com/watch?v=${id}`);
   }
 }

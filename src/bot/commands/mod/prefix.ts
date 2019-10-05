@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { Command, Argument } from 'discord-akairo';
 
 export default class PrefixCommand extends Command {
-  constructor() {
+  public constructor() {
     super('prefix', {
       aliases: ['prefix'],
       category: 'mod',
@@ -28,8 +28,8 @@ export default class PrefixCommand extends Command {
     });
   }
 
-  async exec(message: Message, { prefix }: { prefix: string }) {
-    await message.client.settings.set(message.guild!.id, 'prefix', prefix);
+  public async exec(message: Message, { prefix }: { prefix: string }) {
+    await this.client.settings.set(message.guild!.id, 'prefix', prefix);
     return message.util!.send(`My prefix is now \`${prefix}\``);
   }
 }

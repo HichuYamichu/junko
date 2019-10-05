@@ -1,16 +1,17 @@
 import { Message, TextChannel } from 'discord.js';
 import { Listener } from 'discord-akairo';
+import Logger from '../../structs/Logger';
 
 export default class ErrorListener extends Listener {
-  constructor() {
+  public constructor() {
     super('commandHandlerError', {
       emitter: 'commandHandler',
       event: 'error'
     });
   }
 
-  exec(err: Error, message: Message) {
-    this.client.logger.error(err);
+  public exec(err: Error, message: Message) {
+    Logger.error(err);
     if (message.guild && !(message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')) {
       return null;
     }

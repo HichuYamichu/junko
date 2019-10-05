@@ -2,7 +2,7 @@ import { Message, TextChannel } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class SayCommand extends Command {
-  constructor() {
+  public constructor() {
     super('say', {
       aliases: ['say'],
       category: 'passive',
@@ -20,7 +20,7 @@ export default class SayCommand extends Command {
     });
   }
 
-  async exec(
+  public async exec(
     message: Message,
     { guildID, channelID, content }: { guildID: string; channelID: string; content: string }
   ) {

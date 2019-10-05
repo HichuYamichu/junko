@@ -1,17 +1,18 @@
 import { Listener } from 'discord-akairo';
+import Logger from '../../structs/Logger';
 
 export default class ReadyListener extends Listener {
-  constructor() {
+  public constructor() {
     super('ready', {
       emitter: 'client',
       event: 'ready'
     });
   }
 
-  exec() {
+  public exec() {
     this.client.user!.setPresence({ activity: { name: '🌙' }, status: 'online' });
     const log = `Ready in ${this.client.channels.size} channels on ${this.client.guilds.size} servers, for a total of ${this.client.users.size} users.`;
-    this.client.logger.info(log);
+    Logger.info(log);
   }
 }
 

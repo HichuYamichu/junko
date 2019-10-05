@@ -2,7 +2,7 @@ import { Command, Flag } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class TagCommand extends Command {
-  constructor() {
+  public constructor() {
     super('tag', {
       category: 'tags',
       aliases: ['tag'],
@@ -24,7 +24,7 @@ export default class TagCommand extends Command {
     });
   }
 
-  *args() {
+  public *args() {
     const method = yield {
       type: [
         ['tag-get', 'get', 'show'],

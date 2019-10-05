@@ -1,15 +1,16 @@
 import { Listener } from 'discord-akairo';
+import Logger from '../../structs/Logger';
 
 export default class DisconnectListener extends Listener {
-  constructor() {
+  public constructor() {
     super('disconnect', {
       emitter: 'client',
       event: 'disconnect'
     });
   }
 
-  exec() {
-    this.client.logger.info('Disconnected...');
+  public exec() {
+    Logger.info('Disconnected...');
   }
 }
 

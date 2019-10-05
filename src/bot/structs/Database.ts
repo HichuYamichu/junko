@@ -10,7 +10,8 @@ connectionManager.create({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [Settings, Tag]
+  entities: [Settings, Tag],
+  synchronize: true
 });
 
 export default connectionManager;

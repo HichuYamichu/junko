@@ -2,7 +2,7 @@ import { Command, Flag } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class SpotifyCommand extends Command {
-  constructor() {
+  public constructor() {
     super('spotify', {
       category: 'spotify',
       aliases: ['spotify'],
@@ -26,7 +26,7 @@ export default class SpotifyCommand extends Command {
     });
   }
 
-  *args() {
+  public *args() {
     if (!this.client.APIManager.spotify) return Flag.continue('not-enabled');
 
     const method = yield {

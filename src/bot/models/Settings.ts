@@ -3,20 +3,20 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 @Entity('settings')
 export class Settings {
   @PrimaryColumn()
-  guild!: string;
+  public guild!: string;
 
-  @Column()
-  prefix!: string;
+  @Column({ type: 'character varying', name: 'prefix', nullable: true })
+  public prefix?: string | null;
 
-  @Column()
-  preset!: string;
+  @Column({ type: 'character varying', name: 'preset', nullable: true })
+  public preset?: string | null;
 
-  @Column()
-  memberLog!: string;
+  @Column({ type: 'character varying', name: 'memberLog', nullable: true })
+  public memberLog?: string | null;
 
-  @Column()
-  messageLog!: string;
+  @Column({ type: 'character varying', name: 'messageLog', nullable: true })
+  public messageLog?: string | null;
 
-  @Column({ type: 'character varying', array: true})
-  blacklist!: string[];
+  @Column({ type: 'character varying', array: true, nullable: true })
+  public blacklist?: string[] | null;
 }

@@ -2,14 +2,14 @@ import { Message, TextChannel } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
 
 export default class CooldownListener extends Listener {
-  constructor() {
+  public constructor() {
     super('cooldown', {
       event: 'cooldown',
       emitter: 'commandHandler'
     });
   }
 
-  async exec(message: Message, command: Command, remaining: number) {
+  public async exec(message: Message, command: Command, remaining: number) {
     const time = remaining / 1000;
 
     if (

@@ -15,7 +15,7 @@ export default class PingCommand extends Command {
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     const sent = (await message.util!.send('Pong!')) as Message;
     const timeDiff =
       (sent.editedTimestamp || sent.createdTimestamp) -

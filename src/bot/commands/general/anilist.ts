@@ -34,7 +34,7 @@ export default class AnilistCommand extends Command {
     });
   }
 
-  async exec(message: Message, { search, type }: { search: string; type: string }) {
+  public async exec(message: Message, { search, type }: { search: string; type: string }) {
     const url = 'https://graphql.anilist.co';
     const query = `query ($search: String, $type: MediaType) {
       Media (search: $search, type: $type) {

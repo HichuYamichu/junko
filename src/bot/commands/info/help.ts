@@ -3,7 +3,7 @@ import { Command, PrefixSupplier } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class HelpCommand extends Command {
-  constructor() {
+  public constructor() {
     super('help', {
       aliases: ['help'],
       category: 'info',
@@ -23,7 +23,7 @@ export default class HelpCommand extends Command {
     });
   }
 
-  async exec(message: Message, { command }: { command: Command }) {
+  public async exec(message: Message, { command }: { command: Command }) {
     const prefix = (this.handler.prefix as PrefixSupplier)(message);
     if (!command) {
       const embed = this.client.util

@@ -1,15 +1,16 @@
 import { Listener } from 'discord-akairo';
+import Logger from '../../structs/Logger';
 
 export default class ErrorListener extends Listener {
-  constructor() {
+  public constructor() {
     super('clientError', {
       emitter: 'client',
       event: 'error'
     });
   }
 
-  exec(event: any) {
-    this.client.logger.error(event);
+  public exec(event: any) {
+    Logger.error(event);
   }
 }
 

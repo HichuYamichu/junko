@@ -1,18 +1,17 @@
 import { TextChannel, GuildMember } from 'discord.js';
 import { Listener } from 'discord-akairo';
-import moment from 'moment';
-import 'moment-timezone';
+import * as moment from 'moment';
 import 'moment-duration-format';
 
 export default class GuildMemberRemoveListener extends Listener {
-  constructor() {
+  public constructor() {
     super('guildMemberRemove', {
       emitter: 'client',
       event: 'guildMemberRemove'
     });
   }
 
-  async exec(member: GuildMember) {
+  public async exec(member: GuildMember) {
     if (!member.guild.me!.hasPermission('EMBED_LINKS')) return;
     const memberLog = await this.client.settings.get(member.guild, 'memberLog', null);
     if (!memberLog) return;

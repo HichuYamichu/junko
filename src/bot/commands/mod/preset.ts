@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class PresetCommand extends Command {
-  constructor() {
+  public constructor() {
     super('preset', {
       aliases: ['preset', 'setpreset', 'ser-preset'],
       category: 'mod',
@@ -27,8 +27,8 @@ export default class PresetCommand extends Command {
     });
   }
 
-  async exec(message: Message, { preset }: { preset: String }) {
-    await message.client.settings.set(message.guild!.id, 'preset', preset);
+  public async exec(message: Message, { preset }: { preset: string }) {
+    await this.client.settings.set(message.guild!.id, 'preset', preset);
     return message.util!.send(`Changed preset to \`${preset}\``);
   }
 }

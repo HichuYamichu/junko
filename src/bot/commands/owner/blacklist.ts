@@ -2,7 +2,7 @@ import { Message, User } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class BlacklistCommand extends Command {
-  constructor() {
+  public constructor() {
     super('blacklist', {
       aliases: ['blacklist'],
       category: 'owner',
@@ -25,8 +25,8 @@ export default class BlacklistCommand extends Command {
     });
   }
 
-  async exec(message: Message, { user }: { user: User }) {
-    const res = await this.client.settings.get(message.guild, 'blacklist', []);
+  public async exec(message: Message, { user }: { user: User }) {
+    const res = await this.client.settings.get(message.guild!, 'blacklist', []);
     const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
     if (blacklist.includes(user.id)) {
       const index = blacklist.indexOf(user.id);

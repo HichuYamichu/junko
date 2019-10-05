@@ -1,8 +1,10 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
+import { Tag } from '../../models/Tag';
+import Logger from '../../structs/Logger';
 
 export default class TagAddCommand extends Command {
-  constructor() {
+  public constructor() {
     super('tag-add', {
       category: 'tags',
       ownerOnly: false,
@@ -28,7 +30,7 @@ export default class TagAddCommand extends Command {
     });
   }
 
-  async exec(message: Message, { name, content }: { name: string; content: string }) {
+  public async exec(message: Message, { name, content }: { name: string; content: string }) {
     if (name && name.length >= 255) {
       return message.util!.reply('tag name must be less then 255 characters.');
     }
@@ -36,36 +38,38 @@ export default class TagAddCommand extends Command {
       return message.util!.reply('tag content must be less then 1900 characters (discord limits).');
     }
 
-    const guildID = message.guild!.id;
+    const guild = message.guild!.id;
     const author = message.author!.id;
 
-    const userTagCount = await this.client.settings.Tag.count({
-      where: { guildID, author }
-    });
-    if (userTagCount === 15 && !this.client.isOwner(message.author!)) {
+    const repo = this.client.db.getRepository(Tag);
+    const { count } = await repo
+      .createQueryBuilder()
+      .select('COUNT(Tag.author)', 'count')
+      .where({ guild, author })
+      .getRawOne();
+
+    if (count >= 15 && !this.client.isOwner(message.author!)) {
       return message.util!.reply(
         'you have reached max tag count for this guild. You must edit or delete your existing tags.'
       );
     }
 
-    const [tag, created] = await this.client.settings.Tag.findOrCreate({
-      where: { name, guildID },
-      defaults: {
-        guildID,
-        author,
-        name,
-        content
+    try {
+      const tag = new Tag();
+      tag.guild = guild;
+      tag.author = author;
+      tag.name = name;
+      tag.content = content;
+      await repo.save(tag);
+    } catch (e) {
+      if (e.message === `duplicate key value violates unique constraint "guild_name"`) {
+        const reply = `Tag with such name already exists in this guild.`;
+        return message.util!.send(reply);
       }
-    });
-    if (!created) {
-      tag.toJSON();
-      const isAuthor = tag.author === author;
-      const reply = `Tag with such name already exists in this guild. ${
-        isAuthor ? 'But as that tag owner you can edit it with `tag-edit`.' : ''
-      }`;
-      return message.util!.send(reply);
-    }
 
+      Logger.error(e);
+      return message.util!.send('Unexpected problem occurred!');
+    }
     return message.util!.send('Tag succesfuly created.');
   }
 }

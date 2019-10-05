@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class SpotifyTrackCommand extends Command {
-  constructor() {
+  public constructor() {
     super('spotify-track', {
       category: 'spotify',
       ownerOnly: false,
@@ -19,12 +19,12 @@ export default class SpotifyTrackCommand extends Command {
     });
   }
 
-  async exec(message: Message, { track }: {track: string}) {
+  public async exec(message: Message, { track }: {track: string}) {
     const res = await this.client.APIManager.spotify.searchTracks(track, { limit: 1 });
-    if (!res.body.tracks.items.length) {
+    if (!res.body.tracks!.items.length) {
       return message.util!.reply('Nothing found!');
     }
-    return message.util!.send(`https://open.spotify.com/track/${res.body.tracks.items[0].id}`);
+    return message.util!.send(`https://open.spotify.com/track/${res.body.tracks!.items[0].id}`);
   }
 }
 

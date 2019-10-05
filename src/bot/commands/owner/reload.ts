@@ -1,8 +1,10 @@
 import { Message } from 'discord.js';
 import { Command, AkairoModule } from 'discord-akairo';
+import Logger from '../../structs/Logger';
+
 
 export default class ReloadCommand extends Command {
-  constructor() {
+  public constructor() {
     super('reload', {
       aliases: ['reload', 'r'],
       category: 'owner',
@@ -15,7 +17,7 @@ export default class ReloadCommand extends Command {
     });
   }
 
-  *args() {
+  public *args() {
     const type = yield {
       'match': 'option',
       'flag': ['--type='],
@@ -42,7 +44,7 @@ export default class ReloadCommand extends Command {
     return { type, mod };
   }
 
-  exec(message: Message, { type, mod }: {type: string, mod: AkairoModule }) {
+  public exec(message: Message, { type, mod }: {type: string; mod: AkairoModule }) {
     if (!mod) {
       return message.util!.reply(
         `Invalid ${type} ${type === 'command' ? 'alias' : 'ID'} specified to reload.`
@@ -53,7 +55,7 @@ export default class ReloadCommand extends Command {
       mod.reload();
       return message.util!.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
     } catch (err) {
-      this.client.logger.error(err);
+      Logger.error(err);
       return message.util!.reply(`Failed to reload ${type} \`${mod.id}\`.`);
     }
   }

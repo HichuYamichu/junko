@@ -4,11 +4,11 @@ import { parse } from 'url';
 collectDefaultMetrics();
 
 export default class Prometheus {
-  public metrics: any
-  public server: any
-  public rpcMiddleware: any
+  public metrics: any;
+  public server: any;
+  public rpcMiddleware: any;
 
-  constructor() {
+  public constructor() {
     this.metrics = {
       commandCounter: new Counter({
         name: 'total_commands_used',
@@ -50,7 +50,7 @@ export default class Prometheus {
     };
   }
 
-  listen() {
+  public listen() {
     this.server.listen(5000);
   }
-};
+}

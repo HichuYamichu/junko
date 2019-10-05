@@ -4,7 +4,7 @@ import Canvas from 'canvas';
 import { join } from 'path';
 
 export default class BullyCommand extends Command {
-  constructor() {
+  public constructor() {
     super('bully', {
       aliases: ['bully', 'bulli'],
       category: 'general',
@@ -30,7 +30,7 @@ export default class BullyCommand extends Command {
     });
   }
 
-  async exec(message: Message, { user, lvl }: { user: User, lvl: number }) {
+  public async exec(message: Message, { user, lvl }: { user: User; lvl: number }) {
     if (user.id === message.client.user!.id) {
       return message.channel.send(`Can't bully me!`, {
         files: [join(__dirname, '../..', 'static/me.gif')]

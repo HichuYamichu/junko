@@ -2,7 +2,7 @@ import { Message, TextChannel } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class LogSetCommand extends Command {
-  constructor() {
+  public constructor() {
     super('log-member', {
       category: 'mod',
       ownerOnly: false,
@@ -22,12 +22,12 @@ export default class LogSetCommand extends Command {
     });
   }
 
-  async exec(message: Message, { chan }: { chan: TextChannel }) {
+  public async exec(message: Message, { chan }: { chan: TextChannel }) {
     if (chan) {
-      await message.client.settings.set(message.guild!.id, 'memberLog', chan.id);
+      await this.client.settings.set(message.guild!.id, 'memberLog', chan.id);
       return message.util!.send(`Member log enabled in ${chan}!`);
     }
-    await message.client.settings.del(message.guild!.id, 'memberLog');
+    await this.client.settings.del(message.guild!.id, 'memberLog');
     return message.util!.send('Member log disabled.');
   }
 }

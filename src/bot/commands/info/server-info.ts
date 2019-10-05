@@ -4,7 +4,7 @@ import moment from 'moment';
 import { stripIndents } from 'common-tags';
 
 export default class ServerInfoCommand extends Command {
-  constructor() {
+  public constructor() {
     super('server-info', {
       aliases: ['server-info', 'server'],
       category: 'info',
@@ -19,7 +19,7 @@ export default class ServerInfoCommand extends Command {
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)
@@ -29,13 +29,13 @@ export default class ServerInfoCommand extends Command {
         /* eslint-disable indent */
         stripIndents`
         • ${message.guild!.channels.filter(ch => ch.type === 'text').size} Text, ${
-          message.guild!.channels.filter(ch => ch.type === 'voice').size
-        } Voice
+  message.guild!.channels.filter(ch => ch.type === 'voice').size
+} Voice
         • AFK: ${
-          message.guild!.afkChannelID
-            ? `<#${message.guild!.afkChannelID}> after ${message.guild!.afkTimeout / 60}min`
-            : 'None'
-        }
+  message.guild!.afkChannelID
+    ? `<#${message.guild!.afkChannelID}> after ${message.guild!.afkTimeout / 60}min`
+    : 'None'
+}
         `
         /* eslint-enable indent */
       )

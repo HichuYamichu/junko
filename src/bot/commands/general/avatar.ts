@@ -2,7 +2,7 @@ import { Message, User } from 'discord.js';
 import { Command } from 'discord-akairo';
 
 export default class AvatarCommand extends Command {
-  constructor() {
+  public constructor() {
     super('avatar', {
       aliases: ['avatar', 'pfp'],
       category: 'general',
@@ -23,7 +23,7 @@ export default class AvatarCommand extends Command {
     });
   }
 
-  async exec(message: Message, { user }: { user: User }) {
+  public async exec(message: Message, { user }: { user: User }) {
     const embed = this.client.util
       .embed()
       .setImage(user.displayAvatarURL({ size: 2048 }))

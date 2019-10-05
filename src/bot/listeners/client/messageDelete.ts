@@ -3,7 +3,7 @@ import { Listener } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
 
 export default class MessageDeleteListener extends Listener {
-  constructor() {
+  public constructor() {
     super('messageDelete', {
       emitter: 'client',
       event: 'messageDelete',
@@ -11,7 +11,7 @@ export default class MessageDeleteListener extends Listener {
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     if (!message.guild!.me!.hasPermission('EMBED_LINKS')) return;
     if (message.author!.bot) return;
     if (!message.guild) return;

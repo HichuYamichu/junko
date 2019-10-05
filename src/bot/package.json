@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "eslint ./",
+    "test": "eslint --fix . --ext .ts",
     "dev": "nodemon dist/Junko.js",
     "start": "node dist/Junko.js"
   },
@@ -35,12 +35,14 @@
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/ioredis": "^4.0.18",
+    "@types/moment-duration-format": "^2.2.2",
     "@types/sequelize": "^4.28.5",
     "@types/spotify-web-api-node": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
     "eslint": "^6.1.0",
     "eslint-config-marine": "^5.0.0",
+    "eslint-config-prettier": "^6.3.0",
     "nodemon": "^1.19.1",
     "typescript": "^3.6.3"
   },

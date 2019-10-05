@@ -3,7 +3,7 @@ import { Command } from 'discord-akairo';
 import { emojis } from '../../util/emojis';
 
 export default class BoldCommand extends Command {
-  constructor() {
+  public constructor() {
     super('bold', {
       aliases: ['bold'],
       category: 'general',
@@ -27,7 +27,7 @@ export default class BoldCommand extends Command {
     });
   }
 
-  async exec(message: Message, { text }: { text: string }) {
+  public async exec(message: Message, { text }: { text: string }) {
     let boldText = '';
     for (let i = 0; i < text.length; i++) {
       let letter = text.charAt(i);

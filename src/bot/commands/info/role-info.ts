@@ -5,7 +5,7 @@ import { permissions } from '../../util/permissions';
 import { stripIndents } from 'common-tags';
 
 export default class RoleInfoCommand extends Command {
-  constructor() {
+  public constructor() {
     super('role-info', {
       aliases: ['role-info', 'role'],
       category: 'info',
@@ -27,7 +27,7 @@ export default class RoleInfoCommand extends Command {
     });
   }
 
-  async exec(message: Message, { role }: { role: Role }) {
+  public async exec(message: Message, { role }: { role: Role }) {
     const perms = Object.keys(permissions).filter(
       // @ts-ignore
       permission => role.permissions.serialize()[permission]

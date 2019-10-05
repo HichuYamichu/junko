@@ -1,15 +1,16 @@
 import { Listener } from 'discord-akairo';
+import Logger from '../../structs/Logger';
 
 export default class ReconnectListener extends Listener {
-  constructor() {
+  public constructor() {
     super('reconnect', {
       emitter: 'client',
       event: 'reconnect'
     });
   }
 
-  exec() {
-    this.client.logger.info('Reconnecting...');
+  public exec() {
+    Logger.info('Reconnecting...');
   }
 }
 

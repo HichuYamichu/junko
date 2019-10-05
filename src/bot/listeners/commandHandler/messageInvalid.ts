@@ -2,14 +2,14 @@ import { Message } from 'discord.js';
 import { Listener } from 'discord-akairo';
 
 export default class MessageInvalidListener extends Listener {
-  constructor() {
+  public constructor() {
     super('messageInvalid', {
       emitter: 'commandHandler',
       event: 'messageInvalid'
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     if (
       message.util!.parsed!.command ||
       !message.guild ||

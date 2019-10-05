@@ -13,8 +13,8 @@ export default class RPCServer extends Mali {
   public fetchUser: (ctx: Mali.Context) => void;
   public say: (ctx: Mali.Context) => void;
 
-  constructor(client: JunkoClient) {
-    super(protoPath, 'GuildFetcher')
+  public constructor(client: JunkoClient) {
+    super(protoPath, 'GuildFetcher');
     this.client = client;
 
     this.fetchGuilds = (ctx: Mali.Context) => {
@@ -66,7 +66,7 @@ export default class RPCServer extends Mali {
     };
   }
 
-  init() {
+  private init() {
     this.use(this.client.prometheus.rpcMiddleware);
     this.use({ fetchGuilds: this.fetchGuilds });
     this.use({ fetchGuild: this.fetchGuild });
@@ -77,7 +77,7 @@ export default class RPCServer extends Mali {
     this.use({ say: this.say });
   }
 
-  listen() {
+  public listen() {
     this.init();
     this.start('0.0.0.0:50051');
   }

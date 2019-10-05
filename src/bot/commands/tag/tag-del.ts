@@ -1,8 +1,9 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
+import { Tag } from '../../models/Tag';
 
 export default class TagDelCommand extends Command {
-  constructor() {
+  public constructor() {
     super('tag-del', {
       category: 'tags',
       ownerOnly: false,
@@ -20,21 +21,25 @@ export default class TagDelCommand extends Command {
     });
   }
 
-  async exec(message: Message, { name }: { name: string }) {
-    const guildID = message.guild!.id;
+  public async exec(message: Message, { name }: { name: string }) {
+    const guild = message.guild!.id;
     const author = message.author!.id;
-    const deleted = await this.client.settings.Tag.destroy({
-      where: {
-        guildID,
-        name,
-        author
-      }
-    });
-    if (!deleted) {
+
+    const repo = this.client.db.getRepository(Tag);
+    const where = this.client.isOwner(message.author!) ? { guild, name } : { guild, name, author };
+
+    const result = await repo
+      .createQueryBuilder()
+      .delete()
+      .where(where)
+      .execute();
+
+    if (result.affected === 0) {
       return message.util!.send(
         `Couldn't delete that tag! Either you don't own it or this tag does not exist.`
       );
     }
+
     return message.util!.send(`Succesfuly deleted \`${name}\`.`);
   }
 }
