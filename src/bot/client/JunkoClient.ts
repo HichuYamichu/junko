@@ -98,7 +98,6 @@ export default class JunkoClient extends AkairoClient {
 
   public async getReply(message: Message, category: string): Promise<string> {
     const preset = await this.settings.get(message.guild!, 'preset', this.config.defaultPreset);
-    // @ts-ignore
     return replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
   }
 
@@ -106,7 +105,7 @@ export default class JunkoClient extends AkairoClient {
     this.db = Database.get('junko');
     await this.db.connect();
     this.settings = new SettingsProvider(this.db.getRepository(Settings));
-    await this.APIManager.init();
+    this.APIManager.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);

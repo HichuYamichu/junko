@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
 import Logger from '../../structs/Logger';
 
@@ -16,19 +16,27 @@ export default class CommandBlockedListener extends Listener {
       : `DM: ${message.author!.tag} (${message.author!.id})`;
     const log = `Blocked ${command.id} on ${channel} reason: ${reason}`;
     Logger.info(log);
-    // @ts-ignore
-    const responce = {
-      owner: () => this.client.getReply(message, 'ownerOnly'),
-      guild: () => this.client.getReply(message, 'guildOnly'),
-      blacklist: () => this.client.getReply(message, 'blacklisted')
-    }[reason];
+
+    let responce = '';
+    switch (reason) {
+      case 'owner':
+        responce = await this.client.getReply(message, 'ownerOnly');
+        break;
+      case 'guild':
+        responce = await this.client.getReply(message, 'ownerOnly');
+        break;
+      case 'blacklist':
+        responce = await this.client.getReply(message, 'ownerOnly');
+        break;
+    }
 
     if (!responce) return;
     if (
-    // @ts-ignore
-      message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true
+      message.guild
+        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+        : true
     ) {
-      message.reply(await responce());
+      message.reply(responce);
     }
   }
 }

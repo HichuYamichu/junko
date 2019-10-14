@@ -16,7 +16,8 @@ export default class PingCommand extends Command {
   }
 
   public async exec(message: Message) {
-    const sent = (await message.util!.send('Pong!')) as Message;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const sent = (await message.util!.send('Pong!') as Message);
     const timeDiff =
       (sent.editedTimestamp || sent.createdTimestamp) -
       (message.editedTimestamp || message.createdTimestamp);

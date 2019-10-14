@@ -1,18 +1,15 @@
-const YouTube = require('simple-youtube-api');
-import * as SpotifyWebApi  from 'spotify-web-api-node';
 import Logger from './Logger';
+// @ts-ignore
+import * as SpotifyWebApi from 'spotify-web-api-node';
 
 export default class APIManager {
-  spotify: SpotifyWebApi;
-  yt: any;
+  public spotify: SpotifyWebApi;
 
   public constructor() {
     this.spotify = new SpotifyWebApi({
       clientId: process.env.SPOTIFY_ID,
       clientSecret: process.env.SPOTIFY_SECRET
     });
-
-    this.yt = new YouTube(process.env.YT_KEY);
   }
 
   public async init() {

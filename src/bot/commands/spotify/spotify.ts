@@ -27,8 +27,6 @@ export default class SpotifyCommand extends Command {
   }
 
   public *args() {
-    if (!this.client.APIManager.spotify) return Flag.continue('not-enabled');
-
     const method = yield {
       type: [
         ['spotify-artist', 'artist'],

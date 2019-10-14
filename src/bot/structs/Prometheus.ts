@@ -1,12 +1,20 @@
-import { collectDefaultMetrics, Counter, Histogram, register } from 'prom-client';
-import { createServer } from 'http';
+import { collectDefaultMetrics, Counter, Histogram, register, Registry } from 'prom-client';
+import { createServer, Server } from 'http';
 import { parse } from 'url';
+import { Context } from 'mali';
 collectDefaultMetrics();
 
 export default class Prometheus {
-  public metrics: any;
-  public server: any;
-  public rpcMiddleware: any;
+  public metrics: {
+    commandCounter: Counter;
+    grpcServerStartedTotal: Counter;
+    grpcServerHandledTotal: Counter;
+    grpcServerHandleTime: Histogram;
+    register: Registry;
+  };
+
+  public server: Server;
+  public rpcMiddleware: (ctx: Context, next: any) => Promise<void>;
 
   public constructor() {
     this.metrics = {
@@ -33,7 +41,7 @@ export default class Prometheus {
       register
     };
 
-    this.server = createServer((req, res) => {
+    this.server = createServer((req, res): void => {
       if (parse(req.url!).pathname === '/metrics') {
         res.writeHead(200, { 'Content-Type': this.metrics.register.contentType });
         res.write(this.metrics.register.metrics());
@@ -41,7 +49,7 @@ export default class Prometheus {
       res.end();
     });
 
-    this.rpcMiddleware = async (ctx: any, next: any) => {
+    this.rpcMiddleware = async (ctx: Context, next: any): Promise<void> => {
       const startEpoch = Date.now();
       this.metrics.grpcServerStartedTotal.labels(ctx.type, ctx.name).inc();
       await next();
@@ -50,7 +58,7 @@ export default class Prometheus {
     };
   }
 
-  public listen() {
+  public listen(): void {
     this.server.listen(5000);
   }
 }

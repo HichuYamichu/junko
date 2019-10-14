@@ -14,9 +14,9 @@ export default class AvatarCommand extends Command {
       },
       args: [
         {
-          id: 'user',
-          type: 'user',
-          default: (message: Message) => message.author
+          'id': 'user',
+          'type': 'user',
+          'default': (message: Message) => message.author
         }
       ],
       clientPermissions: ['EMBED_LINKS']

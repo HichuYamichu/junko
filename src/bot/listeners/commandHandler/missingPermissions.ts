@@ -9,38 +9,7 @@ export default class MissingPermissionsListener extends Listener {
     });
   }
 
-  public exec(message: Message, command: Command, type: string, missing: any) {
-    // @ts-ignore
-    const text = {
-      client: () => {
-        const str = this.missingPermissions(
-          message.channel as TextChannel,
-          this.client.user!,
-          missing
-        );
-        return `I need ${str} permission for this command`;
-      },
-      user: () => {
-        const str = this.missingPermissions(
-          message.channel as TextChannel,
-          message.author!,
-          missing
-        );
-        return `You need ${str} permission for this command`;
-      }
-    }[type];
-
-    if (!text) return;
-    if (
-      message.guild
-        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
-        : true
-    ) {
-      message.reply(text());
-    }
-  }
-
-  missingPermissions(channel: TextChannel, user: User, permissions: any) {
+  public missingPermissions(channel: TextChannel, user: User, permissions: any) {
     const missingPerms = channel
       .permissionsFor(user)!
       .missing(permissions)
@@ -57,6 +26,30 @@ export default class MissingPermissionsListener extends Listener {
     return missingPerms.length > 1
       ? `${missingPerms.slice(0, -1).join(', ')} and ${missingPerms.slice(-1)[0]}`
       : missingPerms[0];
+  }
+
+  public exec(message: Message, command: Command, type: string, missing: any) {
+    let text = '';
+    let str = '';
+    switch (type) {
+      case 'client':
+        str = this.missingPermissions(message.channel as TextChannel, this.client.user!, missing);
+        text = `I need ${str} permission for this command`;
+        break;
+      case 'user':
+        str = this.missingPermissions(message.channel as TextChannel, message.author!, missing);
+        text = `You need ${str} permission for this command`;
+        break;
+    }
+
+    if (!text) return;
+    if (
+      message.guild
+        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+        : true
+    ) {
+      message.reply(text);
+    }
   }
 }
 

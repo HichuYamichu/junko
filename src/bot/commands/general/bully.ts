@@ -1,6 +1,6 @@
 import { Message, User } from 'discord.js';
 import { Command } from 'discord-akairo';
-import Canvas from 'canvas';
+import * as Canvas from 'canvas';
 import { join } from 'path';
 
 export default class BullyCommand extends Command {
@@ -33,13 +33,13 @@ export default class BullyCommand extends Command {
   public async exec(message: Message, { user, lvl }: { user: User; lvl: number }) {
     if (user.id === message.client.user!.id) {
       return message.channel.send(`Can't bully me!`, {
-        files: [join(__dirname, '../..', 'static/me.gif')]
+        files: [join(__dirname, '../../..', 'static/me.gif')]
       });
     }
 
     if (this.client.isOwner(user)) {
       return message.util!.send(`Can't bully The Creator!`, {
-        files: [join(__dirname, '../..', 'static/me.gif')]
+        files: [join(__dirname, '../../..', 'static/me.gif')]
       });
     }
 
@@ -57,7 +57,7 @@ export default class BullyCommand extends Command {
         canvas = Canvas.createCanvas(1068, 821);
         ctx = canvas.getContext('2d');
         join(__dirname, '..', 'inhibitors');
-        base = await Canvas.loadImage(join(__dirname, '../..', 'static/bully1.jpg'));
+        base = await Canvas.loadImage(join(__dirname, '../../..', 'static/bully1.jpg'));
         ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
@@ -71,7 +71,7 @@ export default class BullyCommand extends Command {
       case 2:
         canvas = Canvas.createCanvas(1100, 1095);
         ctx = canvas.getContext('2d');
-        base = await Canvas.loadImage(join(__dirname, '../..', 'static/bully2.jpg'));
+        base = await Canvas.loadImage(join(__dirname, '../../..', 'static/bully2.jpg'));
         ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
 
         ctx.font = `${fontSize}px sans-serif`;
@@ -83,7 +83,7 @@ export default class BullyCommand extends Command {
         } while (ctx.measureText(user.username).width > canvas.width - 300);
         textWidth = ctx.measureText(user.username).width;
         ctx.fillStyle = this.client.config.color;
-        ctx.fillText(user.username, canvas.width / 2 - textWidth / 2, canvas.height / 7.5);
+        ctx.fillText(user.username, (canvas.width / 2) - (textWidth / 2), canvas.height / 7.5);
 
         ctx.fillStyle = fontColor;
         ctx.font = '70px sans-serif';

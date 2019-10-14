@@ -28,14 +28,16 @@ export default class BoldCommand extends Command {
   }
 
   public async exec(message: Message, { text }: { text: string }) {
+    const alpha = /[a-z]/;
+    const numeric = /[1-9]/;
     let boldText = '';
     for (let i = 0; i < text.length; i++) {
       let letter = text.charAt(i);
       if (letter === ' ') {
         boldText += '  ';
-      } else if (letter.match(/[a-z]/)) {
+      } else if (alpha.exec(letter)) {
         boldText += `${emojis[letter]} `;
-      } else {
+      } else if (numeric.exec(letter)) {
         letter = `d${letter}`;
         boldText += `${emojis[letter]} `;
       }

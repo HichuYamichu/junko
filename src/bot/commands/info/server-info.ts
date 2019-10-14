@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
-import moment from 'moment';
+import * as moment from 'moment';
+import 'moment-duration-format';
 import { stripIndents } from 'common-tags';
 
 export default class ServerInfoCommand extends Command {

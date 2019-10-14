@@ -17,9 +17,9 @@ export default class UserInfoCommand extends Command {
       },
       args: [
         {
-          id: 'member',
-          type: 'member',
-          default: (message: Message) => message.member
+          'id': 'member',
+          'type': 'member',
+          'default': (message: Message) => message.member
         }
       ],
       clientPermissions: ['EMBED_LINKS']

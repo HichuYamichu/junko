@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "eslint --fix . --ext .ts",
+    "test": "eslint . --ext .ts",
+    "build": "tsc",
     "dev": "nodemon dist/Junko.js",
     "start": "node dist/Junko.js"
   },
@@ -25,6 +26,7 @@
     "mali": "^0.19.0",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
+    "node-spotify-api": "^1.1.1",
     "pg": "^7.12.1",
     "prom-client": "^11.5.3",
     "sequelize": "^5.18.1",
@@ -40,9 +42,8 @@
     "@types/spotify-web-api-node": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
-    "eslint": "^6.1.0",
+    "eslint": "^6.5.1",
     "eslint-config-marine": "^5.0.0",
-    "eslint-config-prettier": "^6.3.0",
     "nodemon": "^1.19.1",
     "typescript": "^3.6.3"
   },
@@ -50,5 +51,26 @@
     "bufferutil": "^4.0.1",
     "zlib-sync": "^0.1.5",
     "zucc": "^0.1.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "marine/node"
+    ],
+    "rules": {
+      "@typescript-eslint/indent": [
+        "error",
+        2
+      ],
+      "quote-props": "off",
+      "max-len": [
+        "error",
+        100,
+        2,
+        {
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true
+        }
+      ]
+    }
   }
 }

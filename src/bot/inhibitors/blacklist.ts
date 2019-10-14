@@ -9,8 +9,7 @@ export default class BlacklistInhibitor extends Inhibitor {
   }
 
   public async exec(message: Message) {
-    const res = await this.client.settings.get(message.guild!, 'blacklist', []);
-    const blacklist = typeof res === 'string' ? JSON.parse(res) : res;
+    const blacklist = await this.client.settings.get(message.guild!, 'blacklist', ['']);
     return blacklist.includes(message.author!.id);
   }
 }

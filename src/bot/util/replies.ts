@@ -42,4 +42,6 @@ const oneesan = {
   owo: ['ara ara']
 };
 
-export default { junko, mean, oneesan };
+const presets: { [index: string]: { [index: string]: string[] } } = { junko, mean, oneesan };
+
+export default presets;

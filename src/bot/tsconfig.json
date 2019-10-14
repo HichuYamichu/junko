@@ -10,9 +10,10 @@
     "target": "es2018",
     "sourceMap": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "pretty": true,
+    "pretty": true
   }
 }

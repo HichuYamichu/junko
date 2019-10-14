@@ -2,7 +2,6 @@ import { Message } from 'discord.js';
 import { Command, AkairoModule } from 'discord-akairo';
 import Logger from '../../structs/Logger';
 
-
 export default class ReloadCommand extends Command {
   public constructor() {
     super('reload', {
@@ -19,24 +18,16 @@ export default class ReloadCommand extends Command {
 
   public *args() {
     const type = yield {
-      'match': 'option',
-      'flag': ['--type='],
-      'type': [['command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
-      'default': 'command'
+      match: 'option',
+      flag: ['--type='],
+      type: [['commandAlias', 'command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
+      default: 'command'
     };
 
     const mod = yield {
       type: (msg: Message, phrase: string) => {
         if (!phrase) return null;
-        const resolver = this.handler.resolver.type(
-          // @ts-ignore
-          {
-            command: 'commandAlias',
-            inhibitor: 'inhibitor',
-            listener: 'listener'
-          }[type]
-        );
-
+        const resolver = this.handler.resolver.type(type);
         return resolver(msg, phrase);
       }
     };
@@ -44,7 +35,7 @@ export default class ReloadCommand extends Command {
     return { type, mod };
   }
 
-  public exec(message: Message, { type, mod }: {type: string; mod: AkairoModule }) {
+  public exec(message: Message, { type, mod }: { type: string; mod: AkairoModule }) {
     if (!mod) {
       return message.util!.reply(
         `Invalid ${type} ${type === 'command' ? 'alias' : 'ID'} specified to reload.`

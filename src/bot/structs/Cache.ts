@@ -6,25 +6,22 @@ const cache = new Redis({
   autoResendUnfulfilledCommands: false
 });
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class SettingsCache {
-  public static get(id: string, key: string) {
-    if (cache.status !== 'ready') return null;
+  public static get(id: string, key: string): Promise<string | null> {
     return cache.hget(id, key);
   }
 
-  public static set(id: string, key: string, data: any) {
-    if (cache.status !== 'ready') return null;
+  public static set(id: string, key: string, data: string | object): Promise<0 | 1> {
     const cacheObject = typeof data === 'object' ? JSON.stringify(data) : data;
     return cache.hset(id, key, cacheObject);
   }
 
-  public static del(id: string, key: string) {
-    if (cache.status !== 'ready') return null;
+  public static del(id: string, key: string): any {
     return cache.hdel(id, key);
   }
 
-  public static clear(id: string) {
-    if (cache.status !== 'ready') return null;
+  public static clear(id: string): Promise<number> {
     return cache.del(id);
   }
 }

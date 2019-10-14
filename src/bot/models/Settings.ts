@@ -1,5 +1,15 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
+export interface Settings {
+  [key: string]: string | string[] | null | undefined;
+  guild: string;
+  prefix?: string | null | undefined;
+  preset?: string | null | undefined;
+  memberLog?: string | null | undefined;
+  messageLog?: string | null | undefined;
+  blacklist?: string[] | null | undefined;
+}
+
 @Entity('settings')
 export class Settings {
   @PrimaryColumn()

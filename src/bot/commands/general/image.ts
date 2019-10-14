@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Command } from 'discord-akairo';
 import { search } from 'kaori';
 
@@ -29,8 +29,7 @@ export default class ImageCommand extends Command {
   }
 
   public async exec(message: Message, { tags }: { tags: string }) {
-    // @ts-ignore
-    const rating = message.channel.nsfw ? 'rating%3aexplicit' : 'rating%3Asafe';
+    const rating = (message.channel as TextChannel).nsfw ? 'rating%3aexplicit' : 'rating%3Asafe';
 
     try {
       const [result] = await search('gelbooru', {

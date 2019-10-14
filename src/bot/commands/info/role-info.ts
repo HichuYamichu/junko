@@ -1,6 +1,7 @@
 import { Message, Role } from 'discord.js';
 import { Command } from 'discord-akairo';
-import moment from 'moment';
+import * as moment from 'moment';
+import 'moment-duration-format';
 import { permissions } from '../../util/permissions';
 import { stripIndents } from 'common-tags';
 
@@ -18,9 +19,9 @@ export default class RoleInfoCommand extends Command {
       },
       args: [
         {
-          id: 'role',
-          type: 'role',
-          default: (message: Message) => message.guild!.roles.get(message.guild!.id)
+          'id': 'role',
+          'type': 'role',
+          'default': (message: Message) => message.guild!.roles.get(message.guild!.id)
         }
       ],
       clientPermissions: ['EMBED_LINKS']

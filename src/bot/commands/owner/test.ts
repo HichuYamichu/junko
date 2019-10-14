@@ -15,7 +15,7 @@ export default class TestCommand extends Command {
     });
   }
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line
   public async exec(message: Message, args: any) {
     this.client.emit('guildMemberRemove', message.member);
   }

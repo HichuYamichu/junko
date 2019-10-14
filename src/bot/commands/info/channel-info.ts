@@ -1,6 +1,7 @@
 import { Message, TextChannel } from 'discord.js';
 import { Command } from 'discord-akairo';
-import moment from 'moment';
+import * as moment from 'moment';
+import 'moment-duration-format';
 import { stripIndents } from 'common-tags';
 
 export default class ChannelInfoCommand extends Command {
@@ -17,10 +18,10 @@ export default class ChannelInfoCommand extends Command {
       },
       args: [
         {
-          id: 'channel',
-          match: 'content',
-          type: 'channel',
-          default: (message: Message) => message.channel
+          'id': 'channel',
+          'match': 'content',
+          'type': 'channel',
+          'default': (message: Message) => message.channel
         }
       ],
       clientPermissions: ['EMBED_LINKS']
