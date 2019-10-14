@@ -2,7 +2,7 @@ FROM node:10-alpine
 
 WORKDIR /usr/src/junko
 
-COPY package.json ./
+COPY package.json tsconfig.json ./
 
 RUN apk add --update \
 && apk add --no-cache pixman cairo pango giflib libjpeg-turbo \
@@ -12,6 +12,8 @@ cairo-dev pango-dev pangomm-dev libjpeg-turbo-dev giflib-dev freetype-dev python
 && apk del .build-deps
 
 COPY . .
+
+RUN yarn build
 
 ENV TOKEN= \
 YT_KEY= \
