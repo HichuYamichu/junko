@@ -3,25 +3,13 @@ version: '3.4'
 x-defaults: &defaults
   restart: unless-stopped
   networks:
-    - junko_net
+    - main
   logging:
     driver: loki
     options:
       loki-url: "http://localhost:3100/api/prom/push"
   
 services:
-  redis:
-    <<: *defaults
-    image: redis:alpine
-
-  postgres:
-    <<: *defaults
-    image: postgres:alpine
-    env_file:
-      - ./env/postgres/.env
-    volumes:
-       - postgres_vol:/var/lib/postgresql/data
-   
   bot:
     <<: *defaults
     build: ./src/bot
@@ -29,62 +17,19 @@ services:
       - ./env/bot/.env
     volumes:
       - ./src/proto:/usr/src/proto
-    depends_on:
-      - redis
-      - postgres
     
   api:
     <<: *defaults
     build: ./src/api
     env_file:
       - ./env/api/.env
-    depends_on:
-      - postgres
     
   dashboard:
     <<: *defaults
     build: ./src/dashboard
     env_file:
       - ./env/dashboard/.env
-    
-  nginx: 
-    <<: *defaults
-    image: nginx:alpine
-    volumes:
-      - ./env/nginx/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - api
-      - dashboard
-      - grafana
-
-  prometheus:
-    <<: *defaults
-    build: ./env/prometheus
-    volumes:
-      - prometheus_vol:/prometheus
-
-  grafana:
-    <<: *defaults
-    image: 'grafana/grafana:latest'
-    env_file:
-      - ./env/grafana/.env
-    volumes:
-      - grafana_vol:/var/lib/grafana
-    
-  loki:
-    <<: *defaults
-    image: grafana/loki:latest
-    command: -config.file=/etc/loki/local-config.yaml
-    ports:
-      - 3100:3100
 
 networks:
-  junko_net:
-
-volumes:
-  postgres_vol:
-  grafana_vol:
-  prometheus_vol:
+  main:
+    external: true

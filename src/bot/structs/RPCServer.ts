@@ -66,7 +66,7 @@ export default class RPCServer extends Mali {
 	  };
   }
 
-  private init(): void {
+  private init() {
 	  this.use(this.client.prometheus.rpcMiddleware);
 	  this.use({ fetchGuilds: this.fetchGuilds });
 	  this.use({ fetchGuild: this.fetchGuild });
@@ -77,7 +77,7 @@ export default class RPCServer extends Mali {
 	  this.use({ say: this.say });
   }
 
-  public listen(): void {
+  public listen() {
 	  this.init();
 	  this.start('0.0.0.0:50051');
   }

@@ -13,19 +13,19 @@ export default class Logger {
     this.write(content, level);
   }
 
-  public static error(content: string | {} | null | undefined): void {
+  public static error(content?: string | {} | null): void {
     const level = 'ERROR';
-    this.write(content, level);
+    this.write(level, content);
   }
 
-  private static write(content: string | {} | null | undefined, level: string): void {
+  private static write(level: string, content?: string | {} | null): void {
     const out = level === 'ERROR' ? process.stderr : process.stdout;
     const now = utc().format('DD/MM/YYYY HH:mm:ss');
     const log = `[${now}][${level}]: ${this.clean(content)}\n`;
     out.write(log);
   }
 
-  private static clean(item: string | {} | null | undefined): string {
+  private static clean(item?: string | {} | null): string {
     if (typeof item === 'string') return item;
     const cleaned = inspect(item, { depth: Infinity });
     return cleaned;
