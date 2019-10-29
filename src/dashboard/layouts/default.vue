@@ -1,8 +1,8 @@
 <template>
-  <v-app  dark>
-    <app-header />
+  <v-app dark>
+    <app-navbar />
     <v-content>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>
@@ -11,14 +11,15 @@
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader';
+import AppNavbar from '@/components/AppNavbar';
 import AppFooter from '@/components/AppFooter';
+
 export default {
   components: {
-    AppHeader,
+    AppNavbar,
     AppFooter
-  },
-}
+  }
+};
 </script>
 
 <style>
