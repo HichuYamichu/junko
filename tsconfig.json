@@ -1,5 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
     "strict": true,
@@ -8,16 +7,12 @@
     "lib": ["es2018"],
     "module": "commonjs",
     "target": "es2018",
+    "sourceMap": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "pretty": true,
-    "sourceMap": false,
-		"inlineSourceMap": true,
-		"inlineSources": true,
-		"sourceRoot": "/",
-		"incremental": true
+    "pretty": true
   }
 }

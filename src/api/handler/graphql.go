@@ -23,11 +23,6 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if pass := authenticate(r); !pass {
-		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
-		return
-	}
-
 	ctx := r.Context()
 
 	response := h.Schema.Exec(ctx, params.Query, params.OperationName, params.Variables)

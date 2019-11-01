@@ -3,74 +3,22 @@ schema {
 }
 
 type Query {
-  Guilds(): [Guild]
-  Guild(ID: String!): Guild
-  Say(GuildID: String!, ChannelID: String!, Content: String!): String
+  Categories(): [Category]
+  Category(Name: String!): Category
 }
 
-type Guild {
-  channels: [Channel]
-  members: [Member]
-  roles: [Role]
-  tags: [Tag]
-  settings: Settings
-  createdTimestamp: String
-  description: String
-  icon: String
-  id: String
-  memberCount: Int
+type Category {
   name: String
-  region: String
+  commands: [Command]
 }
 
-type Channel {
-  id: String
-  name: String
-  createdTimestamp: String
-  type: String
-  rawPosition: Int
-  topic: String
-  nsfw: Boolean
-  bitrate: Int
-  userLimit: Int
-  parentID: String
-  rateLimitPerUser: Int
-}
-
-type Member {
-  user: User
-  roles: [Role]
-  displayName: String
-  joinedTimestamp: Int
-}
-
-type User {
-  avatar: String
-  id: String
-  tag: String
-}
-
-type Role {
-  color: Int
-  name: String
-  rawPosition: Int
-  id: String
-  permissions: Int
-  hoist: Boolean
-}
-
-type Settings {
-  guildID: String,
-  prefix: String,
-  preset: String,
-  logChannel: String,
-  blacklist: [String!]
-}
-
-type Tag {
-  tagID: String,
-  guildID: String,
-  author: String,
+type Command {
   name: String,
+  description: Description
+}
+
+type Description {
   content: String,
+  usage: String,
+  examples: [String!]
 }

@@ -24,812 +24,280 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type Void struct {
+type CategoriesRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Void) Reset()         { *m = Void{} }
-func (m *Void) String() string { return proto.CompactTextString(m) }
-func (*Void) ProtoMessage()    {}
-func (*Void) Descriptor() ([]byte, []int) {
+func (m *CategoriesRequest) Reset()         { *m = CategoriesRequest{} }
+func (m *CategoriesRequest) String() string { return proto.CompactTextString(m) }
+func (*CategoriesRequest) ProtoMessage()    {}
+func (*CategoriesRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8e16ccb8c5307b32, []int{0}
 }
 
-func (m *Void) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Void.Unmarshal(m, b)
+func (m *CategoriesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CategoriesRequest.Unmarshal(m, b)
 }
-func (m *Void) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Void.Marshal(b, m, deterministic)
+func (m *CategoriesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CategoriesRequest.Marshal(b, m, deterministic)
 }
-func (m *Void) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Void.Merge(m, src)
+func (m *CategoriesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CategoriesRequest.Merge(m, src)
 }
-func (m *Void) XXX_Size() int {
-	return xxx_messageInfo_Void.Size(m)
+func (m *CategoriesRequest) XXX_Size() int {
+	return xxx_messageInfo_CategoriesRequest.Size(m)
 }
-func (m *Void) XXX_DiscardUnknown() {
-	xxx_messageInfo_Void.DiscardUnknown(m)
+func (m *CategoriesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CategoriesRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Void proto.InternalMessageInfo
+var xxx_messageInfo_CategoriesRequest proto.InternalMessageInfo
 
-type FetchRequest struct {
-	GuildID              string   `protobuf:"bytes,1,opt,name=GuildID,proto3" json:"GuildID,omitempty"`
-	ID                   string   `protobuf:"bytes,2,opt,name=ID,proto3" json:"ID,omitempty"`
+type CategoriesResponce struct {
+	CategoryNames        []string `protobuf:"bytes,1,rep,name=categoryNames,proto3" json:"categoryNames,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *FetchRequest) Reset()         { *m = FetchRequest{} }
-func (m *FetchRequest) String() string { return proto.CompactTextString(m) }
-func (*FetchRequest) ProtoMessage()    {}
-func (*FetchRequest) Descriptor() ([]byte, []int) {
+func (m *CategoriesResponce) Reset()         { *m = CategoriesResponce{} }
+func (m *CategoriesResponce) String() string { return proto.CompactTextString(m) }
+func (*CategoriesResponce) ProtoMessage()    {}
+func (*CategoriesResponce) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8e16ccb8c5307b32, []int{1}
 }
 
-func (m *FetchRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_FetchRequest.Unmarshal(m, b)
+func (m *CategoriesResponce) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CategoriesResponce.Unmarshal(m, b)
 }
-func (m *FetchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_FetchRequest.Marshal(b, m, deterministic)
+func (m *CategoriesResponce) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CategoriesResponce.Marshal(b, m, deterministic)
 }
-func (m *FetchRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FetchRequest.Merge(m, src)
+func (m *CategoriesResponce) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CategoriesResponce.Merge(m, src)
 }
-func (m *FetchRequest) XXX_Size() int {
-	return xxx_messageInfo_FetchRequest.Size(m)
+func (m *CategoriesResponce) XXX_Size() int {
+	return xxx_messageInfo_CategoriesResponce.Size(m)
 }
-func (m *FetchRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_FetchRequest.DiscardUnknown(m)
+func (m *CategoriesResponce) XXX_DiscardUnknown() {
+	xxx_messageInfo_CategoriesResponce.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_FetchRequest proto.InternalMessageInfo
+var xxx_messageInfo_CategoriesResponce proto.InternalMessageInfo
 
-func (m *FetchRequest) GetGuildID() string {
+func (m *CategoriesResponce) GetCategoryNames() []string {
 	if m != nil {
-		return m.GuildID
+		return m.CategoryNames
 	}
-	return ""
+	return nil
 }
 
-func (m *FetchRequest) GetID() string {
-	if m != nil {
-		return m.ID
-	}
-	return ""
-}
-
-type Msg struct {
-	GuildID              string   `protobuf:"bytes,1,opt,name=guildID,proto3" json:"guildID,omitempty"`
-	ChannelID            string   `protobuf:"bytes,2,opt,name=channelID,proto3" json:"channelID,omitempty"`
-	Content              string   `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+type CommandsRequest struct {
+	CategoryName         string   `protobuf:"bytes,1,opt,name=categoryName,proto3" json:"categoryName,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Msg) Reset()         { *m = Msg{} }
-func (m *Msg) String() string { return proto.CompactTextString(m) }
-func (*Msg) ProtoMessage()    {}
-func (*Msg) Descriptor() ([]byte, []int) {
+func (m *CommandsRequest) Reset()         { *m = CommandsRequest{} }
+func (m *CommandsRequest) String() string { return proto.CompactTextString(m) }
+func (*CommandsRequest) ProtoMessage()    {}
+func (*CommandsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8e16ccb8c5307b32, []int{2}
 }
 
-func (m *Msg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Msg.Unmarshal(m, b)
+func (m *CommandsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CommandsRequest.Unmarshal(m, b)
 }
-func (m *Msg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Msg.Marshal(b, m, deterministic)
+func (m *CommandsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CommandsRequest.Marshal(b, m, deterministic)
 }
-func (m *Msg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Msg.Merge(m, src)
+func (m *CommandsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CommandsRequest.Merge(m, src)
 }
-func (m *Msg) XXX_Size() int {
-	return xxx_messageInfo_Msg.Size(m)
+func (m *CommandsRequest) XXX_Size() int {
+	return xxx_messageInfo_CommandsRequest.Size(m)
 }
-func (m *Msg) XXX_DiscardUnknown() {
-	xxx_messageInfo_Msg.DiscardUnknown(m)
+func (m *CommandsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CommandsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Msg proto.InternalMessageInfo
+var xxx_messageInfo_CommandsRequest proto.InternalMessageInfo
 
-func (m *Msg) GetGuildID() string {
+func (m *CommandsRequest) GetCategoryName() string {
 	if m != nil {
-		return m.GuildID
+		return m.CategoryName
 	}
 	return ""
 }
 
-func (m *Msg) GetChannelID() string {
+type CommandsResponce struct {
+	CommandNames         []string `protobuf:"bytes,1,rep,name=commandNames,proto3" json:"commandNames,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CommandsResponce) Reset()         { *m = CommandsResponce{} }
+func (m *CommandsResponce) String() string { return proto.CompactTextString(m) }
+func (*CommandsResponce) ProtoMessage()    {}
+func (*CommandsResponce) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{3}
+}
+
+func (m *CommandsResponce) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CommandsResponce.Unmarshal(m, b)
+}
+func (m *CommandsResponce) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CommandsResponce.Marshal(b, m, deterministic)
+}
+func (m *CommandsResponce) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CommandsResponce.Merge(m, src)
+}
+func (m *CommandsResponce) XXX_Size() int {
+	return xxx_messageInfo_CommandsResponce.Size(m)
+}
+func (m *CommandsResponce) XXX_DiscardUnknown() {
+	xxx_messageInfo_CommandsResponce.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CommandsResponce proto.InternalMessageInfo
+
+func (m *CommandsResponce) GetCommandNames() []string {
 	if m != nil {
-		return m.ChannelID
+		return m.CommandNames
+	}
+	return nil
+}
+
+type DescriptionRequest struct {
+	CommandName          string   `protobuf:"bytes,1,opt,name=commandName,proto3" json:"commandName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DescriptionRequest) Reset()         { *m = DescriptionRequest{} }
+func (m *DescriptionRequest) String() string { return proto.CompactTextString(m) }
+func (*DescriptionRequest) ProtoMessage()    {}
+func (*DescriptionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{4}
+}
+
+func (m *DescriptionRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DescriptionRequest.Unmarshal(m, b)
+}
+func (m *DescriptionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DescriptionRequest.Marshal(b, m, deterministic)
+}
+func (m *DescriptionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DescriptionRequest.Merge(m, src)
+}
+func (m *DescriptionRequest) XXX_Size() int {
+	return xxx_messageInfo_DescriptionRequest.Size(m)
+}
+func (m *DescriptionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DescriptionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DescriptionRequest proto.InternalMessageInfo
+
+func (m *DescriptionRequest) GetCommandName() string {
+	if m != nil {
+		return m.CommandName
 	}
 	return ""
 }
 
-func (m *Msg) GetContent() string {
+type DescriptionResponce struct {
+	Content              string   `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	Usage                string   `protobuf:"bytes,2,opt,name=usage,proto3" json:"usage,omitempty"`
+	Examples             []string `protobuf:"bytes,3,rep,name=examples,proto3" json:"examples,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DescriptionResponce) Reset()         { *m = DescriptionResponce{} }
+func (m *DescriptionResponce) String() string { return proto.CompactTextString(m) }
+func (*DescriptionResponce) ProtoMessage()    {}
+func (*DescriptionResponce) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{5}
+}
+
+func (m *DescriptionResponce) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DescriptionResponce.Unmarshal(m, b)
+}
+func (m *DescriptionResponce) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DescriptionResponce.Marshal(b, m, deterministic)
+}
+func (m *DescriptionResponce) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DescriptionResponce.Merge(m, src)
+}
+func (m *DescriptionResponce) XXX_Size() int {
+	return xxx_messageInfo_DescriptionResponce.Size(m)
+}
+func (m *DescriptionResponce) XXX_DiscardUnknown() {
+	xxx_messageInfo_DescriptionResponce.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DescriptionResponce proto.InternalMessageInfo
+
+func (m *DescriptionResponce) GetContent() string {
 	if m != nil {
 		return m.Content
 	}
 	return ""
 }
 
-type Guilds struct {
-	Guilds               []*Guild `protobuf:"bytes,1,rep,name=guilds,proto3" json:"guilds,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Guilds) Reset()         { *m = Guilds{} }
-func (m *Guilds) String() string { return proto.CompactTextString(m) }
-func (*Guilds) ProtoMessage()    {}
-func (*Guilds) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{3}
-}
-
-func (m *Guilds) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Guilds.Unmarshal(m, b)
-}
-func (m *Guilds) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Guilds.Marshal(b, m, deterministic)
-}
-func (m *Guilds) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Guilds.Merge(m, src)
-}
-func (m *Guilds) XXX_Size() int {
-	return xxx_messageInfo_Guilds.Size(m)
-}
-func (m *Guilds) XXX_DiscardUnknown() {
-	xxx_messageInfo_Guilds.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Guilds proto.InternalMessageInfo
-
-func (m *Guilds) GetGuilds() []*Guild {
+func (m *DescriptionResponce) GetUsage() string {
 	if m != nil {
-		return m.Guilds
-	}
-	return nil
-}
-
-type Guild struct {
-	Channels             []string `protobuf:"bytes,1,rep,name=channels,proto3" json:"channels,omitempty"`
-	Members              []string `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
-	Roles                []string `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
-	CreatedTimestamp     string   `protobuf:"bytes,4,opt,name=createdTimestamp,proto3" json:"createdTimestamp,omitempty"`
-	Description          string   `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	Icon                 string   `protobuf:"bytes,6,opt,name=icon,proto3" json:"icon,omitempty"`
-	Id                   string   `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	MemberCount          int32    `protobuf:"varint,8,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
-	Name                 string   `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	Region               string   `protobuf:"bytes,10,opt,name=region,proto3" json:"region,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Guild) Reset()         { *m = Guild{} }
-func (m *Guild) String() string { return proto.CompactTextString(m) }
-func (*Guild) ProtoMessage()    {}
-func (*Guild) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{4}
-}
-
-func (m *Guild) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Guild.Unmarshal(m, b)
-}
-func (m *Guild) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Guild.Marshal(b, m, deterministic)
-}
-func (m *Guild) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Guild.Merge(m, src)
-}
-func (m *Guild) XXX_Size() int {
-	return xxx_messageInfo_Guild.Size(m)
-}
-func (m *Guild) XXX_DiscardUnknown() {
-	xxx_messageInfo_Guild.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Guild proto.InternalMessageInfo
-
-func (m *Guild) GetChannels() []string {
-	if m != nil {
-		return m.Channels
-	}
-	return nil
-}
-
-func (m *Guild) GetMembers() []string {
-	if m != nil {
-		return m.Members
-	}
-	return nil
-}
-
-func (m *Guild) GetRoles() []string {
-	if m != nil {
-		return m.Roles
-	}
-	return nil
-}
-
-func (m *Guild) GetCreatedTimestamp() string {
-	if m != nil {
-		return m.CreatedTimestamp
+		return m.Usage
 	}
 	return ""
 }
 
-func (m *Guild) GetDescription() string {
+func (m *DescriptionResponce) GetExamples() []string {
 	if m != nil {
-		return m.Description
-	}
-	return ""
-}
-
-func (m *Guild) GetIcon() string {
-	if m != nil {
-		return m.Icon
-	}
-	return ""
-}
-
-func (m *Guild) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *Guild) GetMemberCount() int32 {
-	if m != nil {
-		return m.MemberCount
-	}
-	return 0
-}
-
-func (m *Guild) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Guild) GetRegion() string {
-	if m != nil {
-		return m.Region
-	}
-	return ""
-}
-
-type Member struct {
-	UserID               string   `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	GuildID              string   `protobuf:"bytes,2,opt,name=guildID,proto3" json:"guildID,omitempty"`
-	Roles                []string `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
-	DisplayName          string   `protobuf:"bytes,4,opt,name=displayName,proto3" json:"displayName,omitempty"`
-	JoinedTimestamp      int32    `protobuf:"varint,5,opt,name=joinedTimestamp,proto3" json:"joinedTimestamp,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Member) Reset()         { *m = Member{} }
-func (m *Member) String() string { return proto.CompactTextString(m) }
-func (*Member) ProtoMessage()    {}
-func (*Member) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{5}
-}
-
-func (m *Member) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Member.Unmarshal(m, b)
-}
-func (m *Member) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Member.Marshal(b, m, deterministic)
-}
-func (m *Member) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Member.Merge(m, src)
-}
-func (m *Member) XXX_Size() int {
-	return xxx_messageInfo_Member.Size(m)
-}
-func (m *Member) XXX_DiscardUnknown() {
-	xxx_messageInfo_Member.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Member proto.InternalMessageInfo
-
-func (m *Member) GetUserID() string {
-	if m != nil {
-		return m.UserID
-	}
-	return ""
-}
-
-func (m *Member) GetGuildID() string {
-	if m != nil {
-		return m.GuildID
-	}
-	return ""
-}
-
-func (m *Member) GetRoles() []string {
-	if m != nil {
-		return m.Roles
-	}
-	return nil
-}
-
-func (m *Member) GetDisplayName() string {
-	if m != nil {
-		return m.DisplayName
-	}
-	return ""
-}
-
-func (m *Member) GetJoinedTimestamp() int32 {
-	if m != nil {
-		return m.JoinedTimestamp
-	}
-	return 0
-}
-
-type Members struct {
-	Members              []*Member `protobuf:"bytes,1,rep,name=members,proto3" json:"members,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
-}
-
-func (m *Members) Reset()         { *m = Members{} }
-func (m *Members) String() string { return proto.CompactTextString(m) }
-func (*Members) ProtoMessage()    {}
-func (*Members) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{6}
-}
-
-func (m *Members) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Members.Unmarshal(m, b)
-}
-func (m *Members) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Members.Marshal(b, m, deterministic)
-}
-func (m *Members) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Members.Merge(m, src)
-}
-func (m *Members) XXX_Size() int {
-	return xxx_messageInfo_Members.Size(m)
-}
-func (m *Members) XXX_DiscardUnknown() {
-	xxx_messageInfo_Members.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Members proto.InternalMessageInfo
-
-func (m *Members) GetMembers() []*Member {
-	if m != nil {
-		return m.Members
-	}
-	return nil
-}
-
-type User struct {
-	Avatar               string   `protobuf:"bytes,1,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	Id                   string   `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	Tag                  string   `protobuf:"bytes,3,opt,name=tag,proto3" json:"tag,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *User) Reset()         { *m = User{} }
-func (m *User) String() string { return proto.CompactTextString(m) }
-func (*User) ProtoMessage()    {}
-func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{7}
-}
-
-func (m *User) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_User.Unmarshal(m, b)
-}
-func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_User.Marshal(b, m, deterministic)
-}
-func (m *User) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_User.Merge(m, src)
-}
-func (m *User) XXX_Size() int {
-	return xxx_messageInfo_User.Size(m)
-}
-func (m *User) XXX_DiscardUnknown() {
-	xxx_messageInfo_User.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_User proto.InternalMessageInfo
-
-func (m *User) GetAvatar() string {
-	if m != nil {
-		return m.Avatar
-	}
-	return ""
-}
-
-func (m *User) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *User) GetTag() string {
-	if m != nil {
-		return m.Tag
-	}
-	return ""
-}
-
-type Channel struct {
-	CreatedTimestamp     string   `protobuf:"bytes,1,opt,name=createdTimestamp,proto3" json:"createdTimestamp,omitempty"`
-	Id                   string   `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	Type                 string   `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	RawPosition          int32    `protobuf:"varint,5,opt,name=rawPosition,proto3" json:"rawPosition,omitempty"`
-	Topic                string   `protobuf:"bytes,6,opt,name=topic,proto3" json:"topic,omitempty"`
-	Nsfw                 bool     `protobuf:"varint,7,opt,name=nsfw,proto3" json:"nsfw,omitempty"`
-	Bitrate              int32    `protobuf:"varint,8,opt,name=bitrate,proto3" json:"bitrate,omitempty"`
-	UserLimit            int32    `protobuf:"varint,9,opt,name=userLimit,proto3" json:"userLimit,omitempty"`
-	ParentID             string   `protobuf:"bytes,10,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	RateLimitPerUser     int32    `protobuf:"varint,11,opt,name=rateLimitPerUser,proto3" json:"rateLimitPerUser,omitempty"`
-	Guild                string   `protobuf:"bytes,12,opt,name=guild,proto3" json:"guild,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Channel) Reset()         { *m = Channel{} }
-func (m *Channel) String() string { return proto.CompactTextString(m) }
-func (*Channel) ProtoMessage()    {}
-func (*Channel) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{8}
-}
-
-func (m *Channel) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Channel.Unmarshal(m, b)
-}
-func (m *Channel) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Channel.Marshal(b, m, deterministic)
-}
-func (m *Channel) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Channel.Merge(m, src)
-}
-func (m *Channel) XXX_Size() int {
-	return xxx_messageInfo_Channel.Size(m)
-}
-func (m *Channel) XXX_DiscardUnknown() {
-	xxx_messageInfo_Channel.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Channel proto.InternalMessageInfo
-
-func (m *Channel) GetCreatedTimestamp() string {
-	if m != nil {
-		return m.CreatedTimestamp
-	}
-	return ""
-}
-
-func (m *Channel) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *Channel) GetType() string {
-	if m != nil {
-		return m.Type
-	}
-	return ""
-}
-
-func (m *Channel) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Channel) GetRawPosition() int32 {
-	if m != nil {
-		return m.RawPosition
-	}
-	return 0
-}
-
-func (m *Channel) GetTopic() string {
-	if m != nil {
-		return m.Topic
-	}
-	return ""
-}
-
-func (m *Channel) GetNsfw() bool {
-	if m != nil {
-		return m.Nsfw
-	}
-	return false
-}
-
-func (m *Channel) GetBitrate() int32 {
-	if m != nil {
-		return m.Bitrate
-	}
-	return 0
-}
-
-func (m *Channel) GetUserLimit() int32 {
-	if m != nil {
-		return m.UserLimit
-	}
-	return 0
-}
-
-func (m *Channel) GetParentID() string {
-	if m != nil {
-		return m.ParentID
-	}
-	return ""
-}
-
-func (m *Channel) GetRateLimitPerUser() int32 {
-	if m != nil {
-		return m.RateLimitPerUser
-	}
-	return 0
-}
-
-func (m *Channel) GetGuild() string {
-	if m != nil {
-		return m.Guild
-	}
-	return ""
-}
-
-type Channels struct {
-	Channels             []*Channel `protobuf:"bytes,1,rep,name=channels,proto3" json:"channels,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
-}
-
-func (m *Channels) Reset()         { *m = Channels{} }
-func (m *Channels) String() string { return proto.CompactTextString(m) }
-func (*Channels) ProtoMessage()    {}
-func (*Channels) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{9}
-}
-
-func (m *Channels) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Channels.Unmarshal(m, b)
-}
-func (m *Channels) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Channels.Marshal(b, m, deterministic)
-}
-func (m *Channels) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Channels.Merge(m, src)
-}
-func (m *Channels) XXX_Size() int {
-	return xxx_messageInfo_Channels.Size(m)
-}
-func (m *Channels) XXX_DiscardUnknown() {
-	xxx_messageInfo_Channels.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Channels proto.InternalMessageInfo
-
-func (m *Channels) GetChannels() []*Channel {
-	if m != nil {
-		return m.Channels
-	}
-	return nil
-}
-
-type Role struct {
-	Color                int32    `protobuf:"varint,1,opt,name=color,proto3" json:"color,omitempty"`
-	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	RawPosition          int32    `protobuf:"varint,3,opt,name=rawPosition,proto3" json:"rawPosition,omitempty"`
-	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	Permissions          int32    `protobuf:"varint,5,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	Hoist                bool     `protobuf:"varint,6,opt,name=hoist,proto3" json:"hoist,omitempty"`
-	Guild                string   `protobuf:"bytes,7,opt,name=guild,proto3" json:"guild,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Role) Reset()         { *m = Role{} }
-func (m *Role) String() string { return proto.CompactTextString(m) }
-func (*Role) ProtoMessage()    {}
-func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{10}
-}
-
-func (m *Role) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Role.Unmarshal(m, b)
-}
-func (m *Role) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Role.Marshal(b, m, deterministic)
-}
-func (m *Role) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Role.Merge(m, src)
-}
-func (m *Role) XXX_Size() int {
-	return xxx_messageInfo_Role.Size(m)
-}
-func (m *Role) XXX_DiscardUnknown() {
-	xxx_messageInfo_Role.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Role proto.InternalMessageInfo
-
-func (m *Role) GetColor() int32 {
-	if m != nil {
-		return m.Color
-	}
-	return 0
-}
-
-func (m *Role) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Role) GetRawPosition() int32 {
-	if m != nil {
-		return m.RawPosition
-	}
-	return 0
-}
-
-func (m *Role) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *Role) GetPermissions() int32 {
-	if m != nil {
-		return m.Permissions
-	}
-	return 0
-}
-
-func (m *Role) GetHoist() bool {
-	if m != nil {
-		return m.Hoist
-	}
-	return false
-}
-
-func (m *Role) GetGuild() string {
-	if m != nil {
-		return m.Guild
-	}
-	return ""
-}
-
-type Roles struct {
-	Roles                []*Role  `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Roles) Reset()         { *m = Roles{} }
-func (m *Roles) String() string { return proto.CompactTextString(m) }
-func (*Roles) ProtoMessage()    {}
-func (*Roles) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{11}
-}
-
-func (m *Roles) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Roles.Unmarshal(m, b)
-}
-func (m *Roles) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Roles.Marshal(b, m, deterministic)
-}
-func (m *Roles) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Roles.Merge(m, src)
-}
-func (m *Roles) XXX_Size() int {
-	return xxx_messageInfo_Roles.Size(m)
-}
-func (m *Roles) XXX_DiscardUnknown() {
-	xxx_messageInfo_Roles.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Roles proto.InternalMessageInfo
-
-func (m *Roles) GetRoles() []*Role {
-	if m != nil {
-		return m.Roles
+		return m.Examples
 	}
 	return nil
 }
 
 func init() {
-	proto.RegisterType((*Void)(nil), "fetcher.Void")
-	proto.RegisterType((*FetchRequest)(nil), "fetcher.FetchRequest")
-	proto.RegisterType((*Msg)(nil), "fetcher.Msg")
-	proto.RegisterType((*Guilds)(nil), "fetcher.Guilds")
-	proto.RegisterType((*Guild)(nil), "fetcher.Guild")
-	proto.RegisterType((*Member)(nil), "fetcher.Member")
-	proto.RegisterType((*Members)(nil), "fetcher.Members")
-	proto.RegisterType((*User)(nil), "fetcher.User")
-	proto.RegisterType((*Channel)(nil), "fetcher.Channel")
-	proto.RegisterType((*Channels)(nil), "fetcher.Channels")
-	proto.RegisterType((*Role)(nil), "fetcher.Role")
-	proto.RegisterType((*Roles)(nil), "fetcher.Roles")
+	proto.RegisterType((*CategoriesRequest)(nil), "fetcher.CategoriesRequest")
+	proto.RegisterType((*CategoriesResponce)(nil), "fetcher.CategoriesResponce")
+	proto.RegisterType((*CommandsRequest)(nil), "fetcher.CommandsRequest")
+	proto.RegisterType((*CommandsResponce)(nil), "fetcher.CommandsResponce")
+	proto.RegisterType((*DescriptionRequest)(nil), "fetcher.DescriptionRequest")
+	proto.RegisterType((*DescriptionResponce)(nil), "fetcher.DescriptionResponce")
 }
 
 func init() { proto.RegisterFile("services.proto", fileDescriptor_8e16ccb8c5307b32) }
 
 var fileDescriptor_8e16ccb8c5307b32 = []byte{
-	// 751 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x55, 0xdd, 0x6a, 0x1b, 0x3b,
-	0x10, 0xb6, 0xd7, 0xbb, 0xfe, 0x19, 0xfb, 0x24, 0x41, 0x9c, 0x73, 0x10, 0xe6, 0x5c, 0x18, 0x9d,
-	0x52, 0xdc, 0x12, 0xd2, 0x92, 0xb4, 0x34, 0xbd, 0x2b, 0xc4, 0xa4, 0x18, 0x9a, 0x12, 0x96, 0xfe,
-	0x5c, 0x6f, 0xd6, 0x8a, 0xa3, 0x62, 0xaf, 0xb6, 0x92, 0x9c, 0x90, 0xe7, 0xe8, 0x6d, 0x1f, 0xa2,
-	0x6f, 0xd2, 0xf7, 0xe9, 0x55, 0xd1, 0x48, 0xfb, 0x63, 0x3b, 0xa6, 0x77, 0x3b, 0x9f, 0x66, 0x46,
-	0x33, 0xdf, 0x37, 0xa3, 0x85, 0x3d, 0xcd, 0xd5, 0xad, 0x48, 0xb9, 0x3e, 0xca, 0x95, 0x34, 0x92,
-	0x74, 0xae, 0xb9, 0x49, 0x6f, 0xb8, 0x62, 0x6d, 0x08, 0x3f, 0x49, 0x31, 0x63, 0xa7, 0x30, 0x38,
-	0xb7, 0x50, 0xcc, 0xbf, 0xae, 0xb8, 0x36, 0x84, 0x42, 0xe7, 0xed, 0x4a, 0x2c, 0x66, 0xd3, 0x09,
-	0x6d, 0x8e, 0x9a, 0xe3, 0x5e, 0x5c, 0x98, 0x64, 0x0f, 0x82, 0xe9, 0x84, 0x06, 0x08, 0x06, 0xd3,
-	0x09, 0xfb, 0x0c, 0xad, 0x0b, 0x3d, 0xb7, 0x01, 0xf3, 0xf5, 0x00, 0x6f, 0x92, 0xff, 0xa0, 0x97,
-	0xde, 0x24, 0x59, 0xc6, 0x17, 0x65, 0x5c, 0x05, 0xd8, 0xb8, 0x54, 0x66, 0x86, 0x67, 0x86, 0xb6,
-	0x5c, 0x9c, 0x37, 0xd9, 0x73, 0x68, 0xe3, 0x9d, 0x9a, 0x3c, 0x86, 0x36, 0x26, 0xd3, 0xb4, 0x39,
-	0x6a, 0x8d, 0xfb, 0xc7, 0x7b, 0x47, 0xbe, 0xfc, 0x23, 0x74, 0x88, 0xfd, 0x29, 0xfb, 0x16, 0x40,
-	0x84, 0x08, 0x19, 0x42, 0xd7, 0x5f, 0xe1, 0x62, 0x7a, 0x71, 0x69, 0xdb, 0x1b, 0x97, 0x7c, 0x79,
-	0xc5, 0x95, 0xa6, 0x01, 0x1e, 0x15, 0x26, 0xf9, 0x1b, 0x22, 0x25, 0x17, 0x5c, 0xd3, 0x16, 0xe2,
-	0xce, 0x20, 0x4f, 0xe1, 0x20, 0x55, 0x3c, 0x31, 0x7c, 0xf6, 0x41, 0x2c, 0xb9, 0x36, 0xc9, 0x32,
-	0xa7, 0x21, 0x96, 0xba, 0x85, 0x93, 0x11, 0xf4, 0x67, 0x5c, 0xa7, 0x4a, 0xe4, 0x46, 0xc8, 0x8c,
-	0x46, 0xe8, 0x56, 0x87, 0x08, 0x81, 0x50, 0xa4, 0x32, 0xa3, 0x6d, 0x3c, 0xc2, 0x6f, 0x4b, 0xa9,
-	0x98, 0xd1, 0x8e, 0xa3, 0x54, 0xcc, 0x6c, 0x16, 0x57, 0xd2, 0x99, 0x5c, 0x65, 0x86, 0x76, 0x47,
-	0xcd, 0x71, 0x14, 0xd7, 0x21, 0x9b, 0x25, 0x4b, 0x96, 0x9c, 0xf6, 0x5c, 0x16, 0xfb, 0x4d, 0xfe,
-	0x85, 0xb6, 0xe2, 0x73, 0x7b, 0x2d, 0x20, 0xea, 0x2d, 0xf6, 0xbd, 0x09, 0xed, 0x0b, 0x8c, 0xb5,
-	0x2e, 0x2b, 0xcd, 0x55, 0xa9, 0x91, 0xb7, 0xea, 0xe2, 0x05, 0xeb, 0xe2, 0x3d, 0x4c, 0x89, 0x6d,
-	0x53, 0xe8, 0x7c, 0x91, 0xdc, 0xbf, 0xb7, 0x55, 0x84, 0xbe, 0xcd, 0x0a, 0x22, 0x63, 0xd8, 0xff,
-	0x22, 0x45, 0x56, 0xe7, 0x2c, 0xc2, 0x36, 0x36, 0x61, 0xf6, 0x02, 0x3a, 0x17, 0x9e, 0xff, 0x27,
-	0x95, 0x32, 0x4e, 0xe8, 0xfd, 0x52, 0x68, 0xe7, 0x52, 0x4a, 0xc5, 0xde, 0x40, 0xf8, 0x51, 0xbb,
-	0x8e, 0x92, 0xdb, 0xc4, 0x24, 0xaa, 0xe8, 0xc8, 0x59, 0x9e, 0xd2, 0xa0, 0xa4, 0xf4, 0x00, 0x5a,
-	0x26, 0x99, 0xfb, 0x11, 0xb3, 0x9f, 0xec, 0x67, 0x00, 0x9d, 0x33, 0x37, 0x13, 0x0f, 0x4a, 0xdc,
-	0xdc, 0x21, 0xf1, 0x66, 0x66, 0x02, 0xa1, 0xb9, 0xcf, 0xb9, 0x4f, 0x8d, 0xdf, 0xa5, 0x3c, 0x61,
-	0x4d, 0x9e, 0x11, 0xf4, 0x55, 0x72, 0x77, 0x29, 0xb5, 0x28, 0x47, 0x23, 0x8a, 0xeb, 0x90, 0xe5,
-	0xda, 0xc8, 0x5c, 0xa4, 0x7e, 0x36, 0x9c, 0x81, 0xb9, 0xf4, 0xf5, 0x1d, 0x8e, 0x47, 0x37, 0xc6,
-	0x6f, 0xab, 0xd7, 0x95, 0x30, 0x2a, 0x31, 0xdc, 0x0f, 0x47, 0x61, 0xda, 0x65, 0xb3, 0x9a, 0xbe,
-	0x13, 0x4b, 0x61, 0x70, 0x3a, 0xa2, 0xb8, 0x02, 0xec, 0x5a, 0xe4, 0x89, 0xe2, 0x99, 0x99, 0x4e,
-	0xfc, 0x90, 0x94, 0xb6, 0xe5, 0xc0, 0x66, 0x40, 0xc7, 0x4b, 0xae, 0x2c, 0xbb, 0xb4, 0x8f, 0x09,
-	0xb6, 0x70, 0x5b, 0x29, 0x0e, 0x08, 0x1d, 0xb8, 0x4a, 0xd1, 0x60, 0xa7, 0xd0, 0x3d, 0x2b, 0x96,
-	0xec, 0x70, 0x63, 0x01, 0xfb, 0xc7, 0x07, 0xa5, 0x96, 0xde, 0xa9, 0x5a, 0x49, 0xf6, 0xa3, 0x09,
-	0x61, 0x2c, 0x17, 0xdc, 0x26, 0x4e, 0xe5, 0x42, 0x3a, 0x35, 0xa3, 0xd8, 0x19, 0x25, 0x9d, 0xc1,
-	0x6e, 0x3a, 0x5b, 0xdb, 0x74, 0x3a, 0xa1, 0xc2, 0xfa, 0x56, 0xe5, 0x5c, 0x2d, 0x85, 0xd6, 0x42,
-	0x66, 0xba, 0x10, 0xa0, 0x06, 0xd9, 0xdb, 0x6f, 0xa4, 0xd0, 0x06, 0x05, 0xe8, 0xc6, 0xce, 0xa8,
-	0x9a, 0xed, 0xd4, 0x9b, 0x3d, 0x84, 0x28, 0xc6, 0x5d, 0xf8, 0xbf, 0xd8, 0x10, 0xd7, 0xe6, 0x5f,
-	0x65, 0x9b, 0xf6, 0xd8, 0x2f, 0xcc, 0xf1, 0xaf, 0x00, 0x06, 0xf8, 0x32, 0x9d, 0xbb, 0x43, 0xf2,
-	0x0c, 0xfa, 0xe8, 0xe7, 0x5f, 0xb8, 0x2a, 0xca, 0xbe, 0xc6, 0xc3, 0xfd, 0xf5, 0x07, 0x4e, 0xb3,
-	0x06, 0x79, 0x09, 0x50, 0x05, 0x90, 0x7f, 0x4a, 0x87, 0xfa, 0xab, 0x3d, 0xdc, 0x78, 0x18, 0x59,
-	0x83, 0xbc, 0x86, 0x01, 0x42, 0xc5, 0xa4, 0xef, 0x08, 0xdc, 0x12, 0x87, 0x35, 0xc8, 0x2b, 0x5f,
-	0xa2, 0x7f, 0x3b, 0x76, 0x44, 0x6e, 0xae, 0x28, 0x6b, 0x90, 0x13, 0xe8, 0x21, 0x86, 0x8a, 0xee,
-	0x08, 0x5b, 0xa7, 0xa9, 0x16, 0x84, 0xf3, 0xf5, 0xc7, 0x20, 0xeb, 0xc5, 0x1a, 0xe4, 0x11, 0xb4,
-	0x74, 0x72, 0x4f, 0x06, 0x55, 0x0d, 0x7a, 0x3e, 0x5c, 0xe7, 0x92, 0x35, 0xae, 0xda, 0xf8, 0xcf,
-	0x3b, 0xf9, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x28, 0xdc, 0x0f, 0x74, 0x05, 0x07, 0x00, 0x00,
+	// 295 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0x3f, 0x4f, 0xc3, 0x30,
+	0x10, 0xc5, 0x09, 0x15, 0x94, 0x1e, 0x94, 0x96, 0x2b, 0x83, 0x09, 0x0c, 0x91, 0xc5, 0xd0, 0x29,
+	0x03, 0x88, 0x0e, 0xac, 0x45, 0x9d, 0x10, 0x48, 0xf9, 0x06, 0xc6, 0x1c, 0x25, 0x12, 0x89, 0x43,
+	0xec, 0x22, 0xf8, 0xec, 0x2c, 0x88, 0xd8, 0x69, 0x6c, 0x35, 0xa3, 0x7f, 0xf7, 0xe7, 0x3d, 0xbd,
+	0x33, 0x9c, 0x6a, 0xaa, 0xbf, 0x72, 0x49, 0x3a, 0xad, 0x6a, 0x65, 0x14, 0x0e, 0xdf, 0xc8, 0xc8,
+	0x77, 0xaa, 0xf9, 0x0c, 0xce, 0x96, 0xc2, 0xd0, 0x5a, 0xd5, 0x39, 0xe9, 0x8c, 0x3e, 0x37, 0xa4,
+	0x0d, 0xbf, 0x07, 0xf4, 0xa1, 0xae, 0x54, 0x29, 0x09, 0xaf, 0x61, 0x2c, 0x2d, 0xfd, 0x79, 0x12,
+	0x05, 0x69, 0x16, 0x25, 0x83, 0xf9, 0x28, 0x0b, 0x21, 0xbf, 0x83, 0xc9, 0x52, 0x15, 0x85, 0x28,
+	0x5f, 0xdb, 0x75, 0xc8, 0xe1, 0xc4, 0xef, 0x61, 0x51, 0x12, 0xcd, 0x47, 0x59, 0xc0, 0xf8, 0x02,
+	0xa6, 0xdd, 0x98, 0x13, 0xfc, 0x9f, 0xb3, 0xcc, 0xd7, 0x0b, 0x18, 0x5f, 0x00, 0x3e, 0x90, 0x96,
+	0x75, 0x5e, 0x99, 0x5c, 0x95, 0xad, 0x62, 0x02, 0xc7, 0x5e, 0x97, 0x13, 0xf4, 0x11, 0x17, 0x30,
+	0x0b, 0xe6, 0x9c, 0x24, 0x83, 0xa1, 0x54, 0xa5, 0xa1, 0xd2, 0xb8, 0xa1, 0xf6, 0x89, 0xe7, 0x70,
+	0xb0, 0xd1, 0x62, 0x4d, 0x6c, 0xbf, 0xe1, 0xf6, 0x81, 0x31, 0x1c, 0xd1, 0xb7, 0x28, 0xaa, 0x0f,
+	0xd2, 0x6c, 0xd0, 0xd8, 0xdb, 0xbe, 0x6f, 0x7e, 0xa3, 0xc0, 0xdb, 0xca, 0x26, 0x8e, 0x8f, 0x30,
+	0x69, 0xc2, 0xef, 0x12, 0xc6, 0x38, 0x75, 0xe7, 0x48, 0x77, 0x6e, 0x11, 0x5f, 0xf6, 0xd6, 0xac,
+	0x5d, 0xbe, 0x87, 0x2b, 0x18, 0xdb, 0x6d, 0x2e, 0x3c, 0x64, 0x5d, 0x7f, 0x78, 0x86, 0xf8, 0xa2,
+	0xa7, 0xb2, 0xdd, 0xf3, 0x0c, 0xd3, 0xa6, 0xea, 0x19, 0xc6, 0x4e, 0x7a, 0x37, 0xe2, 0xf8, 0xaa,
+	0xbf, 0xd8, 0x2e, 0x7c, 0x39, 0x6c, 0x3e, 0xda, 0xed, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x12,
+	0x63, 0xc6, 0xba, 0x7a, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -840,288 +308,144 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// GuildFetcherClient is the client API for GuildFetcher service.
+// DescriptionFetcherClient is the client API for DescriptionFetcher service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type GuildFetcherClient interface {
-	FetchGuilds(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Guilds, error)
-	FetchGuild(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Guild, error)
-	FetchChannel(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Channel, error)
-	FetchMember(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Member, error)
-	FetchRole(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Role, error)
-	FetchUser(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*User, error)
-	Say(ctx context.Context, in *Msg, opts ...grpc.CallOption) (*Void, error)
+type DescriptionFetcherClient interface {
+	FetchCategories(ctx context.Context, in *CategoriesRequest, opts ...grpc.CallOption) (*CategoriesResponce, error)
+	FetchCommands(ctx context.Context, in *CommandsRequest, opts ...grpc.CallOption) (*CommandsResponce, error)
+	FetchDescription(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*DescriptionResponce, error)
 }
 
-type guildFetcherClient struct {
+type descriptionFetcherClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewGuildFetcherClient(cc *grpc.ClientConn) GuildFetcherClient {
-	return &guildFetcherClient{cc}
+func NewDescriptionFetcherClient(cc *grpc.ClientConn) DescriptionFetcherClient {
+	return &descriptionFetcherClient{cc}
 }
 
-func (c *guildFetcherClient) FetchGuilds(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Guilds, error) {
-	out := new(Guilds)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchGuilds", in, out, opts...)
+func (c *descriptionFetcherClient) FetchCategories(ctx context.Context, in *CategoriesRequest, opts ...grpc.CallOption) (*CategoriesResponce, error) {
+	out := new(CategoriesResponce)
+	err := c.cc.Invoke(ctx, "/fetcher.DescriptionFetcher/fetchCategories", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *guildFetcherClient) FetchGuild(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Guild, error) {
-	out := new(Guild)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchGuild", in, out, opts...)
+func (c *descriptionFetcherClient) FetchCommands(ctx context.Context, in *CommandsRequest, opts ...grpc.CallOption) (*CommandsResponce, error) {
+	out := new(CommandsResponce)
+	err := c.cc.Invoke(ctx, "/fetcher.DescriptionFetcher/fetchCommands", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *guildFetcherClient) FetchChannel(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Channel, error) {
-	out := new(Channel)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchChannel", in, out, opts...)
+func (c *descriptionFetcherClient) FetchDescription(ctx context.Context, in *DescriptionRequest, opts ...grpc.CallOption) (*DescriptionResponce, error) {
+	out := new(DescriptionResponce)
+	err := c.cc.Invoke(ctx, "/fetcher.DescriptionFetcher/fetchDescription", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *guildFetcherClient) FetchMember(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Member, error) {
-	out := new(Member)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchMember", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// DescriptionFetcherServer is the server API for DescriptionFetcher service.
+type DescriptionFetcherServer interface {
+	FetchCategories(context.Context, *CategoriesRequest) (*CategoriesResponce, error)
+	FetchCommands(context.Context, *CommandsRequest) (*CommandsResponce, error)
+	FetchDescription(context.Context, *DescriptionRequest) (*DescriptionResponce, error)
 }
 
-func (c *guildFetcherClient) FetchRole(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*Role, error) {
-	out := new(Role)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchRole", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// UnimplementedDescriptionFetcherServer can be embedded to have forward compatible implementations.
+type UnimplementedDescriptionFetcherServer struct {
 }
 
-func (c *guildFetcherClient) FetchUser(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*User, error) {
-	out := new(User)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/fetchUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (*UnimplementedDescriptionFetcherServer) FetchCategories(ctx context.Context, req *CategoriesRequest) (*CategoriesResponce, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchCategories not implemented")
+}
+func (*UnimplementedDescriptionFetcherServer) FetchCommands(ctx context.Context, req *CommandsRequest) (*CommandsResponce, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchCommands not implemented")
+}
+func (*UnimplementedDescriptionFetcherServer) FetchDescription(ctx context.Context, req *DescriptionRequest) (*DescriptionResponce, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchDescription not implemented")
 }
 
-func (c *guildFetcherClient) Say(ctx context.Context, in *Msg, opts ...grpc.CallOption) (*Void, error) {
-	out := new(Void)
-	err := c.cc.Invoke(ctx, "/fetcher.GuildFetcher/say", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func RegisterDescriptionFetcherServer(s *grpc.Server, srv DescriptionFetcherServer) {
+	s.RegisterService(&_DescriptionFetcher_serviceDesc, srv)
 }
 
-// GuildFetcherServer is the server API for GuildFetcher service.
-type GuildFetcherServer interface {
-	FetchGuilds(context.Context, *Void) (*Guilds, error)
-	FetchGuild(context.Context, *FetchRequest) (*Guild, error)
-	FetchChannel(context.Context, *FetchRequest) (*Channel, error)
-	FetchMember(context.Context, *FetchRequest) (*Member, error)
-	FetchRole(context.Context, *FetchRequest) (*Role, error)
-	FetchUser(context.Context, *FetchRequest) (*User, error)
-	Say(context.Context, *Msg) (*Void, error)
-}
-
-// UnimplementedGuildFetcherServer can be embedded to have forward compatible implementations.
-type UnimplementedGuildFetcherServer struct {
-}
-
-func (*UnimplementedGuildFetcherServer) FetchGuilds(ctx context.Context, req *Void) (*Guilds, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchGuilds not implemented")
-}
-func (*UnimplementedGuildFetcherServer) FetchGuild(ctx context.Context, req *FetchRequest) (*Guild, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchGuild not implemented")
-}
-func (*UnimplementedGuildFetcherServer) FetchChannel(ctx context.Context, req *FetchRequest) (*Channel, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchChannel not implemented")
-}
-func (*UnimplementedGuildFetcherServer) FetchMember(ctx context.Context, req *FetchRequest) (*Member, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchMember not implemented")
-}
-func (*UnimplementedGuildFetcherServer) FetchRole(ctx context.Context, req *FetchRequest) (*Role, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchRole not implemented")
-}
-func (*UnimplementedGuildFetcherServer) FetchUser(ctx context.Context, req *FetchRequest) (*User, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchUser not implemented")
-}
-func (*UnimplementedGuildFetcherServer) Say(ctx context.Context, req *Msg) (*Void, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Say not implemented")
-}
-
-func RegisterGuildFetcherServer(s *grpc.Server, srv GuildFetcherServer) {
-	s.RegisterService(&_GuildFetcher_serviceDesc, srv)
-}
-
-func _GuildFetcher_FetchGuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+func _DescriptionFetcher_FetchCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoriesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchGuilds(ctx, in)
+		return srv.(DescriptionFetcherServer).FetchCategories(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchGuilds",
+		FullMethod: "/fetcher.DescriptionFetcher/FetchCategories",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchGuilds(ctx, req.(*Void))
+		return srv.(DescriptionFetcherServer).FetchCategories(ctx, req.(*CategoriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GuildFetcher_FetchGuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
+func _DescriptionFetcher_FetchCommands_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommandsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchGuild(ctx, in)
+		return srv.(DescriptionFetcherServer).FetchCommands(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchGuild",
+		FullMethod: "/fetcher.DescriptionFetcher/FetchCommands",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchGuild(ctx, req.(*FetchRequest))
+		return srv.(DescriptionFetcherServer).FetchCommands(ctx, req.(*CommandsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GuildFetcher_FetchChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
+func _DescriptionFetcher_FetchDescription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescriptionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchChannel(ctx, in)
+		return srv.(DescriptionFetcherServer).FetchDescription(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchChannel",
+		FullMethod: "/fetcher.DescriptionFetcher/FetchDescription",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchChannel(ctx, req.(*FetchRequest))
+		return srv.(DescriptionFetcherServer).FetchDescription(ctx, req.(*DescriptionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GuildFetcher_FetchMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchMember(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchMember",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchMember(ctx, req.(*FetchRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GuildFetcher_FetchRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchRole(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchRole",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchRole(ctx, req.(*FetchRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GuildFetcher_FetchUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GuildFetcherServer).FetchUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/FetchUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).FetchUser(ctx, req.(*FetchRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GuildFetcher_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Msg)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GuildFetcherServer).Say(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/fetcher.GuildFetcher/Say",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GuildFetcherServer).Say(ctx, req.(*Msg))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _GuildFetcher_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "fetcher.GuildFetcher",
-	HandlerType: (*GuildFetcherServer)(nil),
+var _DescriptionFetcher_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "fetcher.DescriptionFetcher",
+	HandlerType: (*DescriptionFetcherServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "fetchGuilds",
-			Handler:    _GuildFetcher_FetchGuilds_Handler,
+			MethodName: "fetchCategories",
+			Handler:    _DescriptionFetcher_FetchCategories_Handler,
 		},
 		{
-			MethodName: "fetchGuild",
-			Handler:    _GuildFetcher_FetchGuild_Handler,
+			MethodName: "fetchCommands",
+			Handler:    _DescriptionFetcher_FetchCommands_Handler,
 		},
 		{
-			MethodName: "fetchChannel",
-			Handler:    _GuildFetcher_FetchChannel_Handler,
-		},
-		{
-			MethodName: "fetchMember",
-			Handler:    _GuildFetcher_FetchMember_Handler,
-		},
-		{
-			MethodName: "fetchRole",
-			Handler:    _GuildFetcher_FetchRole_Handler,
-		},
-		{
-			MethodName: "fetchUser",
-			Handler:    _GuildFetcher_FetchUser_Handler,
-		},
-		{
-			MethodName: "say",
-			Handler:    _GuildFetcher_Say_Handler,
+			MethodName: "fetchDescription",
+			Handler:    _DescriptionFetcher_FetchDescription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

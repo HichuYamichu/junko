@@ -5,80 +5,45 @@ const protoPath = join(__dirname, '../../..', 'proto/services.proto');
 
 export default class RPCServer extends Mali {
   public client: JunkoClient;
-  public fetchGuilds: (ctx: Mali.Context) => void;
-  public fetchGuild: (ctx: Mali.Context) => void;
-  public fetchChannel: (ctx: Mali.Context) => void;
-  public fetchMember: (ctx: Mali.Context) => void;
-  public fetchRole: (ctx: Mali.Context) => void;
-  public fetchUser: (ctx: Mali.Context) => void;
-  public say: (ctx: Mali.Context) => void;
+  public fetchCategories: (ctx: Mali.Context) => void;
+  public fetchCommands: (ctx: Mali.Context) => void;
+  public fetchDescription: (ctx: Mali.Context) => void;
 
   public constructor(client: JunkoClient) {
-	  super(protoPath, 'GuildFetcher');
-	  this.client = client;
+    super(protoPath, 'DescriptionFetcher');
+    this.client = client;
 
-	  this.fetchGuilds = (ctx: Mali.Context) => {
-	    const res: { id: string; name: string; icon: string | null }[] = [];
-	    this.client.guilds.each(guild => {
-	      res.push({ id: guild.id, name: guild.name, icon: guild.icon });
-	    });
-	    ctx.res = { guilds: res };
-	  };
+    this.fetchCategories = (ctx: Mali.Context) => {
+      const categories = this.client.commandHandler.categories;
+      const res = categories.keyArray();
+      ctx.res = { categoryNames: res };
+    };
 
-	  this.fetchGuild = (ctx: Mali.Context) => {
-	    const guild = this.client.guilds.get(ctx.req.ID);
-	    const res = guild!.toJSON();
-	    ctx.res = res;
-	  };
+    this.fetchCommands = (ctx: Mali.Context) => {
+      const category = this.client.commandHandler.findCategory(ctx.req.categoryName);
+      const commandNames = category.keyArray();
+      ctx.res = { commandNames };
+    };
 
-	  this.fetchChannel = (ctx: Mali.Context) => {
-	    const channel = this.client.channels.get(ctx.req.ID);
-	    const res = channel!.toJSON();
-	    ctx.res = res;
-	  };
-
-	  this.fetchMember = (ctx: Mali.Context) => {
-	    const member = this.client.guilds.get(ctx.req.GuildID)!.members.get(ctx.req.ID);
-	    const res = member!.toJSON();
-	    ctx.res = res;
-	  };
-
-	  this.fetchRole = (ctx: Mali.Context) => {
-	    const role = this.client.guilds.get(ctx.req.GuildID)!.roles.get(ctx.req.ID);
-	    const res = role!.toJSON();
-	    ctx.res = res;
-	  };
-
-	  this.fetchUser = (ctx: Mali.Context) => {
-	    const user = this.client.users.get(ctx.req.ID);
-	    const res = user!.toJSON();
-	    ctx.res = res;
-	  };
-
-	  this.say = (ctx: Mali.Context) => {
-	    this.client.commandHandler.runCommand(
-	      // @ts-ignore
-	      null,
-	      this.client.commandHandler.findCommand('say'),
-	      ctx.req
-	    );
-	    ctx.res = null;
-	  };
+    this.fetchDescription = (ctx: Mali.Context) => {
+      const cmd = this.client.commandHandler.findCommand(ctx.req.commandName);
+      if (!cmd || !cmd.description) {
+        ctx.res = {};
+        return;
+      }
+      ctx.res = cmd.description;
+    };
   }
 
   private init() {
-	  this.use(this.client.prometheus.rpcMiddleware);
-	  this.use({ fetchGuilds: this.fetchGuilds });
-	  this.use({ fetchGuild: this.fetchGuild });
-	  this.use({ fetchChannel: this.fetchChannel });
-	  this.use({ fetchMember: this.fetchMember });
-	  this.use({ fetchRole: this.fetchRole });
-	  this.use({ fetchUser: this.fetchUser });
-	  this.use({ say: this.say });
+    this.use(this.client.prometheus.rpcMiddleware);
+    this.use({ fetchCategories: this.fetchCategories });
+    this.use({ fetchCommands: this.fetchCommands });
+    this.use({ fetchDescription: this.fetchDescription });
   }
 
   public listen() {
-	  this.init();
-	  this.start('0.0.0.0:50051');
+    this.init();
+    this.start(process.env.RPC_ADDR!);
   }
 }

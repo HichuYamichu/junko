@@ -17,7 +17,6 @@ import (
 	"github.com/hichuyamichu/junko-api/fetcher"
 	"github.com/hichuyamichu/junko-api/handler"
 	"github.com/hichuyamichu/junko-api/resolver"
-	"github.com/jinzhu/gorm"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -26,15 +25,13 @@ import (
 // App : Application struct
 type App struct {
 	srv *http.Server
-	rpc *fetcher.GuildFetcherClient
+	rpc *fetcher.DescriptionFetcherClient
 	reg *prometheus.Registry
-	db  *gorm.DB
 }
 
 // New : Initialize new server instance
 func New(host, port string) *App {
 	a := &App{}
-	a.db = a.connectDB()
 	a.reg = prometheus.NewRegistry()
 	a.rpc = a.setupRPC()
 	a.srv = &http.Server{}
@@ -65,7 +62,6 @@ func (a *App) setupHandler() http.Handler {
 
 	schema := a.setupSchema()
 	r.Method("GET", "/", &handler.GraphiQL{})
-	r.Method("POST", "/auth", &handler.Authorization{})
 	r.Method("POST", "/query", &handler.GraphQL{Schema: schema})
 	r.Method("GET", "/metrics", promhttp.HandlerFor(a.reg, promhttp.HandlerOpts{}))
 
@@ -78,12 +74,12 @@ func (a *App) setupSchema() *graphql.Schema {
 	if err != nil {
 		panic(err)
 	}
-	res := &resolver.Resolver{RPC: a.rpc, DB: a.db}
+	res := &resolver.Resolver{RPC: a.rpc}
 	schemaDeff := graphql.MustParseSchema(schema, res, graphql.UseStringDescriptions())
 	return schemaDeff
 }
 
-func (a *App) setupRPC() *fetcher.GuildFetcherClient {
+func (a *App) setupRPC() *fetcher.DescriptionFetcherClient {
 	grpcMetrics := grpc_prometheus.NewClientMetrics()
 	a.reg.MustRegister(grpcMetrics)
 	a.reg.MustRegister(prometheus.NewGoCollector())
@@ -104,25 +100,8 @@ func (a *App) setupRPC() *fetcher.GuildFetcherClient {
 		panic(err)
 	}
 
-	rpc := fetcher.NewGuildFetcherClient(conn)
+	rpc := fetcher.NewDescriptionFetcherClient(conn)
 	return &rpc
-}
-
-func (a *App) connectDB() *gorm.DB {
-	host := os.Getenv("POSTGRES_HOST")
-	user := os.Getenv("POSTGRES_USER")
-	dbname := os.Getenv("POSTGRES_DB")
-	password := os.Getenv("POSTGRES_PASSWORD")
-
-	uri := fmt.Sprintf("host=%s port=5432 user=%s dbname=%s password=%s sslmode=disable", host, user, dbname, password)
-	db, err := gorm.Open("postgres", uri)
-	if err != nil {
-		log.Println(err)
-		time.Sleep(5 * time.Second)
-		a.connectDB()
-	}
-	log.Println("Connected to db")
-	return db
 }
 
 // Run : Starts the app
