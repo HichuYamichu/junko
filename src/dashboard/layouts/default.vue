@@ -2,7 +2,7 @@
   <v-app dark>
     <app-navbar />
     <v-content>
-      <v-container fluid>
+      <v-container>
         <nuxt />
       </v-container>
     </v-content>
@@ -10,19 +10,20 @@
   </v-app>
 </template>
 
-<script>
-import AppNavbar from '@/components/AppNavbar';
-import AppFooter from '@/components/AppFooter';
+<script lang="ts">
+import AppNavbar from '@/components/AppNavbar.vue';
+import AppFooter from '@/components/AppFooter.vue';
 
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   components: {
     AppNavbar,
     AppFooter
   }
-};
+})
 </script>
 
-<style>
+<style scoped>
 .page-enter-active,
 .page-leave-active {
   transition: all 0.25s ease;

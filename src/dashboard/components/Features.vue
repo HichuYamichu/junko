@@ -1,22 +1,26 @@
 <template>
   <div class="features">
-    <feature
+    <v-row
       class="spacer"
+      align="center"
+      justify="center"
       v-for="(feature, index) in features"
       :key="index"
-      :name="feature.name"
-      :content="feature.content"
-      :imgSrc="feature.imgSrc"
-    />
+    >
+      <v-col xl="4" xs="12" :order-xl="index % 2" order-xs="1">
+        <h3 class="display-2 py-2">{{ feature.name }}</h3>
+        <p>{{ feature.content }}</p>
+      </v-col>
+      <v-col xl="4" xs="12" order-xs="2">
+        <v-img :src="feature.imgSrc" contain height="500"></v-img>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
-<script>
-import Feature from './Feature';
-export default {
-  components: {
-    Feature
-  },
+<script lang="ts">
+import Vue from 'vue';
+export default Vue.extend({
   data() {
     return {
       features: [
@@ -33,7 +37,7 @@ export default {
           imgSrc: '/logs.jpg'
         },
         {
-          name: 'Customizable',
+          name: 'Settings',
           content:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi tempore, numquam, perferendis dolorem molestiae incidunt officiis eaque impedit voluptates ad, maiores culpa? Illum fugit ipsa harum, vitae et corrupti. Exercitationem?',
           imgSrc: '/customizable.jpg'
@@ -41,10 +45,10 @@ export default {
       ]
     };
   }
-};
+});
 </script>
 
-<style>
+<style scoped>
 .features {
   margin-top: 5vh;
 }

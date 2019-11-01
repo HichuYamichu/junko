@@ -2,61 +2,32 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   server: {
-    port: process.env.NUXT_PORT || 8080,
-    host: process.env.NUXT_HOST || '127.0.0.1'
+    port: process.env.NUXT_PORT || 8080
   },
-
   mode: 'universal',
-
   head: {
-    titleTemplate: 'Junko Dashboard',
-    title: '',
+    titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: ''
+        content: process.env.npm_package_description || ''
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-
   loading: { color: '#fff' },
-
   css: [],
-
   plugins: [],
-
-  devModules: ['@nuxtjs/vuetify'],
-
+  buildModules: ['@nuxtjs/vuetify', '@nuxt/typescript-build'],
   modules: [
-    '@nuxtjs/apollo',
-    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/pwa'
   ],
-
-  axios: {
-    proxy: true,
-    credentials: true
-  },
-
-  proxy: {
-    '/api/': {
-      target: 'http://localhost:4000',
-      pathRewrite: { '^/api/': '' },
-      changeOrigin: true
-    }
-  },
-
-  apollo: {
-    clientConfigs: {
-      default: '@/plugins/apollo-config.js'
-    }
-  },
-
+  axios: {},
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -82,7 +53,6 @@ export default {
       }
     }
   },
-
   build: {
     extend (config, ctx) {}
   }

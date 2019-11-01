@@ -22,7 +22,7 @@
           alt="avatar"
         />
       </v-avatar>
-      <v-toolbar-title class="mx-3 white--text" color="white">JUNKO DASHBOARD</v-toolbar-title>
+      <v-toolbar-title class="mx-3 white--text" color="white">JUNKO</v-toolbar-title>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn class="white--text" large depressed to="/" active-class="active" color="black">home</v-btn>
         <v-btn
@@ -38,12 +38,13 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data: () => ({
-    drawer: null
+    drawer: false
   })
-};
+})
 </script>
 
 <style scoped>
