@@ -10,17 +10,16 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import AppNavbar from '@/components/AppNavbar.vue';
-import AppFooter from '@/components/AppFooter.vue';
+<script>
+import AppNavbar from '@/components/AppNavbar';
+import AppFooter from '@/components/AppFooter';
 
-import Vue from 'vue'
-export default Vue.extend({
+export default {
   components: {
     AppNavbar,
     AppFooter
   }
-})
+};
 </script>
 
 <style scoped>

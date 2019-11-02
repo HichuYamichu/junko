@@ -1,5 +1,10 @@
 module.exports = {
-  extends: [
-    '@nuxtjs/eslint-config-typescript'
+  "root": true,
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module"
+  },
+  "extends": [
+    "@nuxtjs"
   ]
 }

@@ -1,12 +1,14 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/es5/util/colors';
 
 export default {
   server: {
     port: process.env.NUXT_PORT || 8080
   },
+
   mode: 'universal',
+
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: 'Junko bot - Dashboard',
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -19,15 +21,31 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+
   loading: { color: '#fff' },
+
   css: [],
+
   plugins: [],
-  buildModules: ['@nuxtjs/vuetify', '@nuxt/typescript-build'],
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
-  ],
-  axios: {},
+
+  buildModules: ['@nuxtjs/vuetify'],
+
+  modules: ['@nuxtjs/proxy', '@nuxtjs/pwa', '@nuxtjs/apollo'],
+
+  apollo: {
+    clientConfigs: {
+      default: '@/plugins/apollo-config.js'
+    }
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:4000',
+      pathRewrite: { '^/api/': '' },
+      changeOrigin: true
+    }
+  },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -53,7 +71,8 @@ export default {
       }
     }
   },
+
   build: {
-    extend (config, ctx) {}
+    extend(config, ctx) {}
   }
-}
+};

@@ -9,16 +9,15 @@
   </v-row>
 </template>
 
-<script lang="ts">
-import Hero from '@/components/Hero.vue';
-// import Hero from '../components/Hero.vue';
-import Features from '@/components/Features.vue';
+<script>
+import Hero from '@/components/Hero';
+import Features from '@/components/Features';
 
-import Vue from 'vue'
-export default Vue.extend({
+export default {
   components: {
     Hero,
     Features
   }
-})
+};
 </script>
+

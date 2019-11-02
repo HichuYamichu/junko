@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
-import util from 'util';
+import { inspect } from 'util';
 
 export default class EvalCommand extends Command {
   public constructor() {
@@ -38,9 +38,9 @@ export default class EvalCommand extends Command {
       // eslint-disable-next-line no-eval
       let evaled = await eval(code);
       // eslint-disable-next-line promise/prefer-await-to-then
-      if (evaled !== null && typeof evaled.then === 'function') evaled = await evaled;
+      if ((evaled !== null || undefined) && typeof evaled.then === 'function') evaled = await evaled;
 
-      if (typeof evaled !== 'string') evaled = util.inspect(evaled, { depth: 0 });
+      if (typeof evaled !== 'string') evaled = inspect(evaled, { depth: 0 });
       evaled = evaled.replace(tokenRegex, '[super secret token]');
       if ((evaled as string).length + code.length > 1900) evaled = 'Output too long.';
 
