@@ -11,14 +11,14 @@ export default class SettingsProvider {
     const id = SettingsProvider.getGuildID(guild);
     const cached = await cache.get(id, key);
     if (cached) {
-      typeof defaultValue === 'string' ? ((cached as unknown) as T) : JSON.parse(cached);
+      return typeof defaultValue === 'string' ? ((cached as unknown) as T) : JSON.parse(cached);
     }
 
     const res = await this.repo
       .createQueryBuilder()
       .select(`Settings.${key}`, key)
       .where('Settings.guild = :id', { id })
-      .getOne();
+      .getRawOne();
     if (!res) return defaultValue;
 
     const value = res[key];

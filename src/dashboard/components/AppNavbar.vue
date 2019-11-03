@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-if="$vuetify.breakpoint.smAndDown" v-model="drawer" app clipped>
+    <v-navigation-drawer v-if="$vuetify.breakpoint.mdAndDown" v-model="drawer" app clipped>
       <v-list>
         <v-list-item to="/">
           <v-list-item-title v-text="'Home'"></v-list-item-title>
@@ -12,7 +12,7 @@
     </v-navigation-drawer>
     <v-app-bar fixed app color="black">
       <v-app-bar-nav-icon
-        v-if="$vuetify.breakpoint.smAndDown"
+        v-if="$vuetify.breakpoint.mdAndDown"
         class="white--text"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>

@@ -1,8 +1,12 @@
-import colors from 'vuetify/es5/util/colors';
+import colors from 'vuetify/es5/util/colors'
 
 export default {
   server: {
     port: process.env.NUXT_PORT || 8080
+  },
+
+  env: {
+    API_ADDR: process.env.API_ADDR
   },
 
   mode: 'universal',
@@ -28,7 +32,7 @@ export default {
 
   plugins: [],
 
-  buildModules: ['@nuxtjs/vuetify'],
+  buildModules: ['@nuxtjs/vuetify', '@nuxtjs/dotenv'],
 
   modules: ['@nuxtjs/proxy', '@nuxtjs/pwa', '@nuxtjs/apollo'],
 
@@ -73,6 +77,6 @@ export default {
   },
 
   build: {
-    extend(config, ctx) {}
+    extend (config, ctx) {}
   }
-};
+}

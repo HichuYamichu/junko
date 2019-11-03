@@ -5,6 +5,7 @@ schema {
 type Query {
   Categories(): [Category]
   Category(Name: String!): Category
+  Command(Name: String!): Command
 }
 
 type Category {

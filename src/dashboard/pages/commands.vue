@@ -33,18 +33,26 @@
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" v-for="(category, index) in categories" :key="index">
-      <v-card>
-        <v-card-title class="align-end fill-height display-1 categoryName">{{ category.name }}</v-card-title>
-        <category :name="category.name" />    
-      </v-card>
+    <v-col cols="12">
+      <v-expansion-panels
+        v-for="(category, index) in categories"
+        :key="index"
+        class="my-4"
+      >
+        <v-expansion-panel >
+          <v-expansion-panel-header class="display-1 categoryName">{{ category.name }}</v-expansion-panel-header>
+          <v-expansion-panel-content class="mt-3">
+            <category :name="category.name" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import Category from '@/components/commands/Category';
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
   components: {
@@ -61,7 +69,7 @@ export default {
       `
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -38,3 +38,13 @@ func (r *Resolver) Category(ctx context.Context, args struct{ Name string }) (*C
 
 	return res, nil
 }
+
+// Command : resolves Command query
+func (r *Resolver) Command(ctx context.Context, args struct{ Name string }) (*CommandResolver, error) {
+	res := &CommandResolver{
+		rpc:     r.RPC,
+		command: args.Name,
+	}
+
+	return res, nil
+}
