@@ -10,8 +10,7 @@ RUN apk add --update \
 
 ENV NUXT_HOST= \
   NUXT_PORT= \
-  API_SERVER_SIDE= \
-  API_CLIENT_SIDE=
+  API_ADDR=
 
 COPY . .
 RUN yarn build && yarn cache clean
