@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-navigation-drawer v-if="$vuetify.breakpoint.mdAndDown" v-model="drawer" app clipped>
+    <v-navigation-drawer
+      v-if="$vuetify.breakpoint.mdAndDown && isHydrated"
+      v-model="drawer"
+      app
+      clipped
+    >
       <v-list>
         <v-list-item to="/">
           <v-list-item-title v-text="'Home'"></v-list-item-title>
@@ -12,15 +17,12 @@
     </v-navigation-drawer>
     <v-app-bar fixed app color="black">
       <v-app-bar-nav-icon
-        v-if="$vuetify.breakpoint.mdAndDown"
+        v-if="$vuetify.breakpoint.mdAndDown && isHydrated"
         class="white--text"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-avatar>
-        <img
-          src="https://cdn.discordapp.com/avatars/462219867467022347/121051502c98aa17cac238a92de6c78b.webp"
-          alt="avatar"
-        />
+      <v-avatar @click="$router.push('/')" :style="{ cursor: 'pointer'}">
+        <img src="/avatar.webp" alt="avatar" />
       </v-avatar>
       <v-toolbar-title class="mx-3 white--text" color="white">JUNKO</v-toolbar-title>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -41,8 +43,12 @@
 <script>
 export default {
   data: () => ({
-    drawer: false
-  })
+    drawer: false,
+    isHydrated: false
+  }),
+  mounted() {
+    this.isHydrated = true;
+  }
 };
 </script>
 

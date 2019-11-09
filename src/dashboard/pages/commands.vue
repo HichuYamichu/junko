@@ -33,16 +33,23 @@
         </v-card-text>
       </v-card>
     </v-col>
+    <v-col cols="12" class="my-5">
+      <h1 class="display-2" align="center">Commands</h1>
+    </v-col>
     <v-col cols="12">
-      <v-expansion-panels
-        v-for="(category, index) in categories"
-        :key="index"
-        class="my-4"
-      >
-        <v-expansion-panel >
-          <v-expansion-panel-header class="display-1 categoryName">{{ category.name }}</v-expansion-panel-header>
+      <v-expansion-panels v-for="(category, index) in categories" :key="index">
+        <v-expansion-panel>
+          <v-expansion-panel-header class="display-1 capital">{{ category.name }}</v-expansion-panel-header>
           <v-expansion-panel-content class="mt-3">
-            <category :name="category.name" />
+            <v-card
+              v-for="(command, index) in category.commands"
+              :key="index"
+              outlined
+              class="pa-3 my-4 capital"
+            >
+              <span class="title">{{ command.name }}</span>
+              <command :name="command.name" />
+            </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -51,12 +58,12 @@
 </template>
 
 <script>
-import Category from '@/components/commands/Category';
+import Command from '@/components/Command';
 import gql from 'graphql-tag';
 
 export default {
   components: {
-    Category
+    Command
   },
   apollo: {
     categories: {
@@ -64,6 +71,9 @@ export default {
         query {
           categories: Categories {
             name
+            commands {
+              name
+            }
           }
         }
       `
@@ -73,7 +83,7 @@ export default {
 </script>
 
 <style scoped>
-.categoryName {
+.capital {
   text-transform: capitalize;
 }
 </style>

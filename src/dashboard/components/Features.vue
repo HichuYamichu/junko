@@ -12,7 +12,7 @@
         <p>{{ feature.content }}</p>
       </v-col>
       <v-col xl="4" xs="12" order-xs="2">
-        <v-img :src="feature.imgSrc" contain height="500"></v-img>
+        <v-img :src="feature.imgSrc" contain></v-img>
       </v-col>
     </v-row>
   </div>
@@ -26,20 +26,20 @@ export default {
         {
           name: 'Tags',
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi tempore, numquam, perferendis dolorem molestiae incidunt officiis eaque impedit voluptates ad, maiores culpa? Illum fugit ipsa harum, vitae et corrupti. Exercitationem?',
+            'Save anything you want with simple to use and future rich tag system. Your tags can be edited or removed as you wish and checking for all avalible tags takes no time.',
           imgSrc: '/tags.jpg'
         },
         {
           name: 'Logs',
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi tempore, numquam, perferendis dolorem molestiae incidunt officiis eaque impedit voluptates ad, maiores culpa? Illum fugit ipsa harum, vitae et corrupti. Exercitationem?',
+            'Get concise messages notifying you about joining/leaving members or keep track of message updates and deletes.',
           imgSrc: '/logs.jpg'
         },
         {
           name: 'Settings',
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi tempore, numquam, perferendis dolorem molestiae incidunt officiis eaque impedit voluptates ad, maiores culpa? Illum fugit ipsa harum, vitae et corrupti. Exercitationem?',
-          imgSrc: '/customizable.jpg'
+            'Of course you can set up everything as you like it. This not only allows you to set prefix and log channels but also choose predefined speech pattern for bot to use.',
+          imgSrc: '/settings.jpg'
         }
       ]
     };
