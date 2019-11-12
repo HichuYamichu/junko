@@ -13,7 +13,7 @@ ENV NUXT_HOST= \
   API_ADDR=
 
 COPY . .
-RUN yarn build && yarn cache clean
+RUN yarn build
 
 EXPOSE 8080
 

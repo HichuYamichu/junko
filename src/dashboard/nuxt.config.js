@@ -19,8 +19,21 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'Discord bot',
-        name: 'Junko dashboard',
+        name: 'Junko bot',
         content: 'Touhou themed discord bot'
+      },
+      { hid: 'og:title', name: 'og:title', content: 'Junko bot' },
+      { hid: 'og:url', name: 'og:url', content: 'http://bot.hichuyamichu.me' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'Click me please!'
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'Junko dashboard'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/avatar.webp' }]

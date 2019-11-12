@@ -45,9 +45,9 @@
               v-for="(command, index) in category.commands"
               :key="index"
               outlined
-              class="pa-3 my-4 capital"
+              class="pa-3 my-4"
             >
-              <span class="title">{{ command.name }}</span>
+              <span class="title capital">{{ command.name }}</span>
               <command :name="command.name" />
             </v-card>
           </v-expansion-panel-content>
