@@ -28,8 +28,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content:
-          'https://images-ext-1.discordapp.net/external/gn6GjmQx9tFYTYzRxeTGgqWmIHkSTeq4J8ULA54DO6s/https/cdn.discordapp.com/avatars/462219867467022347/121051502c98aa17cac238a92de6c78b.webp'
+        content: '/avatar.webp'
       },
       {
         hid: 'og:description',
