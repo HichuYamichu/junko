@@ -18,6 +18,7 @@ jobs:
         name: hichuyamichu/junko-dashboard
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: src/dashboard/dockerfile
 
   deploy:
     needs: build

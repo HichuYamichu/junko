@@ -18,6 +18,7 @@ jobs:
         name: hichuyamichu/junko-api
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: src/api/dockerfile
 
   deploy:
     needs: build
