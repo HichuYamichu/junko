@@ -18,8 +18,8 @@ jobs:
         name: hichuyamichu/junko-bot
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: src/bot/dockerfile
         workdir: src/bot/
+        dockerfile: ./dockerfile
 
   deploy:
     needs: build
