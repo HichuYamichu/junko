@@ -12,7 +12,7 @@ x-defaults: &defaults
 services:
   bot:
     <<: *defaults
-    build: ./src/bot
+    image: hichuyamichu/junko-bot:latest
     env_file:
       - ./env/bot/.env
     volumes:
@@ -20,13 +20,13 @@ services:
     
   api:
     <<: *defaults
-    build: ./src/api
+    image: hichuyamichu/junko-api:latest
     env_file:
       - ./env/api/.env
     
   dashboard:
     <<: *defaults
-    build: ./src/dashboard
+    image: hichuyamichu/junko-dashboard:latest
     env_file:
       - ./env/dashboard/.env
 
