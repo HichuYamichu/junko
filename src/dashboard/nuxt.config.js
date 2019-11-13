@@ -28,7 +28,7 @@ export default {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'Click me please!'
+        content: 'Cool embed huh?'
       },
       {
         hid: 'og:site_name',
