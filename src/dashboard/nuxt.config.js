@@ -6,7 +6,7 @@ export default {
   },
 
   env: {
-    GQL_ENDPOINT: process.env.NODE_ENV === 'production' ? 'http://bot.hichuyamichu.me/api' : 'http://localhost:8080/api/'
+    GQL_ENDPOINT: process.env.NODE_ENV === 'production' ? 'http://bot.hichuyamichu.me/api/query' : 'http://localhost:8080/api/query'
   },
 
   mode: 'universal',
