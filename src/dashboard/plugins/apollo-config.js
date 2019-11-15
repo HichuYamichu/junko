@@ -2,7 +2,7 @@ const httpLinkOptions = {
   credentials: 'include'
 }
 
-const httpEndpoint = process.env.API_ADDR || 'http://localhost:8080/api/query'
+const httpEndpoint = process.env.GQL_ENDPOINT
 
 export default function () {
   return {
