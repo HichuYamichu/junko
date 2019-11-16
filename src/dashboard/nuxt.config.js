@@ -6,7 +6,10 @@ export default {
   },
 
   env: {
-    GQL_ENDPOINT: process.env.NODE_ENV === 'production' ? 'http://bot.hichuyamichu.me/api/query' : 'http://localhost:8080/api/query'
+    GQL_ENDPOINT:
+      process.env.NODE_ENV === 'production'
+        ? 'https://bot.hichuyamichu.me/api/query'
+        : 'http://localhost:4000/api/query'
   },
 
   mode: 'universal',
@@ -23,7 +26,7 @@ export default {
         content: 'Touhou themed discord bot'
       },
       { hid: 'og:title', name: 'og:title', content: 'Junko bot' },
-      { hid: 'og:url', name: 'og:url', content: 'http://bot.hichuyamichu.me' },
+      { hid: 'og:url', name: 'og:url', content: 'https://bot.hichuyamichu.me' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       {
         hid: 'og:image',
