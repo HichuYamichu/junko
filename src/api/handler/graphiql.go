@@ -1,12 +1,19 @@
 package handler
 
-import "net/http"
+import (
+	"net/http"
+	"os"
+)
 
 // GraphiQL : GraphiQL handler
 type GraphiQL struct{}
 
 func (h GraphiQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write(graphiql)
+	if os.Getenv("GRAPHIQL") == "allow" {
+		w.Write(graphiql)
+	} else {
+		w.Write([]byte("nothing to see here"))
+	}
 }
 
 var graphiql = []byte(`
