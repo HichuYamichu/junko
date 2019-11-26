@@ -4,7 +4,7 @@
 
 ## What is this?
 
-Junko is ~~barely~~ Touhou themed discord bot with very little actual functionality. Main purpose of this repo is to try out and play around with some cool stuff. As of now this project includes the Discord.js/Akairo bot, Nuxt.js dashboard, GraphQl api and Grafana metrics dashboard powered by Prometheus and Loki.
+Junko is ~~barely~~ Touhou themed discord bot with very little actual functionality. Main purpose of this repo is to try out and play around with some cool stuff. As of now this project includes the Discord.js/Akairo bot, Nuxt.js dashboard and GraphQl api
 
 ## Get your own
 
