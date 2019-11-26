@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/es5/util/colors';
 
 export default {
   server: {
@@ -25,6 +25,7 @@ export default {
         name: 'Junko bot',
         content: 'Touhou themed discord bot'
       },
+      { hid: 'theme-color', name: 'theme-color', content: '#f271cd' },
       { hid: 'og:title', name: 'og:title', content: 'Junko bot' },
       { hid: 'og:url', name: 'og:url', content: 'https://bot.hichuyamichu.me' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
@@ -98,6 +99,6 @@ export default {
   },
 
   build: {
-    extend (config, ctx) {}
+    extend(config, ctx) {}
   }
-}
+};
