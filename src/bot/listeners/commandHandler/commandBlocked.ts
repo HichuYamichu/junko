@@ -20,13 +20,13 @@ export default class CommandBlockedListener extends Listener {
     let responce = '';
     switch (reason) {
       case 'owner':
-        responce = await this.client.getReply(message, 'ownerOnly');
+        responce = await this.client.replyManager.getReply(message, 'ownerOnly');
         break;
       case 'guild':
-        responce = await this.client.getReply(message, 'ownerOnly');
+        responce = await this.client.replyManager.getReply(message, 'guildOnly');
         break;
       case 'blacklist':
-        responce = await this.client.getReply(message, 'ownerOnly');
+        responce = await this.client.replyManager.getReply(message, 'blacklisted');
         break;
     }
 
@@ -40,5 +40,3 @@ export default class CommandBlockedListener extends Listener {
     }
   }
 }
-
-module.exports = CommandBlockedListener;

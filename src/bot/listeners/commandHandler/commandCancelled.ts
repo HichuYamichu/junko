@@ -18,5 +18,3 @@ export default class CommandCancelledListener extends Listener {
     Logger.info(log);
   }
 }
-
-module.exports = CommandCancelledListener;

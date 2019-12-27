@@ -31,5 +31,3 @@ export default class LogSetCommand extends Command {
     return message.util!.send('Message log disabled.');
   }
 }
-
-module.exports = LogSetCommand;

@@ -28,5 +28,3 @@ export default class PingCommand extends Command {
     ]);
   }
 }
-
-module.exports = PingCommand;

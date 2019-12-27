@@ -27,5 +27,3 @@ export default class SpotifyTrackCommand extends Command {
     return message.util!.send(`https://open.spotify.com/track/${res.body.tracks!.items[0].id}`);
   }
 }
-
-module.exports = SpotifyTrackCommand;

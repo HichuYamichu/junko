@@ -43,5 +43,3 @@ export default class TagDelCommand extends Command {
     return message.util!.send(`Succesfuly deleted \`${name}\`.`);
   }
 }
-
-module.exports = TagDelCommand;

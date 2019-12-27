@@ -35,5 +35,3 @@ export default class TagGetCommand extends Command {
     }
   }
 }
-
-module.exports = TagGetCommand;

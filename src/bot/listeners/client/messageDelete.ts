@@ -24,7 +24,10 @@ export default class MessageDeleteListener extends Listener {
 
     const embed = this.client.util
       .embed()
-      .setAuthor(`${message.author!.tag} (${message.author!.id})`, message.author!.displayAvatarURL())
+      .setAuthor(
+        `${message.author!.tag} (${message.author!.id})`,
+        message.author!.displayAvatarURL()
+      )
       .setTitle('**MESSAGE DELETED**')
       .setColor(this.client.config.color)
       .setDescription(
@@ -41,5 +44,3 @@ export default class MessageDeleteListener extends Listener {
     return (messageLogChannel as TextChannel).send(embed);
   }
 }
-
-module.exports = MessageDeleteListener;

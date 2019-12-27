@@ -27,5 +27,3 @@ export default class SpotifyAlbumCommand extends Command {
     return message.util!.send(`https://open.spotify.com/album/${res.body.albums!.items[0].id}`);
   }
 }
-
-module.exports = SpotifyAlbumCommand;

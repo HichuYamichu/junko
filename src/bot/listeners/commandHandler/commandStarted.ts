@@ -27,5 +27,3 @@ export default class CommandBlockedListener extends Listener {
     this.client.prometheus.metrics.commandCounter.inc();
   }
 }
-
-module.exports = CommandBlockedListener;

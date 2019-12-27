@@ -17,9 +17,9 @@ export default class UserInfoCommand extends Command {
       },
       args: [
         {
-          'id': 'member',
-          'type': 'member',
-          'default': (message: Message) => message.member
+          id: 'member',
+          type: 'member',
+          default: (message: Message) => message.member
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -41,7 +41,6 @@ export default class UserInfoCommand extends Command {
       )
       .addField(
         'User Details:',
-        /* eslint-disable indent */
         stripIndents`
 		    • ID: ${member.id}
         • Username: ${member.user.tag}
@@ -49,11 +48,8 @@ export default class UserInfoCommand extends Command {
         • Status: ${member.presence.status.toUpperCase()}
         • Activity: ${member.presence.activity ? member.presence.activity.name : 'None'}
         `
-        /* eslint-enable indent */
       )
       .setThumbnail(member.user.displayAvatarURL());
     return message.util!.send(embed);
   }
 }
-
-module.exports = UserInfoCommand;

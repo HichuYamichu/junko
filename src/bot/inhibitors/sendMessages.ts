@@ -15,5 +15,3 @@ export default class SendMessagesInhibitor extends Inhibitor {
       .has('SEND_MESSAGES');
   }
 }
-
-module.exports = SendMessagesInhibitor;

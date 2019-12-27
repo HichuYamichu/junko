@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// tslint:disable-next-line: no-var-requires
 require('dotenv').config();
 import JunkoClient from './client/JunkoClient';
 import Logger from './structs/Logger';
@@ -6,9 +6,9 @@ import Logger from './structs/Logger';
 const client = new JunkoClient({
   ownerID: process.env.OWNER_ID!,
   token: process.env.TOKEN!,
-  color: '#f271cd',
-  defaultPrefix: '!',
-  defaultPreset: 'junko'
+  color: process.env.COLOR || '#f271cd',
+  defaultPrefix: process.env.PREFIX || '!',
+  defaultPreset: process.env.PRESET || 'junko'
 });
 
 client.start();

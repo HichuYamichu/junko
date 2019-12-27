@@ -15,5 +15,3 @@ export default class GuildDeleteListener extends Listener {
     Logger.info(`Guild ${guild.name} {${guild.id}} has been deleted.`);
   }
 }
-
-module.exports = GuildDeleteListener;

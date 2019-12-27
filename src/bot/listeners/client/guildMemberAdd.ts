@@ -24,5 +24,3 @@ export default class GuildMemberAddListener extends Listener {
     return (memberLogChannel as TextChannel).send(embed);
   }
 }
-
-module.exports = GuildMemberAddListener;

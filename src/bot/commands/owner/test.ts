@@ -20,5 +20,3 @@ export default class TestCommand extends Command {
     this.client.emit('guildMemberRemove', message.member);
   }
 }
-
-module.exports = TestCommand;

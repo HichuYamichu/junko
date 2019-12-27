@@ -10,7 +10,7 @@ export default class ImageCommand extends Command {
       ownerOnly: false,
       description: {
         content:
-          'Sends a random image (always SFW on non-NSFW channels and always NSFW on NSFW channels)!',
+          'Sends a random image (SFW on non-NSFW channels and NSFW on NSFW channels)!',
         usage: '<valid booru tags>',
         examples: ['image junko_(touhou)', 'image hug blonde_hair']
       },
@@ -50,5 +50,3 @@ export default class ImageCommand extends Command {
     }
   }
 }
-
-module.exports = ImageCommand;

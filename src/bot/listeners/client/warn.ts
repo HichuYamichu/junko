@@ -13,5 +13,3 @@ export default class WarnListener extends Listener {
     Logger.warn(event);
   }
 }
-
-module.exports = WarnListener;

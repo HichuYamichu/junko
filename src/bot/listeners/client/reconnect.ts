@@ -13,5 +13,3 @@ export default class ReconnectListener extends Listener {
     Logger.info('Reconnecting...');
   }
 }
-
-module.exports = ReconnectListener;

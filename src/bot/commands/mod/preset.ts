@@ -32,5 +32,3 @@ export default class PresetCommand extends Command {
     return message.util!.send(`Changed preset to \`${preset}\``);
   }
 }
-
-module.exports = PresetCommand;

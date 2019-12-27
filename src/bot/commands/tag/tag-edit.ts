@@ -53,5 +53,3 @@ export default class TagEditCommand extends Command {
     return message.util!.send('Tag succesfuly updated.');
   }
 }
-
-module.exports = TagEditCommand;

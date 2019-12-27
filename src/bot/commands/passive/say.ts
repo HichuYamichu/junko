@@ -28,5 +28,3 @@ export default class SayCommand extends Command {
     return (this.client.guilds.get(guildID)!.channels.get(channelID)! as TextChannel).send(content);
   }
 }
-
-module.exports = SayCommand;

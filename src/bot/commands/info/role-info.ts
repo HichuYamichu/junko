@@ -19,9 +19,9 @@ export default class RoleInfoCommand extends Command {
       },
       args: [
         {
-          'id': 'role',
-          'type': 'role',
-          'default': (message: Message) => message.guild!.roles.get(message.guild!.id)
+          id: 'role',
+          type: 'role',
+          default: (message: Message) => message.guild!.roles.get(message.guild!.id)
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -56,5 +56,3 @@ export default class RoleInfoCommand extends Command {
     return message.util!.send(embed);
   }
 }
-
-module.exports = RoleInfoCommand;

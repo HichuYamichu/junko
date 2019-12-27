@@ -27,5 +27,3 @@ export default class LogCommand extends Command {
     return Flag.continue(method);
   }
 }
-
-module.exports = LogCommand;

@@ -13,5 +13,3 @@ export default class ErrorListener extends Listener {
     Logger.error(event);
   }
 }
-
-module.exports = ErrorListener;

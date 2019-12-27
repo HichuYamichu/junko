@@ -13,5 +13,3 @@ export default class DisconnectListener extends Listener {
     Logger.info('Disconnected...');
   }
 }
-
-module.exports = DisconnectListener;

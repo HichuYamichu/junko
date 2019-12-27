@@ -15,7 +15,7 @@ export default class TagAddCommand extends Command {
           type: 'lowercase',
           prompt: {
             start: 'Enter the tag name.',
-            retry: "You have to enter tag name so you're able to find that it later."
+            retry: 'You have to enter tag name so you\'re able to find that it later.'
           }
         },
         {
@@ -73,5 +73,3 @@ export default class TagAddCommand extends Command {
     return message.util!.send('Tag succesfuly created.');
   }
 }
-
-module.exports = TagAddCommand;

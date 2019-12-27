@@ -8,7 +8,7 @@ import SettingsProvider from '../structs/SettingsProvider';
 import Prometheus from '../structs/Prometheus';
 import RPCServer from '../structs/RPCServer';
 import APIManager from '../structs/APIManager';
-import replies from '../util/replies';
+import ReplyManager from '../structs/ReplyMenager';
 
 interface JunkoConf {
   ownerID: string;
@@ -25,11 +25,11 @@ declare module 'discord-akairo' {
     settings: SettingsProvider;
     prometheus: Prometheus;
     rpc: RPCServer;
+    replyManager: ReplyManager;
     APIManager: APIManager;
     commandHandler: CommandHandler;
     inhibitorHandler: InhibitorHandler;
     listenerHandler: ListenerHandler;
-    getReply(message: Message, category: string): Promise<string>;
   }
 }
 
@@ -54,6 +54,8 @@ export default class JunkoClient extends AkairoClient {
 
     this.rpc = new RPCServer(this);
 
+    this.replyManager = new ReplyManager(this);
+
     this.APIManager = new APIManager();
 
     this.commandHandler = new CommandHandler(this, {
@@ -64,22 +66,15 @@ export default class JunkoClient extends AkairoClient {
       commandUtil: true,
       commandUtilLifetime: 3e5,
       defaultCooldown: 3000,
-      fetchMembers: true,
       argumentDefaults: {
         prompt: {
-          modifyStart: (msg: Message, text: string) =>
-            `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
-          modifyRetry: (msg: Message, text: string) =>
-            `${msg.author} **//** ${text}\nType \`cancel\` to cancel this command.`,
-          timeout: async (msg: Message) => {
-            const reply = await this.getReply(msg, 'timeout');
-            return `${msg.author} **//** ${reply}`;
-          },
-          ended: async (msg: Message) => {
-            const reply = await this.getReply(msg, 'ended');
-            return `${msg.author} **//** ${reply}\nCommand has been cancelled.`;
-          },
-          cancel: (msg: Message) => `${msg.author} **//** Command has been cancelled.`,
+          modifyStart: async (msg: Message, text: string) =>
+            await this.replyManager.modifyStart(msg, text),
+          modifyRetry: async (msg: Message, text: string) =>
+            await this.replyManager.modifyStart(msg, text),
+          timeout: async (msg: Message) => await this.replyManager.timeout(msg),
+          ended: async (msg: Message) => await this.replyManager.ended(msg),
+          cancel: async (msg: Message) => await this.replyManager.cancel(msg),
           retries: 3,
           time: 20000
         },
@@ -96,14 +91,8 @@ export default class JunkoClient extends AkairoClient {
     });
   }
 
-  public async getReply(message: Message, category: string): Promise<string> {
-    const preset = await this.settings.get(message.guild!, 'preset', this.config.defaultPreset);
-    return replies[preset][category][Math.floor(Math.random() * replies[preset][category].length)];
-  }
-
   private async init() {
-    this.db = Database.get('junko');
-    await this.db.connect();
+    this.db = await Database.get('junko').connect();
     this.settings = new SettingsProvider(this.db.getRepository(Settings));
     this.APIManager.init();
 

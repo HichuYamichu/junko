@@ -1,7 +1,6 @@
 import { utc } from 'moment';
 import { inspect } from 'util';
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class Logger {
   public static info(content: string): void {
     const level = 'INFO';

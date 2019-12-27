@@ -103,5 +103,3 @@ export default class BullyCommand extends Command {
     return message.util!.send(attachment);
   }
 }
-
-module.exports = BullyCommand;

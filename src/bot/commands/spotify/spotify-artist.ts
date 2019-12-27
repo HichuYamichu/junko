@@ -27,5 +27,3 @@ export default class SpotifyArtistCommand extends Command {
     return message.util!.send(`https://open.spotify.com/artist/${res.body.artists!.items[0].id}`);
   }
 }
-
-module.exports = SpotifyArtistCommand;

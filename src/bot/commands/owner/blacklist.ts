@@ -39,5 +39,3 @@ export default class BlacklistCommand extends Command {
     return message.util!.send(`**${user.tag}** has been added to the blacklist.`);
   }
 }
-
-module.exports = BlacklistCommand;

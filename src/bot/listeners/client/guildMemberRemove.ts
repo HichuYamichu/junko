@@ -31,5 +31,3 @@ export default class GuildMemberRemoveListener extends Listener {
     return (memberLogChannel as TextChannel).send(embed);
   }
 }
-
-module.exports = GuildMemberRemoveListener;

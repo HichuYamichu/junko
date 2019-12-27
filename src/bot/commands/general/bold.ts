@@ -45,5 +45,3 @@ export default class BoldCommand extends Command {
     return message.util!.send(boldText);
   }
 }
-
-module.exports = BoldCommand;

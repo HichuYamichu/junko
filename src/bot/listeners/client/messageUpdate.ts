@@ -43,5 +43,3 @@ export default class MessageUpdateListener extends Listener {
     return (messageLogChannel as TextChannel).send(embed);
   }
 }
-
-module.exports = MessageUpdateListener;

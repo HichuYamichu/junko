@@ -4,7 +4,6 @@ import { Settings } from '../models/Settings';
 import cache from './Cache';
 
 export default class SettingsProvider {
-  // eslint-disable-next-line no-useless-constructor
   public constructor(private readonly repo: Repository<Settings>) {}
 
   public async get<T>(guild: string | Guild, key: string, defaultValue: T): Promise<T> {
@@ -20,12 +19,11 @@ export default class SettingsProvider {
       .where('Settings.guild = :id', { id })
       .getRawOne();
     if (!res) return defaultValue;
-
     const value = res[key];
     if (!value) return defaultValue;
 
     await cache.set(id, key, value);
-    return (value as unknown) as T;
+    return value as T;
   }
 
   public async set(guild: string | Guild, key: string, value: string): Promise<InsertResult> {

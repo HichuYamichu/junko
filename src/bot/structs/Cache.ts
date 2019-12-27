@@ -6,7 +6,6 @@ const cache = new Redis({
   autoResendUnfulfilledCommands: false
 });
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class SettingsCache {
   public static get(id: string, key: string): Promise<string | null> {
     return cache.hget(id, key);

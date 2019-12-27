@@ -50,5 +50,3 @@ export default class StatsCommand extends Command {
     return message.util!.send(embed);
   }
 }
-
-module.exports = StatsCommand;

@@ -18,10 +18,10 @@ export default class ChannelInfoCommand extends Command {
       },
       args: [
         {
-          'id': 'channel',
-          'match': 'content',
-          'type': 'channel',
-          'default': (message: Message) => message.channel
+          id: 'channel',
+          match: 'content',
+          type: 'channel',
+          default: (message: Message) => message.channel
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -46,5 +46,3 @@ export default class ChannelInfoCommand extends Command {
     return message.util!.send(embed);
   }
 }
-
-module.exports = ChannelInfoCommand;

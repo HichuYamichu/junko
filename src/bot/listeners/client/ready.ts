@@ -15,5 +15,3 @@ export default class ReadyListener extends Listener {
     Logger.info(log);
   }
 }
-
-module.exports = ReadyListener;

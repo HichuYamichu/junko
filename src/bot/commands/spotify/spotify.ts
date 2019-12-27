@@ -17,8 +17,8 @@ export default class SpotifyCommand extends Command {
         usage: '<method> <...args>',
         examples: [
           'artist jpegmafia',
-          "track baby i'm bleeding",
-          "track artist:jpegmafia track:baby i'm bleeding",
+          'track baby i\'m bleeding',
+          'track artist:jpegmafia track:baby i\'m bleeding',
           'album Black Ben Carson',
           'playlist jpegmafia'
         ]
@@ -40,5 +40,3 @@ export default class SpotifyCommand extends Command {
     return Flag.continue(method);
   }
 }
-
-module.exports = SpotifyCommand;

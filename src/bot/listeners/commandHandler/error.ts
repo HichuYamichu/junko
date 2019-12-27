@@ -18,5 +18,3 @@ export default class ErrorListener extends Listener {
     return message.util!.reply('there was an error trying to execute that command!');
   }
 }
-
-module.exports = ErrorListener;

@@ -60,5 +60,3 @@ export default class ServerInfoCommand extends Command {
     return message.util!.send(embed);
   }
 }
-
-module.exports = ServerInfoCommand;

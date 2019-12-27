@@ -33,5 +33,3 @@ export default class PrefixCommand extends Command {
     return message.util!.send(`My prefix is now \`${prefix}\``);
   }
 }
-
-module.exports = PrefixCommand;

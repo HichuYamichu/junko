@@ -22,5 +22,3 @@ export default class MessageInvalidListener extends Listener {
     return this.client.commandHandler.runCommand(message, command!, args);
   }
 }
-
-module.exports = MessageInvalidListener;

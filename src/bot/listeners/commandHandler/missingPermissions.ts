@@ -52,5 +52,3 @@ export default class MissingPermissionsListener extends Listener {
     }
   }
 }
-
-module.exports = MissingPermissionsListener;

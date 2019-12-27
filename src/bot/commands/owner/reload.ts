@@ -51,5 +51,3 @@ export default class ReloadCommand extends Command {
     }
   }
 }
-
-module.exports = ReloadCommand;

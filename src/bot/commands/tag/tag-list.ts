@@ -34,5 +34,3 @@ export default class TagListCommand extends Command {
     return message.util!.send(embed);
   }
 }
-
-module.exports = TagListCommand;

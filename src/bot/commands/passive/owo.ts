@@ -10,9 +10,7 @@ export default class OwoCommand extends Command {
   }
 
   public async exec(message: Message) {
-    const reply = await this.client.getReply(message, 'owo');
+    const reply = await this.client.replyManager.getReply(message, 'owo');
     return message.util!.send(reply);
   }
 }
-
-module.exports = OwoCommand;
