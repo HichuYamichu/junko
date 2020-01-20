@@ -1,6 +1,5 @@
 import { Message, TextChannel } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
-import Logger from '../../structs/Logger';
 
 export default class CommandBlockedListener extends Listener {
   public constructor() {
@@ -15,7 +14,7 @@ export default class CommandBlockedListener extends Listener {
       ? `Guild: ${message.guild.name} (${message.guild.id})`
       : `DM: ${message.author!.tag} (${message.author!.id})`;
     const log = `Blocked ${command.id} on ${channel} reason: ${reason}`;
-    Logger.info(log);
+    this.client.logger.info(log);
 
     let responce = '';
     switch (reason) {

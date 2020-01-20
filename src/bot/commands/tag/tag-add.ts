@@ -1,7 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
 import { Tag } from '../../models/Tag';
-import Logger from '../../structs/Logger';
 
 export default class TagAddCommand extends Command {
   public constructor() {
@@ -67,7 +66,7 @@ export default class TagAddCommand extends Command {
         return message.util!.send(reply);
       }
 
-      Logger.error(e);
+      this.client.logger.error(e);
       return message.util!.send('Unexpected problem occurred!');
     }
     return message.util!.send('Tag succesfuly created.');

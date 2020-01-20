@@ -9,6 +9,7 @@ import { Prometheus } from '../structs/Prometheus';
 import { RPCServer } from '../structs/RPCServer';
 import { APIManager } from '../structs/APIManager';
 import { ReplyManager } from '../structs/ReplyMenager';
+import { Logger } from '../structs/Logger';
 
 interface JunkoConf {
   ownerID: string;
@@ -27,6 +28,7 @@ declare module 'discord-akairo' {
     rpc: RPCServer;
     replyManager: ReplyManager;
     APIManager: APIManager;
+    logger: Logger;
     commandHandler: CommandHandler;
   }
 }
@@ -40,7 +42,9 @@ export default class JunkoClient extends AkairoClient {
 
   public replyManager = new ReplyManager(this);
 
-  public APIManager = new APIManager();
+  public APIManager = new APIManager(this);
+
+  public logger = new Logger();
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),

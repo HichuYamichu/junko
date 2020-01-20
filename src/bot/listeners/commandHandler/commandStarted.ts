@@ -1,7 +1,6 @@
 import { Message } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
 import { inspect } from 'util';
-import Logger from '../../structs/Logger';
 
 export default class CommandBlockedListener extends Listener {
   public constructor() {
@@ -23,7 +22,7 @@ export default class CommandBlockedListener extends Listener {
       : `DM: ${message.author!.tag} (${message.author!.id})`;
     const cmdArgs = Object.keys(args).length && !args.command ? `Args: ${this.clean(args)}` : '';
     const log = `Started ${command.id} on ${channel} ${cmdArgs}`;
-    Logger.info(log);
+    this.client.logger.info(log);
     this.client.prometheus.metrics.commandCounter.inc();
   }
 }

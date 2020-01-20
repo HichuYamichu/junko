@@ -1,7 +1,6 @@
 // tslint:disable-next-line: no-var-requires
 require('dotenv').config();
 import JunkoClient from './client/JunkoClient';
-import Logger from './structs/Logger';
 
 const client = new JunkoClient({
   ownerID: process.env.OWNER_ID!,
@@ -14,5 +13,5 @@ const client = new JunkoClient({
 client.start();
 
 process.on('unhandledRejection', reason => {
-  Logger.error(reason);
+  client.logger.error(reason);
 });
