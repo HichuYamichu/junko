@@ -11,7 +11,7 @@ export default class EvalCommand extends Command {
       description: {
         content: 'Evaluates provided code.',
         usage: '<code>',
-        examples: ['message.util.reply(\'no eval 4 u\')']
+        examples: ["message.util.reply('no eval 4 u')"]
       },
       args: [
         {
@@ -35,10 +35,12 @@ export default class EvalCommand extends Command {
     const tokenRegex = new RegExp(`${token}|${rev}`, 'g');
 
     try {
-      // tslint:disable-next-line: no-eval
+      // eslint-disable-next-line no-eval
       let evaled = await eval(code);
-      if ((evaled !== null || undefined) && typeof evaled.then === 'function')
+      // eslint-disable-next-line promise/prefer-await-to-then
+      if ((evaled !== null || undefined) && typeof evaled.then === 'function') {
         evaled = await evaled;
+      }
 
       if (typeof evaled !== 'string') evaled = inspect(evaled, { depth: 0 });
       evaled = evaled.replace(tokenRegex, '[super secret token]');

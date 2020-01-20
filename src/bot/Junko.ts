@@ -1,5 +1,5 @@
-// tslint:disable-next-line: no-var-requires
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 import JunkoClient from './client/JunkoClient';
 
 const client = new JunkoClient({

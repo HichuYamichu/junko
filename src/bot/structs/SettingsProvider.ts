@@ -4,7 +4,7 @@ import { Settings } from '../models/Settings';
 import { SettingsCache } from './Cache';
 
 export class SettingsProvider {
-  private cache = new SettingsCache();
+  private readonly cache = new SettingsCache();
 
   public constructor(private readonly repo: Repository<Settings>) {}
 

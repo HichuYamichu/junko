@@ -8,7 +8,7 @@ export class APIManager {
     clientSecret: process.env.SPOTIFY_SECRET
   });
 
-  constructor(private readonly client: JunkoClient) {}
+  public constructor(private readonly client: JunkoClient) {}
 
   public async init() {
     try {

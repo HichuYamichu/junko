@@ -21,6 +21,7 @@ export default class LogCommand extends Command {
     const method = yield {
       type: [['log-member', 'member', 'mem'], ['log-message', 'message', 'msg']],
       otherwise: () =>
+        // eslint-disable-next-line max-len
         'You must specify a method like `log-member` or `log-message`. See `help log` for more info.'
     };
 

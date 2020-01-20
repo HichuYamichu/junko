@@ -56,13 +56,11 @@ export default class JunkoClient extends AkairoClient {
     defaultCooldown: 3000,
     argumentDefaults: {
       prompt: {
-        modifyStart: async (msg: Message, text: string) =>
-          await this.replyManager.modifyStart(msg, text),
-        modifyRetry: async (msg: Message, text: string) =>
-          await this.replyManager.modifyRetry(msg, text),
-        timeout: async (msg: Message) => await this.replyManager.timeout(msg),
-        ended: async (msg: Message) => await this.replyManager.ended(msg),
-        cancel: async (msg: Message) => await this.replyManager.cancel(msg),
+        modifyStart: (msg: Message, text: string) => this.replyManager.modifyStart(msg, text),
+        modifyRetry: (msg: Message, text: string) => this.replyManager.modifyRetry(msg, text),
+        timeout: (msg: Message) => this.replyManager.timeout(msg),
+        ended: (msg: Message) => this.replyManager.ended(msg),
+        cancel: (msg: Message) => this.replyManager.cancel(msg),
         retries: 3,
         time: 20000
       },

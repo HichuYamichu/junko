@@ -8,13 +8,13 @@ export class RPCServer extends Mali {
     const categories = this.client.commandHandler.categories;
     const res = categories.keyArray();
     ctx.res = { categoryNames: res };
-  }
+  };
 
   public fetchCommands = (ctx: Mali.Context) => {
     const category = this.client.commandHandler.findCategory(ctx.req.categoryName);
     const commandNames = category.keyArray();
     ctx.res = { commandNames };
-  }
+  };
 
   public fetchDescription = (ctx: Mali.Context) => {
     const cmd = this.client.commandHandler.findCommand(ctx.req.commandName);
@@ -23,7 +23,7 @@ export class RPCServer extends Mali {
       return;
     }
     ctx.res = cmd.description;
-  }
+  };
 
   public constructor(private readonly client: JunkoClient) {
     super(protoPath, 'DescriptionFetcher');

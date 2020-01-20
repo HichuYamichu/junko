@@ -39,6 +39,7 @@ export default class ImageCommand extends Command {
       });
       if (!result) {
         return message.util!.send(
+          // eslint-disable-next-line max-len
           'No results! Are you sure your query is correct? Read https://danbooru.donmai.us/wiki_pages/43049.'
         );
       }

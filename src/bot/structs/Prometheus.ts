@@ -11,7 +11,7 @@ export class Prometheus {
     await next();
     this.metrics.grpcServerHandledTotal.labels(ctx.type, ctx.name).inc();
     this.metrics.grpcServerHandleTime.labels(ctx.type, ctx.name).observe(Date.now() - startEpoch);
-  }
+  };
 
   public metrics = {
     commandCounter: new Counter({

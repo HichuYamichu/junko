@@ -54,29 +54,28 @@ export default class HelpCommand extends Command {
       }
 
       return message.util!.send(embed);
-    } else {
-      const embed = this.client.util
-        .embed()
-        .setColor(this.client.config.color)
-        .setTitle(
-          `\`${command.aliases[0]} ${command.description.usage ? command.description.usage : ''}\``
-        )
-        .addField('Description:', command.description.content);
-
-      if (command.description.examples && command.description.examples.length) {
-        embed.addField(
-          'Examples:',
-          `\`${command.aliases[0]} ${command.description.examples.join(
-            `\`\n\`${command.aliases[0]} `
-          )}\``,
-          true
-        );
-      }
-      if (command.aliases.length > 1) {
-        embed.addField('Aliases:', `\`${command.aliases.join('` `')}\``, true);
-      }
-
-      return message.util!.send(embed);
     }
+    const embed = this.client.util
+      .embed()
+      .setColor(this.client.config.color)
+      .setTitle(
+        `\`${command.aliases[0]} ${command.description.usage ? command.description.usage : ''}\``
+      )
+      .addField('Description:', command.description.content);
+
+    if (command.description.examples && command.description.examples.length) {
+      embed.addField(
+        'Examples:',
+        `\`${command.aliases[0]} ${command.description.examples.join(
+          `\`\n\`${command.aliases[0]} `
+        )}\``,
+        true
+      );
+    }
+    if (command.aliases.length > 1) {
+      embed.addField('Aliases:', `\`${command.aliases.join('` `')}\``, true);
+    }
+
+    return message.util!.send(embed);
   }
 }

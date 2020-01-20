@@ -5,12 +5,8 @@ import replies from '../util/replies';
 export class ReplyManager {
   public constructor(private readonly client: JunkoClient) {}
 
-  private async getPreset(message: Message): Promise<string> {
-    return await this.client.settings.get(
-      message.guild!,
-      'preset',
-      this.client.config.defaultPreset
-    );
+  private getPreset(message: Message): Promise<string> {
+    return this.client.settings.get(message.guild!, 'preset', this.client.config.defaultPreset);
   }
 
   public async getReply(message: Message, category: string): Promise<string> {

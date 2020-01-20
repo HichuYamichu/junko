@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Message, TextChannel } from 'discord.js';
 import { Command } from 'discord-akairo';
 import * as moment from 'moment';
