@@ -4,11 +4,11 @@ import { Connection } from 'typeorm';
 import { join } from 'path';
 import Database from '../structs/Database';
 import { Settings } from '../models/Settings';
-import SettingsProvider from '../structs/SettingsProvider';
-import Prometheus from '../structs/Prometheus';
-import RPCServer from '../structs/RPCServer';
-import APIManager from '../structs/APIManager';
-import ReplyManager from '../structs/ReplyMenager';
+import { SettingsProvider } from '../structs/SettingsProvider';
+import { Prometheus } from '../structs/Prometheus';
+import { RPCServer } from '../structs/RPCServer';
+import { APIManager } from '../structs/APIManager';
+import { ReplyManager } from '../structs/ReplyMenager';
 
 interface JunkoConf {
   ownerID: string;
@@ -28,12 +28,52 @@ declare module 'discord-akairo' {
     replyManager: ReplyManager;
     APIManager: APIManager;
     commandHandler: CommandHandler;
-    inhibitorHandler: InhibitorHandler;
-    listenerHandler: ListenerHandler;
   }
 }
 
 export default class JunkoClient extends AkairoClient {
+  public config: JunkoConf;
+
+  public prometheus = new Prometheus();
+
+  public rpc = new RPCServer(this);
+
+  public replyManager = new ReplyManager(this);
+
+  public APIManager = new APIManager();
+
+  public commandHandler: CommandHandler = new CommandHandler(this, {
+    directory: join(__dirname, '..', 'commands'),
+    prefix: (msg: Message) => this.settings.get(msg.guild!, 'prefix', this.config.defaultPrefix),
+    aliasReplacement: /-/g,
+    allowMention: true,
+    commandUtil: true,
+    commandUtilLifetime: 3e5,
+    defaultCooldown: 3000,
+    argumentDefaults: {
+      prompt: {
+        modifyStart: async (msg: Message, text: string) =>
+          await this.replyManager.modifyStart(msg, text),
+        modifyRetry: async (msg: Message, text: string) =>
+          await this.replyManager.modifyRetry(msg, text),
+        timeout: async (msg: Message) => await this.replyManager.timeout(msg),
+        ended: async (msg: Message) => await this.replyManager.ended(msg),
+        cancel: async (msg: Message) => await this.replyManager.cancel(msg),
+        retries: 3,
+        time: 20000
+      },
+      otherwise: ''
+    }
+  });
+
+  public inhibitorHandler = new InhibitorHandler(this, {
+    directory: join(__dirname, '..', 'inhibitors')
+  });
+
+  public listenerHandler = new ListenerHandler(this, {
+    directory: join(__dirname, '..', 'listeners')
+  });
+
   public constructor(config: JunkoConf) {
     super(
       {
@@ -49,46 +89,6 @@ export default class JunkoClient extends AkairoClient {
     );
 
     this.config = config;
-
-    this.prometheus = new Prometheus();
-
-    this.rpc = new RPCServer(this);
-
-    this.replyManager = new ReplyManager(this);
-
-    this.APIManager = new APIManager();
-
-    this.commandHandler = new CommandHandler(this, {
-      directory: join(__dirname, '..', 'commands'),
-      prefix: (msg: Message) => this.settings.get(msg.guild!, 'prefix', this.config.defaultPrefix),
-      aliasReplacement: /-/g,
-      allowMention: true,
-      commandUtil: true,
-      commandUtilLifetime: 3e5,
-      defaultCooldown: 3000,
-      argumentDefaults: {
-        prompt: {
-          modifyStart: async (msg: Message, text: string) =>
-            await this.replyManager.modifyStart(msg, text),
-          modifyRetry: async (msg: Message, text: string) =>
-            await this.replyManager.modifyStart(msg, text),
-          timeout: async (msg: Message) => await this.replyManager.timeout(msg),
-          ended: async (msg: Message) => await this.replyManager.ended(msg),
-          cancel: async (msg: Message) => await this.replyManager.cancel(msg),
-          retries: 3,
-          time: 20000
-        },
-        otherwise: ''
-      }
-    });
-
-    this.inhibitorHandler = new InhibitorHandler(this, {
-      directory: join(__dirname, '..', 'inhibitors')
-    });
-
-    this.listenerHandler = new ListenerHandler(this, {
-      directory: join(__dirname, '..', 'listeners')
-    });
   }
 
   private async init() {

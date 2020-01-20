@@ -16,7 +16,7 @@ export default class MessageDeleteListener extends Listener {
     if (message.author!.bot) return;
     if (!message.guild) return;
     if (!message.content) return;
-    const messageLog = await this.client.settings.get(message.guild, 'messageLog', null);
+    const messageLog = await this.client.settings.get(message.guild, 'messageLog', '');
     if (!messageLog) return;
     const messageLogChannel = this.client.channels.get(messageLog);
     if (!messageLogChannel) return;

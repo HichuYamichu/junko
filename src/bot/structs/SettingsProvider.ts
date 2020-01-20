@@ -1,38 +1,39 @@
 import { Guild } from 'discord.js';
 import { Repository, InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { Settings } from '../models/Settings';
-import cache from './Cache';
+import { SettingsCache } from './Cache';
 
-export default class SettingsProvider {
+export class SettingsProvider {
+  private cache = new SettingsCache();
+
   public constructor(private readonly repo: Repository<Settings>) {}
 
-  public async get<T>(guild: string | Guild, key: string, defaultValue: T): Promise<T> {
-    const id = SettingsProvider.getGuildID(guild);
-    const cached = await cache.get(id, key);
+  public async get<K extends keyof Settings>(
+    guild: string | Guild,
+    key: K,
+    defaultValue: Settings[K]
+  ): Promise<Settings[K]> {
+    const id = this.getGuildID(guild);
+    const cached = await this.cache.get(id, key);
     if (cached) {
-      return typeof defaultValue === 'string' ? ((cached as unknown) as T) : JSON.parse(cached);
+      return typeof defaultValue === 'string' ? cached : JSON.parse(cached);
     }
 
-    const res = await this.repo
-      .createQueryBuilder()
-      .select(`Settings.${key}`, key)
-      .where('Settings.guild = :id', { id })
-      .getRawOne();
+    const res = await this.repo.findOne(id, { select: [key] });
     if (!res) return defaultValue;
     const value = res[key];
     if (!value) return defaultValue;
 
-    await cache.set(id, key, value);
-    return value as T;
+    await this.cache.set(id, key, value);
+    return value;
   }
 
   public async set(guild: string | Guild, key: string, value: string): Promise<InsertResult> {
-    const id = SettingsProvider.getGuildID(guild);
-    await cache.del(id, key);
+    const id = this.getGuildID(guild);
+    await this.cache.del(id, key);
     return this.repo
       .createQueryBuilder()
       .insert()
-      .into(Settings)
       .values({ guild: id, [key]: value })
       .onConflict(`("guild") DO UPDATE SET "${key}" = :${key}`)
       .setParameter(key, value)
@@ -40,8 +41,8 @@ export default class SettingsProvider {
   }
 
   public async del(guild: string | Guild, key: string): Promise<UpdateResult> {
-    const id = SettingsProvider.getGuildID(guild);
-    await cache.del(id, key);
+    const id = this.getGuildID(guild);
+    await this.cache.del(id, key);
     return this.repo
       .createQueryBuilder()
       .update()
@@ -51,8 +52,8 @@ export default class SettingsProvider {
   }
 
   public async clear(guild: string | Guild): Promise<DeleteResult> {
-    const id = SettingsProvider.getGuildID(guild);
-    await cache.clear(id);
+    const id = this.getGuildID(guild);
+    await this.cache.clear(id);
     return this.repo
       .createQueryBuilder()
       .delete()
@@ -60,7 +61,7 @@ export default class SettingsProvider {
       .execute();
   }
 
-  private static getGuildID(guild: string | Guild): string {
+  private getGuildID(guild: string | Guild): string {
     if (guild instanceof Guild) return guild.id;
     if (guild === 'global' || guild === null) return 'global';
     if (typeof guild === 'string' && /^\d+$/.test(guild)) return guild;

@@ -2,15 +2,11 @@ import Logger from './Logger';
 // @ts-ignore
 import * as SpotifyWebApi from 'spotify-web-api-node';
 
-export default class APIManager {
-  public spotify: SpotifyWebApi;
-
-  public constructor() {
-    this.spotify = new SpotifyWebApi({
-      clientId: process.env.SPOTIFY_ID,
-      clientSecret: process.env.SPOTIFY_SECRET
-    });
-  }
+export class APIManager {
+  public spotify = new SpotifyWebApi({
+    clientId: process.env.SPOTIFY_ID,
+    clientSecret: process.env.SPOTIFY_SECRET
+  });
 
   public async init() {
     try {

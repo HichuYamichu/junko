@@ -11,7 +11,7 @@ export default class GuildMemberAddListener extends Listener {
 
   public async exec(member: GuildMember) {
     if (!member.guild.me!.hasPermission('EMBED_LINKS')) return;
-    const memberLog = await this.client.settings.get(member.guild, 'memberLog', null);
+    const memberLog = await this.client.settings.get(member.guild, 'memberLog', '');
     if (!memberLog) return;
     const memberLogChannel = this.client.channels.get(memberLog);
     if (!memberLogChannel) return;

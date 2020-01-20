@@ -16,7 +16,7 @@ export default class MessageUpdateListener extends Listener {
     if (!newMessage.guild.me!.hasPermission('EMBED_LINKS')) return;
     if (oldMessage.author!.bot || newMessage.author!.bot) return;
     if (Util.escapeMarkdown(oldMessage.content) === Util.escapeMarkdown(newMessage.content)) return;
-    const messageLog = await this.client.settings.get(newMessage.guild, 'messageLog', null);
+    const messageLog = await this.client.settings.get(newMessage.guild, 'messageLog', '');
     if (!messageLog) return;
     const messageLogChannel = this.client.channels.get(messageLog);
     if (!messageLogChannel) return;

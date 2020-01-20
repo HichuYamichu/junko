@@ -2,7 +2,7 @@ import JunkoClient from '../client/JunkoClient';
 import { Message } from 'discord.js';
 import replies from '../util/replies';
 
-export default class ReplyManager {
+export class ReplyManager {
   public constructor(private readonly client: JunkoClient) {}
 
   private async getPreset(message: Message): Promise<string> {
