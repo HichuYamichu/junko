@@ -4,11 +4,11 @@ WORKDIR /build
 
 ENV GO111MODULE=on
 
-COPY go.mod go.sum ./
+COPY src/api/go.mod src/api/go.sum ./
 
 RUN go mod download
 
-COPY . .
+COPY src/api ./
 
 RUN go get -u github.com/gobuffalo/packr/packr
 

@@ -1,8 +1,17 @@
 FROM node:10-alpine
 
+ENV TOKEN= \
+YT_KEY= \
+SPOTIFY_ID= \
+SPOTIFY_SECRET= \
+OWNER_ID= \
+REDIS_URI= \
+RPC_ADDR=
+
 WORKDIR /usr/src/junko
 
-COPY package.json tsconfig.json ./
+COPY src/bot/package.json /usr/src/junko/src/bot/
+COPY tsconfig.json package.json yarn.lock /usr/src/junko/
 
 RUN apk add --update \
 && apk add --no-cache pixman cairo pango giflib libjpeg-turbo \
@@ -11,17 +20,11 @@ cairo-dev pango-dev pangomm-dev libjpeg-turbo-dev giflib-dev freetype-dev python
 && yarn install --build-from-source \
 && apk del .build-deps
 
-COPY . .
+COPY src/bot /usr/src/junko/src/bot/
+
+WORKDIR /usr/src/junko/src/bot
 
 RUN yarn build
-
-ENV TOKEN= \
-YT_KEY= \
-SPOTIFY_ID= \
-SPOTIFY_SECRET= \
-OWNER_ID= \
-REDIS_URI= \
-RPC_ADDR=
 
 EXPOSE 5000
 

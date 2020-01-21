@@ -46,7 +46,7 @@ export default class UserInfoCommand extends Command {
         • Username: ${member.user.tag}
         • Created at: ${moment.utc(member.user.createdAt).format('YYYY/MM/DD hh:mm:ss')}
         • Status: ${member.presence.status.toUpperCase()}
-        • Activity: ${member.presence.activity ? member.presence.activity.name : 'None'}
+        • Activity: ${member.presence.activities?.[0]?.name ?? 'None'}
         `
       )
       .setThumbnail(member.user.displayAvatarURL());
