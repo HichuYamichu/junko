@@ -1,7 +1,7 @@
-import Redis, { Redis as RedisInstance } from 'ioredis';
+import * as Redis from 'ioredis';
 
 export class SettingsCache {
-  public cache: RedisInstance = new Redis({
+  public cache = new Redis({
     host: process.env.REDIS_HOST,
     keyPrefix: 'settings:',
     autoResendUnfulfilledCommands: false

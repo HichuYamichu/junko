@@ -5,19 +5,24 @@
     "moduleResolution": "node",
     "removeComments": true,
     "alwaysStrict": true,
-    "lib": ["es2018"],
+    "lib": [
+			"esnext",
+			"esnext.array",
+			"esnext.asynciterable",
+			"esnext.intl",
+			"esnext.symbol",
+			"dom"
+		],
     "module": "commonjs",
-    "target": "es2018",
+    "target": "es2019",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "pretty": true,
     "sourceMap": false,
 		"inlineSourceMap": true,
 		"inlineSources": true,
-		"sourceRoot": "/",
-		"incremental": true
+		"sourceRoot": "/"
   }
 }
