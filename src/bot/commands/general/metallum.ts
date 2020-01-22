@@ -7,6 +7,12 @@ export default class MetallumBandCommand extends Command {
       aliases: ['metallum'],
       category: 'general',
       ownerOnly: false,
+      description: {
+        content:
+          'Issues a simple query against metallum api (https://metallum.hichuyamichu.me/graphql)',
+        usage: '<type> <query> <selected fields>',
+        examples: ['band "behemoth black metal" "name country"']
+      },
       args: [
         {
           id: 'type',
