@@ -1,0 +1,39 @@
+version: '3.4'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  networks:
+    - main
+  
+services:
+  bot:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: ./dockerfile_bot
+    env_file:
+      - ./env/bot/.env
+    volumes:
+      - ./src/proto:/usr/src/proto
+    
+  api:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: ./dockerfile_api
+    env_file:
+      - ./env/api/.env
+    
+  dashboard:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: ./dockerfile_dashboard
+    env_file:
+      - ./env/dashboard/.env
+    ports: 
+      - 8080:8080
+
+networks:
+  main:
+    external: true
