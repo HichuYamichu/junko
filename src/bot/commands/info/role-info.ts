@@ -21,7 +21,7 @@ export default class RoleInfoCommand extends Command {
         {
           id: 'role',
           type: 'role',
-          default: (message: Message) => message.guild!.roles.get(message.guild!.id)
+          default: (message: Message) => message.guild!.roles.cache.get(message.guild!.id)
         }
       ],
       clientPermissions: ['EMBED_LINKS']

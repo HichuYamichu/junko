@@ -15,7 +15,7 @@ export default class GuildMemberRemoveListener extends Listener {
     if (!member.guild.me!.hasPermission('EMBED_LINKS')) return;
     const memberLog = await this.client.settings.get(member.guild, 'memberLog', '');
     if (!memberLog) return;
-    const memberLogChannel = this.client.channels.get(memberLog);
+    const memberLogChannel = this.client.channels.cache.get(memberLog);
     if (!memberLogChannel) return;
     const embed = this.client.util
       .embed()

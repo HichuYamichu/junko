@@ -35,7 +35,7 @@ export default class UserInfoCommand extends Command {
         'Member Details:',
         stripIndents`
         ${member.nickname === undefined ? '• No nickname' : `• Nickname: ${member.nickname}`}
-        • Roles: ${member.roles.map(r => `\`${r.name}\``).join(' ')}
+        • Roles: ${member.roles.cache.map(r => `\`${r.name}\``).join(' ')}
         • Joined at: ${moment.utc(member.joinedAt!).format('YYYY/MM/DD hh:mm:ss')}
         `
       )

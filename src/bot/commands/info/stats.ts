@@ -22,10 +22,10 @@ export default class StatsCommand extends Command {
 
   public async exec(message: Message) {
     const used = process.memoryUsage().heapUsed / 1024 / 1024;
-    const author = `${message.client.users.get(this.client.config.ownerID)!.tag}`;
-    const guildsCount = message.client.guilds.size;
-    const channelsCount = message.client.channels.size;
-    const usersCount = message.client.users.size;
+    const author = `${message.client.users.cache.get(this.client.config.ownerID)!.tag}`;
+    const guildsCount = message.client.guilds.cache.size;
+    const channelsCount = message.client.channels.cache.size;
+    const usersCount = message.client.users.cache.size;
 
     const embed = this.client.util
       .embed()

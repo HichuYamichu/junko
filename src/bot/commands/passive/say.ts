@@ -25,6 +25,8 @@ export default class SayCommand extends Command {
     { guildID, channelID, content }: { guildID: string; channelID: string; content: string }
   ) {
     if (message) return message.util!.send('Not happening.');
-    return (this.client.guilds.get(guildID)!.channels.get(channelID)! as TextChannel).send(content);
+    return (this.client.guilds.cache
+      .get(guildID)!
+      .channels.cache.get(channelID)! as TextChannel).send(content);
   }
 }
