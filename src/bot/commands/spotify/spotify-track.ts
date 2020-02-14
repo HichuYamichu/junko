@@ -20,7 +20,7 @@ export default class SpotifyTrackCommand extends Command {
   }
 
   public async exec(message: Message, { track }: {track: string}) {
-    const res = await this.client.APIManager.spotify.searchTracks(track, { limit: 1 });
+    const res = await this.client.apiManager.spotify.searchTracks(track, { limit: 1 });
     if (!res.body.tracks!.items.length) {
       return message.util!.reply('Nothing found!');
     }

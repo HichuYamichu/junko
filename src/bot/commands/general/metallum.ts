@@ -54,7 +54,7 @@ export default class MetallumBandCommand extends Command {
     }
   `;
     try {
-      const data = await this.client.APIManager.metallum.request(query);
+      const data = await this.client.apiManager.metallum.request(query);
       const selected = data[queryType];
       const selectedStr = JSON.stringify(selected, null, 2);
       const res =

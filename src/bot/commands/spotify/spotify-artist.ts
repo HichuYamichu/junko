@@ -20,7 +20,7 @@ export default class SpotifyArtistCommand extends Command {
   }
 
   public async exec(message: Message, { artist }: { artist: string }) {
-    const res = await this.client.APIManager.spotify.searchArtists(artist, { limit: 1 });
+    const res = await this.client.apiManager.spotify.searchArtists(artist, { limit: 1 });
     if (!res.body.artists!.items.length) {
       return message.util!.reply('Nothing found!');
     }

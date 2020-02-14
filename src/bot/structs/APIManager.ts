@@ -1,15 +1,18 @@
 // @ts-ignore
 import * as SpotifyWebApi from 'spotify-web-api-node';
 import { GraphQLClient } from 'graphql-request';
+import { Myriag } from './Myriag';
 import JunkoClient from '../client/JunkoClient';
 
 export class APIManager {
+  public metallum = new GraphQLClient(process.env.METALLUM_URL!);
+
+  public myraig = new Myriag();
+
   public spotify = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_ID,
     clientSecret: process.env.SPOTIFY_SECRET
   });
-
-  public metallum = new GraphQLClient('https://metallum.hichuyamichu.me/graphql');
 
   public constructor(private readonly client: JunkoClient) {}
 

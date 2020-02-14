@@ -27,7 +27,7 @@ declare module 'discord-akairo' {
     prometheus: Prometheus;
     rpc: RPCServer;
     replyManager: ReplyManager;
-    APIManager: APIManager;
+    apiManager: APIManager;
     logger: Logger;
     commandHandler: CommandHandler;
   }
@@ -42,7 +42,7 @@ export default class JunkoClient extends AkairoClient {
 
   public replyManager = new ReplyManager(this);
 
-  public APIManager = new APIManager(this);
+  public apiManager = new APIManager(this);
 
   public logger = new Logger();
 
@@ -96,7 +96,7 @@ export default class JunkoClient extends AkairoClient {
   private async init() {
     this.db = await Database.get('junko').connect();
     this.settings = new SettingsProvider(this.db.getRepository(Settings));
-    this.APIManager.init();
+    this.apiManager.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
