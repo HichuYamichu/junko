@@ -26,8 +26,8 @@ export default class TagListCommand extends Command {
       .embed()
       .setColor(this.client.config.color)
       .setAuthor(
-        `${message.author!.tag} (${message.author!.id})`,
-        message.author!.displayAvatarURL()
+        `${message.author.tag} (${message.author.id})`,
+        message.author.displayAvatarURL()
       )
       .addField('**Available tags:**', guildTags);
 

@@ -13,20 +13,20 @@ export default class MessageDeleteListener extends Listener {
 
   public async exec(message: Message) {
     if (!message.guild!.me!.hasPermission('EMBED_LINKS')) return;
-    if (message.author!.bot) return;
+    if (message.author.bot) return;
     if (!message.guild) return;
     if (!message.content) return;
     const messageLog = await this.client.settings.get(message.guild, 'messageLog', '');
     if (!messageLog) return;
-    const messageLogChannel = this.client.channels.get(messageLog);
+    const messageLogChannel = this.client.channels.cache.get(messageLog);
     if (!messageLogChannel) return;
     const attachment = message.attachments.first();
 
     const embed = this.client.util
       .embed()
       .setAuthor(
-        `${message.author!.tag} (${message.author!.id})`,
-        message.author!.displayAvatarURL()
+        `${message.author.tag} (${message.author.id})`,
+        message.author.displayAvatarURL()
       )
       .setTitle('**MESSAGE DELETED**')
       .setColor(this.client.config.color)

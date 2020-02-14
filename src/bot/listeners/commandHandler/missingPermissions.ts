@@ -37,7 +37,7 @@ export default class MissingPermissionsListener extends Listener {
         text = `I need ${str} permission for this command`;
         break;
       case 'user':
-        str = this.missingPermissions(message.channel as TextChannel, message.author!, missing);
+        str = this.missingPermissions(message.channel as TextChannel, message.author, missing);
         text = `You need ${str} permission for this command`;
         break;
     }

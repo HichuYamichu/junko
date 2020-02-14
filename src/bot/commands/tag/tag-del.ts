@@ -23,10 +23,10 @@ export default class TagDelCommand extends Command {
 
   public async exec(message: Message, { name }: { name: string }) {
     const guild = message.guild!.id;
-    const author = message.author!.id;
+    const author = message.author.id;
 
     const repo = this.client.db.getRepository(Tag);
-    const where = this.client.isOwner(message.author!) ? { guild, name } : { guild, name, author };
+    const where = this.client.isOwner(message.author) ? { guild, name } : { guild, name, author };
 
     const result = await repo
       .createQueryBuilder()

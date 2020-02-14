@@ -14,18 +14,18 @@ export default class MessageUpdateListener extends Listener {
   public async exec(oldMessage: Message, newMessage: Message) {
     if (!newMessage.guild) return;
     if (!newMessage.guild.me!.hasPermission('EMBED_LINKS')) return;
-    if (oldMessage.author!.bot || newMessage.author!.bot) return;
+    if (oldMessage.author.bot || newMessage.author.bot) return;
     if (Util.escapeMarkdown(oldMessage.content) === Util.escapeMarkdown(newMessage.content)) return;
     const messageLog = await this.client.settings.get(newMessage.guild, 'messageLog', '');
     if (!messageLog) return;
-    const messageLogChannel = this.client.channels.get(messageLog);
+    const messageLogChannel = this.client.channels.cache.get(messageLog);
     if (!messageLogChannel) return;
 
     const embed = this.client.util
       .embed()
       .setAuthor(
-        `${newMessage.author!.tag} (${newMessage.author!.id})`,
-        newMessage.author!.displayAvatarURL()
+        `${newMessage.author.tag} (${newMessage.author.id})`,
+        newMessage.author.displayAvatarURL()
       )
       .setTitle('**MESSAGE UPDATED**')
       .setColor(this.client.config.color)

@@ -38,9 +38,9 @@ export default class TagEditCommand extends Command {
     }
 
     const guild = message.guild!.id;
-    const author = message.author!.id;
+    const author = message.author.id;
 
-    const where = this.client.isOwner(message.author!) ? { guild, name } : { guild, name, author };
+    const where = this.client.isOwner(message.author) ? { guild, name } : { guild, name, author };
 
     const repo = this.client.db.getRepository(Tag);
     const result = await repo.update(where, { content });

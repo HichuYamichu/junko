@@ -19,7 +19,7 @@ export default class CommandCancelledListener extends Listener {
   public exec(message: Message, command: Command, args: any) {
     const channel = message.guild
       ? `Guild: ${message.guild.name} (${message.guild.id})`
-      : `DM: ${message.author!.tag} (${message.author!.id})`;
+      : `DM: ${message.author.tag} (${message.author.id})`;
     const cmdArgs = Object.keys(args).length && !args.command ? `Args: ${this.clean(args)}` : '';
     const log = `Finished  ${command.id} on ${channel} ${cmdArgs}`;
     this.client.logger.info(log);

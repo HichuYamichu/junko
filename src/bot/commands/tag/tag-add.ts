@@ -38,7 +38,7 @@ export default class TagAddCommand extends Command {
     }
 
     const guild = message.guild!.id;
-    const author = message.author!.id;
+    const author = message.author.id;
 
     const repo = this.client.db.getRepository(Tag);
     const { count } = await repo
@@ -47,7 +47,7 @@ export default class TagAddCommand extends Command {
       .where({ guild, author })
       .getRawOne();
 
-    if (count >= 15 && !this.client.isOwner(message.author!)) {
+    if (count >= 15 && !this.client.isOwner(message.author)) {
       return message.util!.reply(
         'you have reached max tag count for this guild. You must edit or delete your existing tags.'
       );
