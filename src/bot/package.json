@@ -32,7 +32,6 @@
     "node-spotify-api": "^1.1.1",
     "pg": "^7.12.1",
     "prom-client": "^11.5.3",
-    "sequelize": "^5.18.1",
     "simple-youtube-api": "^5.2.1",
     "spotify-web-api-node": "^4.0.0",
     "typeorm": "0.2.21"
