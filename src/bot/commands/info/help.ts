@@ -40,10 +40,9 @@ export default class HelpCommand extends Command {
           \`<thing1 | thing2>\` - multiple content types available
           \`[thing]\` - parameter is optional or has a default value`
         )
-        .addBlankField();
+        .addField('\u200B', '\u200B');
 
       for (const category of this.handler.categories.values()) {
-        if (category.id === 'passive') continue;
         embed.addField(
           category.id.replace(/(\b\w)/gi, lc => lc.toUpperCase()),
           `${category
