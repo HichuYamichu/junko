@@ -14,6 +14,7 @@ const languages: [string, string[]][] = [
   ['idris', ['idris', 'idr']],
   ['java', ['java']],
   ['javascript', ['javascript', 'js']],
+  ['typescript', ['typescript', 'ts']],
   ['julia', ['julia']],
   ['lua', ['lua']],
   ['ocaml', ['ocaml', 'ml']],
