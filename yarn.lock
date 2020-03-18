@@ -4670,18 +4670,17 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-aqua@^7.1.2:
+eslint-config-aqua@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/eslint-config-aqua/-/eslint-config-aqua-7.2.1.tgz#10802b39d4c21f7b8192bb33ad5b7014b52683c6"
   integrity sha512-GXRpVRoxD4qIriJ7/8+XCG5P04gtT/Yqwv1u0b6X8X5ue/JouFCpRWTnhktNVVrafeq7ObLbAJG99rbb3MsVww==
 
-eslint-config-marine@^5.3.2:
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-marine/-/eslint-config-marine-5.3.2.tgz#46a461a5c436ea0b85fa19532478f287e5dc9f0e"
-  integrity sha512-II5YYnc1xTmYzgfUO0T8bqxH3FTNTXdTnwYtWrn2gxabqiWfAljkVjh/K9SltQhD5LQsVgJdn4xDRbjENWGPqQ==
+eslint-config-marine@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-marine/-/eslint-config-marine-6.0.0.tgz#00a89ad05e186ab1fa95c6629c04df6afe5dd4cc"
+  integrity sha512-4735oFwmfMsXQY/MUKJ/N8EjCqHiLkAu9kbxOjdQCwJpWUeDpGwLUN5LL/c5DZQ/NaQVGfLvUM0gq4waj8UwAA==
   dependencies:
-    eslint-config-aqua "^7.1.2"
-    eslint-plugin-promise "^4.2.1"
+    eslint-config-aqua "^7.2.1"
 
 eslint-config-standard@^12.0.0:
   version "12.0.0"
@@ -7651,22 +7650,6 @@ node-object-hash@^1.2.0:
   resolved "https://registry.yarnpkg.com/node-object-hash/-/node-object-hash-1.4.2.tgz#385833d85b229902b75826224f6077be969a9e94"
   integrity sha512-UdS4swXs85fCGWWf6t6DMGgpN/vnlKeSGEQ7hJcrs7PBFoxoKLmibc3QRb7fwiYsjdL7PX8iI/TMSlZ90dgHhQ==
 
-node-pre-gyp@*, node-pre-gyp@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
-  integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4.4.2"
-
 node-pre-gyp@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.11.0.tgz#db1f33215272f692cd38f03238e3e9b47c5dd054"
@@ -7682,6 +7665,22 @@ node-pre-gyp@^0.11.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+node-pre-gyp@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
+  integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
+  dependencies:
+    detect-libc "^1.0.2"
+    mkdirp "^0.5.1"
+    needle "^2.2.1"
+    nopt "^4.0.1"
+    npm-packlist "^1.1.6"
+    npmlog "^4.0.2"
+    rc "^1.2.7"
+    rimraf "^2.6.1"
+    semver "^5.3.0"
+    tar "^4.4.2"
 
 node-releases@^1.1.50:
   version "1.1.50"
