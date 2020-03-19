@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^8.2.0",
-    "@types/ioredis": "^4.14.4",
+    "@types/ioredis": "^4.14.9",
     "@types/moment-duration-format": "^2.2.2",
     "@types/node": "^13.1.8",
     "@types/spotify-web-api-node": "^4.0.1",
