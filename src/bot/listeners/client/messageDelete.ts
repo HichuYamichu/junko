@@ -14,9 +14,8 @@ export default class MessageDeleteListener extends Listener {
   public async exec(message: Message) {
     if (!message.guild!.me!.hasPermission('EMBED_LINKS')) return;
     if (message.author.bot) return;
-    if (!message.guild) return;
     if (!message.content) return;
-    const messageLog = await this.client.settings.get(message.guild, 'messageLog', '');
+    const messageLog = await this.client.settings.get(message.guild!, 'messageLog', '');
     if (!messageLog) return;
     const messageLogChannel = this.client.channels.cache.get(messageLog);
     if (!messageLogChannel) return;
@@ -40,7 +39,7 @@ export default class MessageDeleteListener extends Listener {
       .setTimestamp(new Date())
       .setFooter('Deleted');
 
-    if (attachment) embed.addField('**Attachment(s):**', attachment ? attachment.url : 'None');
+    if (attachment) embed.addField('**Attachment(s):**', attachment.url);
     return (messageLogChannel as TextChannel).send(embed);
   }
 }
