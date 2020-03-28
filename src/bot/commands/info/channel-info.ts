@@ -13,9 +13,9 @@ export default class ChannelInfoCommand extends Command {
       ownerOnly: false,
       channel: 'guild',
       description: {
-        content: 'Sends info about current channel.',
-        usage: '',
-        examples: ['']
+        content: 'Sends info about channel.',
+        usage: '<id | channel name | mention>',
+        examples: ['506171893666283520', 'general', '#general']
       },
       args: [
         {

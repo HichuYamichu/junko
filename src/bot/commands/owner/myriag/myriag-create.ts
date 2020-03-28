@@ -8,8 +8,8 @@ export default class MyriagCreateCommand extends Command {
       ownerOnly: true,
       description: {
         content: 'Creates Myriag container',
-        usage: '',
-        examples: []
+        usage: '<lang>',
+        examples: ['ts', 'typescript', 'rust']
       },
       args: [
         {

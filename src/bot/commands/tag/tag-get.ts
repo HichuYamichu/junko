@@ -8,6 +8,11 @@ export default class TagGetCommand extends Command {
       category: 'tags',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'gets a tag',
+        usage: '<tag>',
+        examples: ['tagName']
+      },
       args: [
         {
           id: 'name',

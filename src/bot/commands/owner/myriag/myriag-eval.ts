@@ -9,8 +9,8 @@ export default class MyriagEvalCommand extends Command {
       ownerOnly: true,
       description: {
         content: 'Evaluates arbitrary code',
-        usage: '',
-        examples: []
+        usage: '<code block>',
+        examples: ['```py print("hello") ```']
       },
       args: [
         {

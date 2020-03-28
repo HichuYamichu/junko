@@ -8,6 +8,11 @@ export default class TagAddCommand extends Command {
       category: 'tags',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'adds a new tag',
+        usage: '<tag> <content>',
+        examples: ['tagName TagContent']
+      },
       args: [
         {
           id: 'name',

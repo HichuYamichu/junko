@@ -8,6 +8,11 @@ export default class TagDelCommand extends Command {
       category: 'tags',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'adds a new tag',
+        usage: '<tag>',
+        examples: ['tagName']
+      },
       args: [
         {
           id: 'name',
