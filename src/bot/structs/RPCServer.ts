@@ -1,7 +1,6 @@
 import JunkoClient from '../client/JunkoClient';
 import * as Mali from 'mali';
-import { join } from 'path';
-const protoPath = join(__dirname, '../../..', 'proto/services.proto');
+import { DescriptionFetcherService } from '../generated/services_grpc_pb';
 
 export class RPCServer extends Mali {
   public fetchCategories = (ctx: Mali.Context) => {
@@ -26,7 +25,7 @@ export class RPCServer extends Mali {
   };
 
   public constructor(private readonly client: JunkoClient) {
-    super(protoPath, 'DescriptionFetcher');
+    super(DescriptionFetcherService, 'DescriptionFetcher');
   }
 
   private init() {

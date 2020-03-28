@@ -2,6 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "declaration": false,
+    "allowJs": true,
     "removeComments": false,
     "alwaysStrict": true,
     "pretty": true,
