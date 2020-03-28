@@ -27,7 +27,7 @@ export default class LogSetCommand extends Command {
       await this.client.settings.set(message.guild!.id, 'messageLog', chan.id);
       return message.util!.send(`Message log enabled in ${chan}!`);
     }
-    await this.client.settings.del(message.guild!.id, 'messageLog');
+    await this.client.settings.delete(message.guild!.id, 'messageLog');
     return message.util!.send('Message log disabled.');
   }
 }

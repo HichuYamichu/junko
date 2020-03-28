@@ -1,12 +1,22 @@
 import { Guild } from 'discord.js';
-import { Repository, InsertResult, UpdateResult, DeleteResult } from 'typeorm';
+import { Provider } from 'discord-akairo';
+import { Repository } from 'typeorm';
 import { Settings } from '../models/Settings';
-import { SettingsCache } from './Cache';
+import { Collection } from 'discord.js';
 
-export class SettingsProvider {
-  private readonly cache = new SettingsCache();
+export class SettingsProvider extends Provider {
+  public constructor(private readonly repo: Repository<Settings>) {
+    super();
+  }
 
-  public constructor(private readonly repo: Repository<Settings>) {}
+  public items!: Collection<string, Settings>;
+
+  public async init() {
+    const settings = await this.repo.find();
+    for (const setting of settings) {
+      this.items.set(setting.guild, setting);
+    }
+  }
 
   public async get<K extends keyof Settings>(
     guild: string | Guild,
@@ -14,51 +24,40 @@ export class SettingsProvider {
     defaultValue: Settings[K]
   ): Promise<Settings[K]> {
     const id = this.getGuildID(guild);
-    const cached = await this.cache.get(id, key);
+    const cached = this.items.get(id);
     if (cached) {
-      return typeof defaultValue === 'string' ? cached : JSON.parse(cached);
+      const value = cached[key];
+      return value == null ? defaultValue : value;
     }
 
-    const res = await this.repo.findOne(id, { select: [key] });
-    if (!res) return defaultValue;
-    const value = res[key];
-    if (!value) return defaultValue;
-
-    await this.cache.set(id, key, value);
-    return value;
+    return defaultValue;
   }
 
-  public async set(guild: string | Guild, key: string, value: string): Promise<InsertResult> {
+  public async set<K extends keyof Settings>(guild: string | Guild, key: K, value: Settings[K]) {
     const id = this.getGuildID(guild);
-    await this.cache.del(id, key);
-    return this.repo
-      .createQueryBuilder()
-      .insert()
-      .values({ guild: id, [key]: value })
-      .onConflict(`("guild") DO UPDATE SET "${key}" = :${key}`)
-      .setParameter(key, value)
-      .execute();
+    const settings = this.items.get(id) || new Settings();
+    settings.guild = id;
+    settings[key] = value;
+    this.items.set(id, settings);
+    await this.repo.save(settings);
   }
 
-  public async del(guild: string | Guild, key: string): Promise<UpdateResult> {
+  public async delete(guild: string | Guild, key: keyof Settings) {
     const id = this.getGuildID(guild);
-    await this.cache.del(id, key);
-    return this.repo
-      .createQueryBuilder()
-      .update()
-      .where(id)
-      .set({ [key]: null })
-      .execute();
+    const cashed = this.items.get(id);
+    if (cashed?.[key] != null) {
+      delete cashed[key];
+      this.items.set(id, cashed);
+      await this.repo.save(cashed);
+    }
   }
 
-  public async clear(guild: string | Guild): Promise<DeleteResult> {
+  public async clear(guild: string | Guild) {
     const id = this.getGuildID(guild);
-    await this.cache.clear(id);
-    return this.repo
-      .createQueryBuilder()
-      .delete()
-      .where(id)
-      .execute();
+    if (this.items.has(id)) {
+      this.items.delete(id);
+      await this.repo.delete({ guild: id });
+    }
   }
 
   private getGuildID(guild: string | Guild): string {

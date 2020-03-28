@@ -6,17 +6,17 @@ export class Settings {
   public guild!: string;
 
   @Column({ type: 'character varying', name: 'prefix', nullable: true })
-  public prefix!: string;
+  public prefix!: string | null;
 
   @Column({ type: 'character varying', name: 'preset', nullable: true })
-  public preset!: string;
+  public preset!: string | null;
 
   @Column({ type: 'character varying', name: 'memberLog', nullable: true })
-  public memberLog!: string;
+  public memberLog!: string | null;
 
   @Column({ type: 'character varying', name: 'messageLog', nullable: true })
-  public messageLog!: string;
+  public messageLog!: string | null;
 
   @Column({ type: 'character varying', array: true, nullable: true })
-  public blacklist!: string[];
+  public blacklist!: string[] | null;
 }

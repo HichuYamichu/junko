@@ -9,7 +9,6 @@ dependencies:
   google-protobuf: 3.11.4
   graphql-request: 1.8.2
   grpc: 1.24.2
-  ioredis: 4.16.1
   kaori: 2.0.1
   mali: 0.19.0_e3eb8df1f014b4717d33781e1c34e6d2
   moment: 2.24.0
@@ -22,7 +21,6 @@ dependencies:
   typeorm: 0.2.21
 devDependencies:
   '@types/common-tags': 1.8.0
-  '@types/ioredis': 4.14.9
   '@types/moment-duration-format': 2.2.2
   '@types/node': 13.9.5
   '@types/spotify-web-api-node': 4.0.1
@@ -140,12 +138,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
-  /@types/ioredis/4.14.9:
-    dependencies:
-      '@types/node': 13.9.5
-    dev: true
-    resolution:
-      integrity: sha512-yNdzppM6vY4DYqXCnt4A3PXArxsMWeJCYxFlyl4AJKrNSGMEAP9TPcXR+8Q6zh9glcCtxmwMQhi4pwdqqHH3OA==
   /@types/json-schema/7.0.4:
     dev: true
     resolution:
@@ -780,12 +772,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==
-  /cluster-key-slot/1.1.0:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha512-2Nii8p3RwAPiFwsnZvukotvow2rIHM+yQ6ZcBXGHdniadkYGZYiGmkHJIbZPIV9nfv7m/U1IPMVVcAhoWFeklw==
   /code-point-at/1.1.0:
     dev: false
     engines:
@@ -1010,12 +996,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
-  /denque/1.4.1:
-    dev: false
-    engines:
-      node: '>=0.10'
-    resolution:
-      integrity: sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
   /destroy/1.0.4:
     dev: false
     resolution:
@@ -1826,22 +1806,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
-  /ioredis/4.16.1:
-    dependencies:
-      cluster-key-slot: 1.1.0
-      debug: 4.1.1
-      denque: 1.4.1
-      lodash.defaults: 4.2.0
-      lodash.flatten: 4.4.0
-      redis-commands: 1.5.0
-      redis-errors: 1.2.0
-      redis-parser: 3.0.0
-      standard-as-callback: 2.0.1
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-g76Mm9dE7BLuewncu1MimGZw5gDDjDwjoRony/VoSxSJEKAhuYncDEwYKYjtHi2NWsTNIB6XXRjE64uVa/wpKQ==
   /is-accessor-descriptor/0.1.6:
     dependencies:
       kind-of: 3.2.2
@@ -2215,18 +2179,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-sFOuAuSoAIWC5yVrnQK9ptA4A5U=
-  /lodash.defaults/4.2.0:
-    dev: false
-    resolution:
-      integrity: sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
   /lodash.find/4.6.0:
     dev: false
     resolution:
       integrity: sha1-ywcE1Hq3F4n/oN6Ll92Sb7iLE7E=
-  /lodash.flatten/4.4.0:
-    dev: false
-    resolution:
-      integrity: sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
   /lodash.forown/4.4.0:
     dev: false
     resolution:
@@ -3079,24 +3035,6 @@ packages:
       node: '>=0.10'
     resolution:
       integrity: sha512-1JU/8q+VgFZyxwrJ+SVIOsh+KywWGpds3NTqikiKpDMZWScmAYyKIgqkO+ARvNWJfXeXR1zxz7aHF4u4CyH6vQ==
-  /redis-commands/1.5.0:
-    dev: false
-    resolution:
-      integrity: sha512-6KxamqpZ468MeQC3bkWmCB1fp56XL64D4Kf0zJSwDZbVLLm7KFkoIcHrgRvQ+sk8dnhySs7+yBg94yIkAK7aJg==
-  /redis-errors/1.2.0:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-62LSrbFeTq9GEMBK/hUpOEJQq60=
-  /redis-parser/3.0.0:
-    dependencies:
-      redis-errors: 1.2.0
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   /reflect-metadata/0.1.13:
     dev: false
     resolution:
@@ -3477,10 +3415,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==
-  /standard-as-callback/2.0.1:
-    dev: false
-    resolution:
-      integrity: sha512-NQOxSeB8gOI5WjSaxjBgog2QFw55FV8TkS6Y07BiB3VJ8xNTvUYm0wl0s8ObgQ5NhdpnNfigMIKjgPESzgr4tg==
   /static-extend/0.1.2:
     dependencies:
       define-property: 0.2.5
@@ -4219,7 +4153,6 @@ packages:
 specifiers:
   '@grpc/proto-loader': ^0.5.2
   '@types/common-tags': ^1.8.0
-  '@types/ioredis': ^4.14.9
   '@types/moment-duration-format': ^2.2.2
   '@types/node': ^13.9.4
   '@types/spotify-web-api-node': ^4.0.1
@@ -4237,7 +4170,6 @@ specifiers:
   google-protobuf: ^3.11.4
   graphql-request: ^1.8.2
   grpc: ^1.23.3
-  ioredis: ^4.14.1
   kaori: ^2.0.0
   mali: ^0.19.0
   moment: ^2.24.0
