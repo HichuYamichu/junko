@@ -92,3 +92,6 @@ sw.*
 
 # python
 __pycache__
+
+# docker
+docker-compose.yaml

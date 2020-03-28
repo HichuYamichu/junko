@@ -10,25 +10,20 @@ RPC_ADDR=
 
 WORKDIR /usr/src/junko
 
-COPY src/bot/package.json /usr/src/junko/src/bot/
-COPY tsconfig.json package.json yarn.lock /usr/src/junko/
-COPY src/proto /usr/src/junko/src/proto
-
-RUN ls
+COPY src/bot/package.json src/bot/pnpm-lock.yaml src/bot/tsconfig.json /usr/src/junko/
 
 RUN apk add --update \
 && apk add --no-cache pixman cairo pango giflib libjpeg-turbo \
 && apk add --no-cache --virtual .build-deps git curl build-base jpeg-dev pixman-dev \
 cairo-dev pango-dev pangomm-dev libjpeg-turbo-dev giflib-dev freetype-dev python g++ make \
-&& yarn install --build-from-source \
+&& curl -L https://unpkg.com/@pnpm/self-installer | node \
+&& pnpm install \
 && apk del .build-deps
 
-COPY src/bot /usr/src/junko/src/bot/
+COPY src/bot /usr/src/junko/
 
-WORKDIR /usr/src/junko/src/bot
-
-RUN yarn build
+RUN pnpm run build
 
 EXPOSE 5000
 
-CMD ["yarn", "start"]
+CMD ["pnpm", "run", "start"]

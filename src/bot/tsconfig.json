@@ -1,15 +1,19 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
+    "declaration": false,
+    "removeComments": false,
+    "alwaysStrict": true,
+    "pretty": true,
     "outDir": "dist",
     "lib": [
-			"esnext",
-			"esnext.array",
-			"esnext.asynciterable",
-			"esnext.intl",
-			"esnext.symbol",
-			"dom"
-		],
+      "esnext",
+      "esnext.array",
+      "esnext.asynciterable",
+      "esnext.intl",
+      "esnext.symbol",
+      "dom"
+    ],
     "module": "commonjs",
     "target": "es2019",
     "resolveJsonModule": true,
@@ -17,10 +21,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": false,
-		"inlineSourceMap": true,
+    "inlineSourceMap": true,
     "inlineSources": true,
     "sourceRoot": "./",
     "noEmitHelpers": true,
-		"importHelpers": true
+    "importHelpers": true
   }
 }

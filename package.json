@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "devDependencies": {},
-  "workspaces": [
-    "src/bot",
-    "src/dashboard"
-  ]
-}

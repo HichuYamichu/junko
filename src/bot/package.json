@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "build": "rimraf dist && tsc",
-    "dev": "yarn build && node dist/Junko.js",
+    "dev": "pnpm run build && node dist/Junko.js",
     "start": "node dist/Junko.js"
   },
   "dependencies": {
@@ -37,18 +37,17 @@
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
-    "@types/dotenv": "^8.2.0",
     "@types/ioredis": "^4.14.9",
     "@types/moment-duration-format": "^2.2.2",
     "@types/node": "^13.9.4",
     "@types/spotify-web-api-node": "^4.0.1",
-    "@typescript-eslint/parser": "^2.25.0",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
-
+    "@typescript-eslint/parser": "^2.25.0",
     "eslint": "^6.8.0",
     "eslint-config-marine": "^6.0.0",
     "nodemon": "^1.19.1",
     "rimraf": "^3.0.0",
+    "tslib": "^1.11.1",
     "typescript": "^3.7.5"
   },
   "optionalDependencies": {
