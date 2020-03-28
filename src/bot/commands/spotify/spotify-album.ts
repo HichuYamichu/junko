@@ -6,6 +6,11 @@ export default class SpotifyAlbumCommand extends Command {
     super('spotify-album', {
       category: 'spotify',
       ownerOnly: false,
+      description: {
+        content: 'searches spotify for an album',
+        usage: '<album name>',
+        examples: ['Black Ben Carson']
+      },
       args: [
         {
           id: 'album',

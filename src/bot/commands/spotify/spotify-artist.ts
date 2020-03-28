@@ -6,6 +6,11 @@ export default class SpotifyArtistCommand extends Command {
     super('spotify-artist', {
       category: 'spotify',
       ownerOnly: false,
+      description: {
+        content: 'searches spotify for an artist',
+        usage: '<artist name>',
+        examples: ['jpegmafia']
+      },
       args: [
         {
           id: 'artist',

@@ -12,13 +12,15 @@ export default class TagCommand extends Command {
         • get \`<tag>\`
         • add \`<tag> <content>\`
         • del \`<tag>\`
-        • edit \`<tag> <content>\``,
+        • edit \`<tag> <content>\`
+        • list `,
         usage: '<method> <...args>',
         examples: [
           'get tagName',
           'add tagName TagContent',
           'del tagName',
-          'edit tagName TagContent'
+          'edit tagName TagContent',
+          'list'
         ]
       }
     });

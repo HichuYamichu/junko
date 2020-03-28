@@ -12,7 +12,7 @@ export default class StatsCommand extends Command {
       category: 'info',
       ownerOnly: false,
       description: {
-        content: 'Sends my private info.',
+        content: 'Sends some process info.',
         usage: '',
         examples: ['']
       },

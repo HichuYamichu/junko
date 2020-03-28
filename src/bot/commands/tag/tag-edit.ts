@@ -8,6 +8,11 @@ export default class TagEditCommand extends Command {
       category: 'tags',
       ownerOnly: false,
       channel: 'guild',
+      description: {
+        content: 'edits a tag',
+        usage: '<tag> <content>',
+        examples: ['tagName TagContent']
+      },
       args: [
         {
           id: 'name',

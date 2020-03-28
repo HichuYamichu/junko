@@ -7,7 +7,12 @@ export default class TagListCommand extends Command {
     super('tag-list', {
       category: 'tags',
       ownerOnly: false,
-      channel: 'guild'
+      channel: 'guild',
+      description: {
+        content: 'lists tags',
+        usage: '',
+        examples: ['']
+      }
     });
   }
 

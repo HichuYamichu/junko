@@ -6,6 +6,11 @@ export default class SpotifyPlaylistCommand extends Command {
     super('spotify-playlist', {
       category: 'spotify',
       ownerOnly: false,
+      description: {
+        content: 'searches spotify for an playlist',
+        usage: '<playlist name>',
+        examples: ['jpegmafia']
+      },
       args: [
         {
           id: 'playlist',

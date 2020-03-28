@@ -6,6 +6,11 @@ export default class SpotifyTrackCommand extends Command {
     super('spotify-track', {
       category: 'spotify',
       ownerOnly: false,
+      description: {
+        content: 'searches spotify for an track',
+        usage: '<track name>',
+        examples: ['baby i\'m bleeding']
+      },
       args: [
         {
           id: 'track',
@@ -19,7 +24,7 @@ export default class SpotifyTrackCommand extends Command {
     });
   }
 
-  public async exec(message: Message, { track }: {track: string}) {
+  public async exec(message: Message, { track }: { track: string }) {
     const res = await this.client.apiManager.spotify.searchTracks(track, { limit: 1 });
     if (!res.body.tracks!.items.length) {
       return message.util!.reply('Nothing found!');
