@@ -62,7 +62,7 @@ export default class HelpCommand extends Command {
       )
       .addField('Description:', command.description.content);
 
-    if (command.description.examples && command.description.examples.length) {
+    if (command.description.examples?.length) {
       embed.addField(
         'Examples:',
         `\`${command.aliases[0]} ${command.description.examples.join(
