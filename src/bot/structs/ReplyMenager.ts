@@ -6,7 +6,7 @@ export class ReplyManager {
   public constructor(private readonly client: JunkoClient) {}
 
   private getPreset(message: Message): Promise<string> {
-    return this.client.settings.get(message.guild!, 'preset', this.client.config.defaultPreset);
+    return this.client.settings.get(message.guild, 'preset', this.client.config.defaultPreset);
   }
 
   public async getReply(message: Message, category: string): Promise<string> {

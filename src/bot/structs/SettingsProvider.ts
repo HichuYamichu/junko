@@ -1,8 +1,7 @@
-import { Guild } from 'discord.js';
+import { Guild, Collection } from 'discord.js';
 import { Provider } from 'discord-akairo';
 import { Repository } from 'typeorm';
 import { Settings } from '../models/Settings';
-import { Collection } from 'discord.js';
 
 export class SettingsProvider extends Provider {
   public constructor(private readonly repo: Repository<Settings>) {
@@ -27,7 +26,7 @@ export class SettingsProvider extends Provider {
     const cached = this.items.get(id);
     if (cached) {
       const value = cached[key];
-      return value == null ? defaultValue : value;
+      return value === null ? defaultValue : value;
     }
 
     return defaultValue;
@@ -45,7 +44,7 @@ export class SettingsProvider extends Provider {
   public async delete(guild: string | Guild, key: keyof Settings) {
     const id = this.getGuildID(guild);
     const cashed = this.items.get(id);
-    if (cashed?.[key] != null) {
+    if (cashed?.[key] !== null) {
       delete cashed[key];
       this.items.set(id, cashed);
       await this.repo.save(cashed);

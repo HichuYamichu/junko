@@ -12,7 +12,7 @@ export default class GuildMemberRemoveListener extends Listener {
   }
 
   public async exec(member: GuildMember) {
-    if (!member.guild.me!.hasPermission('EMBED_LINKS')) return;
+    if (!member.guild.me.hasPermission('EMBED_LINKS')) return;
     const memberLog = await this.client.settings.get(member.guild, 'memberLog', '');
     if (!memberLog) return;
     const memberLogChannel = this.client.channels.cache.get(memberLog);
@@ -23,7 +23,7 @@ export default class GuildMemberRemoveListener extends Listener {
       .setColor(this.client.config.color)
       .setDescription(
         `**Left after:** ${moment
-          .duration(Date.now() - member.joinedTimestamp!)
+          .duration(Date.now() - member.joinedTimestamp)
           .format('d[d ]h[h ]m[m ]s[s]')}`
       )
       .setFooter('Left')

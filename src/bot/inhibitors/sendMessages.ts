@@ -11,7 +11,7 @@ export default class SendMessagesInhibitor extends Inhibitor {
   public exec(message: Message) {
     if (!message.guild) return false;
     return !(message.channel as TextChannel)
-      .permissionsFor(this.client.user!)!
+      .permissionsFor(this.client.user)!
       .has('SEND_MESSAGES');
   }
 }

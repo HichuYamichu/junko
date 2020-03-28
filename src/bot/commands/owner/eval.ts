@@ -27,9 +27,9 @@ export default class EvalCommand extends Command {
   }
 
   public async exec(message: Message, { code }: { code: string }) {
-    const token = this.client.token!.split('').join('[^]{0,2}');
-    const rev = this.client
-      .token!.split('')
+    const token = this.client.token.split('').join('[^]{0,2}');
+    const rev = this.client.token
+      .split('')
       .reverse()
       .join('[^]{0,2}');
     const tokenRegex = new RegExp(`${token}|${rev}`, 'g');
@@ -37,7 +37,6 @@ export default class EvalCommand extends Command {
     try {
       // eslint-disable-next-line no-eval
       let evaled = await eval(code);
-      // eslint-disable-next-line promise/prefer-await-to-then
       if ((evaled !== null || undefined) && typeof evaled.then === 'function') {
         evaled = await evaled;
       }
@@ -46,7 +45,7 @@ export default class EvalCommand extends Command {
       evaled = evaled.replace(tokenRegex, '[super secret token]');
       if ((evaled as string).length + code.length > 1900) evaled = 'Output too long.';
 
-      await message.util!.send([
+      await message.util.send([
         `**Input**\`\`\`js`,
         code,
         '```',
@@ -55,7 +54,7 @@ export default class EvalCommand extends Command {
         '```'
       ]);
     } catch (err) {
-      return message.util!.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+      return message.util.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
     }
   }
 }

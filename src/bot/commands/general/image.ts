@@ -38,14 +38,14 @@ export default class ImageCommand extends Command {
         random: true
       });
       if (!result) {
-        return message.util!.send(
+        return message.util.send(
           // eslint-disable-next-line max-len
           'No results! Are you sure your query is correct? Read https://danbooru.donmai.us/wiki_pages/43049.'
         );
       }
-      return message.util!.send({ files: [result.fileURL] });
+      return message.util.send({ files: [result.fileURL] });
     } catch (e) {
-      return message.util!.send(
+      return message.util.send(
         'Error! Probably invalid search query. Read https://danbooru.donmai.us/wiki_pages/43049.'
       );
     }

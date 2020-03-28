@@ -17,9 +17,9 @@ export default class UserInfoCommand extends Command {
       },
       args: [
         {
-          id: 'member',
-          type: 'member',
-          default: (message: Message) => message.member
+          'id': 'member',
+          'type': 'member',
+          'default': (message: Message) => message.member
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -36,7 +36,7 @@ export default class UserInfoCommand extends Command {
         stripIndents`
         ${member.nickname === undefined ? '• No nickname' : `• Nickname: ${member.nickname}`}
         • Roles: ${member.roles.cache.map(r => `\`${r.name}\``).join(' ')}
-        • Joined at: ${moment.utc(member.joinedAt!).format('YYYY/MM/DD hh:mm:ss')}
+        • Joined at: ${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}
         `
       )
       .addField(
@@ -50,6 +50,6 @@ export default class UserInfoCommand extends Command {
         `
       )
       .setThumbnail(member.user.displayAvatarURL());
-    return message.util!.send(embed);
+    return message.util.send(embed);
   }
 }

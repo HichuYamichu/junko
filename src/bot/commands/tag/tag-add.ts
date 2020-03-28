@@ -36,13 +36,13 @@ export default class TagAddCommand extends Command {
 
   public async exec(message: Message, { name, content }: { name: string; content: string }) {
     if (name && name.length >= 255) {
-      return message.util!.reply('tag name must be less then 255 characters.');
+      return message.util.reply('tag name must be less then 255 characters.');
     }
     if (content && content.length >= 1900) {
-      return message.util!.reply('tag content must be less then 1900 characters (discord limits).');
+      return message.util.reply('tag content must be less then 1900 characters (discord limits).');
     }
 
-    const guild = message.guild!.id;
+    const guild = message.guild.id;
     const author = message.author.id;
 
     const repo = this.client.db.getRepository(Tag);
@@ -53,7 +53,7 @@ export default class TagAddCommand extends Command {
       .getRawOne();
 
     if (count >= 15 && !this.client.isOwner(message.author)) {
-      return message.util!.reply(
+      return message.util.reply(
         'you have reached max tag count for this guild. You must edit or delete your existing tags.'
       );
     }
@@ -68,12 +68,12 @@ export default class TagAddCommand extends Command {
     } catch (e) {
       if (e.message === `duplicate key value violates unique constraint "guild_name"`) {
         const reply = `Tag with such name already exists in this guild.`;
-        return message.util!.send(reply);
+        return message.util.send(reply);
       }
 
       this.client.logger.error(e);
-      return message.util!.send('Unexpected problem occurred!');
+      return message.util.send('Unexpected problem occurred!');
     }
-    return message.util!.send('Tag succesfuly created.');
+    return message.util.send('Tag succesfuly created.');
   }
 }

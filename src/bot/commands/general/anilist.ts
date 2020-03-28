@@ -47,10 +47,10 @@ export default class AnilistCommand extends Command {
       const {
         data: { data }
       } = await axios.post(url, { query, variables });
-      return message.util!.send(`https://anilist.co/${type.toLowerCase()}/${data.Media.id}`);
+      return message.util.send(`https://anilist.co/${type.toLowerCase()}/${data.Media.id}`);
     } catch (err) {
       const msg = err.response.status === 404 ? 'Nothing found!' : 'Unknown problem occurred!';
-      return message.util!.send(msg);
+      return message.util.send(msg);
     }
   }
 }

@@ -19,9 +19,9 @@ export default class RoleInfoCommand extends Command {
       },
       args: [
         {
-          id: 'role',
-          type: 'role',
-          default: (message: Message) => message.guild!.roles.cache.get(message.guild!.id)
+          'id': 'role',
+          'type': 'role',
+          'default': (message: Message) => message.guild.roles.cache.get(message.guild.id)
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -52,7 +52,7 @@ export default class RoleInfoCommand extends Command {
 				${perms.map(permission => `• ${permissions[permission]}`).join('\n') || 'None'}
 			`
       )
-      .setThumbnail(message.guild!.iconURL()!);
-    return message.util!.send(embed);
+      .setThumbnail(message.guild.iconURL()!);
+    return message.util.send(embed);
   }
 }

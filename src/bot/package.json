@@ -53,5 +53,20 @@
     "bufferutil": "^4.0.1",
     "zlib-sync": "^0.1.5",
     "zucc": "^0.1.2"
+  },
+  "eslintConfig": {
+    "extends": "marine/node",
+    "rules": {
+      "brace-style": "error",
+      "no-useless-constructor": "off",
+      "@typescript-eslint/indent": [
+        "error",
+        2
+      ],
+      "max-len": [
+        "error",
+        100
+      ]
+    }
   }
 }

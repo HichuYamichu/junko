@@ -28,7 +28,7 @@ export default class PresetCommand extends Command {
   }
 
   public async exec(message: Message, { preset }: { preset: string }) {
-    await this.client.settings.set(message.guild!.id, 'preset', preset);
-    return message.util!.send(`Changed preset to \`${preset}\``);
+    await this.client.settings.set(message.guild.id, 'preset', preset);
+    return message.util.send(`Changed preset to \`${preset}\``);
   }
 }

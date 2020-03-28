@@ -33,7 +33,7 @@ export default class MissingPermissionsListener extends Listener {
     let str = '';
     switch (type) {
       case 'client':
-        str = this.missingPermissions(message.channel as TextChannel, this.client.user!, missing);
+        str = this.missingPermissions(message.channel as TextChannel, this.client.user, missing);
         text = `I need ${str} permission for this command`;
         break;
       case 'user':
@@ -45,7 +45,7 @@ export default class MissingPermissionsListener extends Listener {
     if (!text) return;
     if (
       message.guild
-        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+        ? (message.channel as TextChannel).permissionsFor(this.client.user)!.has('SEND_MESSAGES')
         : true
     ) {
       message.reply(text);

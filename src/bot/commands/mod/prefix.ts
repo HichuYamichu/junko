@@ -29,7 +29,7 @@ export default class PrefixCommand extends Command {
   }
 
   public async exec(message: Message, { prefix }: { prefix: string }) {
-    await this.client.settings.set(message.guild!.id, 'prefix', prefix);
-    return message.util!.send(`My prefix is now \`${prefix}\``);
+    await this.client.settings.set(message.guild.id, 'prefix', prefix);
+    return message.util.send(`My prefix is now \`${prefix}\``);
   }
 }

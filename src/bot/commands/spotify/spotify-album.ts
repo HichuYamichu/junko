@@ -26,9 +26,9 @@ export default class SpotifyAlbumCommand extends Command {
 
   public async exec(message: Message, { album }: { album: string }) {
     const res = await this.client.apiManager.spotify.searchAlbums(album, { limit: 1 });
-    if (!res.body.albums!.items.length) {
-      return message.util!.reply('Nothing found!');
+    if (!res.body.albums.items.length) {
+      return message.util.reply('Nothing found!');
     }
-    return message.util!.send(`https://open.spotify.com/album/${res.body.albums!.items[0].id}`);
+    return message.util.send(`https://open.spotify.com/album/${res.body.albums.items[0].id}`);
   }
 }

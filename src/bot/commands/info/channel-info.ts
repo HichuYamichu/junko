@@ -19,10 +19,10 @@ export default class ChannelInfoCommand extends Command {
       },
       args: [
         {
-          id: 'channel',
-          match: 'content',
-          type: 'channel',
-          default: (message: Message) => message.channel
+          'id': 'channel',
+          'match': 'content',
+          'type': 'channel',
+          'default': (message: Message) => message.channel
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -43,7 +43,7 @@ export default class ChannelInfoCommand extends Command {
 				• Creation Date: ${moment.utc(message.channel.createdAt).format('YYYY/MM/DD hh:mm:ss')}
 			`
       )
-      .setThumbnail(message.guild!.iconURL()!);
-    return message.util!.send(embed);
+      .setThumbnail(message.guild.iconURL()!);
+    return message.util.send(embed);
   }
 }

@@ -42,6 +42,6 @@ export default class BoldCommand extends Command {
         boldText += `${emojis[letter]} `;
       }
     }
-    return message.util!.send(boldText);
+    return message.util.send(boldText);
   }
 }

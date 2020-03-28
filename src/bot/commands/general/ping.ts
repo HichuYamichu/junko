@@ -21,7 +21,7 @@ export default class PingCommand extends Command {
     const timeDiff =
       (sent.editedTimestamp || sent.createdTimestamp) -
       (message.editedTimestamp || message.createdTimestamp);
-    return message.util!.reply([
+    return message.util.reply([
       'Pong!',
       `Responce time: \`${timeDiff} ms\``,
       `Gateway latency: \`${Math.round(this.client.ws.ping)} ms\``

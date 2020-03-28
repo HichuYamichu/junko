@@ -16,14 +16,14 @@ export default class BullyCommand extends Command {
       },
       args: [
         {
-          id: 'user',
-          type: 'user',
-          default: (message: Message) => message.author
+          'id': 'user',
+          'type': 'user',
+          'default': (message: Message) => message.author
         },
         {
-          id: 'lvl',
-          type: 'number',
-          default: 1
+          'id': 'lvl',
+          'type': 'number',
+          'default': 1
         }
       ],
       clientPermissions: ['ATTACH_FILES']
@@ -31,14 +31,14 @@ export default class BullyCommand extends Command {
   }
 
   public async exec(message: Message, { user, lvl }: { user: User; lvl: number }) {
-    if (user.id === message.client.user!.id) {
+    if (user.id === message.client.user.id) {
       return message.channel.send(`Can't bully me!`, {
         files: [join(__dirname, '../../..', 'static/me.gif')]
       });
     }
 
     if (this.client.isOwner(user)) {
-      return message.util!.send(`Can't bully The Creator!`, {
+      return message.util.send(`Can't bully The Creator!`, {
         files: [join(__dirname, '../../..', 'static/me.gif')]
       });
     }
@@ -100,6 +100,6 @@ export default class BullyCommand extends Command {
 
     const attachment = this.client.util.attachment(canvas.toBuffer());
 
-    return message.util!.send(attachment);
+    return message.util.send(attachment);
   }
 }

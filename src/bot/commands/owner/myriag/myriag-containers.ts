@@ -16,6 +16,6 @@ export default class MyriagContainersCommand extends Command {
 
   public async exec(message: Message) {
     const containers = await this.client.apiManager.myraig.getContainers();
-    return message.util!.send(`Avalible containers:\`${containers.join('` `')}\``);
+    return message.util.send(`Avalible containers:\`${containers.join('` `')}\``);
   }
 }

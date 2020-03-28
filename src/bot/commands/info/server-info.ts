@@ -24,16 +24,16 @@ export default class ServerInfoCommand extends Command {
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)
-      .setDescription(`Info about **${message.guild!.name}** (ID: ${message.guild!.id})`)
+      .setDescription(`Info about **${message.guild.name}** (ID: ${message.guild.id})`)
       .addField(
         'Channels:',
         stripIndents`
-        • ${message.guild!.channels.cache.filter(ch => ch.type === 'text').size} Text, ${
-  message.guild!.channels.cache.filter(ch => ch.type === 'voice').size
+        • ${message.guild.channels.cache.filter(ch => ch.type === 'text').size} Text, ${
+  message.guild.channels.cache.filter(ch => ch.type === 'voice').size
 } Voice
         • AFK: ${
-  message.guild!.afkChannelID
-    ? `<#${message.guild!.afkChannelID}> after ${message.guild!.afkTimeout / 60}min`
+  message.guild.afkChannelID
+    ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min`
     : 'None'
 }
         `
@@ -41,20 +41,20 @@ export default class ServerInfoCommand extends Command {
       .addField(
         'Members:',
         stripIndents`
-        • ${message.guild!.memberCount} members
-        • Owner: ${message.guild!.owner!.user.tag} (ID: ${message.guild!.ownerID})
+        • ${message.guild.memberCount} members
+        • Owner: ${message.guild.owner.user.tag} (ID: ${message.guild.ownerID})
         `
       )
       .addField(
         'Other:',
         stripIndents`
-        • Roles: ${message.guild!.roles.cache.size}
-        • Region: ${message.guild!.region}
-        • Created at: ${moment.utc(message.guild!.createdAt).format('YYYY/MM/DD hh:mm:ss')}
-        • Verification Level: ${message.guild!.verificationLevel}
+        • Roles: ${message.guild.roles.cache.size}
+        • Region: ${message.guild.region}
+        • Created at: ${moment.utc(message.guild.createdAt).format('YYYY/MM/DD hh:mm:ss')}
+        • Verification Level: ${message.guild.verificationLevel}
         `
       )
-      .setThumbnail(message.guild!.iconURL()!);
-    return message.util!.send(embed);
+      .setThumbnail(message.guild.iconURL()!);
+    return message.util.send(embed);
   }
 }

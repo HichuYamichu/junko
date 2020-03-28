@@ -38,7 +38,7 @@ export class Prometheus {
   };
 
   public server = createServer((req, res): void => {
-    if (parse(req.url!).pathname === '/metrics') {
+    if (parse(req.url).pathname === '/metrics') {
       res.writeHead(200, { 'Content-Type': this.metrics.register.contentType });
       res.write(this.metrics.register.metrics());
     }

@@ -24,10 +24,10 @@ export default class LogSetCommand extends Command {
 
   public async exec(message: Message, { chan }: { chan: TextChannel }) {
     if (chan) {
-      await this.client.settings.set(message.guild!.id, 'messageLog', chan.id);
-      return message.util!.send(`Message log enabled in ${chan}!`);
+      await this.client.settings.set(message.guild.id, 'messageLog', chan.id);
+      return message.util.send(`Message log enabled in ${chan}!`);
     }
-    await this.client.settings.delete(message.guild!.id, 'messageLog');
-    return message.util!.send('Message log disabled.');
+    await this.client.settings.delete(message.guild.id, 'messageLog');
+    return message.util.send('Message log disabled.');
   }
 }

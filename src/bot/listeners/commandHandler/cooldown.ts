@@ -14,11 +14,11 @@ export default class CooldownListener extends Listener {
 
     if (
       message.guild
-        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+        ? (message.channel as TextChannel).permissionsFor(this.client.user)!.has('SEND_MESSAGES')
         : true
     ) {
       const reply = await this.client.replyManager.getReply(message, 'cooldown');
-      return message.util!.send(`${reply} Cooldown left: \`${time.toFixed(1)}\`s.`);
+      return message.util.send(`${reply} Cooldown left: \`${time.toFixed(1)}\`s.`);
     }
   }
 }

@@ -48,7 +48,7 @@ export default class JunkoClient extends AkairoClient {
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
-    prefix: (msg: Message) => this.settings.get(msg.guild!, 'prefix', this.config.defaultPrefix),
+    prefix: (msg: Message) => this.settings.get(msg.guild, 'prefix', this.config.defaultPrefix),
     aliasReplacement: /-/g,
     allowMention: true,
     commandUtil: true,

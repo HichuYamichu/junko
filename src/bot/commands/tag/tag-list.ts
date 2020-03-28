@@ -18,9 +18,9 @@ export default class TagListCommand extends Command {
 
   public async exec(message: Message) {
     const repo = this.client.db.getRepository(Tag);
-    const tags = await repo.find({ where: { guild: message.guild!.id } });
+    const tags = await repo.find({ where: { guild: message.guild.id } });
 
-    if (!tags.length) return message.util!.send('No tags available for this guild!');
+    if (!tags.length) return message.util.send('No tags available for this guild!');
 
     const guildTags = tags
       .map(tag => `\`${tag.name}\``)
@@ -36,6 +36,6 @@ export default class TagListCommand extends Command {
       )
       .addField('**Available tags:**', guildTags);
 
-    return message.util!.send(embed);
+    return message.util.send(embed);
   }
 }

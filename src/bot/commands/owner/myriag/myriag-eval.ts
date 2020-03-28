@@ -25,19 +25,19 @@ export default class MyriagEvalCommand extends Command {
     const regex = /^\s*(`{1,3})(.+?)[ \n]([^]+)\1\s*$/;
     const match = regex.exec(input);
     if (!match) {
-      return message.util!.send('Invalid input!');
+      return message.util.send('Invalid input!');
     }
     const language = this.client.apiManager.myraig.getLanguageByAlias(match[2]);
     if (!language) {
-      return message.util!.send('Language not supported');
+      return message.util.send('Language not supported');
     }
     const code = match[3].trim();
     const result = await this.client.apiManager.myraig.eval(language, code);
     const output = `\`\`\`\n${result}\n\`\`\``;
     if (output.length >= 2000) {
       const { data } = await axios.post('https://hasteb.in/documents', result);
-      return message.util!.send(`Output was too long: <https://hasteb.in/${data.key}>`);
+      return message.util.send(`Output was too long: <https://hasteb.in/${data.key}>`);
     }
-    return message.util!.send(output);
+    return message.util.send(output);
   }
 }

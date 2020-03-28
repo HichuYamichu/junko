@@ -23,12 +23,12 @@ export default class MyriagCreateCommand extends Command {
   public async exec(message: Message, { lang }: { lang: string }) {
     const language = this.client.apiManager.myraig.getLanguageByAlias(lang);
     if (!language) {
-      return message.util!.send('Language not supported');
+      return message.util.send('Language not supported');
     }
     const success = await this.client.apiManager.myraig.createContainer(language);
     if (!success) {
-      return message.util!.send('Failed to create container');
+      return message.util.send('Failed to create container');
     }
-    return message.util!.send(`Created: \`myriag_${language}\``);
+    return message.util.send(`Created: \`myriag_${language}\``);
   }
 }

@@ -32,7 +32,7 @@ export default class StatsCommand extends Command {
       .setTitle('**Stats:**')
       .setColor(this.client.config.color)
       .addField('Memory usage:', `${Math.round(used * 100) / 100} MB`, true)
-      .addField('Uptime:', moment.duration(this.client.uptime!).format('d[d ]h[h ]m[m ]s[s]'), true)
+      .addField('Uptime:', moment.duration(this.client.uptime).format('d[d ]h[h ]m[m ]s[s]'), true)
       .addField(
         'General:',
         stripIndents`
@@ -44,9 +44,9 @@ export default class StatsCommand extends Command {
       )
       .addField('Version:', `v${version}`, true)
       .addField('Sauce:', `[GitHub](https://github.com/HichuYamichu/Junko)`, true)
-      .setThumbnail(message.client.user!.displayAvatarURL())
+      .setThumbnail(message.client.user.displayAvatarURL())
       .setFooter(`Coded with ❤ by ${author}`);
 
-    return message.util!.send(embed);
+    return message.util.send(embed);
   }
 }

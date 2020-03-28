@@ -12,10 +12,10 @@ export default class MessageDeleteListener extends Listener {
   }
 
   public async exec(message: Message) {
-    if (!message.guild!.me!.hasPermission('EMBED_LINKS')) return;
+    if (!message.guild.me.hasPermission('EMBED_LINKS')) return;
     if (message.author.bot) return;
     if (!message.content) return;
-    const messageLog = await this.client.settings.get(message.guild!, 'messageLog', '');
+    const messageLog = await this.client.settings.get(message.guild, 'messageLog', '');
     if (!messageLog) return;
     const messageLogChannel = this.client.channels.cache.get(messageLog);
     if (!messageLogChannel) return;

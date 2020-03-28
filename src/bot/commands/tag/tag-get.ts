@@ -32,11 +32,11 @@ export default class TagGetCommand extends Command {
     const tag = await repo
       .createQueryBuilder()
       .select('Tag.content', 'content')
-      .where({ guild: message.guild!.id, name })
+      .where({ guild: message.guild.id, name })
       .getRawOne();
 
     if (tag) {
-      return message.util!.send(tag.content);
+      return message.util.send(tag.content);
     }
   }
 }

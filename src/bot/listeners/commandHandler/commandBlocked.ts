@@ -32,7 +32,7 @@ export default class CommandBlockedListener extends Listener {
     if (!responce) return;
     if (
       message.guild
-        ? (message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+        ? (message.channel as TextChannel).permissionsFor(this.client.user)!.has('SEND_MESSAGES')
         : true
     ) {
       message.reply(responce);

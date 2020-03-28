@@ -61,7 +61,7 @@ export default class MetallumBandCommand extends Command {
         selectedStr.length > 1900
           ? 'Output too long try selecting fewer fields.'
           : [`\`\`\`json`, selectedStr, '```'];
-      return message.util!.send(res);
+      return message.util.send(res);
     } catch (error) {
       if (error.response?.errors[0]?.message) {
         return message.reply(error.response?.errors[0]?.message);

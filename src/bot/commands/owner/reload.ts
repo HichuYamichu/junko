@@ -17,10 +17,10 @@ export default class ReloadCommand extends Command {
 
   public *args() {
     const type = yield {
-      match: 'option',
-      flag: ['--type='],
-      type: [['commandAlias', 'command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
-      default: 'command'
+      'match': 'option',
+      'flag': ['--type='],
+      'type': [['commandAlias', 'command', 'c'], ['inhibitor', 'i'], ['listener', 'l']],
+      'default': 'command'
     };
 
     const mod = yield {
@@ -36,17 +36,17 @@ export default class ReloadCommand extends Command {
 
   public exec(message: Message, { type, mod }: { type: string; mod: AkairoModule }) {
     if (!mod) {
-      return message.util!.reply(
+      return message.util.reply(
         `Invalid ${type} ${type === 'command' ? 'alias' : 'ID'} specified to reload.`
       );
     }
 
     try {
       mod.reload();
-      return message.util!.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
+      return message.util.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
     } catch (err) {
       this.client.logger.error(err);
-      return message.util!.reply(`Failed to reload ${type} \`${mod.id}\`.`);
+      return message.util.reply(`Failed to reload ${type} \`${mod.id}\`.`);
     }
   }
 }

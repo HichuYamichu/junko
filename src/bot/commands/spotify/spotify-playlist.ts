@@ -26,11 +26,11 @@ export default class SpotifyPlaylistCommand extends Command {
 
   public async exec(message: Message, { playlist }: { playlist: string }) {
     const res = await this.client.apiManager.spotify.searchPlaylists(playlist, { limit: 1 });
-    if (!res.body.playlists!.items.length) {
-      return message.util!.reply('Nothing found!');
+    if (!res.body.playlists.items.length) {
+      return message.util.reply('Nothing found!');
     }
-    return message.util!.send(
-      `https://open.spotify.com/playlist/${res.body.playlists!.items[0].id}`
+    return message.util.send(
+      `https://open.spotify.com/playlist/${res.body.playlists.items[0].id}`
     );
   }
 }

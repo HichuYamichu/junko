@@ -27,7 +27,7 @@ export default class TagDelCommand extends Command {
   }
 
   public async exec(message: Message, { name }: { name: string }) {
-    const guild = message.guild!.id;
+    const guild = message.guild.id;
     const author = message.author.id;
 
     const repo = this.client.db.getRepository(Tag);
@@ -40,11 +40,11 @@ export default class TagDelCommand extends Command {
       .execute();
 
     if (result.affected === 0) {
-      return message.util!.send(
+      return message.util.send(
         `Couldn't delete that tag! Either you don't own it or this tag does not exist.`
       );
     }
 
-    return message.util!.send(`Succesfuly deleted \`${name}\`.`);
+    return message.util.send(`Succesfuly deleted \`${name}\`.`);
   }
 }

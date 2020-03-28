@@ -52,7 +52,7 @@ export default class HelpCommand extends Command {
         );
       }
 
-      return message.util!.send(embed);
+      return message.util.send(embed);
     }
     const embed = this.client.util
       .embed()
@@ -75,6 +75,6 @@ export default class HelpCommand extends Command {
       embed.addField('Aliases:', `\`${command.aliases.join('` `')}\``, true);
     }
 
-    return message.util!.send(embed);
+    return message.util.send(embed);
   }
 }

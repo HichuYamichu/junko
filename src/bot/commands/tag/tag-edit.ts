@@ -36,13 +36,13 @@ export default class TagEditCommand extends Command {
 
   public async exec(message: Message, { name, content }: { name: string; content: string }) {
     if (name && name.length >= 255) {
-      return message.util!.reply('tag name must be less then 255 characters.');
+      return message.util.reply('tag name must be less then 255 characters.');
     }
     if (content && content.length >= 1900) {
-      return message.util!.reply('tag content must be less then 1900 characters (discord limits).');
+      return message.util.reply('tag content must be less then 1900 characters (discord limits).');
     }
 
-    const guild = message.guild!.id;
+    const guild = message.guild.id;
     const author = message.author.id;
 
     const where = this.client.isOwner(message.author) ? { guild, name } : { guild, name, author };
@@ -51,10 +51,10 @@ export default class TagEditCommand extends Command {
     const result = await repo.update(where, { content });
 
     if (result.affected === 0) {
-      return message.util!.send(
+      return message.util.send(
         `Couldn't edit that tag! Either you don't own it or this tag does not exist.`
       );
     }
-    return message.util!.send('Tag succesfuly updated.');
+    return message.util.send('Tag succesfuly updated.');
   }
 }

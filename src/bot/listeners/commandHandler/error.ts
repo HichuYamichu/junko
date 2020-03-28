@@ -13,10 +13,10 @@ export default class ErrorListener extends Listener {
     this.client.logger.error(err);
     if (
       message.guild &&
-      !(message.channel as TextChannel).permissionsFor(this.client.user!)!.has('SEND_MESSAGES')
+      !(message.channel as TextChannel).permissionsFor(this.client.user)!.has('SEND_MESSAGES')
     ) {
       return null;
     }
-    return message.util!.reply('there was an error trying to execute that command!');
+    return message.util.reply('there was an error trying to execute that command!');
   }
 }

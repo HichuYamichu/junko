@@ -14,9 +14,9 @@ export default class AvatarCommand extends Command {
       },
       args: [
         {
-          id: 'user',
-          type: 'user',
-          default: (message: Message) => message.author
+          'id': 'user',
+          'type': 'user',
+          'default': (message: Message) => message.author
         }
       ],
       clientPermissions: ['EMBED_LINKS']
@@ -28,6 +28,6 @@ export default class AvatarCommand extends Command {
       .embed()
       .setImage(user.displayAvatarURL({ size: 2048 }))
       .setColor(this.client.config.color);
-    return message.util!.send(embed);
+    return message.util.send(embed);
   }
 }

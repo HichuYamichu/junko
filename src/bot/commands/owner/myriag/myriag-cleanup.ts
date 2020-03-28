@@ -16,6 +16,6 @@ export default class MyriagCleanupCommand extends Command {
 
   public async exec(message: Message) {
     const containers = await this.client.apiManager.myraig.cleanup();
-    return message.util!.send(`Removed containers:\`${containers.join('` `')}\``);
+    return message.util.send(`Removed containers:\`${containers.join('` `')}\``);
   }
 }
