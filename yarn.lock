@@ -4360,8 +4360,9 @@ dimport@^1.0.0:
     rewrite-imports "^2.0.3"
 
 "discord-akairo@github:discord-akairo/discord-akairo":
-  version "8.0.0-beta.8"
-  resolved "https://codeload.github.com/discord-akairo/discord-akairo/tar.gz/ccd021cb8075db3c71aedb09672ec9c575a76e61"
+  version "8.0.0"
+  uid "10cef7efc7a329cb1e0d96d73ccb4b83bc0afa72"
+  resolved "https://codeload.github.com/discord-akairo/discord-akairo/tar.gz/10cef7efc7a329cb1e0d96d73ccb4b83bc0afa72"
 
 "discord.js@github:discordjs/discord.js":
   version "12.0.1"
