@@ -30,7 +30,7 @@
     "moment-duration-format": "^2.3.2",
     "node-spotify-api": "^1.1.1",
     "pg": "^7.12.1",
-    "prom-client": "^11.5.3",
+    "prom-client": "^12.0.0",
     "simple-youtube-api": "^5.2.1",
     "spotify-web-api-node": "^4.0.0",
     "typeorm": "0.2.21"
@@ -38,14 +38,15 @@
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^8.2.0",
-    "@types/ioredis": "^4.14.4",
+    "@types/ioredis": "^4.14.9",
     "@types/moment-duration-format": "^2.2.2",
     "@types/node": "^13.1.8",
     "@types/spotify-web-api-node": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^2.17.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+
     "eslint": "^6.8.0",
-    "eslint-config-marine": "^5.3.2",
+    "eslint-config-marine": "^6.0.0",
     "nodemon": "^1.19.1",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.5"
