@@ -1,15 +1,22 @@
 import { Message } from 'discord.js';
-import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
+import {
+  AkairoClient,
+  CommandHandler,
+  InhibitorHandler,
+  ListenerHandler
+} from 'discord-akairo';
 import { Connection } from 'typeorm';
 import { join } from 'path';
 import Database from '../structs/Database';
 import { Settings } from '../models/Settings';
 import { SettingsProvider } from '../structs/SettingsProvider';
 import { Prometheus } from '../structs/Prometheus';
-import { RPCServer } from '../structs/RPCServer';
+import { RPCHandler } from '../structs/RPCHandler';
 import { APIManager } from '../structs/APIManager';
 import { ReplyManager } from '../structs/ReplyMenager';
 import { Logger } from '../structs/Logger';
+import { Server, ServerCredentials } from 'grpc';
+import { JunkoService } from '../generated/junko_grpc_pb';
 
 interface JunkoConf {
   ownerID: string;
@@ -25,7 +32,7 @@ declare module 'discord-akairo' {
     db: Connection;
     settings: SettingsProvider;
     prometheus: Prometheus;
-    rpc: RPCServer;
+    rpcServer: Server;
     replyManager: ReplyManager;
     apiManager: APIManager;
     logger: Logger;
@@ -38,7 +45,7 @@ export default class JunkoClient extends AkairoClient {
 
   public prometheus = new Prometheus();
 
-  public rpc = new RPCServer(this);
+  public rpcServer = new Server();
 
   public replyManager = new ReplyManager(this);
 
@@ -48,7 +55,8 @@ export default class JunkoClient extends AkairoClient {
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
-    prefix: (msg: Message) => this.settings.get(msg.guild, 'prefix', this.config.defaultPrefix),
+    prefix: (msg: Message) =>
+      this.settings.get(msg.guild, 'prefix', this.config.defaultPrefix),
     aliasReplacement: /-/g,
     allowMention: true,
     commandUtil: true,
@@ -56,8 +64,10 @@ export default class JunkoClient extends AkairoClient {
     defaultCooldown: 3000,
     argumentDefaults: {
       prompt: {
-        modifyStart: (msg: Message, text: string) => this.replyManager.modifyStart(msg, text),
-        modifyRetry: (msg: Message, text: string) => this.replyManager.modifyRetry(msg, text),
+        modifyStart: (msg: Message, text: string) =>
+          this.replyManager.modifyStart(msg, text),
+        modifyRetry: (msg: Message, text: string) =>
+          this.replyManager.modifyRetry(msg, text),
         timeout: (msg: Message) => this.replyManager.timeout(msg),
         ended: (msg: Message) => this.replyManager.ended(msg),
         cancel: (msg: Message) => this.replyManager.cancel(msg),
@@ -98,7 +108,12 @@ export default class JunkoClient extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
-    this.rpc.listen();
+    this.rpcServer.addService(JunkoService, new RPCHandler(this));
+    this.rpcServer.bind(
+      process.env.RPC_ADDR!,
+      ServerCredentials.createInsecure()
+    );
+    this.rpcServer.start();
     this.prometheus.listen();
   }
 

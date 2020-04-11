@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package junko;
+
+service Junko {
+  rpc getCommands (CommandsRequest) returns (CommandsResponce) {}
+}
+
+message CommandsRequest {}
+
+message CommandsResponce {
+  repeated Command commands = 1;
+}
+
+message Command {
+  string category = 1;
+  string content = 2;
+  string usage = 3;
+  repeated string examples = 4;
+}

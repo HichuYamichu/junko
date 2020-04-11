@@ -1,16 +1,15 @@
 dependencies:
-  '@grpc/proto-loader': 0.5.3
+  '@grpc/proto-loader': 0.5.4
   axios: 0.19.2
   canvas: 2.6.1
   common-tags: 1.8.0
   discord-akairo: github.com/discord-akairo/discord-akairo/10cef7efc7a329cb1e0d96d73ccb4b83bc0afa72_discord.js@12.1.1
   discord.js: github.com/discordjs/discord.js/6544d2233804f01b08d15a88edf9b5331949353d_bufferutil@4.0.1+zlib-sync@0.1.6
   dotenv: 8.2.0
-  google-protobuf: 3.11.4
   graphql-request: 1.8.2
   grpc: 1.24.2
   kaori: 2.0.1
-  mali: 0.19.0_e3eb8df1f014b4717d33781e1c34e6d2
+  mali: 0.20.0_a83ccdd093c669c14bdf6ee119682ded
   moment: 2.24.0
   moment-duration-format: 2.3.2
   node-spotify-api: 1.1.1
@@ -60,7 +59,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-CU1q0UXQUpFNzNB7gufgoisDHP7n+T3tkqTsp3MNUkVJ5+hS3BCvME8uCXAUFlz+6T2FbTCu75A+yQ7HMKqRKw==
-  /@grpc/proto-loader/0.5.3:
+  /@grpc/proto-loader/0.5.4:
     dependencies:
       lodash.camelcase: 4.3.0
       protobufjs: 6.8.9
@@ -68,7 +67,7 @@ packages:
     engines:
       node: '>=6'
     resolution:
-      integrity: sha512-8qvUtGg77G2ZT2HqdqYoM/OY97gQd/0crSG34xNmZ4ZOsv3aQT/FQV9QfZPazTGna6MIoyUd+u6AxsoZjJ/VMQ==
+      integrity: sha512-HTM4QpI9B2XFkPz7pjwMyMgZchJ93TVkL3kWPW8GDMDKYxsMnmf4w2TNMJK7+KNiYHS5cJrCEAFlF+AwtXWVPA==
   /@malijs/call-types/0.3.0:
     dev: false
     resolution:
@@ -123,7 +122,7 @@ packages:
   /@types/bytebuffer/5.0.40:
     dependencies:
       '@types/long': 4.0.1
-      '@types/node': 13.9.5
+      '@types/node': 13.11.1
     dev: false
     resolution:
       integrity: sha512-h48dyzZrPMz25K6Q4+NCwWaxwXany2FhQg/ErOcdZS1ZpsaDnDMZg8JYLMTGz7uvXKrcKGJUZJlZObyfgdaN9g==
@@ -152,11 +151,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-CuYswsMI3y5uR5sD9i/VUqIbZrsYN2eaCs7nH3qpDl2CZlNI48mjMf4ve2RpQ/65irprtnQVetfnea9my+jqcg==
-  /@types/node/10.17.17:
+  /@types/node/10.17.19:
     dev: false
     resolution:
-      integrity: sha512-gpNnRnZP3VWzzj5k3qrpRC6Rk3H/uclhAVo1aIvwzK5p5cOrs9yEyQ8H/HBsBY0u5rrWxXEiVPQ0dEB6pkjE8Q==
+      integrity: sha512-46/xThm3zvvc9t9/7M3AaLEqtOpqlYYYcCZbpYVAQHG20+oMZBkae/VMrn4BTi6AJ8cpack0mEXhGiKmDNbLrQ==
+  /@types/node/13.11.1:
+    dev: false
+    resolution:
+      integrity: sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
   /@types/node/13.9.5:
+    dev: true
     resolution:
       integrity: sha512-hkzMMD3xu6BrJpGVLeQ3htQQNAcOrJjX7WFmtK8zWQpz2UJf13LCFF2ALA7c9OVdvc2vQJeDdjfR35M0sBCxvw==
   /@types/spotify-api/0.0.2:
@@ -1571,10 +1575,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-BWICuzzDvDoH54NHKCseDanAhE3CeDorgDL5MT6LMXXj2WCnd9UC2szdk4AWLfjdgNBCXLUanXYcpBBKOSWGwg==
-  /google-protobuf/3.11.4:
-    dev: false
-    resolution:
-      integrity: sha512-lL6b04rDirurUBOgsY2+LalI6Evq8eH5TcNzi7TYQ3BsIWelT0KSOQSBsXuavEkNf+odQU6c0lgz3UsZXeNX9Q==
   /got/6.7.1:
     dependencies:
       create-error-class: 3.0.2
@@ -2245,9 +2245,9 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==
-  /mali/0.19.0_e3eb8df1f014b4717d33781e1c34e6d2:
+  /mali/0.20.0_a83ccdd093c669c14bdf6ee119682ded:
     dependencies:
-      '@grpc/proto-loader': 0.5.3
+      '@grpc/proto-loader': 0.5.4
       '@malijs/call-types': 0.3.0
       '@malijs/compose': 1.3.2
       ascallback: 1.1.1
@@ -2276,7 +2276,7 @@ packages:
       '@grpc/proto-loader': ^0.3.0 || ^0.4.0 || ^0.5.0
       grpc: ^1.11.0
     resolution:
-      integrity: sha512-zv9VGKHE2CI1KnOTPbYvQFH5V5GBAsmepjDaw/2df8x0T6W0rSsDxe6CDH7gKK4bcOy+EtMYoyh4raaIscOcGA==
+      integrity: sha512-ia8OFCNufw3/3U1HenJHcm4B1c5eQdil2wnSiPnxSugO+hLM3k9EgU5GXJ8E41t42STz3LXkB0L8+ym4Gyk8Aw==
   /map-cache/0.2.2:
     dev: true
     engines:
@@ -2969,7 +2969,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.1
-      '@types/node': 10.17.17
+      '@types/node': 10.17.19
       long: 4.0.0
     dev: false
     hasBin: true
@@ -4151,7 +4151,7 @@ packages:
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/6544d2233804f01b08d15a88edf9b5331949353d'
     version: 12.1.1
 specifiers:
-  '@grpc/proto-loader': ^0.5.2
+  '@grpc/proto-loader': ^0.5.4
   '@types/common-tags': ^1.8.0
   '@types/moment-duration-format': ^2.2.2
   '@types/node': ^13.9.4
@@ -4167,11 +4167,10 @@ specifiers:
   dotenv: ^8.2.0
   eslint: ^6.8.0
   eslint-config-marine: ^6.0.0
-  google-protobuf: ^3.11.4
   graphql-request: ^1.8.2
-  grpc: ^1.23.3
+  grpc: ^1.24.2
   kaori: ^2.0.0
-  mali: ^0.19.0
+  mali: ^0.20.0
   moment: ^2.24.0
   moment-duration-format: ^2.3.2
   node-spotify-api: ^1.1.1
