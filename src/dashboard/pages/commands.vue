@@ -2,7 +2,9 @@
   <v-row class="pa-5" align="center">
     <v-col cols="12">
       <v-card>
-        <v-card-title class="align-end fill-height display-1">Prefix</v-card-title>
+        <v-card-title class="align-end fill-height display-1"
+          >Prefix</v-card-title
+        >
         <v-card-text class="text--primary">
           <p>
             Default:
@@ -19,13 +21,14 @@
     </v-col>
     <v-col cols="12">
       <v-card>
-        <v-card-title class="align-end fill-height display-1">Command help</v-card-title>
+        <v-card-title class="align-end fill-height display-1"
+          >Command help</v-card-title
+        >
         <v-card-text class="text--primary">
+          <p><code>&lt;thing&gt;</code> - fill with appropriate content</p>
           <p>
-            <code>&lt;thing&gt;</code> - fill with appropriate content
-          </p>
-          <p>
-            <code>&lt;thing1 | thing2&gt;</code> - multiple content types available
+            <code>&lt;thing1 | thing2&gt;</code> - multiple content types
+            available
           </p>
           <p>
             <code>[thing]</code> - parameter is optional or has a default value
@@ -39,7 +42,9 @@
     <v-col cols="12">
       <v-expansion-panels v-for="(category, index) in categories" :key="index">
         <v-expansion-panel>
-          <v-expansion-panel-header class="display-1 capital">{{ category.name }}</v-expansion-panel-header>
+          <v-expansion-panel-header class="display-1 capital">{{
+            category.name
+          }}</v-expansion-panel-header>
           <v-expansion-panel-content class="mt-3">
             <v-card
               v-for="(command, index) in category.commands"
@@ -59,26 +64,17 @@
 
 <script>
 import Command from '@/components/Command';
-import gql from 'graphql-tag';
 
 export default {
   components: {
-    Command
+    Command,
   },
-  apollo: {
-    categories: {
-      query: gql`
-        query {
-          categories: Categories {
-            name
-            commands {
-              name
-            }
-          }
-        }
-      `
-    }
-  }
+
+  async asyncData(context) {
+    const res = fetch('/api/commands');
+    console.log(res);
+    return { categories: [] };
+  },
 };
 </script>
 

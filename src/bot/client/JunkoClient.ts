@@ -7,6 +7,7 @@ import {
 } from 'discord-akairo';
 import { Connection } from 'typeorm';
 import { join } from 'path';
+import { Server, ServerCredentials } from 'grpc';
 import Database from '../structs/Database';
 import { Settings } from '../models/Settings';
 import { SettingsProvider } from '../structs/SettingsProvider';
@@ -15,7 +16,6 @@ import { RPCHandler } from '../structs/RPCHandler';
 import { APIManager } from '../structs/APIManager';
 import { ReplyManager } from '../structs/ReplyMenager';
 import { Logger } from '../structs/Logger';
-import { Server, ServerCredentials } from 'grpc';
 import { JunkoService } from '../generated/junko_grpc_pb';
 
 interface JunkoConf {

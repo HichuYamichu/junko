@@ -12,7 +12,7 @@ COPY src/api ./
 
 RUN go get -u github.com/gobuffalo/packr/packr
 
-RUN CGO_ENABLED=0 GOOS=linux packr build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o junko-api ./cmd/junko-api/main.go
+RUN CGO_ENABLED=0 GOOS=linux packr build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o junko-api main.go
 
 FROM scratch
 
