@@ -6,6 +6,7 @@ dependencies:
   discord-akairo: github.com/discord-akairo/discord-akairo/10cef7efc7a329cb1e0d96d73ccb4b83bc0afa72_discord.js@12.1.1
   discord.js: github.com/discordjs/discord.js/6544d2233804f01b08d15a88edf9b5331949353d_bufferutil@4.0.1+zlib-sync@0.1.6
   dotenv: 8.2.0
+  google-protobuf: 3.11.4
   graphql-request: 1.8.2
   grpc: 1.24.2
   kaori: 2.0.1
@@ -1575,6 +1576,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-BWICuzzDvDoH54NHKCseDanAhE3CeDorgDL5MT6LMXXj2WCnd9UC2szdk4AWLfjdgNBCXLUanXYcpBBKOSWGwg==
+  /google-protobuf/3.11.4:
+    dev: false
+    resolution:
+      integrity: sha512-lL6b04rDirurUBOgsY2+LalI6Evq8eH5TcNzi7TYQ3BsIWelT0KSOQSBsXuavEkNf+odQU6c0lgz3UsZXeNX9Q==
   /got/6.7.1:
     dependencies:
       create-error-class: 3.0.2
@@ -4167,6 +4172,7 @@ specifiers:
   dotenv: ^8.2.0
   eslint: ^6.8.0
   eslint-config-marine: ^6.0.0
+  google-protobuf: ^3.11.4
   graphql-request: ^1.8.2
   grpc: ^1.24.2
   kaori: ^2.0.0

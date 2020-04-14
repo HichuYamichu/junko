@@ -21,6 +21,7 @@
     "discord-akairo": "github:discord-akairo/discord-akairo",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
+    "google-protobuf": "^3.11.4",
     "graphql-request": "^1.8.2",
     "grpc": "^1.24.2",
     "kaori": "^2.0.0",
