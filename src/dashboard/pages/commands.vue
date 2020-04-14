@@ -2,9 +2,7 @@
   <v-row class="pa-5" align="center">
     <v-col cols="12">
       <v-card>
-        <v-card-title class="align-end fill-height display-1"
-          >Prefix</v-card-title
-        >
+        <v-card-title class="align-end fill-height display-1">Prefix</v-card-title>
         <v-card-text class="text--primary">
           <p>
             Default:
@@ -21,11 +19,11 @@
     </v-col>
     <v-col cols="12">
       <v-card>
-        <v-card-title class="align-end fill-height display-1"
-          >Command help</v-card-title
-        >
+        <v-card-title class="align-end fill-height display-1">Command help</v-card-title>
         <v-card-text class="text--primary">
-          <p><code>&lt;thing&gt;</code> - fill with appropriate content</p>
+          <p>
+            <code>&lt;thing&gt;</code> - fill with appropriate content
+          </p>
           <p>
             <code>&lt;thing1 | thing2&gt;</code> - multiple content types
             available
@@ -42,9 +40,11 @@
     <v-col cols="12">
       <v-expansion-panels v-for="(category, index) in categories" :key="index">
         <v-expansion-panel>
-          <v-expansion-panel-header class="display-1 capital">{{
+          <v-expansion-panel-header class="display-1 capital">
+            {{
             category.name
-          }}</v-expansion-panel-header>
+            }}
+          </v-expansion-panel-header>
           <v-expansion-panel-content class="mt-3">
             <v-card
               v-for="(command, index) in category.commands"
@@ -53,7 +53,7 @@
               class="pa-3 my-4"
             >
               <span class="title capital">{{ command.name }}</span>
-              <command :name="command.name" />
+              <command v-bind="command" />
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -63,18 +63,19 @@
 </template>
 
 <script>
-import Command from '@/components/Command';
+import Command from "@/components/Command";
 
 export default {
   components: {
-    Command,
+    Command
   },
 
   async asyncData(context) {
-    const res = fetch('/api/commands');
-    console.log(res);
-    return { categories: [] };
-  },
+    const host = process.server ? req.headers.host : window.location.host;
+    const res = await fetch(`http://${host}/api/commands`);
+    const categories = await res.json();
+    return { categories };
+  }
 };
 </script>
 

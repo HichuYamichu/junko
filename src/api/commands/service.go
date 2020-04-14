@@ -15,12 +15,12 @@ func NewService(junkoClient junko.JunkoClient) *Service {
 	return &Service{junkoClient: junkoClient}
 }
 
-func (s *Service) Commands(ctx context.Context) ([]*junko.Command, error) {
+func (s *Service) Commands(ctx context.Context) ([]*junko.Category, error) {
 	const op errors.Op = "commands/service.Commands"
 
 	cmdRes, err := s.junkoClient.GetCommands(ctx, &junko.CommandsRequest{})
 	if err != nil {
 		return nil, errors.E(err, errors.Internal, op)
 	}
-	return cmdRes.Commands, nil
+	return cmdRes.Categories, nil
 }

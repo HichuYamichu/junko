@@ -3,7 +3,8 @@ import { ServerUnaryCall, sendUnaryData } from 'grpc';
 import {
   CommandsRequest,
   CommandsResponce,
-  Command
+  Command,
+  Category
 } from '../generated/junko_pb';
 import { IJunkoServer } from '../generated/junko_grpc_pb';
 
@@ -14,17 +15,24 @@ export class RPCHandler implements IJunkoServer {
     call: ServerUnaryCall<CommandsRequest>,
     callback: sendUnaryData<CommandsResponce>
   ) {
-    const commands = [...this.client.commandHandler.modules.values()];
     const res = new CommandsResponce();
-    for (const command of commands) {
-      const commandMessage = new Command();
-      commandMessage.setCategory(command.categoryID);
-      commandMessage.setContent(command.description.content);
-      commandMessage.setUsage(command.description.usage);
-      commandMessage.setExamplesList(command.description.examples);
-      res.addCommands(commandMessage);
+    const categoryNames = this.client.commandHandler.categories.keys();
+    for (const catName of categoryNames) {
+      const categoryMessage = new Category();
+      categoryMessage.setName(catName);
+      const cmdNames = this.client.commandHandler.findCategory(catName).keys();
+      for (const cmdName of cmdNames) {
+        const cmd = this.client.commandHandler.modules.get(cmdName);
+        if (!cmd || !cmd.description) continue;
+        const commandMessage = new Command();
+        commandMessage.setName(cmdName);
+        commandMessage.setContent(cmd.description.content);
+        commandMessage.setUsage(cmd.description.usage);
+        commandMessage.setExamplesList(cmd.description.examples);
+        categoryMessage.addCommands(commandMessage);
+      }
+      res.addCategories(categoryMessage);
     }
-
     callback(null, res);
   }
 }

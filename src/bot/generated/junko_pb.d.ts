@@ -24,10 +24,10 @@ export namespace CommandsRequest {
 }
 
 export class CommandsResponce extends jspb.Message { 
-    clearCommandsList(): void;
-    getCommandsList(): Array<Command>;
-    setCommandsList(value: Array<Command>): void;
-    addCommands(value?: Command, index?: number): Command;
+    clearCategoriesList(): void;
+    getCategoriesList(): Array<Category>;
+    setCategoriesList(value: Array<Category>): void;
+    addCategories(value?: Category, index?: number): Category;
 
 
     serializeBinary(): Uint8Array;
@@ -42,13 +42,40 @@ export class CommandsResponce extends jspb.Message {
 
 export namespace CommandsResponce {
     export type AsObject = {
+        categoriesList: Array<Category.AsObject>,
+    }
+}
+
+export class Category extends jspb.Message { 
+    getName(): string;
+    setName(value: string): void;
+
+    clearCommandsList(): void;
+    getCommandsList(): Array<Command>;
+    setCommandsList(value: Array<Command>): void;
+    addCommands(value?: Command, index?: number): Command;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Category.AsObject;
+    static toObject(includeInstance: boolean, msg: Category): Category.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Category, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Category;
+    static deserializeBinaryFromReader(message: Category, reader: jspb.BinaryReader): Category;
+}
+
+export namespace Category {
+    export type AsObject = {
+        name: string,
         commandsList: Array<Command.AsObject>,
     }
 }
 
 export class Command extends jspb.Message { 
-    getCategory(): string;
-    setCategory(value: string): void;
+    getName(): string;
+    setName(value: string): void;
 
     getContent(): string;
     setContent(value: string): void;
@@ -74,7 +101,7 @@ export class Command extends jspb.Message {
 
 export namespace Command {
     export type AsObject = {
-        category: string,
+        name: string,
         content: string,
         usage: string,
         examplesList: Array<string>,

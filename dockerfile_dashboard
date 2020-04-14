@@ -1,26 +1,15 @@
-FROM node:10-alpine
-
-ENV NUXT_HOST= \
-  NUXT_PORT= \
-  API_ADDR=
+FROM node:12-alpine
 
 WORKDIR /usr/src/junko
 
-COPY src/dashboard/package.json /usr/src/junko/src/dashboard/
-COPY tsconfig.json package.json yarn.lock /usr/src/junko/
+COPY src/dashboard/package.json src/dashboard/package-lock.json /usr/src/junko/
 
-RUN apk add --update \
-&& apk add --no-cache --virtual .build-deps make python g++  \
-&& yarn install \
-&& apk del .build-deps
+RUN npm install
 
-COPY src/dashboard /usr/src/junko/src/dashboard/
+COPY src/dashboard /usr/src/junko/
 
-WORKDIR /usr/src/junko/src/dashboard
-RUN ls
-
-RUN yarn build
+RUN npm run build
 
 EXPOSE 8080
 
-CMD ["yarn", "start"]
+CMD ["npm", "run", start"]

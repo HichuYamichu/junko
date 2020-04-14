@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "dash",
   "version": "1.0.0",
   "description": "My primo Nuxt.js project",
   "author": "HichuYamichu",
@@ -10,11 +10,9 @@
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
-  "devDependencies": {
-    "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/eslint-config": "^1.1.2",
-    "@nuxtjs/vuetify": "^1.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.6.0"
+  "dependencies": {
+    "@nuxtjs/proxy": "^1.3.3",
+    "@nuxtjs/vuetify": "^1.11.0",
+    "nuxt": "^2.0.0"
   }
 }

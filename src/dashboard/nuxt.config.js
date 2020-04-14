@@ -1,12 +1,9 @@
-import colors from 'vuetify/es5/util/colors';
-
 export default {
   server: {
-    port: process.env.NUXT_PORT || 8080,
+    port: 8000,
+    host: '0.0.0.0'
   },
-
-  mode: 'universal',
-
+  mode: 'spa',
   head: {
     titleTemplate: 'Junko bot - Dashboard',
     title: process.env.npm_package_name || '',
@@ -16,7 +13,7 @@ export default {
       {
         hid: 'Discord bot',
         name: 'Junko bot',
-        content: 'Touhou themed discord bot',
+        content: 'Touhou themed discord bot'
       },
       { hid: 'theme-color', name: 'theme-color', content: '#f271cd' },
       { hid: 'og:title', name: 'og:title', content: 'Junko bot' },
@@ -25,67 +22,28 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/avatar.webp',
+        content: '/avatar.webp'
       },
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'Cool embed huh?',
+        content: 'Cool embed huh?'
       },
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: 'Junko dashboard',
-      },
+        content: 'Junko dashboard'
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/avatar.webp' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/avatar.webp' }]
   },
-
   loading: { color: '#fff' },
-
   css: [],
-
   plugins: [],
-
-  buildModules: ['@nuxtjs/vuetify', '@nuxtjs/dotenv'],
-
-  modules: ['@nuxtjs/proxy', '@nuxtjs/pwa'],
-
-  proxy: {
-    '/api/': {
-      target: 'http://localhost:4000',
-      pathRewrite: { '^/api/': '' },
-      changeOrigin: true,
-    },
-  },
-
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      themes: {
-        dark: {
-          primary: '#000',
-          accent: '#f271cd',
-          secondary: '#F12B49',
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-        light: {
-          primary: '#000',
-          accent: '#000',
-          secondary: '#000',
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
-  },
-
+  buildModules: ['@nuxtjs/vuetify'],
+  modules: ['@nuxtjs/proxy'],
+  proxy: ['http://localhost:4000/api/*'],
   build: {
-    extend(config, ctx) {},
-  },
+    extend(config, ctx) {}
+  }
 };

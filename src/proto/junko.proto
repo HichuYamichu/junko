@@ -9,11 +9,16 @@ service Junko {
 message CommandsRequest {}
 
 message CommandsResponce {
-  repeated Command commands = 1;
+  repeated Category categories = 1;
+}
+
+message Category {
+  string name = 1;
+  repeated Command commands = 2;
 }
 
 message Command {
-  string category = 1;
+  string name = 1;
   string content = 2;
   string usage = 3;
   repeated string examples = 4;
