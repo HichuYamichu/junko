@@ -72,7 +72,7 @@ export default {
 
   async asyncData(context) {
     const host = process.server ? req.headers.host : window.location.host;
-    const res = await fetch(`http://${host}/api/commands`);
+    const res = await fetch(`https://${host}/api/commands`);
     const categories = await res.json();
     return { categories };
   }
