@@ -6,7 +6,7 @@ const client = new JunkoClient({
   ownerID: process.env.OWNER_ID!,
   token: process.env.TOKEN!,
   color: process.env.COLOR || '#f271cd',
-  defaultPrefix: process.env.PREFIX || '!',
+  defaultPrefix: process.env.PREFIX || '>',
   defaultPreset: process.env.PRESET || 'junko'
 });
 

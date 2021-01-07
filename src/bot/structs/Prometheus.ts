@@ -1,18 +1,9 @@
 import { collectDefaultMetrics, Counter, Histogram, register } from 'prom-client';
 import { createServer } from 'http';
 import { parse } from 'url';
-import { Context } from 'mali';
 collectDefaultMetrics();
 
 export class Prometheus {
-  public rpcMiddleware = async (ctx: Context, next: any): Promise<void> => {
-    const startEpoch = Date.now();
-    this.metrics.grpcServerStartedTotal.labels(ctx.type, ctx.name).inc();
-    await next();
-    this.metrics.grpcServerHandledTotal.labels(ctx.type, ctx.name).inc();
-    this.metrics.grpcServerHandleTime.labels(ctx.type, ctx.name).observe(Date.now() - startEpoch);
-  };
-
   public metrics = {
     commandCounter: new Counter({
       name: 'total_commands_used',

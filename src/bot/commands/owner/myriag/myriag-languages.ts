@@ -15,7 +15,7 @@ export default class MyriagLanguagesCommand extends Command {
   }
 
   public async exec(message: Message) {
-    const languages = await this.client.apiManager.myraig.getLanguages();
+    const languages = await this.client.myriag.getLanguages();
     return message.util.send(`Avalible languages:\`${languages.join('` `')}\``);
   }
 }

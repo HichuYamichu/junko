@@ -7,16 +7,13 @@ import {
 } from 'discord-akairo';
 import { Connection } from 'typeorm';
 import { join } from 'path';
-import { Server, ServerCredentials } from 'grpc';
 import Database from '../structs/Database';
 import { Settings } from '../models/Settings';
 import { SettingsProvider } from '../structs/SettingsProvider';
+import { Myriag } from '../structs/Myriag';
 import { Prometheus } from '../structs/Prometheus';
-import { RPCHandler } from '../structs/RPCHandler';
-import { APIManager } from '../structs/APIManager';
 import { ReplyManager } from '../structs/ReplyMenager';
 import { Logger } from '../structs/Logger';
-import { JunkoService } from '../generated/junko_grpc_pb';
 
 interface JunkoConf {
   ownerID: string;
@@ -31,10 +28,9 @@ declare module 'discord-akairo' {
     config: JunkoConf;
     db: Connection;
     settings: SettingsProvider;
+    myriag: Myriag;
     prometheus: Prometheus;
-    rpcServer: Server;
     replyManager: ReplyManager;
-    apiManager: APIManager;
     logger: Logger;
     commandHandler: CommandHandler;
   }
@@ -45,13 +41,11 @@ export default class JunkoClient extends AkairoClient {
 
   public prometheus = new Prometheus();
 
-  public rpcServer = new Server();
-
   public replyManager = new ReplyManager(this);
 
-  public apiManager = new APIManager(this);
-
   public logger = new Logger();
+
+  public myriag = new Myriag();
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
@@ -94,7 +88,6 @@ export default class JunkoClient extends AkairoClient {
   private async init() {
     this.db = await Database.get('junko').connect();
     this.settings = new SettingsProvider(this.db.getRepository(Settings));
-    this.apiManager.init();
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
@@ -108,12 +101,6 @@ export default class JunkoClient extends AkairoClient {
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
 
-    this.rpcServer.addService(JunkoService, new RPCHandler(this));
-    this.rpcServer.bind(
-      process.env.RPC_ADDR!,
-      ServerCredentials.createInsecure()
-    );
-    this.rpcServer.start();
     this.prometheus.listen();
   }
 

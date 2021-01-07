@@ -27,12 +27,12 @@ export default class MyriagEvalCommand extends Command {
     if (!match) {
       return message.util.send('Invalid input!');
     }
-    const language = this.client.apiManager.myraig.getLanguageByAlias(match[2]);
+    const language = this.client.myriag.getLanguageByAlias(match[2]);
     if (!language) {
       return message.util.send('Language not supported');
     }
     const code = match[3].trim();
-    const result = await this.client.apiManager.myraig.eval(language, code);
+    const result = await this.client.myriag.eval(language, code);
     const output = `\`\`\`\n${result}\n\`\`\``;
     if (output.length >= 2000) {
       const { data } = await axios.post('https://hasteb.in/documents', result);
