@@ -1,23 +1,27 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { languages } from '../util/languages';
+import { Config } from './Config';
+import { Logger } from './Logger';
 
 export class Myriag {
-  private readonly client = axios.create({
-    baseURL: process.env.MYRIAG_URL!,
-    responseType: 'json',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  private readonly client: AxiosInstance;
 
   private readonly aliases: Map<string, string> = new Map();
 
-  public constructor() {
+  public constructor(config: Config) {
     for (const [lang, aliases] of languages) {
       for (const alias of aliases) {
         this.aliases.set(alias, lang);
       }
     }
+
+    this.client = axios.create({
+      baseURL: config.myriag_url,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   public getLanguageByAlias(alias: string) {
@@ -25,22 +29,17 @@ export class Myriag {
   }
 
   public async getLanguages() {
-    const { data } = await this.client.get<string[]>('/api/languages');
+    const { data } = await this.client.get<string[]>('/languages');
     return data;
   }
 
   public async getContainers() {
-    const { data } = await this.client.get<string[]>('/api/containers');
+    const { data } = await this.client.get<string[]>('/containers');
     return data;
   }
 
-  public async createContainer(language: string) {
-    const res = await this.client.post('/api/create_container', { language });
-    return res.status === 201;
-  }
-
   public async cleanup() {
-    const { data } = await this.client.post<string[]>('/api/cleanup');
+    const { data } = await this.client.post<string[]>('/cleanup');
     return data;
   }
 
@@ -48,12 +47,13 @@ export class Myriag {
     try {
       const {
         data: { result }
-      } = await this.client.post<{ result: string }>('/api/eval', {
+      } = await this.client.post<{ result: string }>('/eval', {
         language,
         code
       });
       return result || '\n';
     } catch (e) {
+      Logger.warn(e);
       switch (e.response.status) {
         case 404:
           return `Invalid language ${language}`;

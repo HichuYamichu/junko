@@ -1,17 +1,13 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 import JunkoClient from './client/JunkoClient';
+import { Config } from './structs/Config';
+import { Logger } from './structs/Logger';
 
-const client = new JunkoClient({
-  ownerID: process.env.OWNER_ID!,
-  token: process.env.TOKEN!,
-  color: process.env.COLOR || '#f271cd',
-  defaultPrefix: process.env.PREFIX || '>',
-  defaultPreset: process.env.PRESET || 'junko'
-});
+const client = new JunkoClient(new Config());
 
 client.start();
 
 process.on('unhandledRejection', reason => {
-  client.logger.error(reason);
+  Logger.error(reason);
 });

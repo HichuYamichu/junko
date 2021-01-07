@@ -1,17 +1,20 @@
 import { ConnectionManager } from 'typeorm';
 import { Tag } from '../models/Tag';
 import { Settings } from '../models/Settings';
+import { Config } from './Config';
 
-const connectionManager = new ConnectionManager();
-connectionManager.create({
-  name: 'junko',
-  type: 'postgres',
-  host: process.env.POSTGRES_HOST,
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
-  entities: [Settings, Tag],
-  synchronize: true
-});
-
-export default connectionManager;
+export class Database extends ConnectionManager {
+  constructor(conf: Config) {
+    super();
+    super.create({
+      name: 'junko',
+      type: 'postgres',
+      host: conf.postgresHost,
+      username: conf.postgresUsername,
+      password: conf.postgresPassword,
+      database: conf.postgresDatabase,
+      entities: [Settings, Tag],
+      synchronize: true
+    });
+  }
+}

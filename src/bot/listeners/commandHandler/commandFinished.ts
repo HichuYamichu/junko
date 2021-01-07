@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
 import { inspect } from 'util';
+import { Logger } from '../../structs/Logger';
 
 export default class CommandCancelledListener extends Listener {
   public constructor() {
@@ -22,6 +23,6 @@ export default class CommandCancelledListener extends Listener {
       : `DM: ${message.author.tag} (${message.author.id})`;
     const cmdArgs = Object.keys(args).length && !args.command ? `Args: ${this.clean(args)}` : '';
     const log = `Finished  ${command.id} on ${channel} ${cmdArgs}`;
-    this.client.logger.info(log);
+    Logger.info(log);
   }
 }

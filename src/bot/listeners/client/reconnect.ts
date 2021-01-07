@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { Logger } from '../../structs/Logger';
 
 export default class ReconnectListener extends Listener {
   public constructor() {
@@ -9,6 +10,6 @@ export default class ReconnectListener extends Listener {
   }
 
   public exec() {
-    this.client.logger.info('Reconnecting...');
+    Logger.info('Reconnecting...');
   }
 }

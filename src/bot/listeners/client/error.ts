@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { Logger } from '../../structs/Logger';
 
 export default class ErrorListener extends Listener {
   public constructor() {
@@ -9,6 +10,6 @@ export default class ErrorListener extends Listener {
   }
 
   public exec(event: any) {
-    this.client.logger.error(event);
+    Logger.error(event);
   }
 }

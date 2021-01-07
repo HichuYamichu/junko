@@ -7,46 +7,30 @@ import {
 } from 'discord-akairo';
 import { Connection } from 'typeorm';
 import { join } from 'path';
-import Database from '../structs/Database';
+import { Database } from '../structs/Database';
 import { Settings } from '../models/Settings';
 import { SettingsProvider } from '../structs/SettingsProvider';
 import { Myriag } from '../structs/Myriag';
 import { Prometheus } from '../structs/Prometheus';
 import { ReplyManager } from '../structs/ReplyMenager';
-import { Logger } from '../structs/Logger';
-
-interface JunkoConf {
-  ownerID: string;
-  token: string;
-  color: string;
-  defaultPrefix: string;
-  defaultPreset: string;
-}
+import { Config } from '../structs/Config';
 
 declare module 'discord-akairo' {
   interface AkairoClient {
-    config: JunkoConf;
+    config: Config;
     db: Connection;
     settings: SettingsProvider;
     myriag: Myriag;
     prometheus: Prometheus;
     replyManager: ReplyManager;
-    logger: Logger;
     commandHandler: CommandHandler;
   }
 }
 
 export default class JunkoClient extends AkairoClient {
-  public config: JunkoConf;
-
+  public config: Config;
   public prometheus = new Prometheus();
-
   public replyManager = new ReplyManager(this);
-
-  public logger = new Logger();
-
-  public myriag = new Myriag();
-
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
     prefix: (msg: Message) =>
@@ -80,13 +64,14 @@ export default class JunkoClient extends AkairoClient {
     directory: join(__dirname, '..', 'listeners')
   });
 
-  public constructor(config: JunkoConf) {
+  public constructor(config: Config) {
     super({ ownerID: config.ownerID });
     this.config = config;
+    this.myriag = new Myriag(this.config);
   }
 
   private async init() {
-    this.db = await Database.get('junko').connect();
+    this.db = await new Database(this.config).get('junko').connect();
     this.settings = new SettingsProvider(this.db.getRepository(Settings));
 
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);

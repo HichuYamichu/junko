@@ -1,5 +1,6 @@
 import { Message } from 'discord.js';
 import { Command, AkairoModule } from 'discord-akairo';
+import { Logger } from '../../structs/Logger';
 
 export default class ReloadCommand extends Command {
   public constructor() {
@@ -45,7 +46,7 @@ export default class ReloadCommand extends Command {
       mod.reload();
       return message.util.reply(`Sucessfully reloaded ${type} \`${mod.id}\`.`);
     } catch (err) {
-      this.client.logger.error(err);
+      Logger.error(err);
       return message.util.reply(`Failed to reload ${type} \`${mod.id}\`.`);
     }
   }
