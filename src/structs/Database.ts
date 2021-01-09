@@ -2,6 +2,7 @@ import { ConnectionManager } from 'typeorm';
 import { Tag } from '../models/Tag';
 import { Settings } from '../models/Settings';
 import { Config } from '../models/Config';
+import { Privileged } from '../models/Privileged';
 
 export class Database extends ConnectionManager {
   public constructor() {
@@ -13,7 +14,7 @@ export class Database extends ConnectionManager {
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Settings, Tag, Config],
+      entities: [Settings, Tag, Config, Privileged],
       synchronize: true
     });
   }

@@ -8,7 +8,7 @@ export default class BlacklistCommand extends Command {
       category: 'owner',
       ownerOnly: true,
       description: {
-        content: 'Makes me hate you even more.',
+        content: 'Adds user to blacklist',
         usage: '<id | username | mention>',
         examples: ['462219867467022347', '@ someone']
       },

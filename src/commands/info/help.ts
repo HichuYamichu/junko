@@ -24,7 +24,7 @@ export default class HelpCommand extends Command {
   }
 
   public async exec(message: Message, { command }: { command: Command }): Promise<void> {
-    const prefix = (this.handler.prefix as PrefixSupplier)(message);
+    const prefix = await (this.handler.prefix as PrefixSupplier)(message);
     if (!command) {
       const embed = this.client.util
         .embed()

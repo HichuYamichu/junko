@@ -38,7 +38,7 @@ export default class JunkoClient extends AkairoClient {
     allowMention: true,
     commandUtil: true,
     commandUtilLifetime: 3e5,
-    defaultCooldown: 3000,
+    defaultCooldown: 4000,
     argumentDefaults: {
       prompt: {
         modifyStart: (msg: Message, text: string) =>

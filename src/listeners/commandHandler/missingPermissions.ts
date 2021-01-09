@@ -1,4 +1,6 @@
-import { Message, TextChannel, User, BitFieldResolvable, PermissionString } from 'discord.js';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Message, TextChannel } from 'discord.js';
 import { Listener, Command } from 'discord-akairo';
 
 export default class MissingPermissionsListener extends Listener {
@@ -9,50 +11,19 @@ export default class MissingPermissionsListener extends Listener {
     });
   }
 
-  public missingPermissions(
-    channel: TextChannel, user: User, permissions: BitFieldResolvable<PermissionString>
-  ): string {
-    const missingPerms = channel
-      .permissionsFor(user)!
-      .missing(permissions)
-      .map(str => {
-        if (str === 'VIEW_CHANNEL') return '`Read Messages`';
-        if (str === 'SEND_TTS_MESSAGES') return '`Send TTS Messages`';
-        if (str === 'USE_VAD') return '`Use VAD`';
-        return `\`${str
-          .replace(/_/g, ' ')
-          .toLowerCase()
-          .replace(/\b(\w)/g, char => char.toUpperCase())}\``;
-      });
+  public exec(message: Message, command: Command, type: string, missing: any): boolean {
+    const canReply = message.guild ?
+      (message.channel as TextChannel).permissionsFor(this.client.user).has('SEND_MESSAGES')
+      : true;
 
-    return missingPerms.length > 1
-      ? `${missingPerms.slice(0, -1).join(', ')} and ${missingPerms.slice(-1)[0]}`
-      : missingPerms[0];
-  }
-
-  public exec(
-    message: Message, command: Command, type: string, missing: BitFieldResolvable<PermissionString>
-  ): boolean {
-    let text = '';
-    let str = '';
-    switch (type) {
-      case 'client':
-        str = this.missingPermissions(message.channel as TextChannel, this.client.user, missing);
-        text = `I need ${str} permission for this command`;
-        break;
-      case 'user':
-        str = this.missingPermissions(message.channel as TextChannel, message.author, missing);
-        text = `You need ${str} permission for this command`;
-        break;
+    if (!canReply) {
+      return;
     }
 
-    if (!text) return;
-    if (
-      message.guild
-        ? (message.channel as TextChannel).permissionsFor(this.client.user)!.has('SEND_MESSAGES')
-        : true
-    ) {
-      message.reply(text);
+    if (type === 'client') {
+      message.reply(`I'm missing ${missing} permission to use that command.`);
+    } else {
+      message.reply(`You are missing ${missing} permission to use that command.`);
     }
   }
 }

@@ -5,7 +5,7 @@ export default class MyriagContainersCommand extends Command {
   public constructor() {
     super('myriag-containers', {
       category: 'myriag',
-      ownerOnly: true,
+      ownerOnly: false,
       description: {
         content: 'lists avalible containers',
         usage: '',

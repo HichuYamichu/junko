@@ -1,12 +1,12 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
-import axios from 'axios';
+import fetch from 'node-fetch';
 
 export default class MyriagEvalCommand extends Command {
   public constructor() {
     super('myriag-eval', {
       category: 'myriag',
-      ownerOnly: true,
+      ownerOnly: false,
       description: {
         content: 'Evaluates arbitrary code',
         usage: '<code block>',
@@ -36,9 +36,19 @@ export default class MyriagEvalCommand extends Command {
     const code = match[3].trim();
     const result = await this.client.myriag.eval(language, code);
     const output = `\`\`\`\n${result}\n\`\`\``;
-    if (output.length >= 2000) {
-      const { data } = await axios.post('https://hasteb.in/documents', result);
-      message.util.send(`Output was too long: <https://hasteb.in/${data.key}>`);
+    if (output.length > 1900) {
+      const response = await fetch('https://hastebin.com/documents', {
+        method: 'POST',
+        body: output,
+      });
+
+      if (!response.ok) {
+        message.util.send(`Output was too long and I wasn't able to upload it to hastebin`);
+        return;
+      }
+
+      const body = await response.json();
+      message.util.send(`Output was too long: <https://hastebin.com/${body.key}>`);
       return;
     }
     message.util.send(output);

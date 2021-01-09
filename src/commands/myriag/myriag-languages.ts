@@ -5,7 +5,7 @@ export default class MyriagLanguagesCommand extends Command {
   public constructor() {
     super('myriag-languages', {
       category: 'myriag',
-      ownerOnly: true,
+      ownerOnly: false,
       description: {
         content: 'lists avalible languages',
         usage: '',

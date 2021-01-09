@@ -5,7 +5,7 @@ export default class MyriagCleanupCommand extends Command {
   public constructor() {
     super('myriag-cleanup', {
       category: 'myriag',
-      ownerOnly: true,
+      ownerOnly: false,
       description: {
         content: 'cleans up Myriag containers',
         usage: '',

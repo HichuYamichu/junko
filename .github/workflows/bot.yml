@@ -4,8 +4,6 @@ on:
   push:
     branches: 
       - master
-    paths:
-    - 'src/bot/**'
 
 jobs:
   build:
@@ -18,4 +16,4 @@ jobs:
         name: hichuyamichu/junko-bot
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: ./dockerfile_bot
+        dockerfile: ./dockerfile

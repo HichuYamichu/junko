@@ -2,7 +2,6 @@ import { Message, Role } from 'discord.js';
 import { Command } from 'discord-akairo';
 import * as moment from 'moment';
 import 'moment-duration-format';
-import { permissions } from '../../util/permissions';
 import { stripIndents } from 'common-tags';
 
 export default class RoleInfoCommand extends Command {
@@ -29,9 +28,14 @@ export default class RoleInfoCommand extends Command {
   }
 
   public async exec(message: Message, { role }: { role: Role }): Promise<void> {
-    const perms = Object.keys(permissions).filter(
-      permission => role.permissions.serialize()[permission]
-    );
+    const perms = role.permissions.toArray().map(str => {
+      if (str === 'VIEW_CHANNEL') return 'Read Messages';
+      if (str === 'SEND_TTS_MESSAGES') return 'Send TTS Messages';
+      if (str === 'USE_VAD') return 'Use VAD';
+      return `${str.replace(/_/g, ' ')
+        .toLowerCase().replace(/\b(\w)/g, char => char.toUpperCase())}`;
+    });
+
     const embed = this.client.util.embed();
     embed
       .setColor(this.client.config.color)
@@ -48,7 +52,7 @@ export default class RoleInfoCommand extends Command {
       .addField(
         'Permissions:',
         `
-				${perms.map(permission => `• ${permissions[permission]}`).join('\n') || 'None'}
+				${perms.map(permission => `• ${permission}`).join('\n') || 'None'}
 			`
       )
       .setThumbnail(message.guild.iconURL()!);

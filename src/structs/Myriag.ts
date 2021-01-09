@@ -1,11 +1,10 @@
-import axios, { AxiosInstance } from 'axios';
 import { languages } from '../util/languages';
-import { Logger } from './Logger';
+import fetch from 'node-fetch';
 
 export class Myriag {
-  private readonly client: AxiosInstance;
-
   private readonly aliases: Map<string, string> = new Map();
+
+  private readonly baseURL: string;
 
   public constructor(url: string) {
     for (const [lang, aliases] of languages) {
@@ -14,13 +13,11 @@ export class Myriag {
       }
     }
 
-    this.client = axios.create({
-      baseURL: url,
-      responseType: 'json',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    this.baseURL = url;
+  }
+
+  private url(p: string): string {
+    return `${this.baseURL}/${p}`;
   }
 
   public getLanguageByAlias(alias: string): string {
@@ -28,43 +25,43 @@ export class Myriag {
   }
 
   public async getLanguages(): Promise<string[]> {
-    const { data } = await this.client.get<string[]>('/languages');
-    return data;
+    return fetch(this.url('languages'), { method: 'GET' }).then(x => x.json());
   }
 
   public async getContainers(): Promise<string[]> {
-    const { data } = await this.client.get<string[]>('/containers');
-    return data;
+    return fetch(this.url('containers'), { method: 'GET' }).then(x => x.json());
   }
 
   public async cleanup(): Promise<string[]> {
-    const { data } = await this.client.post<string[]>('/cleanup');
-    return data;
+    return fetch(this.url('cleanup'), { method: 'POST' }).then(x => x.json());
   }
 
   public async eval(language: string, code: string): Promise<string> {
-    try {
-      const {
-        data: { result }
-      } = await this.client.post<{ result: string }>('/eval', {
-        language,
-        code
-      });
-      return result || '\n';
-    } catch (e) {
-      Logger.warn(e);
-      switch (e.response.status) {
-        case 404:
-          return `Invalid language ${language}`;
-        case 500:
-          return 'Evaluation failed';
-        case 504:
-          return 'Evaluation timed out';
-        default:
-          throw new Error(
-            `Unexpected ${e.response.status} response from Myriag, ${e.response.statusText}`
-          );
+    const response = await fetch(this.url('eval'), {
+      method: 'POST',
+      body: JSON.stringify({ language, code }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      const status = response.status;
+      const text = await response.text();
+      if (status === 404 && text === `Language ${language} was not found`) {
+        return `Invalid language ${language}`;
       }
+
+      if (status === 500 && text === 'Evaluation failed') {
+        return 'Evaluation failed';
+      }
+
+      if (status === 504 && text === 'Evaluation timed out') {
+        return 'Evaluation timed out';
+      }
+
+      throw new Error(`Unexpected ${response.status} response from Myriad, ${response.statusText}`);
     }
+
+    const body = await response.json();
+    return body.result || '\n';
   }
 }

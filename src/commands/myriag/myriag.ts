@@ -1,5 +1,7 @@
 import { Command, Flag } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
+import { Privileged } from '../../models/Privileged';
+import { Message } from 'discord.js';
 
 export default class MyriagCommand extends Command {
   public constructor() {
@@ -18,6 +20,16 @@ export default class MyriagCommand extends Command {
       }
     });
   }
+
+  public userPermissions = async (message: Message): Promise<string | null> => {
+    const repo = this.client.db.getRepository(Privileged);
+    const found = await repo.findOne({ userId: message.author.id });
+    if (!found) {
+      return 'PRIVILEGE';
+    }
+
+    return null;
+  };
 
   public *args(): unknown {
     const method = yield {
